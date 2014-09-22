@@ -3,14 +3,16 @@
 var cannon1:GameObject;
 var cannon2:GameObject;
 var cannon3:GameObject;
+var playerPrefab:GameObject;
 var player:GameObject;
+var peanut:GameObject;
 
 var cannonStep1:Sprite;
 var cannonStep2:Sprite;
 var cannonStep3:Sprite;
 
-var difficulty:int;
 var speed:int;
+var difficulty:int;
 
 var playerLocation:int;
 var target:int;
@@ -20,6 +22,10 @@ var finished:boolean;
 var previous:int;
 
 function Start () {
+	player = Instantiate(playerPrefab, Vector3(0,-6.5,0), Quaternion.identity);
+	player.transform.localScale = Vector3(3,3,3);
+	player.transform.parent = transform;
+	player.transform.localPosition.z = -.1;
 	finished = false;
 	playerLocation = 2;
 	target = 0;
@@ -38,12 +44,28 @@ function Start () {
 	
 	length = 3 + 5/speed;
 	timer = length;
-	
+	PlayerManager.speed = .05;
 	Play();
 }
 
 function Update () {
 	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
+	if(Mathf.Abs(player.transform.position.x - target) < .3)
+	{
+		PlayerManager.currentState = PlayerState.StandingBack;
+	}
+	else if(player.transform.position.x > target)
+	{
+		PlayerManager.currentState = PlayerState.WalkingLeft;
+	}
+	else if(player.transform.position.x < target)
+	{
+		PlayerManager.currentState = PlayerState.WalkingRight;
+	}
+	else
+	{
+		PlayerManager.currentState = PlayerState.StandingBack;
+	}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
@@ -56,19 +78,6 @@ function Update () {
 			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(true);
 		}
 		finished = true;
-	}
-
-	if(Input.GetKeyDown("left"))
-	{
-		Left();
-	}
-	if(Input.GetKeyDown("right"))
-	{
-		Right();
-	}
-	if(Input.GetKeyDown("1"))
-	{
-		fireCannon2();
 	}
 }
 
@@ -135,6 +144,9 @@ function fireCannon1() {
 	cannon1.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
+	Instantiate(peanut,cannon1.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep1;
+	yield WaitForSeconds(.05);
 	if(playerLocation == 1)
 	{
 		if(Application.loadedLevelName == "MicroTester")
@@ -147,7 +159,7 @@ function fireCannon1() {
 		}
 		finished = true;
 	}
-	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep1;
+	
 }
 
 function fireCannon2() {
@@ -157,6 +169,9 @@ function fireCannon2() {
 	cannon2.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
+	Instantiate(peanut,cannon2.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep1;
+	yield WaitForSeconds(.05);
 	if(playerLocation == 2)
 	{
 		if(Application.loadedLevelName == "MicroTester")
@@ -169,7 +184,6 @@ function fireCannon2() {
 		}
 		finished = true;
 	}
-	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep1;
 }
 
 function fireCannon3() {
@@ -179,6 +193,9 @@ function fireCannon3() {
 	cannon3.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
+	Instantiate(peanut,cannon3.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep1;
+	yield WaitForSeconds(.05);
 	if(playerLocation == 3)
 	{
 		if(Application.loadedLevelName == "MicroTester")
@@ -191,7 +208,6 @@ function fireCannon3() {
 		}
 		finished = true;
 	}
-	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep1;
 }
 
 function Left () {

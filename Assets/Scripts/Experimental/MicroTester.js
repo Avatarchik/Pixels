@@ -12,11 +12,14 @@ var timeIfSpeedChange:float;
 // Game variables.
 static var timeMultiplier:float;
 static var speedProgress:int;
+static var difficultyProgress:int;
 static var difficulty:int;
 static var speedChange:int;
 static var failure:boolean;
+static var currentGame:GameObject;
 static var lives:int;
 static var gameNumber:int;
+
 var gameCovers:GameObject[];
 var instructions:GameObject;
 
@@ -35,7 +38,7 @@ function Start () {
 	// Microgame variables.
 	if(timeMultiplier == null || timeMultiplier < 7)
 	{
-		timeMultiplier = 10;
+		timeMultiplier = 1;
 	}
 	
 	// Between game variables.
@@ -149,7 +152,7 @@ function MoveAway () {
 			}
 			else
 			{
-				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).destination, Time.deltaTime * timeMultiplier * 4);
+				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).destination, Time.deltaTime * 40);
 			}
 		}
 		yield;
@@ -170,7 +173,7 @@ function MoveBack () {
 			}
 			else
 			{
-				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).origin, Time.deltaTime * timeMultiplier * 4);
+				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).origin, Time.deltaTime * 40);
 			}
 		}
 		yield;

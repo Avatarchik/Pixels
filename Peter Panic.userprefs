@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Microgames/Packing Peanut Fatory/ItemCatch.js">
+    <Files>
+      <File FileName="Assets/Scripts/GeneralPurpose/Objects/GyroDetection.js" Line="11" Column="20" />
+      <File FileName="Assets/Scripts/Microgames/Packing Peanut Fatory/ItemCatch.js" Line="84" Column="150" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

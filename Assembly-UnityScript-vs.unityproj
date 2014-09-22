@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{F3D00E28-B0B1-F14A-2D09-BAB9752C3581}</ProjectGuid>
+	<ProjectGuid>{2AD9B1D2-9456-6497-DE77-FE77FA47F6C3}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -56,24 +56,37 @@
      <Compile Include="Assets\Scripts\Experimental\MicroTester.js" />
      <Compile Include="Assets\Scripts\Experimental\TestGame.js" />
      <Compile Include="Assets\Scripts\Experimental\TestMaster.js" />
-     <Compile Include="Assets\Scripts\Managers\Finger.js" />
-     <Compile Include="Assets\Scripts\Managers\GameManager.js" />
-     <Compile Include="Assets\Scripts\Managers\Master.js" />
-     <Compile Include="Assets\Scripts\Managers\MicroGameManager.js" />
-     <Compile Include="Assets\Scripts\Managers\ObjectMovementManager.js" />
-     <Compile Include="Assets\Scripts\Managers\ScreenTouchManager.js" />
-     <Compile Include="Assets\Scripts\Managers\WorldMapManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Managers\AnimationManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Finger.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Master.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Managers\ScreenTouchManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\GyroDetection.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectShake.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Player\ObjectMovementManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\MicroGameManager.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\DifficultyObject.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameCover.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameNumberObject.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Instruction.js" />
+     <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\ItemCatch.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PeanutCannon.js" />
-     <Compile Include="Assets\Scripts\Objects\ButtonSquare.js" />
-     <Compile Include="Assets\Scripts\Objects\Effects\Instruction.js" />
-     <Compile Include="Assets\Scripts\Objects\Effects\ObjectShake.js" />
-     <Compile Include="Assets\Scripts\Objects\Effects\Transition.js" />
-     <Compile Include="Assets\Scripts\Objects\UI\DifficultyObject.js" />
-     <Compile Include="Assets\Scripts\Objects\UI\GameCover.js" />
-     <Compile Include="Assets\Scripts\Objects\UI\GameNumberObject.js" />
-     <Compile Include="Assets\Scripts\WorldMap\GoToWorld.js" />
-     <Compile Include="Assets\Scripts\WorldMap\HideTicket.js" />
-     <Compile Include="Assets\Scripts\WorldMap\ShowTicket.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\ChangeTitleState.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\CustomizationButton.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\ShowColorSelection.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\StartGame.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\TitleManager.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\UndoCustomizationChanges.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\ChangMapState.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\GoToWorld.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\Menu\ChangeColor.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />
      <None Include="Assets\Art\Materials\3DText.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
