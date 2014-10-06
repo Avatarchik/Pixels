@@ -38,7 +38,7 @@ function Start () {
 	// Microgame variables.
 	if(timeMultiplier == null || timeMultiplier < 7)
 	{
-		timeMultiplier = 1;
+		timeMultiplier = 3;
 	}
 	
 	// Between game variables.
@@ -59,7 +59,7 @@ function Start () {
 		timeIfSpeedChange = .4;
 	}
 	speedProgress = 0;
-	difficulty = 1;
+	difficulty = 5;
 	gameNumber = 1;
 	// Start the pre-game animation.
 	StartCoroutine(BeforeGames());
@@ -87,7 +87,7 @@ function BetweenGame () {
 			{
 				timeMultiplier -= speedChange;
 			}
-			lives--;
+			//lives--;
 			yield WaitForSeconds(timeIfSpeedChange);
 		}
 		else if(speedProgress > 4)
@@ -131,8 +131,8 @@ function GameComplete (success:boolean) {
 
 // Lose all lives.
 function GameOver () {
-	yield WaitForSeconds(4);
-	Application.LoadLevel("WorldSelect");
+	yield WaitForSeconds(1);
+	//Application.LoadLevel("WorldSelect");
 }
 
 //////////////////////////////////////////////////////////////////////////

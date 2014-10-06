@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 46428d5debbc943cf8f67c8298bd476e
+guid: 153000e0d3c0d40d6a711daa9356d7e3
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Ticket
+    21300000: SceneBack
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

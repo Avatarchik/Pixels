@@ -6,10 +6,15 @@ var gyro:Gyroscope;
 
 var initial:Quaternion;
 var gyroChange:Quaternion;
+static var initialRotation:DeviceOrientation;
 static var rotation:Vector3;
 
 function Start () {
 	gyro = Input.gyro;
+	if(initialRotation == DeviceOrientation.Unknown)
+	{
+		initialRotation = Input.deviceOrientation;
+	}
 	gyro.enabled = true;
 	if(automatic)
 	{
@@ -41,25 +46,33 @@ function DetectGyro () {
 		{
 			rotation.z -= 360;
 		}
-		if (Input.deviceOrientation == DeviceOrientation.Portrait)
+		if(initialRotation == DeviceOrientation.Portrait || initialRotation == DeviceOrientation.PortraitUpsideDown)
 		{
 			rotation = Vector3(rotation.y,rotation.x,rotation.z);
-			rotation *= -1;
 		}
-		if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
+		switch(Input.deviceOrientation)
 		{
-			rotation.x *= -1;
-			rotation.z *= -1;
-		}
-		if (Input.deviceOrientation == DeviceOrientation.LandscapeRight)
-		{
-			rotation.y *= -1;
-			rotation.z *= -1;
-		}
-		if (Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown)
-		{
-			rotation = Vector3(rotation.y,rotation.x,rotation.z);
-			rotation.z *= -1;
+			case DeviceOrientation.Portrait:
+				//rotation = Vector3(rotation.y,rotation.x,rotation.z);
+				rotation *= -1;
+				break;
+			case DeviceOrientation.PortraitUpsideDown:
+				rotation.z *= -1;
+				//rotation = Vector3(rotation.y,rotation.x,rotation.z);
+				break;
+			case DeviceOrientation.LandscapeLeft:
+				rotation *= -1;
+				//rotation.y *= -1;
+				//rotation.z *= -1;
+				//rotation = Vector3(rotation.y,rotation.x,rotation.z);
+				break;
+			case DeviceOrientation.LandscapeRight:
+				rotation *= -1;
+				//rotation.y *= -1;
+				//rotation.z *= -1;
+				break;
+			default:
+				break;
 		}
 		yield;
 	}

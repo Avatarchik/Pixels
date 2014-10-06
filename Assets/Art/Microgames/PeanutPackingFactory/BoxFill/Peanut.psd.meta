@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 46428d5debbc943cf8f67c8298bd476e
+guid: 4d2dcbef918a349efa29f8a9b6086dfb
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Ticket
+    21300000: Peanut
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -23,7 +23,7 @@ TextureImporter:
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 1024
+  maxTextureSize: 32
   textureSettings:
     filterMode: 0
     aniso: 1

@@ -20,6 +20,14 @@ function Start () {
 function MoveTo(){
 	while(transform.position.y > target + .1)
 	{
+		if(text != GameObject.FindGameObjectWithTag("MicroGame").GetComponent(MicroGameManager).instruction)
+		{
+			text = GameObject.FindGameObjectWithTag("MicroGame").GetComponent(MicroGameManager).instruction;
+			for(var i:int = 0; i < children.Length; i++)
+			{
+				children[i].GetComponent(TextMesh).text = text;
+			}
+		}
 		transform.position.y = Mathf.Lerp(transform.position.y,target,Time.deltaTime*8);
 		yield;
 	}

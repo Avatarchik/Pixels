@@ -26,6 +26,7 @@ function Start () {
 	player.transform.localScale = Vector3(3,3,3);
 	player.transform.parent = transform;
 	player.transform.localPosition.z = -.1;
+	GetComponent(ScreenTouchManager).relativeObject = player;
 	finished = false;
 	playerLocation = 2;
 	target = 0;

@@ -6,6 +6,11 @@ var thisObject:boolean;
 var message:GameObject[];
 var importantFinger:int;
 var touchType:ScreenTouchType;
+var origin:Vector3;
+
+// Determine if movement is from the origin or relative to an object.
+var relativeToObject:boolean;
+var relativeObject:GameObject;
 
 // Binary Variables
 var continuous:boolean;
@@ -31,10 +36,16 @@ function Update () {
 	}
 	else
 	{
+		origin = Vector3.zero;
+		if(relativeToObject && relativeObject != null)
+		{
+			origin = relativeObject.transform.position;
+		}
 		switch (touchType)
 		{
+			
 			case ScreenTouchType.LeftRight:
-				if(Finger.GetPosition(importantFinger).x < 0 && !done)
+				if(Finger.GetPosition(importantFinger).x < origin.x && !done)
 				{
 					if(thisObject)
 					{
@@ -48,7 +59,7 @@ function Update () {
 						}
 					}
 				}
-				if(Finger.GetPosition(importantFinger).x > 0 && !done)
+				if(Finger.GetPosition(importantFinger).x > origin.x && !done)
 				{
 					if(thisObject)
 					{

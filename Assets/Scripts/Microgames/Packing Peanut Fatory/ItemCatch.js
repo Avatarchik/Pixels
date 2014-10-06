@@ -81,21 +81,21 @@ function Update () {
 			}
 			else
 			{
-				objectsOnScreen[i].transform.position = Vector2.MoveTowards(objectsOnScreen[i].transform.position, crate.transform.position, Time.deltaTime * (10));
+				objectsOnScreen[i].transform.position = Vector3.MoveTowards(objectsOnScreen[i].transform.position, Vector3(crate.transform.position.x,crate.transform.position.y, objectsOnScreen[i].transform.position.z), Time.deltaTime * (10));
 				objectsOnScreen[i].transform.parent = crate.transform;
 			}
 		}
 	}
 	newPosition = GyroDetection.rotation.x;
-	if(newPosition > 30)
+	if(newPosition > 20)
 	{
-		newPosition = 30;
+		newPosition = 20;
 	}
-	if(newPosition < -30)
+	if(newPosition < -20)
 	{
-		newPosition = -30;
+		newPosition = -20;
 	}
-	crate.transform.position.x = newPosition / 5;
+	crate.transform.position.x = newPosition / 3.3;
 }
 
 // Create object.
