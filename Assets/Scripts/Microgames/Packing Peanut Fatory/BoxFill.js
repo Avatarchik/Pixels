@@ -87,15 +87,7 @@ function Update () {
 			}
 			else if (peanuts[x].transform.position.y < -7 && !finished)
 			{
-				if(Application.loadedLevelName == "MicroTester")
-				{
-					GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(false);
-				}
-				else 
-				{
-					GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(false);
-				}
-				finished = true;
+				Finish(false);
 			}
 		}
 	}
@@ -109,27 +101,11 @@ function Update () {
 	}
 	if(progress >= goal && !finished)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(true);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(true);
-		}
-		finished = true;
+		Finish(true);
 	}
 	if(boxes[boxes.Length-1].transform.position.x >= 3 && !finished)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(false);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(false);
-		}
-		finished = true;
+		Finish(false);
 	}
 }
 
@@ -146,4 +122,16 @@ function Clicked () {
 		peanutsFree[currentPeanut] = 1;
 	}
 	currentPeanut++;
+}
+
+function Finish(completionStatus) {
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
+	}
+	else 
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
+	}
+	finished = true;
 }

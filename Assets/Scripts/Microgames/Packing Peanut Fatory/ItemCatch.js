@@ -39,15 +39,7 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(true);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(true);
-		}
-		finished = true;
+		Finish(true);
 	}
 	for(var i:int = 0; i < objectsOnScreen.length; i++)
 	{
@@ -56,16 +48,7 @@ function Update () {
 			objectsOnScreen[i].transform.parent = transform;
 			if(objectsOnScreen[i].transform.position.y <= -10 && !finished)
 			{
-				if(Application.loadedLevelName == "MicroTester")
-				{
-					GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(false);
-					finished = true;
-				}
-				else 
-				{
-					GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(false);
-					finished = true;
-				}
+				Finish(false);
 			}
 			else if(objectsOnScreen[i].transform.position.y < -2.5 && objectsOnScreen[i].transform.position.y > -4 && !objectsOnScreenTarget[i])
 			{
@@ -129,4 +112,16 @@ function AddBoolean (original:boolean[],addition:boolean):boolean[] {
 	}
 	finalArray[finalArray.length-1] = addition;
 	return finalArray;
+}
+
+function Finish(completionStatus) {
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
+	}
+	else 
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
+	}
+	finished = true;
 }

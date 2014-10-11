@@ -59,7 +59,7 @@ function Start () {
 		timeIfSpeedChange = .4;
 	}
 	speedProgress = 0;
-	difficulty = 5;
+	difficulty = 3;
 	gameNumber = 1;
 	// Start the pre-game animation.
 	StartCoroutine(BeforeGames());

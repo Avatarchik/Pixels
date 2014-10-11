@@ -70,25 +70,35 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(true);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(true);
-		}
-		finished = true;
+		Finish(true);
 	}
 }
 
 function Play() {
-	yield WaitForSeconds(length * .1);
-	Choice();
-	yield WaitForSeconds(length * .3);
-	Choice();
-	yield WaitForSeconds(length * .3);
-	Choice();
+	if(difficulty < 3)
+	{
+		yield WaitForSeconds(length * .1);
+		Choice();
+		yield WaitForSeconds(length * .3);
+		Choice();
+		yield WaitForSeconds(length * .3);
+		Choice();
+	}
+	else
+	{
+		yield WaitForSeconds(length * .1);
+		Choice();
+		yield WaitForSeconds(length * .15);
+		Choice();
+		yield WaitForSeconds(length * .15);
+		Choice();
+		yield WaitForSeconds(length * .15);
+		Choice();
+		yield WaitForSeconds(length * .15);
+		Choice();
+		yield WaitForSeconds(length * .15);
+		Choice();
+	}
 }
 
 function Choice() {
@@ -113,7 +123,7 @@ function Choice() {
 		default:
 			break;
 	}
-	if(difficulty > 1)
+	if(difficulty == 2)
 	{
 		var other:int = choice;
 		randomStop = 0;
@@ -139,75 +149,57 @@ function Choice() {
 }
 
 function fireCannon1() {
+	var newNut:GameObject;
 	cannon1.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep2;
 	yield WaitForSeconds(length * .1);
 	cannon1.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
-	Instantiate(peanut,cannon1.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut = Instantiate(peanut,cannon1.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut.transform.parent = transform.parent;
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep1;
 	yield WaitForSeconds(.05);
 	if(playerLocation == 1)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(false);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(false);
-		}
-		finished = true;
+		Finish(false);
 	}
 	
 }
 
 function fireCannon2() {
+	var newNut:GameObject;
 	cannon2.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep2;
 	yield WaitForSeconds(length * .1);
 	cannon2.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
-	Instantiate(peanut,cannon2.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut = Instantiate(peanut,cannon2.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut.transform.parent = transform.parent;
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep1;
 	yield WaitForSeconds(.05);
-	if(playerLocation == 2)
+	if(playerLocation == 2 && !finished)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(false);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(false);
-		}
-		finished = true;
+		Finish(false);
 	}
 }
 
 function fireCannon3() {
+	var newNut:GameObject;
 	cannon3.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep2;
 	yield WaitForSeconds(length * .1);
 	cannon3.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
-	Instantiate(peanut,cannon3.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut = Instantiate(peanut,cannon3.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut.transform.parent = transform.parent;
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep1;
 	yield WaitForSeconds(.05);
-	if(playerLocation == 3)
+	if(playerLocation == 3 && !finished)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(false);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(false);
-		}
-		finished = true;
+		Finish(false);
 	}
 }
 
@@ -242,4 +234,16 @@ function SetDestination () {
 		default:
 			break;
 	}
+}
+
+function Finish(completionStatus) {
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
+	}
+	else 
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
+	}
+	finished = true;
 }

@@ -35,6 +35,11 @@ var shuffled:boolean;
 var shuffleCount:int;
 var speedUp:GameObject;
 
+// Game change variables.
+var changeOrder:String;
+var smallAmount:int;
+var largeAmount:int;
+
 function Start () {
 	// Get required variables.
 	controller = Camera.main.GetComponent(Master);
@@ -44,6 +49,11 @@ function Start () {
 	currentGames = controller.selectedWorldGames;
 	UI = Instantiate(controller.selectedWorldUI);
 	speedUp = UI.Find("SpeedUp");
+	
+	// Set game change variables.
+	changeOrder = "DifficultySpeed";
+	smallAmount = 3;
+	largeAmount = 9;
 	
 	// Microgame variables.
 	shuffled = false;
@@ -93,35 +103,58 @@ function BetweenGame () {
 			lives--;
 			yield WaitForSeconds(timeIfSpeedChange);
 		}
-		else if(difficultyProgress > 15) 
-		{
-			difficulty ++;
-			timeMultiplier = 1;
-			UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
-			difficultyProgress = 0;
-			yield WaitForSeconds(timeIfSpeedChange);
-		}
-		else if(speedProgress > 4)
-		{
-			if(speedUp != null)
-			{
-				speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
-			}
-			timeMultiplier ++;
-			speedProgress = 0;
-			yield WaitForSeconds(timeIfSpeedChange);
-		}
-		
-		//Check for Death
-		if(lives > 0)
-		{
-			StartCoroutine(MoveAway());
-			LaunchLevel();
-		}
-		else
+		if(lives <= 0)
 		{
 			StartCoroutine(GameOver());
 		}
+		else 
+		{
+			if(changeOrder == "SpeedDifficulty")
+			{
+				if(difficultyProgress >= largeAmount) 
+				{
+					difficulty ++;
+					timeMultiplier = 1;
+					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
+					difficultyProgress = 0;
+					yield WaitForSeconds(timeIfSpeedChange);
+				}
+				else if(speedProgress >= smallAmount)
+				{
+					if(speedUp != null)
+					{
+						speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
+					}
+					timeMultiplier ++;
+					speedProgress = 0;
+					yield WaitForSeconds(timeIfSpeedChange);
+				}
+			}
+			if(changeOrder == "DifficultySpeed")
+			{
+				if(speedProgress >= largeAmount)
+				{
+					if(speedUp != null)
+					{
+						speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
+					}
+					timeMultiplier ++;
+					difficulty = 1;
+					speedProgress = 0;
+					yield WaitForSeconds(timeIfSpeedChange);
+				}
+				else if(difficultyProgress >= smallAmount) 
+				{
+					difficulty ++;
+					//timeMultiplier = 1;
+					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
+					difficultyProgress = 0;
+					yield WaitForSeconds(timeIfSpeedChange);
+				}
+			}
+		}
+		StartCoroutine(MoveAway());
+		LaunchLevel();
 }
 
 // End game and reset timer.

@@ -26,18 +26,22 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		if(Application.loadedLevelName == "MicroTester")
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(true);
-		}
-		else 
-		{
-			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(true);
-		}
-		finished = true;
+		Finish(true);
 	}
 }
 
 function Play () {
 
+}
+
+function Finish(completionStatus) {
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
+	}
+	else 
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
+	}
+	finished = true;
 }
