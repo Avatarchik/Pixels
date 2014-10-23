@@ -124,7 +124,7 @@ function Clicked () {
 	currentPeanut++;
 }
 
-function Finish(completionStatus) {
+function Finish(completionStatus:boolean) {
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

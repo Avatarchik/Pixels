@@ -4,7 +4,6 @@
 public enum WorldSelect{PackingPeanutFactory,Museum,test3};
 var controller:Master;
 var transition:GameObject;
-var instructions:GameObject;
 
 // Controls time between games
 var timeBeforeResponse:float;
@@ -24,6 +23,9 @@ static var gameNumber:int;
 // UI elements
 var gameCovers:GameObject[];
 var UI:GameObject;
+var instructions:GameObject;
+var controls:GameObject;
+
 
 // Variables for Use
 var currentGames:GameObject[];
@@ -276,6 +278,8 @@ function LaunchLevel () {
 	currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);
 	GameManager.currentGame = currentlyLoaded;
 	Instantiate(instructions);
+	Instantiate(controls,Vector3(-7.3,20,0),Quaternion.identity);
+	Instantiate(controls,Vector3(7.3,20,0),Quaternion.identity);
 	// Shift list of previously loaded levels.
 	for(var x:int = numberAvoid - 1; x > 0; x--)
 	{

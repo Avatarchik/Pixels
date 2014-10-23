@@ -22,6 +22,7 @@ static var gameNumber:int;
 
 var gameCovers:GameObject[];
 var instructions:GameObject;
+var controls:GameObject;
 
 // Lists of Microgames by World
 var game:GameObject;
@@ -195,4 +196,6 @@ function LaunchLevel () {
 	currentlyLoaded = Instantiate(game, Vector3(0,0,5), Quaternion.identity);
 	GameManager.currentGame = currentlyLoaded;
 	Instantiate(instructions);
+	Instantiate(controls,Vector3(-7.3,20,0),Quaternion.identity);
+	Instantiate(controls,Vector3(7.3,20,0),Quaternion.identity);
 }

@@ -43,13 +43,21 @@ function Start () {
 		difficulty = GameManager.difficulty;
 	}
 	
-	length = 3 + 5/speed;
+	length = 3 + 3/speed;
 	timer = length;
 	PlayerManager.speed = .05;
 	Play();
 }
 
 function Update () {
+	if(Input.GetKeyDown("left"))
+	{
+		Left();
+	}
+	if(Input.GetKeyDown("right"))
+	{
+		Right();
+	}
 	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
 	if(Mathf.Abs(player.transform.position.x - target) < .3)
 	{

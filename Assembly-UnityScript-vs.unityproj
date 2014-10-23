@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\MicroGameManager.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Controls.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\DifficultyObject.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameCover.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameNumberObject.js" />
@@ -76,8 +77,10 @@
      <Compile Include="Assets\Scripts\Microgames\MicroGame Template.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\BoxFill.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\ItemCatch.js" />
+     <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\MonsterFeed.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PaperFile.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PeanutCannon.js" />
+     <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PeanutStamp.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ChangeTitleState.js" />
      <Compile Include="Assets\Scripts\TitleScreen\CustomizationButton.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ShowColorSelection.js" />

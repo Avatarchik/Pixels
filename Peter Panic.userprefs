@@ -1,6 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Microgames/Packing Peanut Fatory/MonsterFeed.js">
+    <Files>
+      <File FileName="Assets/Scripts/Microgames/Packing Peanut Fatory/MonsterFeed.js" Line="109" Column="28" />
+      <File FileName="Assets/Scripts/Experimental/MicroTester.js" Line="63" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
