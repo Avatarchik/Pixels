@@ -38,7 +38,7 @@ function Start () {
 	boxes = new GameObject[peanuts.Length + (5 - difficulty)];
 	for(var i:int = 0; i < peanuts.Length; i++)
 	{
-		peanuts[i] = Instantiate(peanutBundlePrefab, injector.transform.position + Vector3(Random.Range(-.2,.3),-3 + (i * 1.3),0), Quaternion.identity);
+		peanuts[i] = Instantiate(peanutBundlePrefab, injector.transform.position + Vector3(Random.Range(-.2,.3),-3 + (i * 1.3),.1), Quaternion.identity);
 		peanuts[i].transform.rotation.eulerAngles.z = 90 * Random.Range(0,4);
 		peanutsTarget[i] = peanuts[i].transform.position.y;
 		peanutsFree[i] = 0;
@@ -52,7 +52,6 @@ function Start () {
 	progress = 0;
 	goal = peanuts.Length;
 	boxSpeed = Time.deltaTime * (speed * 3 + 5);
-	Debug.Log(progress);
 }
 
 function Update () {

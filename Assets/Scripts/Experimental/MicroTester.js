@@ -2,6 +2,8 @@
 
 // Variable Types
 var controller:TestMaster;
+var notification:GameObject;
+var notificationText:String;
 
 // Controls time between games
 var timeBeforeResponse:float;
@@ -31,6 +33,13 @@ var game:GameObject;
 var currentlyLoaded:GameObject;
 var speedUp:GameObject;
 
+// Pausing Variables
+var pausable:boolean;
+var paused:boolean;
+var menu:GameObject;
+var currentMenu:GameObject;
+var fade:Renderer;
+
 function Start () {
 	// Get required variables.
 	controller = Camera.main.GetComponent(TestMaster);
@@ -39,7 +48,7 @@ function Start () {
 	// Microgame variables.
 	if(timeMultiplier == null || timeMultiplier < 7)
 	{
-		timeMultiplier = 3;
+		timeMultiplier = 1;
 	}
 	
 	// Between game variables.
@@ -60,9 +69,12 @@ function Start () {
 		timeIfSpeedChange = .4;
 	}
 	speedProgress = 0;
-	difficulty = 3;
+	difficulty = 1;
 	gameNumber = 1;
-	// Start the pre-game animation.
+	pausable = true;
+	paused = false;
+	fade = Camera.main.GetComponentInChildren(Renderer);
+	// Start the pre-game animation;
 	StartCoroutine(BeforeGames());
 }
 
@@ -72,14 +84,12 @@ function Start () {
 
 function BeforeGames () {
 	yield WaitForSeconds(3);
-	StartCoroutine(MoveAway());
-	LaunchLevel();
+	LaunchLevel(0);
 }
 
 function BetweenGame () {
 		StartCoroutine(MoveBack());
 		yield WaitForSeconds(timeBeforeResponse);
-			
 		// Say "Success" or "Failure."
 		yield WaitForSeconds(timeBeforeSpeedChange);
 		if(failure) 
@@ -106,8 +116,7 @@ function BetweenGame () {
 		}
 		if(lives > 0)
 		{
-			StartCoroutine(MoveAway());
-			LaunchLevel();
+			LaunchLevel(0);
 		}
 		else
 		{
@@ -127,6 +136,7 @@ function GameComplete (success:boolean) {
 		speedProgress = 0;
 		failure = true;
 	}
+	pausable = true;
 	StartCoroutine(BetweenGame());
 }
 
@@ -186,16 +196,40 @@ function MoveBack () {
 ////////////////////// Level Selection Code Code /////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-function LaunchLevel () {
+function LaunchLevel (wait:float) {
+	pausable = false;
 	if(currentlyLoaded != null)
 	{
 		Destroy(currentlyLoaded);
 	}
 	
-	// LAUNCH THE LEVEL HERE
-	currentlyLoaded = Instantiate(game, Vector3(0,0,5), Quaternion.identity);
-	GameManager.currentGame = currentlyLoaded;
-	Instantiate(instructions);
-	Instantiate(controls,Vector3(-7.3,20,0),Quaternion.identity);
-	Instantiate(controls,Vector3(7.3,20,0),Quaternion.identity);
+	if(!paused)
+	{
+		yield WaitForSeconds(wait);
+		// LAUNCH THE LEVEL HERE
+		StartCoroutine(MoveAway());
+		currentlyLoaded = Instantiate(game, Vector3(0,0,5), Quaternion.identity);
+		GameManager.currentGame = currentlyLoaded;
+		yield WaitForSeconds(.05);
+		Instantiate(instructions);
+		Instantiate(controls,Vector3(-7.3,20,0),Quaternion.identity);
+		Instantiate(controls,Vector3(7.3,20,0),Quaternion.identity);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////// Pausing Code ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+function Clicked () {
+	if(pausable && currentMenu == null)
+	{
+		paused = true;
+		fade.material.color.a = .5;
+		currentMenu = Instantiate(menu, Vector3(0,-24,-3),Quaternion.identity);
+	}
+	else
+	{
+		
+	}
 }

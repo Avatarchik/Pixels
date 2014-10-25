@@ -22,6 +22,8 @@ var monsterTimer:float;
 var monsterOrigin:float;
 var monsterShake:float;
 
+var peanutEmitter:GameObject;
+
 var monsterSprites:Sprite[];
 var aimSprites:Sprite[];
 
@@ -53,7 +55,7 @@ function Start () {
 		point.transform.position.y = pointerBottom;
 	}
 	currentLevel = goal;
-	length = 10 + 5/speed;
+	length = 6 - speed;
 	timer = length;
 	for(var point:GameObject in pointer)
 	{
@@ -79,7 +81,7 @@ function Play () {
 	yield WaitForSeconds(.4);
 	while(true)
 	{
-		currentLevel -= Time.deltaTime * (22 + 5 * (speed-1));
+		currentLevel -= Time.deltaTime * (20 + 5 * (speed-1));
 		for(var point:GameObject in pointer)
 		{
 			point.transform.position.y = pointerBottom + (pointerAmount/100) * currentLevel;
@@ -98,7 +100,7 @@ function Play () {
 			monsterShake = .3;
 			monster.GetComponent(SpriteRenderer).sprite = monsterSprites[2];
 		}
-		else if(monsterTimer < 0)
+		else if(monsterTimer < 0 && !finished)
 		{
 			Finish(false);
 		}
@@ -108,6 +110,11 @@ function Play () {
 }
 
 function Clicked() {
+	peanutEmitter.particleSystem.Emit(1);
+	var particleList:ParticleSystem.Particle[] = new ParticleSystem.Particle[peanutEmitter.particleSystem.particleCount];
+	peanutEmitter.particleSystem.GetParticles(particleList);
+	particleList[particleList.Length-1].rotation = Random.Range(0,4) * 90;
+	peanutEmitter.particleSystem.SetParticles(particleList,peanutEmitter.particleSystem.particleCount);
 	currentLevel += 5;
 }
 

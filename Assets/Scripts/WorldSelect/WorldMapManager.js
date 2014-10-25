@@ -17,13 +17,14 @@ var ticket:GameObject;
 var worldTransition:GameObject;
 
 // Menu
-var fade:GameObject;
+var fade:Renderer;
 
 // Locations
 var showNot:Vector3;
 var hideNot:Vector3;
 
 function Start () {
+	fade = Camera.main.GetComponentInChildren(Renderer);
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
 	currentState = MapStatus.Clear;
@@ -41,7 +42,7 @@ function Update () {
 	{
 		case MapStatus.Clear:
 			hideTicket();
-			fade.renderer.material.color.a = Mathf.MoveTowards(fade.renderer.material.color.a, 0, Time.deltaTime);
+			fade.material.color.a = Mathf.MoveTowards(fade.renderer.material.color.a, 0, Time.deltaTime);
 			if(importantFinger == -1)
 			{
 				for(var i:int = 0; i < Finger.identity.length; i++)

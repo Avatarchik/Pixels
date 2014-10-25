@@ -81,7 +81,6 @@ function Start () {
 	}
 	paperPile[0].GetComponent(ObjectMovementManager).allowMovement = true;
 	length = paperPile.Length * (1.2 - speed * .12);
-	Debug.Log(length);
 	timer = length;
 }
 

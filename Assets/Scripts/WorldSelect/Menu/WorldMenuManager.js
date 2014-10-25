@@ -45,7 +45,22 @@ function MenuEffect(clicked:String) {
 	{
 		// From initial menu.
 		case "Continue":
-			WorldMapManager.currentState = MapStatus.Clear;
+			if(Application.loadedLevelName == "MicroTester")
+			{
+				GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).fade.material.color.a = 0;
+				GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).paused = false;
+				GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).LaunchLevel(.3);
+			}
+			else if(Application.loadedLevelName == "MicroGameLauncher")
+			{
+				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).fade.material.color.a = 0;
+				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused = false;
+				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).LaunchLevel(.3);
+			}
+			else if(Application.loadedLevelName == "WorldSelect")
+			{
+				WorldMapManager.currentState = MapStatus.Clear;
+			}
 			Exit();
 			break;
 		case "Options":

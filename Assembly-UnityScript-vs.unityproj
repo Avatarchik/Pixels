@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Experimental\MicroTester.js" />
      <Compile Include="Assets\Scripts\Experimental\TestGame.js" />
      <Compile Include="Assets\Scripts\Experimental\TestMaster.js" />
+     <Compile Include="Assets\Scripts\Experimental\TextController.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\AnimationManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Finger.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Master.js" />
@@ -63,6 +64,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\GyroDetection.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectShake.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ObjectMovementManager.js" />
@@ -74,6 +76,7 @@
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameCover.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameNumberObject.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Instruction.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\UIPause.js" />
      <Compile Include="Assets\Scripts\Microgames\MicroGame Template.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\BoxFill.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\ItemCatch.js" />

@@ -157,15 +157,15 @@ function Choice() {
 }
 
 function fireCannon1() {
-	var newNut:GameObject;
+	var newNut1:GameObject;
 	cannon1.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep2;
 	yield WaitForSeconds(length * .1);
 	cannon1.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
-	newNut = Instantiate(peanut,cannon1.transform.position - Vector3(0,1.8,0),Quaternion.identity);
-	newNut.transform.parent = transform.parent;
+	newNut1 = Instantiate(peanut,cannon1.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut1.transform.parent = transform;
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep1;
 	yield WaitForSeconds(.05);
 	if(playerLocation == 1)
@@ -176,15 +176,15 @@ function fireCannon1() {
 }
 
 function fireCannon2() {
-	var newNut:GameObject;
+	var newNut2:GameObject;
 	cannon2.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep2;
 	yield WaitForSeconds(length * .1);
 	cannon2.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
-	newNut = Instantiate(peanut,cannon2.transform.position - Vector3(0,1.8,0),Quaternion.identity);
-	newNut.transform.parent = transform.parent;
+	newNut2 = Instantiate(peanut,cannon2.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut2.transform.parent = transform;
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep1;
 	yield WaitForSeconds(.05);
 	if(playerLocation == 2 && !finished)
@@ -194,15 +194,15 @@ function fireCannon2() {
 }
 
 function fireCannon3() {
-	var newNut:GameObject;
+	var newNut3:GameObject;
 	cannon3.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep2;
 	yield WaitForSeconds(length * .1);
 	cannon3.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep3;
 	yield WaitForSeconds(length * .1);
-	newNut = Instantiate(peanut,cannon3.transform.position - Vector3(0,1.8,0),Quaternion.identity);
-	newNut.transform.parent = transform.parent;
+	newNut3 = Instantiate(peanut,cannon3.transform.position - Vector3(0,1.8,0),Quaternion.identity);
+	newNut3.transform.parent = transform;
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep1;
 	yield WaitForSeconds(.05);
 	if(playerLocation == 3 && !finished)

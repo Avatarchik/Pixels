@@ -4,6 +4,10 @@
 public enum WorldSelect{PackingPeanutFactory,Museum,test3};
 var controller:Master;
 var transition:GameObject;
+var notification:GameObject;
+var curNotify:GameObject;
+var notified:boolean;
+var notificationText:String;
 
 // Controls time between games
 var timeBeforeResponse:float;
@@ -42,6 +46,13 @@ var changeOrder:String;
 var smallAmount:int;
 var largeAmount:int;
 
+// Pausing Variables
+var pausable:boolean;
+var paused:boolean;
+var menu:GameObject;
+var currentMenu:GameObject;
+var fade:Renderer;
+
 function Start () {
 	// Get required variables.
 	controller = Camera.main.GetComponent(Master);
@@ -63,22 +74,20 @@ function Start () {
 	timeMultiplier = 1;
 	
 	// Between game variables.
-	if(timeBeforeResponse == 0)
-	{
-		timeBeforeResponse = .4;
-	}
-	if(timeBeforeSpeedChange == 0)
-	{
-		timeBeforeSpeedChange = .4;
-	}
-	if(timeIfSpeedChange == 0)
-	{
-		timeIfSpeedChange = .4;
-	}
+	timeBeforeResponse = 1;
+	timeBeforeSpeedChange = 1;
+	timeIfSpeedChange = 3.5;
 	speedProgress = 0;
 	difficultyProgress = 0;
 	difficulty = 1;
 	gameNumber = 1;
+	notified = false;
+	
+	// Pause variables.
+	pausable = true;
+	paused = false;
+	fade = Camera.main.GetComponentInChildren(Renderer);
+	
 	// Start the pre-game animation.
 	StartCoroutine(BeforeGames());
 }
@@ -89,9 +98,8 @@ function Start () {
 
 function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
-	yield WaitForSeconds(3);
-	StartCoroutine(MoveAway());
-	LaunchLevel();
+	yield WaitForSeconds(2);
+	LaunchLevel(0);
 }
 
 function BetweenGame () {
@@ -111,59 +119,15 @@ function BetweenGame () {
 		}
 		else 
 		{
-			if(changeOrder == "SpeedDifficulty")
-			{
-				if(difficultyProgress >= largeAmount) 
-				{
-					difficulty ++;
-					timeMultiplier = 1;
-					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
-					difficultyProgress = 0;
-					yield WaitForSeconds(timeIfSpeedChange);
-				}
-				else if(speedProgress >= smallAmount)
-				{
-					if(speedUp != null)
-					{
-						speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
-					}
-					timeMultiplier ++;
-					speedProgress = 0;
-					yield WaitForSeconds(timeIfSpeedChange);
-				}
-			}
-			if(changeOrder == "DifficultySpeed")
-			{
-				if(speedProgress >= largeAmount)
-				{
-					if(speedUp != null)
-					{
-						speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
-					}
-					timeMultiplier ++;
-					difficulty = 1;
-					speedProgress = 0;
-					yield WaitForSeconds(timeIfSpeedChange);
-				}
-				else if(difficultyProgress >= smallAmount) 
-				{
-					difficulty ++;
-					//timeMultiplier = 1;
-					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
-					difficultyProgress = 0;
-					yield WaitForSeconds(timeIfSpeedChange);
-				}
-			}
+			DifficultSpeedCheck();
 		}
-		StartCoroutine(MoveAway());
-		LaunchLevel();
+		LaunchLevel(0);
 }
 
 // End game and reset timer.
 function GameComplete (success:boolean) {
 	if(success)
 	{
-		Debug.Log(Time.time);
 		failure = false;
 		speedProgress++;
 		difficultyProgress++;
@@ -173,6 +137,7 @@ function GameComplete (success:boolean) {
 	{
 		failure = true;
 	}
+	pausable = true;
 	StartCoroutine(BetweenGame());
 }
 
@@ -231,7 +196,7 @@ function MoveBack () {
 }
 
 //////////////////////////////////////////////////////////////////////////
-////////////////////// Level Selection Code Code /////////////////////////
+//////////////////////// Level Selection Code  ///////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
 function LoadWorld (world:WorldSelect) {
@@ -250,41 +215,144 @@ function LoadWorld (world:WorldSelect) {
 	}
 }
 
-function LaunchLevel () {
+function LaunchLevel (wait:float) {
+	pausable = false;
+	
+	// Delete Level
 	if(currentlyLoaded != null)
 	{
 		Destroy(currentlyLoaded);
 	}
-	// Pick games and check against previous games ten times.
-	while(!shuffled && shuffleCount < 10)
+	if(!paused)
 	{
-		gameToLoad = Random.Range(0, currentGames.Length);
-		for(var y:int = 0; y < numberAvoid; y++)
+		if(notified)
 		{
-			if(gameToLoad == previousGames[y])
-			{
-				shuffled = false;
-				break;
-			}
-			else
-			{
-				shuffled = true;
-			}
+			yield WaitForSeconds(timeIfSpeedChange);
 		}
-		shuffleCount++;
+		notified = false;
+		
+		// Pick games and check against previous games ten times.
+		yield WaitForSeconds(wait);
+		StartCoroutine(MoveAway());
+		GetRandomGame();
+		
+		// Launch level
+		currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);
+		GameManager.currentGame = currentlyLoaded;
+		
+		// Wait for update, show instructions.
+		yield WaitForSeconds(.05);
+		ShowInstructions();
+		
+		// Shift list of previously loaded levels.
+		for(var x:int = numberAvoid - 1; x > 0; x--)
+		{
+			previousGames[x] = previousGames[x-1];
+		}
+		previousGames[0] = gameToLoad;
+		shuffled = false;
 	}
-	shuffleCount = 0;
-	// LAUNCH THE LEVEL HERE
-	currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);
-	GameManager.currentGame = currentlyLoaded;
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////// Pausing Code ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+function Clicked () {
+	if(pausable && currentMenu == null)
+	{
+		paused = true;
+		fade.material.color.a = .5;
+		currentMenu = Instantiate(menu, Vector3(0,-24,-3),Quaternion.identity);
+	}
+	else
+	{
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+///////////////////////// Smaller Functions //////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+function GetRandomGame() {
+	while(!shuffled && shuffleCount < 10)
+		{
+			gameToLoad = Random.Range(0, currentGames.Length);
+			for(var y:int = 0; y < numberAvoid; y++)
+			{
+				if(gameToLoad == previousGames[y])
+				{
+					shuffled = false;
+					break;
+				}
+				else
+				{
+					shuffled = true;
+				}
+			}
+			shuffleCount++;
+		}
+		shuffleCount = 0;
+}
+
+function ShowInstructions() {
 	Instantiate(instructions);
 	Instantiate(controls,Vector3(-7.3,20,0),Quaternion.identity);
 	Instantiate(controls,Vector3(7.3,20,0),Quaternion.identity);
-	// Shift list of previously loaded levels.
-	for(var x:int = numberAvoid - 1; x > 0; x--)
-	{
-		previousGames[x] = previousGames[x-1];
-	}
-	previousGames[0] = gameToLoad;
-	shuffled = false;
+}
+
+function Notify(text:String) {
+	notificationText = text;
+	curNotify = Instantiate(notification);
+	curNotify.transform.position.z = -9;
+}
+
+function DifficultSpeedCheck() {
+	if(changeOrder == "SpeedDifficulty")
+			{
+				if(difficultyProgress >= largeAmount) 
+				{
+					difficulty ++;
+					Notify("Difficulty Up!");
+					timeMultiplier = 1;
+					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
+					difficultyProgress = 0;
+					notified = true;
+				}
+				else if(speedProgress >= smallAmount)
+				{
+					if(speedUp != null)
+					{
+						speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
+					}
+					timeMultiplier ++;
+					Notify("Speed Up!");
+					speedProgress = 0;
+					notified = true;
+				}
+			}
+			if(changeOrder == "DifficultySpeed")
+			{
+				if(speedProgress >= largeAmount)
+				{
+					if(speedUp != null)
+					{
+						speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
+					}
+					timeMultiplier ++;
+					Notify("Speed Up!");
+					difficulty = 1;
+					speedProgress = 0;
+					notified = true;
+				}
+				else if(difficultyProgress >= smallAmount) 
+				{
+					difficulty ++;
+					Notify("Difficulty Up!");
+					//timeMultiplier = 1;
+					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
+					difficultyProgress = 0;
+					notified = true;
+				}
+			}
 }

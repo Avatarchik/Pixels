@@ -20,6 +20,7 @@ var controller:Master;
 function Clicked () {
 	switch(newState)
 	{
+		
 		case MapStatus.Menu:
 			if(WorldMapManager.currentState == MapStatus.Clear && menu != null && currentMenu == null)
 			{

@@ -18,7 +18,10 @@ var children:GameObject[];
 function Start () {
 	transform.position.y = 20;
 	origin = transform.position.y;
-	gameControl = GameObject.FindGameObjectWithTag("MicroGame").GetComponent(MicroGameManager).controls;
+	if(GameObject.FindGameObjectWithTag("MicroGame") != null)
+	{
+		gameControl = GameObject.FindGameObjectWithTag("MicroGame").GetComponent(MicroGameManager).controls;
+	}
 	switch(gameControl)
 	{
 		case MiniGameControlType.Tap:
