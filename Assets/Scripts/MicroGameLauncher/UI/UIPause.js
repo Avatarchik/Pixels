@@ -7,6 +7,10 @@ function Clicked() {
 	}
 	else 
 	{
+		if(GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).loadedText!=null)
+		{
+			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).loadedText.GetComponent(TextManager).NextLine();
+		}
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).Clicked();
 	}
 }

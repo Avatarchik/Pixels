@@ -8,6 +8,8 @@ var selectedWorldGames:GameObject[];
 var selectedWorldCovers:GameObject[];
 var selectedWorldColors:Color[];
 var selectedWorldUI:GameObject;
+var selectedWorldOpeningText:GameObject;
+var selectedWorldEndingText:GameObject;
 
 var initialWorldSpeed:int;
 var speedIncrease:int;
@@ -36,6 +38,19 @@ function Update () {
 }
 
 function Initialize () {
+	// World unlock variables.
+	if(!PlayerPrefs.HasKey("PackingPeanutFactory"))
+	{
+		PlayerPrefs.SetInt("PackingPeanutFactory", 1);
+	}
+	if(!PlayerPrefs.HasKey("Museum"))
+	{
+		PlayerPrefs.SetInt("Museum", 0);
+	}
+	if(!PlayerPrefs.HasKey("Theater"))
+	{
+		PlayerPrefs.SetInt("Theater", 0);
+	}
 	if(!PlayerPrefs.HasKey("Sound"))
 	{
 		PlayerPrefs.SetInt("Sound", 1);

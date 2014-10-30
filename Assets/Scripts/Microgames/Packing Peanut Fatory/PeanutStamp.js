@@ -57,7 +57,7 @@ function Start () {
 			}
 		}
 		platforms[i] = Instantiate(platformPrefab, transform.position - Vector3(10 + ((i * 12) + speed * 2),3.4,2), Quaternion.identity);
-		object[i] = Instantiate(objectPrefab[newValue], transform.position - Vector3(10 + ((i * 12) + speed * 2),.4,2), Quaternion.identity);
+		object[i] = Instantiate(objectPrefab[newValue], transform.position - Vector3(10 + ((i * 12) + speed * 2),.4,1.8), Quaternion.identity);
 		object[i].transform.parent = platforms[i].transform;
 		objectValues[i] = newValue;
 	}

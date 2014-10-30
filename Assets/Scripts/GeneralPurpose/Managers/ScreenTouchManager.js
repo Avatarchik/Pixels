@@ -9,6 +9,8 @@ var touchType:ScreenTouchType;
 var origin:Vector3;
 
 // Determine if movement is from the origin or relative to an object.
+var relativeToDistance:boolean;
+var relativeDistance:float;
 var relativeToObject:boolean;
 var relativeObject:GameObject;
 
@@ -55,9 +57,15 @@ function Update () {
 					{
 						for(var y:int = 0; y < message.length; y++)
 						{
-							message[y].SendMessage("Left");
+							message[y].SendMessage("Left", SendMessageOptions.DontRequireReceiver);
 						}
 					}
+					
+					if(relativeToDistance && Mathf.Abs(Finger.GetPosition(importantFinger).x - origin.x) > relativeDistance)
+					{
+						SendMessage("Left", SendMessageOptions.DontRequireReceiver);
+					}
+					
 				}
 				if(Finger.GetPosition(importantFinger).x > origin.x && !done)
 				{
@@ -71,6 +79,10 @@ function Update () {
 						{
 							message[z].SendMessage("Right");
 						}
+					}
+					if(relativeToDistance && Mathf.Abs(Finger.GetPosition(importantFinger).x - origin.x) > relativeDistance)
+					{
+						SendMessage("Right", SendMessageOptions.DontRequireReceiver);
 					}
 				}	
 				if(!continuous)

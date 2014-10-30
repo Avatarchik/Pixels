@@ -10,7 +10,6 @@ var timeBeforeResponse:float;
 var timeBeforeSpeedChange:float;
 var timeIfSpeedChange:float;
 
-
 // Game variables.
 static var timeMultiplier:float;
 static var speedProgress:int;
@@ -22,6 +21,7 @@ static var currentGame:GameObject;
 static var lives:int;
 static var gameNumber:int;
 
+// Prefabs
 var gameCovers:GameObject[];
 var instructions:GameObject;
 var controls:GameObject;
@@ -39,6 +39,10 @@ var paused:boolean;
 var menu:GameObject;
 var currentMenu:GameObject;
 var fade:Renderer;
+
+// "Cutscene" variables
+var openingText:GameObject;
+var loadedText:GameObject;
 
 function Start () {
 	// Get required variables.
@@ -83,8 +87,16 @@ function Start () {
 //////////////////////////////////////////////////////////////////////////
 
 function BeforeGames () {
-	yield WaitForSeconds(3);
+	/*
+	loadedText = Instantiate(openingText);
+	while(!loadedText.GetComponent(TextManager).finished)
+	{
+		yield;
+	}
+	yield WaitForSeconds(2);
+	*/
 	LaunchLevel(0);
+	yield;
 }
 
 function BetweenGame () {

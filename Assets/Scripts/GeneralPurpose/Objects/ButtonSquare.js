@@ -4,6 +4,8 @@
 var importantFinger:int;
 var button:Bounds;
 var startPosition:Vector3;
+var continuous:boolean = false;
+var location:Vector2;
 
 var down:Sprite;
 var up:Sprite;
@@ -39,6 +41,11 @@ function Update () {
 	}
 	else if(Finger.GetExists(importantFinger))
 	{
+		location = Finger.GetPosition(importantFinger);
+		if(continuous)
+		{
+			gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+		}
 		if(!button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{
 			if(up!=null && GetComponent(SpriteRenderer)!=null)

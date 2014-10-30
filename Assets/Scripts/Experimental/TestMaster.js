@@ -6,6 +6,7 @@ var speedIncrease:int;
 var lives:int;
 
 function Awake () {
+	Screen.SetResolution(30,240, true);
 	DontDestroyOnLoad(gameObject);
 }
 

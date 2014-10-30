@@ -6,15 +6,26 @@ var newState:MapStatus;
 static var currentMenu:GameObject;
 
 var thisWorld:WorldSelect;
+var thisWorldDisplay:GameObject[];
 var worldNameFull:String;
+var worldNameVar:String;
 var worldNameLine1:String;
 var worldNameLine2:String;
 var thisWorldGames:GameObject[];
 var thisWorldCovers:GameObject[];
 var thisWorldColors:Color[];
 var thisWorldUI:GameObject;
+var thisWorldOpeningText:GameObject;
+var thisWorldClosingText:GameObject;
 
 var controller:Master;
+
+function Start () {
+	if(thisWorldDisplay.Length == 2)
+	{
+		thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)].SetActive(false);
+	}
+}
 
 
 function Clicked () {
@@ -41,18 +52,23 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
-			controller = Camera.main.GetComponent(Master);
-			controller.selectedWorld = thisWorld;
-			controller.worldNameFull = worldNameFull;
-			controller.worldNameLine1 = worldNameLine1;
-			controller.worldNameLine2 = worldNameLine2;
-			controller.selectedWorldGames = thisWorldGames;
-			controller.selectedWorldCovers = thisWorldCovers;
-			controller.selectedWorldColors = thisWorldColors;
-			controller.selectedWorldUI = thisWorldUI;
-			if(WorldMapManager.currentState == MapStatus.Clear)
+			if(PlayerPrefs.GetInt(worldNameVar) == 1)
 			{
-				WorldMapManager.currentState = MapStatus.Confirmation;
+				controller = Camera.main.GetComponent(Master);
+				controller.selectedWorld = thisWorld;
+				controller.worldNameFull = worldNameFull;
+				controller.worldNameLine1 = worldNameLine1;
+				controller.worldNameLine2 = worldNameLine2;
+				controller.selectedWorldGames = thisWorldGames;
+				controller.selectedWorldCovers = thisWorldCovers;
+				controller.selectedWorldColors = thisWorldColors;
+				controller.selectedWorldUI = thisWorldUI;
+				controller.selectedWorldOpeningText = thisWorldOpeningText;
+				controller.selectedWorldEndingText = thisWorldClosingText;
+				if(WorldMapManager.currentState == MapStatus.Clear)
+				{
+					WorldMapManager.currentState = MapStatus.Confirmation;
+				}
 			}
 			break;
 		default:

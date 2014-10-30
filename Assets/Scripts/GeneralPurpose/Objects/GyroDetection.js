@@ -50,6 +50,10 @@ function DetectGyro () {
 		{
 			rotation = Vector3(rotation.y,rotation.x,rotation.z);
 		}
+		if(initialRotation == DeviceOrientation.FaceUp)
+		{
+			rotation = Vector3(rotation.z,rotation.y,rotation.z);
+		}
 		switch(Input.deviceOrientation)
 		{
 			case DeviceOrientation.Portrait:
@@ -70,6 +74,9 @@ function DetectGyro () {
 				rotation *= -1;
 				//rotation.y *= -1;
 				//rotation.z *= -1;
+				break;
+			case DeviceOrientation.FaceUp:
+				
 				break;
 			default:
 				break;

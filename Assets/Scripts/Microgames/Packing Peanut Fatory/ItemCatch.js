@@ -12,6 +12,8 @@ var length:float;
 var timer:float;
 var newPosition:float;
 
+var button:ButtonSquare;
+
 function Awake () {
 	GyroDetection.delay = .3;
 	GyroDetection.automatic = true;
@@ -32,6 +34,7 @@ function Start () {
 	length = 3 + 5/speed;
 	timer = length;
 	newPosition = 0;
+	button = GetComponent(ButtonSquare);
 	StartCoroutine(Deployment());
 }
 
@@ -69,16 +72,23 @@ function Update () {
 			}
 		}
 	}
-	newPosition = GyroDetection.rotation.x;
-	if(newPosition > 20)
+	//newPosition = GyroDetection.rotation.x;
+	if(button.importantFinger!=-1)
 	{
-		newPosition = 20;
+		if(Vector2.Distance(button.location,crate.transform.position) < 5)
+		{
+			newPosition = button.location.x;
+		}
 	}
-	if(newPosition < -20)
+	if(newPosition > 7)
 	{
-		newPosition = -20;
+		newPosition = 7;
 	}
-	crate.transform.position.x = newPosition / 3.3;
+	if(newPosition < -7)
+	{
+		newPosition = -7;
+	}
+	crate.transform.position.x = newPosition / 1;
 }
 
 // Create object.
