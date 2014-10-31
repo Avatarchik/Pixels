@@ -160,7 +160,7 @@ function IncreaseLetters () {
 		}
 		else
 		{
-			yield WaitForSeconds(.5);
+			yield WaitForSeconds(.4);
 		}
 		NextLine();
 	}
@@ -231,4 +231,8 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 		finalStrings.Push(text);
 		return finalStrings;
 	}
+}
+
+function Clicked () {
+	numberOfLetters = currentDialogue[current].ToString().Length;
 }

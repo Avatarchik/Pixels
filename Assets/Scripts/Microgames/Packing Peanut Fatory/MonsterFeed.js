@@ -61,6 +61,7 @@ function Start () {
 	{
 		point.transform.position.y = pointerBottom + (pointerAmount/100) * currentLevel;
 	}
+	
 	StartCoroutine(MonsterShake());
 	StartCoroutine(Play());
 }
@@ -104,6 +105,8 @@ function Play () {
 		{
 			Finish(false);
 		}
+		aimAmount.transform.localScale.y = currentLevel * .01 * aimAmountComplete - .01;
+		Debug.Log((currentLevel * .01));
 		yield;
 	}
 	yield;

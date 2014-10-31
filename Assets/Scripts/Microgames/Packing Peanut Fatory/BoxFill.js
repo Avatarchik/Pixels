@@ -67,7 +67,7 @@ function Update () {
 		}
 		else if(peanutsFree[i] == 1)
 		{
-			peanuts[i].transform.position.y -= Time.deltaTime * 15;
+			peanuts[i].transform.position.y -= Time.deltaTime * 22;
 		}
 		else if(peanutsFree[i] == 2)
 		{

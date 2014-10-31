@@ -52,9 +52,11 @@ var instructions:GameObject;
 //@Group("UI Elements")
 var controls:GameObject;
 //@Group("UI Elements")
-var speedHolder:GameObject;
+var speedHolderHorizontal:GameObject;
+var speedHolderVertical:GameObject;
 //@Group("UI Elements")
-var speedObjects:GameObject[];
+var speedObjectsHorizontal:GameObject[];
+var speedObjectsVertical:GameObject[];
 
 // Variables for Use
 //@Group("Variables For Use")
@@ -110,9 +112,12 @@ function Start () {
 	UI = Instantiate(controller.selectedWorldUI);
 	openingText = controller.selectedWorldOpeningText;
 	endingText = controller.selectedWorldEndingText;
-	speedHolder = UI.Find("SpeedUps");
-	speedObjects = speedHolder.GetComponent(SpeedHolder).speedSprites;
-	speedObjects[0].SetActive(true);
+	speedHolderHorizontal = UI.Find("SpeedUpsHorizontal");
+	speedHolderVertical = UI.Find("SpeedUpsVertical");
+	speedObjectsHorizontal = speedHolderHorizontal.GetComponent(SpeedHolder).speedSprites;
+	speedObjectsHorizontal[0].SetActive(true);
+	speedObjectsVertical = speedHolderVertical.GetComponent(SpeedHolder).speedSprites;
+	speedObjectsVertical[0].SetActive(true);
 	
 	// Set game change variables.
 	changeOrder = "DifficultySpeed";
@@ -125,8 +130,8 @@ function Start () {
 	timeMultiplier = 1;
 	
 	// Between game variables.
-	timeBeforeResponse = 1.5;
-	timeBeforeSpeedChange = 1.5;
+	timeBeforeResponse = 1;
+	timeBeforeSpeedChange = 1;
 	timeIfSpeedChange = 3.5;
 	speedProgress = 0;
 	difficultyProgress = 0;
@@ -385,7 +390,8 @@ function DifficultSpeedCheck() {
 				}
 				else if(speedProgress >= smallAmount)
 				{
-					speedObjects[timeMultiplier].SetActive(true);
+					speedObjectsHorizontal[timeMultiplier].SetActive(true);
+					speedObjectsVertical[timeMultiplier].SetActive(true);
 					timeMultiplier ++;
 					Notify("Speed\nUp!");
 					speedProgress = 0;
@@ -396,7 +402,8 @@ function DifficultSpeedCheck() {
 			{
 				if(speedProgress >= largeAmount)
 				{
-					speedObjects[timeMultiplier].SetActive(true);
+					speedObjectsHorizontal[timeMultiplier].SetActive(true);
+					speedObjectsVertical[timeMultiplier].SetActive(true);
 					timeMultiplier ++;
 					Notify("Speed\nUp!");
 					difficulty = 1;
