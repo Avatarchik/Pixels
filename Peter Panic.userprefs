@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Microgames/Packing Peanut Fatory/BoxFill.js">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../DearMomDearDad/Assets/Scripts/Managers/ScreenTouchManager.js">
     <Files>
-      <File FileName="Assets/Scripts/Microgames/Packing Peanut Fatory/BoxFill.js" Line="70" Column="58" />
+      <File FileName="../DearMomDearDad/Assets/Scripts/Movement/CameraMovement.js" Line="25" Column="75" />
+      <File FileName="../DearMomDearDad/Assets/Scripts/Movement/CharacterMovement.js" Line="10" Column="2" />
+      <File FileName="../DearMomDearDad/Assets/Scripts/Managers/TextManager.js" Line="21" Column="43" />
+      <File FileName="../DearMomDearDad/Assets/Scripts/Managers/ScreenTouchManager.js" Line="64" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

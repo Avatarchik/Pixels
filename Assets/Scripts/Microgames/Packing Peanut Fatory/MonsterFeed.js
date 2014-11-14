@@ -106,7 +106,6 @@ function Play () {
 			Finish(false);
 		}
 		aimAmount.transform.localScale.y = currentLevel * .01 * aimAmountComplete - .01;
-		Debug.Log((currentLevel * .01));
 		yield;
 	}
 	yield;

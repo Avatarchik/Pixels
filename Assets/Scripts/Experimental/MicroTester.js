@@ -28,13 +28,14 @@ var controls:GameObject;
 
 // Lists of Microgames by World
 var game:GameObject;
+var gameInstructions:MicroGameManager;
 
 // Variables for Use
 var currentlyLoaded:GameObject;
 var speedUp:GameObject;
 
 // Pausing Variables
-var pausable:boolean;
+static var pausable:boolean;
 var paused:boolean;
 var menu:GameObject;
 var currentMenu:GameObject;
@@ -110,7 +111,6 @@ function BetweenGame () {
 			{
 				timeMultiplier -= speedChange;
 			}
-			//lives--;
 			yield WaitForSeconds(timeIfSpeedChange);
 		}
 		else if(speedProgress > 4)

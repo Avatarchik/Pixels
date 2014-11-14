@@ -56,11 +56,6 @@
      <Compile Include="Assets\Scripts\Experimental\MicroTester.js" />
      <Compile Include="Assets\Scripts\Experimental\TestGame.js" />
      <Compile Include="Assets\Scripts\Experimental\TestMaster.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\GetSetJS.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\GetSetVJS.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\GroupJS.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\HovertipJS.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\TooltipJS.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\AnimationManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Finger.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Master.js" />
@@ -104,12 +99,7 @@
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />
-     <None Include="Assets\Plugins\readme.txt" />
      <None Include="Assets\Art\Materials\3DText.shader" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{B5764861-4F08-C8C2-FAE0-DE6CE69DCF9F}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

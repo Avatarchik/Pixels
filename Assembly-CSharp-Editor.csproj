@@ -48,15 +48,12 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Editor\PimpMyEditorInspector2.cs" />
      <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Editor\PimpMyEditorInspectorGroup.cs" />
-     <None Include="Assets\Plugins\readme.txt" />
      <None Include="Assets\Art\Materials\3DText.shader" />
  <Reference Include="UnityEditor.Graphs">
  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{B5764861-4F08-C8C2-FAE0-DE6CE69DCF9F}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{CF37E974-03F8-D499-65B9-D95F497726FA}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-Boo.booproj">

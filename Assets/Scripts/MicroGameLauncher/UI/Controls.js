@@ -20,7 +20,7 @@ function Start () {
 	origin = transform.position.y;
 	if(GameObject.FindGameObjectWithTag("MicroGame") != null)
 	{
-		gameControl = GameObject.FindGameObjectWithTag("MicroGame").GetComponent(MicroGameManager).controls;
+		//gameControl = GameObject.FindGameObjectWithTag("MicroGame").GetComponent(MicroGameManager).controls;
 	}
 	switch(gameControl)
 	{

@@ -7,9 +7,17 @@ var target:float;
 var children:GameObject[];
 
 function Start () {
+	Debug.Log("hey");
 	transform.position.y = 20;
 	origin = transform.position.y;
-	text = GameObject.FindGameObjectWithTag("MicroGame").GetComponent(MicroGameManager).instruction;
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		text = GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).game.GetComponent(MicroGameManager).instruction;
+	}
+	else 
+	{
+		text = GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).currentGames[GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).gameToLoad].GetComponent(MicroGameManager).instruction;
+	}
 	for(var i:int = 0; i < children.Length; i++)
 	{
 		children[i].GetComponent(TextMesh).text = text;
@@ -24,6 +32,20 @@ function MoveTo(){
 		yield;
 	}
 	yield WaitForSeconds(.2);
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		while(MicroTester.pausable)
+		{
+			yield;
+		}
+	}
+	else
+	{
+		while(GameManager.pausable)
+		{
+			yield;
+		}
+	}
 	MoveBack();
 	yield;
 }

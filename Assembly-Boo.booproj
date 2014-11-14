@@ -51,12 +51,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\GroupBOO.boo" />
      <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\HovertipBOO.boo" />
      <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Plugins\TooltipBOO.boo" />
-     <None Include="Assets\Plugins\readme.txt" />
      <None Include="Assets\Art\Materials\3DText.shader" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{B5764861-4F08-C8C2-FAE0-DE6CE69DCF9F}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

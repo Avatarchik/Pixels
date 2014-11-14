@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Editor\PimpMyEditorInspector2.cs" />
      <Compile Include="Assets\Scripts\GeneralPurpose\EditorGroups\Editor\PimpMyEditorInspectorGroup.cs" />
-     <None Include="Assets\Plugins\readme.txt" />
      <None Include="Assets\Art\Materials\3DText.shader" />
  <Reference Include="Assembly-Boo">
  <HintPath>/Users/jamesmarionair/GameProjects/Peter Panic/Library/ScriptAssemblies/Assembly-Boo.dll</HintPath>
@@ -61,8 +60,6 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{B5764861-4F08-C8C2-FAE0-DE6CE69DCF9F}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp-vs.csproj">
       <Project>{CF37E974-03F8-D499-65B9-D95F497726FA}</Project>      <Name>Assembly-CSharp-vs</Name>    </ProjectReference>
   </ItemGroup>
