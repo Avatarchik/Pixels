@@ -15,6 +15,7 @@ var speed:int;
 var difficulty:int;
 
 var playerLocation:int;
+var playerManager:PlayerManager;
 var target:int;
 var length:float;
 var timer:float;
@@ -26,6 +27,7 @@ function Start () {
 	player.transform.localScale = Vector3(3,3,3);
 	player.transform.parent = transform;
 	player.transform.localPosition.z = -.1;
+	playerManager = player.GetComponent(PlayerManager);
 	GetComponent(ScreenTouchManager).relativeObject = player;
 	finished = false;
 	playerLocation = 2;
@@ -61,19 +63,19 @@ function Update () {
 	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
 	if(Mathf.Abs(player.transform.position.x - target) < .3)
 	{
-		PlayerManager.currentState = PlayerState.StandingBack;
+		playerManager.currentState = PlayerState.StandingBack;
 	}
 	else if(player.transform.position.x > target)
 	{
-		PlayerManager.currentState = PlayerState.WalkingLeft;
+		playerManager.currentState = PlayerState.WalkingLeft;
 	}
 	else if(player.transform.position.x < target)
 	{
-		PlayerManager.currentState = PlayerState.WalkingRight;
+		playerManager.currentState = PlayerState.WalkingRight;
 	}
 	else
 	{
-		PlayerManager.currentState = PlayerState.StandingBack;
+		playerManager.currentState = PlayerState.StandingBack;
 	}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)

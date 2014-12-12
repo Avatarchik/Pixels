@@ -7,7 +7,17 @@ var walkSpriteSide:Sprite[];
 
 var waitTime:float;
 
+var playerManager:PlayerManager;
+
 function Start () {
+	if(gameObject.tag == "Player")
+	{
+		playerManager = GetComponent(PlayerManager);
+	}
+	else
+	{
+		playerManager = transform.parent.GetComponent(PlayerManager);
+	}
 	StartCoroutine(Move());
 }
 
@@ -15,7 +25,7 @@ function Move() {
 	while(true)
 	{
 		waitTime = PlayerManager.speed;
-		switch(PlayerManager.currentState)
+		switch(playerManager.currentState)
 		{
 			case PlayerState.StandingFront:
 				transform.localScale.x = Mathf.Abs(transform.localScale.x);

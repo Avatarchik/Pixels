@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification};
+public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification, Returning};
 
 static var currentState:MapStatus;
 static var mapMove:boolean;
@@ -29,6 +29,7 @@ function Start () {
 	hideNot = Vector3(0,30,-1);
 	currentState = MapStatus.Clear;
 	bound = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x, transform.lossyScale.y, 2));
+	bound = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(60,60,2));
 	importantFinger = -1;
 	mapMove = false;
 	if(mapMoveSpeed == 0 || mapMoveSpeed == null)
@@ -93,7 +94,7 @@ function Update () {
 				}
 				if(transform.position.y + (cameraVelocity.y * mapMoveSpeed) - bound.extents.y < -9 && transform.position.y + (cameraVelocity.y * mapMoveSpeed) + bound.extents.y > 9)
 				{
-					transform.position.y += cameraVelocity.y * mapMoveSpeed;
+					//transform.position.y += cameraVelocity.y * mapMoveSpeed;
 				}
 			}
 			else
@@ -104,7 +105,7 @@ function Update () {
 				}
 				if(transform.position.y + (cameraVelocity.y * mapMoveSpeed) - bound.extents.y < -16 && transform.position.y + (cameraVelocity.y * mapMoveSpeed) + bound.extents.y > 16)
 				{
-					transform.position.y += cameraVelocity.y * mapMoveSpeed;
+					//transform.position.y += cameraVelocity.y * mapMoveSpeed;
 				}
 			}
 			
@@ -133,6 +134,9 @@ function Update () {
 			break;
 		case MapStatus.Menu:
 			fade.renderer.material.color.a = Mathf.MoveTowards(fade.renderer.material.color.a, .4, Time.deltaTime);
+			break;
+		case MapStatus.Returning:
+			fade.renderer.material.color.a = Mathf.MoveTowards(fade.renderer.material.color.a, 0, Time.deltaTime);
 			break;
 		default:
 			break;

@@ -8,8 +8,12 @@ var colors1:GameObject;
 var colors2:GameObject;
 var returnButton:GameObject;
 
+var flats:GameObject[];
+var currentFlat:GameObject;
+
 function Start () {
 	currentState = TitleStatus.Home;
+	StartCoroutine(FlatMovement());
 }	
 
 function Update () {
@@ -21,40 +25,21 @@ function Update () {
 			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
 			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
-			
-			/*
-			transform.position = Vector2.MoveTowards(transform.position, Vector2(0,0),speed * 2);
-			returnButton.transform.position = Vector2.MoveTowards(returnButton.transform.position, Vector2(-7,22),speed * 2);
-			colors1.transform.position = Vector2.MoveTowards(colors1.transform.position, Vector2(0,-20),speed * 2);
-			colors2.transform.position = Vector2.MoveTowards(colors2.transform.position, Vector2(22,0),speed * 2);
-			*/
 			break;
 		case TitleStatus.CustomizeNoColor:
 			transform.position = Vector2.Lerp(transform.position, Vector2(0,25),speed);
 			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14),speed);
 			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
-			/*
-			transform.position = Vector2.MoveTowards(transform.position, Vector2(0,0),speed * 2);
-			returnButton.transform.position = Vector2.MoveTowards(returnButton.transform.position, Vector2(-7,22),speed * 2);
-			colors1.transform.position = Vector2.MoveTowards(colors1.transform.position, Vector2(0,-20),speed * 2);
-			colors2.transform.position = Vector2.MoveTowards(colors2.transform.position, Vector2(22,0),speed * 2);
-			*/
 			break;
 		case TitleStatus.CustomizeColor:
 			transform.position = Vector2.Lerp(transform.position, Vector2(0,25),speed);
 			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14),speed);
 			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-12.5),speed);
 			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(12.4,-1),speed);
-			/*
-			transform.position = Vector2.MoveTowards(transform.position, Vector2(0,0),speed * 2);
-			returnButton.transform.position = Vector2.MoveTowards(returnButton.transform.position, Vector2(-7,22),speed * 2);
-			colors1.transform.position = Vector2.MoveTowards(colors1.transform.position, Vector2(0,-20),speed * 2);
-			colors2.transform.position = Vector2.MoveTowards(colors2.transform.position, Vector2(22,0),speed * 2);
-			*/
 			break;
 		case TitleStatus.Options:
-			transform.position = Vector2.Lerp(transform.position, Vector2(-24,0),speed);
+			transform.position = Vector2.Lerp(transform.position, Vector2(-30,0),speed);
 			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
 			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
@@ -62,4 +47,34 @@ function Update () {
 		default:
 			break;
 	}
+}
+
+function FlatMovement () {
+	var goal:float;
+	while(true && flats.Length != 0)
+	{
+		while(currentFlat == null && currentState != TitleStatus.CustomizeColor && currentState != TitleStatus.CustomizeColor)
+		{
+			goal = Random.Range(0,2);
+			if(goal == 0)
+			{
+				goal = -1;
+			}
+			yield WaitForSeconds(Random.Range(4,8));
+			currentFlat = Instantiate(flats[Random.Range(0,flats.Length)], Vector3(transform.position.x + -16.7 * goal,transform.position.y - 4.95 + (.15 * Random.Range(-3,6)),3),Quaternion.identity);
+			currentFlat.transform.parent = transform;
+			yield;
+		}
+		while(currentFlat != null)
+		{
+			currentFlat.transform.position.x += Time.deltaTime * 4 * goal;
+			if(currentFlat.transform.position.x > transform.position.x + 16.7 || currentFlat.transform.position.x < transform.position.x - 16.7)
+			{
+				Destroy(currentFlat);
+			}
+			yield;
+		}
+	yield;
+	}
+	yield;
 }

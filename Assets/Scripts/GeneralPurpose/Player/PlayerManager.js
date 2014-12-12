@@ -2,7 +2,7 @@
 
 // Current position of the player.
 public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight}
-static var currentState:PlayerState;
+var currentState:PlayerState;
 static var speed:float;
 
 // Arrays with different types of sprites.

@@ -33,7 +33,7 @@ function Start () {
 }
 
 function Update () {
-	if(WorldMapManager.currentState == MapStatus.Clear)
+	if(WorldMapManager.currentState == MapStatus.Returning)
 	{
 		//StartCoroutine(Exit());
 	}
@@ -131,8 +131,12 @@ function UpdateNamesUp () {
 		if(option[i] != null && option[i] != "")
 		{	
 			button[i] = Instantiate(buttonPrefab, transform.position + Vector3(0,3.8 - i * 2.9,-.01), Quaternion.identity);
-			button[i].GetComponent(WorldMenuButton).SetText(option[i]);
+			if(Application.loadedLevelName != "TitleScreen")
+			{
+				button[i].transform.localScale = Vector3(5.625,5.625,5.625);
+			}
 			button[i].transform.parent = transform;
+			button[i].GetComponent(WorldMenuButton).SetText(option[i]);
 			if(option[3] == "")
 			{
 				button[i].transform.position.y -= .8 + i/3;
@@ -166,6 +170,7 @@ function UpdateNamesDown () {
 		if(option[i] != null && option[i] != "")
 		{	
 			button[i] = Instantiate(buttonPrefab, transform.position + Vector3(0,3.8 - i * 2.9,0), Quaternion.identity);
+			
 			button[i].GetComponent(WorldMenuButton).SetText(option[i]);
 			button[i].transform.parent = transform;
 			if(option[3] == "")
@@ -200,6 +205,7 @@ function Exit () {
 }
 
 function ReturnToTitle() {
+		WorldMapManager.currentState = MapStatus.Returning;
 		Camera.main.GetComponent(Master).selectedWorldColors = transitionColors;
 		Camera.main.GetComponent(Master).worldNameFull = "";
 		Camera.main.GetComponent(Master).worldNameLine1 = "";

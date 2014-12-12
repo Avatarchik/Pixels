@@ -10,7 +10,15 @@ var location:Vector2;
 var down:Sprite;
 var up:Sprite;
 
+var subText:GameObject;
+var textOrigin:Vector3;
+var textOffset:Vector3;
+
 function Start () {
+	if(subText != null)
+	{
+		textOrigin = subText.transform.localPosition;
+	}
 	// Reset important finger, create bounding box.
 	importantFinger = -1;
 	button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x, transform.lossyScale.y, 2));
@@ -33,6 +41,10 @@ function Update () {
 					if(down!=null && GetComponent(SpriteRenderer)!=null)
 					{
 						GetComponent(SpriteRenderer).sprite = down;
+						if(subText != null)
+						{
+							subText.transform.localPosition = textOrigin - textOffset;
+						}
 					}
 					break;
 				}
@@ -51,6 +63,10 @@ function Update () {
 			if(up!=null && GetComponent(SpriteRenderer)!=null)
 			{
 				GetComponent(SpriteRenderer).sprite = up;
+				if(subText != null)
+				{
+					subText.transform.localPosition = textOrigin;
+				}
 			}
 		}
 	}
@@ -65,6 +81,10 @@ function Update () {
 			if(up!=null && GetComponent(SpriteRenderer)!=null)
 			{
 				GetComponent(SpriteRenderer).sprite = up;
+				if(subText != null)
+				{
+					subText.transform.localPosition = textOrigin;
+				}
 			}
 		}
 		importantFinger = -1;

@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_5_5;UNITY_4_5;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_0;UNITY_4_6;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -61,12 +61,14 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Master.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\ScreenTouchManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\TextManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonRectangle.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\GyroDetection.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectShake.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ObjectMovementManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
@@ -89,7 +91,9 @@
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PeanutStamp.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ChangeTitleState.js" />
      <Compile Include="Assets\Scripts\TitleScreen\CustomizationButton.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Logo.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ShowColorSelection.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\StageHand.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StartGame.js" />
      <Compile Include="Assets\Scripts\TitleScreen\TitleManager.js" />
      <Compile Include="Assets\Scripts\TitleScreen\UndoCustomizationChanges.js" />
@@ -100,6 +104,9 @@
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />
      <None Include="Assets\Art\Materials\3DText.shader" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

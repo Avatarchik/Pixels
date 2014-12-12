@@ -6,7 +6,7 @@ var newState:MapStatus;
 static var currentMenu:GameObject;
 
 var thisWorld:WorldSelect;
-var thisWorldDisplay:GameObject[];
+var thisWorldDisplay:Sprite[];
 var worldNameFull:String;
 var worldNameVar:String;
 var worldNameLine1:String;
@@ -23,7 +23,7 @@ var controller:Master;
 function Start () {
 	if(thisWorldDisplay.Length == 2)
 	{
-		thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)].SetActive(false);
+		GetComponent(SpriteRenderer).sprite = thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)];
 	}
 }
 
