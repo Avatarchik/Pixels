@@ -16,7 +16,7 @@ var timeIfSpeedChange:float;
 var timeBeforeLevelLoad:float;
 
 // Game variables.
-static var timeMultiplier:float;
+static var speed:float;
 static var speedProgress:int;
 static var difficultyProgress:int;
 static var difficulty:int;
@@ -29,10 +29,6 @@ static var gameNumber:int;
 var gameCovers:GameObject[];
 var UI:GameObject;
 var instructions:GameObject;
-var speedHolderHorizontal:GameObject;
-var speedHolderVertical:GameObject;
-var speedObjectsHorizontal:GameObject[];
-var speedObjectsVertical:GameObject[];
 
 // Variables for Use
 var currentGames:GameObject[];
@@ -42,11 +38,6 @@ var previousGames:int[];
 var gameToLoad:int;
 var shuffled:boolean;
 var shuffleCount:int;
-
-// Non-permanent
-var failSprite:Sprite;
-var sucSprite:Sprite;
-var defSprite:Sprite;
 
 // Game change variables.
 var changeOrder:String;
@@ -76,13 +67,6 @@ function Start () {
 	openingText = controller.selectedWorldOpeningText;
 	endingText = controller.selectedWorldEndingText;
 	
-	// Speed objects.
-	speedHolderHorizontal = UI.Find("SpeedUpsHorizontal");
-	speedHolderVertical = UI.Find("SpeedUpsVertical");
-	speedObjectsHorizontal = speedHolderHorizontal.GetComponent(SpeedHolder).speedSprites;
-	speedObjectsHorizontal[0].SetActive(true);
-	speedObjectsVertical = speedHolderVertical.GetComponent(SpeedHolder).speedSprites;
-	speedObjectsVertical[0].SetActive(true);
 	
 	// Set game change variables.
 	changeOrder = "DifficultySpeed";
@@ -92,7 +76,7 @@ function Start () {
 	// Microgame variables.
 	shuffled = false;
 	shuffleCount = 0;
-	timeMultiplier = 1;
+	speed = 1;
 	
 	// Between game variables.
 	timeBeforeSuccessNotification = 1;
@@ -120,6 +104,7 @@ function Start () {
 
 function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
+	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	yield WaitForSeconds (1);
 	loadedText = Instantiate(openingText);
 	// Wait for the text to finish.
@@ -138,11 +123,13 @@ function BetweenGame () {
 	// Say "Success" or "Failure."
 	if(failure) 
 	{
+		UI.BroadcastMessage("NotifySuccess", false,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Failure");
 		lives--;
 	}
 	else
 	{
+		UI.BroadcastMessage("NotifySuccess", true,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Success");
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
@@ -342,16 +329,13 @@ function DifficultSpeedCheck() {
 				{
 					difficulty ++;
 					Notify("Difficulty\nUp!");
-					timeMultiplier = 1;
-					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
+					speed = 1;
 					difficultyProgress = 0;
 					notified = true;
 				}
 				else if(speedProgress >= smallAmount)
 				{
-					speedObjectsHorizontal[timeMultiplier].SetActive(true);
-					speedObjectsVertical[timeMultiplier].SetActive(true);
-					timeMultiplier ++;
+					speed ++;
 					Notify("Speed\nUp!");
 					speedProgress = 0;
 					notified = true;
@@ -361,24 +345,22 @@ function DifficultSpeedCheck() {
 			{
 				if(speedProgress >= largeAmount)
 				{
-					speedObjectsHorizontal[timeMultiplier].SetActive(true);
-					speedObjectsVertical[timeMultiplier].SetActive(true);
-					timeMultiplier ++;
-					Notify("Speed\nUp!");
+					speed ++;
 					difficulty = 1;
 					speedProgress = 0;
+					Notify("Speed\nUp!");
 					notified = true;
 				}
 				else if(difficultyProgress >= smallAmount) 
 				{
 					difficulty ++;
-					Notify("Difficulty\nUp!");
-					//timeMultiplier = 1;
-					UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
 					difficultyProgress = 0;
+					Notify("Difficulty\nUp!");
 					notified = true;
 				}
 			}
+			UI.BroadcastMessage("SpeedChange", speed,SendMessageOptions.DontRequireReceiver);
+			UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
 }
 
 function BroadcastArray(array:GameObject[],message:String,input:String){

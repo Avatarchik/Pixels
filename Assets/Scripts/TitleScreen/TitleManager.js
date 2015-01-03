@@ -27,13 +27,13 @@ function Update () {
 			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
 			break;
 		case TitleStatus.CustomizeNoColor:
-			transform.position = Vector2.Lerp(transform.position, Vector2(0,25),speed);
+			transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
 			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14),speed);
 			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
 			break;
 		case TitleStatus.CustomizeColor:
-			transform.position = Vector2.Lerp(transform.position, Vector2(0,25),speed);
+			transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
 			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14),speed);
 			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-12.5),speed);
 			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(12.4,-1),speed);

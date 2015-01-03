@@ -5,5 +5,5 @@ function Start () {
 }
 
 function Update () {
-	GetComponent(TextMesh).text = "GSpeed: " + GameManager.timeMultiplier;
+	GetComponent(TextMesh).text = "GSpeed: " + GameManager.speed;
 }

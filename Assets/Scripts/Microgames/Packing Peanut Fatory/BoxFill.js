@@ -28,7 +28,7 @@ function Start () {
 	}
 	else
 	{
-		speed = GameManager.timeMultiplier;
+		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
 	peanuts = new GameObject[2 + (difficulty * 2)];

@@ -38,7 +38,7 @@ function Start () {
 	}
 	else
 	{
-		speed = GameManager.timeMultiplier;
+		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
 	platforms = new GameObject[2 + (difficulty * 2)];

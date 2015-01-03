@@ -1,6 +1,11 @@
 ﻿#pragma strict
 
 var dialogue:String[];
+var leftSprites:Sprite[];
+var rightSprites:Sprite[];
+var currentSpeaker:boolean[];
+var spriteObjects:GameObject[];
+
 var targetTimes:float[];
 var textTypeSpeed:float = 1;
 var automatic:boolean;
@@ -23,7 +28,6 @@ function Start () {
 	finished = false;
 	while(transform.position.x < -7.74)
 	{
-		//transform.position.x = Mathf.Lerp(transform.position.x,-7,Time.deltaTime*1);
 		transform.position.x = Mathf.MoveTowards(transform.position.x,-7.74,Time.deltaTime*30);
 		yield;
 	}
@@ -40,11 +44,16 @@ function Start () {
 	{
 		Destroy(gameObject);
 	}
+	UpdateSprites(dialogueMarker);
 	StartCoroutine(UpdateSet());
 }
 
+function Update () {
+	Debug.Log(dialogueMarker);
+}
+
 // Updates the shown text. This should be edited if the TextMesh object is not attached to the same
-// object as this script, or if 
+// object as this script.
 function UpdateSet () {
 	while(true)
 	{
@@ -69,6 +78,25 @@ function UpdateSet () {
 	yield;
 }
 
+function UpdateSprites(number:int) {
+	if(leftSprites.Length >= dialogueMarker && rightSprites.Length >= dialogueMarker && spriteObjects.Length == 2 && currentSpeaker.Length >= dialogueMarker)
+	{
+		spriteObjects[0].GetComponent(SpriteRenderer).sprite == leftSprites[number];
+		spriteObjects[1].GetComponent(SpriteRenderer).sprite == rightSprites[number];
+		if(currentSpeaker[number])
+		{
+			spriteObjects[1].transform.position = Vector2(0,0);
+			spriteObjects[0].transform.position = Vector2(0,0);
+		}
+		else
+		{
+			spriteObjects[1].transform.position = Vector2(0,0);
+			spriteObjects[0].transform.position = Vector2(0,0);
+		}
+	}
+	
+}
+
 // This function causes the lines of dialogue to progress, first from one "screen" to the next and then
 // from one line to the next. If "automatic" is selected, this will happen at the end of every line as
 // part of the IncreaseLetters() function.
@@ -85,6 +113,7 @@ function NextLine () {
 		numberOfLetters = 0;
 		dialogueMarker++;
 		currentDialogue = BoxCut(dialogue[dialogueMarker],numberOfLines);
+		UpdateSprites(dialogueMarker);
 		IncreaseLetters();
 	}
 	else if(dialogueMarker == dialogue.Length-1)

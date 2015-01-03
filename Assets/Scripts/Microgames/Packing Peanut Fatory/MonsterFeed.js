@@ -35,7 +35,7 @@ function Start () {
 	}
 	else
 	{
-		speed = GameManager.timeMultiplier;
+		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
 	
