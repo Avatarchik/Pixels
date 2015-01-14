@@ -1,9 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/UI/SuccessNotificationSpriteChanger.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
     <Files>
-      <File FileName="Assets/Scripts/MicroGameLauncher/UI/SuccessNotificationSpriteChanger.js" Line="15" Column="24" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/GameManager.js" Line="126" Column="45" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="33" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

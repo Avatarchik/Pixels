@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+static var initialLoad:boolean;
+
 var selectedWorld:WorldSelect;
 var worldNameFull:String;
 var worldNameLine1:String;
@@ -17,6 +19,7 @@ var lives:int;
 var worldColors:Color[];
 
 function Awake () {
+	initialLoad = true;
 	Application.targetFrameRate = 60;
 	DontDestroyOnLoad(gameObject);
 	Initialize();

@@ -56,7 +56,9 @@
      <Compile Include="Assets\Scripts\Experimental\MicroTester.js" />
      <Compile Include="Assets\Scripts\Experimental\TestGame.js" />
      <Compile Include="Assets\Scripts\Experimental\TestMaster.js" />
+     <Compile Include="Assets\Scripts\Experimental\WorldMapManagerBackup.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\AnimationManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Audio.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Finger.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Master.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\ScreenTouchManager.js" />
@@ -64,12 +66,13 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonRectangle.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\GyroDetection.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectLoop.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectMovementManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectShake.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\SpriteRotate.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\Player\ObjectMovementManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
@@ -103,7 +106,9 @@
      <Compile Include="Assets\Scripts\WorldSelect\Menu\ChangeColor.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\SmokeStack.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\WorldMapVisualsManager.js" />
      <None Include="Assets\Art\Materials\3DText.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>

@@ -1,5 +1,8 @@
 ﻿#pragma strict
 
+// Audio
+var transitionToTitle:AudioClip;
+
 var option:String[] = new String[4];
 var button:GameObject[] = new GameObject[4];
 var buttonPrefab:GameObject;
@@ -211,6 +214,19 @@ function ReturnToTitle() {
 		Camera.main.GetComponent(Master).worldNameLine1 = "";
 		Camera.main.GetComponent(Master).worldNameLine2 = "";
 		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
-		yield WaitForSeconds(2);
-		Application.LoadLevel("TitleScreen");
+		if(Application.loadedLevelName == "WorldSelect")
+		{
+			Audio.PlaySoundTransition(transitionToTitle);
+		}
+		yield WaitForSeconds(.7);
+		Audio.StopSong();
+		yield WaitForSeconds(1);
+		if(Application.loadedLevelName == "WorldSelect")
+		{
+			Application.LoadLevel("TitleScreen");
+		}
+		else
+		{
+			Application.LoadLevel("WorldSelect");
+		}
 }

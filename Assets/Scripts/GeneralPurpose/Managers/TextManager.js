@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
 var dialogue:String[];
-var leftSprites:Sprite[];
-var rightSprites:Sprite[];
+var leftSprites:GameObject[];
+var rightSprites:GameObject[];
 var currentSpeaker:boolean[];
 var spriteObjects:GameObject[];
 
@@ -22,6 +22,7 @@ var numberOfLetters:int;
 var current:int;
 
 function Start () {
+	spriteObjects = new GameObject[leftSprites.length];
 	dialogueMarker = 0;
 	numberOfLetters = 0;
 	current = 0;
@@ -49,7 +50,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(dialogueMarker);
 }
 
 // Updates the shown text. This should be edited if the TextMesh object is not attached to the same
@@ -79,20 +79,25 @@ function UpdateSet () {
 }
 
 function UpdateSprites(number:int) {
+	
 	if(leftSprites.Length >= dialogueMarker && rightSprites.Length >= dialogueMarker && spriteObjects.Length == 2 && currentSpeaker.Length >= dialogueMarker)
 	{
-		spriteObjects[0].GetComponent(SpriteRenderer).sprite == leftSprites[number];
-		spriteObjects[1].GetComponent(SpriteRenderer).sprite == rightSprites[number];
+		Destroy(spriteObjects[0]);
+		Destroy(spriteObjects[1]);
+		spriteObjects[0] = Instantiate(leftSprites[number]);
+		spriteObjects[1] = Instantiate(rightSprites[number]);
 		if(currentSpeaker[number])
 		{
-			spriteObjects[1].transform.position = Vector2(0,0);
-			spriteObjects[0].transform.position = Vector2(0,0);
+			spriteObjects[0].transform.position = Vector3(-4.5,0,-.2);
+			spriteObjects[1].transform.position = Vector3(4.5,.3,-.2);
 		}
 		else
 		{
-			spriteObjects[1].transform.position = Vector2(0,0);
-			spriteObjects[0].transform.position = Vector2(0,0);
+			spriteObjects[0].transform.position = Vector3(-4.5,.3,-.2);
+			spriteObjects[1].transform.position = Vector3(4.5,0,-.2);
 		}
+		spriteObjects[0].transform.parent = transform;
+		spriteObjects[1].transform.parent = transform;
 	}
 	
 }

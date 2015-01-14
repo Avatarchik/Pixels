@@ -53,7 +53,7 @@ function Start () {
 	// Microgame variables.
 	if(timeMultiplier == null || timeMultiplier < 7)
 	{
-		timeMultiplier = 1;
+		timeMultiplier = 2;
 	}
 	
 	// Between game variables.
@@ -73,8 +73,8 @@ function Start () {
 	{
 		timeIfSpeedChange = .4;
 	}
-	speedProgress = 0;
-	difficulty = 1;
+	speedProgress = 2;
+	difficulty = 3;
 	gameNumber = 1;
 	pausable = true;
 	paused = false;

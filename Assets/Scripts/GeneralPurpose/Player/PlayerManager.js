@@ -11,6 +11,11 @@ var eyes:GameObject[];
 var tops:GameObject[];
 var bottoms:GameObject[];
 
+private var hairAvailability:boolean[];
+private var eyesAvailability:boolean[];
+private var topsAvailability:boolean[];
+private var bottomsAvailability:boolean[];
+
 // Arrays with possible colors;
 var hairColor:Color[];
 var eyesColor:Color[];
@@ -26,6 +31,9 @@ var currentBottom:GameObject;
 var save:int[];
 
 function Start () {	
+	UpdateAvailability();
+	UnlockAllOptions();
+	UpdateAvailability();
 	// Instantiates and colors all paper doll sprites, scales them correctly, and parents them to the player.
 	currentHair = Instantiate(hair[PlayerPrefs.GetInt("HairSelection")],transform.position-Vector3(0,0,.08),Quaternion.identity);
 		currentHair.transform.localScale = transform.lossyScale;
@@ -43,11 +51,11 @@ function Start () {
 		currentBottom.transform.localScale = transform.lossyScale;
 		currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
 		currentBottom.transform.parent = transform;
-		
 		Save();
 }
 
 function Update () {
+	
 	if(Input.GetKeyDown("up"))
 	{
 		currentState = PlayerState.WalkingBack;
@@ -87,19 +95,19 @@ function ChangePart(part:String, change:int) {
 	{
 		case "hair":
 			PlayerPrefs.SetInt("HairSelection",PlayerPrefs.GetInt("HairSelection")+change);
-			Refresh("hair");
+			Refresh("hair",change);
 			break;
 		case "eyes":
 			PlayerPrefs.SetInt("EyesSelection",PlayerPrefs.GetInt("EyesSelection")+change);
-			Refresh("eyes");
+			Refresh("eyes",change);
 			break;
 		case "top":
 			PlayerPrefs.SetInt("TopSelection",PlayerPrefs.GetInt("TopSelection")+change);
-			Refresh("top");
+			Refresh("top",change);
 			break;
 		case "bottom":
 			PlayerPrefs.SetInt("BottomSelection",PlayerPrefs.GetInt("BottomSelection")+change);
-			Refresh("bottom");
+			Refresh("bottom",change);
 			break;
 		default:
 			break;
@@ -131,11 +139,14 @@ function ChangeColor(part:String, color:int) {
 }
 
 function Refresh(part:String) {
+	Refresh(part,0);
+}
+function Refresh(part:String, change:int) {
 	switch(part)
 	{
 		case "hair":
 			Destroy(currentHair);
-			if(PlayerPrefs.GetInt("HairSelection") == hair.Length)
+			if(PlayerPrefs.GetInt("HairSelection") >= hair.Length)
 			{
 				PlayerPrefs.SetInt("HairSelection", 0);
 			}
@@ -147,10 +158,14 @@ function Refresh(part:String) {
 			currentHair.transform.localScale = transform.localScale;
 			currentHair.GetComponent(SpriteRenderer).color = hairColor[PlayerPrefs.GetInt("HairColor")];
 			currentHair.transform.parent = transform;
+			if(hairAvailability[PlayerPrefs.GetInt("HairSelection")]==false)
+			{
+				ChangePart("hair",change);
+			}
 			break;
 		case "eyes":
 			Destroy(currentEyes);
-			if(PlayerPrefs.GetInt("EyesSelection") == eyes.Length)
+			if(PlayerPrefs.GetInt("EyesSelection") >= eyes.Length)
 			{
 				PlayerPrefs.SetInt("EyesSelection", 0);
 			}
@@ -162,10 +177,14 @@ function Refresh(part:String) {
 			currentEyes.transform.localScale = transform.localScale;
 			currentEyes.GetComponent(SpriteRenderer).color = eyesColor[PlayerPrefs.GetInt("EyesColor")];
 			currentEyes.transform.parent = transform;
+			if(eyesAvailability[PlayerPrefs.GetInt("EyesSelection")]==false)
+			{
+				ChangePart("eyes",change);
+			}
 			break;
 		case "top":
 			Destroy(currentTop);
-			if(PlayerPrefs.GetInt("TopSelection") == tops.Length)
+			if(PlayerPrefs.GetInt("TopSelection") >= tops.Length)
 			{
 				PlayerPrefs.SetInt("TopSelection", 0);
 			}
@@ -177,10 +196,14 @@ function Refresh(part:String) {
 			currentTop.transform.localScale = transform.localScale;
 			currentTop.GetComponent(SpriteRenderer).color = topsColor[PlayerPrefs.GetInt("TopColor")];
 			currentTop.transform.parent = transform;
+			if(topsAvailability[PlayerPrefs.GetInt("TopSelection")]==false)
+			{
+				ChangePart("top",change);
+			}
 			break;
 		case "bottom":
 			Destroy(currentBottom);
-			if(PlayerPrefs.GetInt("BottomSelection") == bottoms.Length)
+			if(PlayerPrefs.GetInt("BottomSelection") >= bottoms.Length)
 			{
 				PlayerPrefs.SetInt("BottomSelection", 0);
 			}
@@ -192,6 +215,10 @@ function Refresh(part:String) {
 			currentBottom.transform.localScale = transform.localScale;
 			currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
 			currentBottom.transform.parent = transform;
+			if(bottomsAvailability[PlayerPrefs.GetInt("BottomSelection")]==false)
+			{
+				ChangePart("bottom",change);
+			}
 			break;
 	}
 }
@@ -201,18 +228,141 @@ function Save () {
 }
 
 function Revert () {
-			PlayerPrefs.SetInt("HairSelection",save[0]);
-			PlayerPrefs.SetInt("EyesSelection",save[1]);
-			PlayerPrefs.SetInt("TopSelection",save[2]);
-			PlayerPrefs.SetInt("BottomSelection",save[3]);
-			
-			PlayerPrefs.SetInt("HairColor",save[4]);
-			PlayerPrefs.SetInt("EyesColor",save[5]);
-			PlayerPrefs.SetInt("TopColor",save[6]);
-			PlayerPrefs.SetInt("BottomColor",save[7]);
-			
-			Refresh("hair");
-			Refresh("eyes");
-			Refresh("top");
-			Refresh("bottom");
+	PlayerPrefs.SetInt("HairSelection",save[0]);
+	PlayerPrefs.SetInt("EyesSelection",save[1]);
+	PlayerPrefs.SetInt("TopSelection",save[2]);
+	PlayerPrefs.SetInt("BottomSelection",save[3]);
+	
+	PlayerPrefs.SetInt("HairColor",save[4]);
+	PlayerPrefs.SetInt("EyesColor",save[5]);
+	PlayerPrefs.SetInt("TopColor",save[6]);
+	PlayerPrefs.SetInt("BottomColor",save[7]);
+	
+	Refresh("hair");
+	Refresh("eyes");
+	Refresh("top");
+	Refresh("bottom");
+}
+
+public function UpdateAvailability () {
+	hairAvailability = new boolean[hair.length + 1];
+	eyesAvailability = new boolean[eyes.length + 1];
+	topsAvailability = new boolean[tops.length + 1];
+	bottomsAvailability = new boolean[bottoms.length + 1];
+	for(var hairPiece:GameObject in hair)
+	{
+		if(!PlayerPrefs.HasKey("Hair:"+hairPiece.transform.name))
+		{
+			PlayerPrefs.SetInt("Hair:"+hairPiece.transform.name,0);
+		}
+	}
+	for(var eyesPiece:GameObject in eyes)
+	{
+		if(!PlayerPrefs.HasKey("Eyes:"+eyesPiece.transform.name))
+		{
+			PlayerPrefs.SetInt("Eyes:"+eyesPiece.transform.name,0);
+		}
+	}
+	for(var topsPiece:GameObject in tops)
+	{
+		if(!PlayerPrefs.HasKey("Tops:"+topsPiece.transform.name))
+		{
+			PlayerPrefs.SetInt("Tops:"+topsPiece.transform.name,0);
+		}
+	}
+	for(var bottomsPiece:GameObject in bottoms)
+	{
+		if(!PlayerPrefs.HasKey("Bottoms:"+bottomsPiece.transform.name))
+		{
+			PlayerPrefs.SetInt("Bottoms:"+bottomsPiece.transform.name,0);
+		}
+	}
+	PlayerPrefs.SetInt("Hair:"+hair[0].transform.name,1);
+	PlayerPrefs.SetInt("Eyes:"+eyes[0].transform.name,1);
+	PlayerPrefs.SetInt("Tops:"+tops[0].transform.name,1);
+	PlayerPrefs.SetInt("Bottoms:"+bottoms[0].transform.name,1);
+	for(var hairCheck:int = 0; hairCheck < hair.length; hairCheck++)
+	{
+		if(PlayerPrefs.GetInt("Hair:"+hair[hairCheck].transform.name) == 0)
+		{
+			hairAvailability[hairCheck] = false;
+		}
+		else
+		{
+			hairAvailability[hairCheck] = true;
+		}
+	}
+	for(var eyesCheck:int = 0; eyesCheck < eyes.length; eyesCheck++)
+	{
+		if(PlayerPrefs.GetInt("Eyes:"+eyes[eyesCheck].transform.name) == 0)
+		{
+			eyesAvailability[eyesCheck] = false;
+		}
+		else
+		{
+			eyesAvailability[eyesCheck] = true;
+		}
+	}
+	for(var topsCheck:int = 0; topsCheck < tops.length; topsCheck++)
+	{
+		if(PlayerPrefs.GetInt("Tops:"+tops[topsCheck].transform.name) == 0)
+		{
+			topsAvailability[topsCheck] = false;
+		}
+		else
+		{
+			topsAvailability[topsCheck] = true;
+		}
+	}
+	for(var bottomsCheck:int = 0; bottomsCheck < bottoms.length; bottomsCheck++)
+	{
+		if(PlayerPrefs.GetInt("Bottoms:"+bottoms[bottomsCheck].transform.name) == 0)
+		{
+			bottomsAvailability[bottomsCheck] = false;
+		}
+		else
+		{
+			bottomsAvailability[bottomsCheck] = true;
+		}
+	}
+}
+function UnlockAllOptions () {
+	for(var hairPiece:GameObject in hair)
+	{
+		PlayerPrefs.SetInt("Hair:"+hairPiece.transform.name,1);
+	}
+	for(var eyesPiece:GameObject in eyes)
+	{
+		PlayerPrefs.SetInt("Eyes:"+eyesPiece.transform.name,1);
+	}
+	for(var topsPiece:GameObject in tops)
+	{
+		PlayerPrefs.SetInt("Tops:"+topsPiece.transform.name,1);
+	}
+	for(var bottomsPiece:GameObject in bottoms)
+	{
+		PlayerPrefs.SetInt("Bottoms:"+bottomsPiece.transform.name,1);
+	}
+}
+function LockAllOptions () {
+	for(var hairPiece:GameObject in hair)
+	{
+		PlayerPrefs.SetInt("Hair:"+hairPiece.transform.name,0);
+	}
+	for(var eyesPiece:GameObject in eyes)
+	{
+		PlayerPrefs.SetInt("Eyes:"+eyesPiece.transform.name,0);
+	}
+	for(var topsPiece:GameObject in tops)
+	{
+		PlayerPrefs.SetInt("Tops:"+topsPiece.transform.name,0);
+	}
+	for(var bottomsPiece:GameObject in bottoms)
+	{
+		PlayerPrefs.SetInt("Bottoms:"+bottomsPiece.transform.name,0);
+	}
+	PlayerPrefs.SetInt("Hair:"+hair[0].transform.name,1);
+	PlayerPrefs.SetInt("Eyes:"+eyes[0].transform.name,1);
+	PlayerPrefs.SetInt("Tops:"+tops[0].transform.name,1);
+	PlayerPrefs.SetInt("Bottoms:"+bottoms[0].transform.name,1);
 }

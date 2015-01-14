@@ -6,6 +6,7 @@ var button:Bounds;
 var startPosition:Vector3;
 var continuous:boolean = false;
 var location:Vector2;
+var boundMultiplier:float = 1;
 
 var down:Sprite;
 var up:Sprite;

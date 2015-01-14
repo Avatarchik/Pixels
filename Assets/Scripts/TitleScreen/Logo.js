@@ -22,7 +22,14 @@ function Appear () {
 		yield;
 	}
 	StartCoroutine(Shake(10, Vector2(0,.03)));
-	yield WaitForSeconds(1.3);
+	if(Master.initialLoad)
+	{
+		yield WaitForSeconds(1.4);
+	}
+	else
+	{
+		yield WaitForSeconds(2.5);
+	}
 	StartCoroutine(Shake(10, Vector2(0.01,.01)));
 	GetComponent(SpriteRenderer).sprite = logo;
 	yield;

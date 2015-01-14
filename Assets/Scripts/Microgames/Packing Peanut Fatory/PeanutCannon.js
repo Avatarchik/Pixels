@@ -61,22 +61,22 @@ function Update () {
 		Right();
 	}
 	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
-	if(Mathf.Abs(player.transform.position.x - target) < .3)
-	{
-		playerManager.currentState = PlayerState.StandingBack;
-	}
-	else if(player.transform.position.x > target)
-	{
-		playerManager.currentState = PlayerState.WalkingLeft;
-	}
-	else if(player.transform.position.x < target)
-	{
-		playerManager.currentState = PlayerState.WalkingRight;
-	}
-	else
-	{
-		playerManager.currentState = PlayerState.StandingBack;
-	}
+		if(Mathf.Abs(player.transform.position.x - target) < .3)
+		{
+			playerManager.currentState = PlayerState.StandingBack;
+		}
+		else if(player.transform.position.x > target)
+		{
+			playerManager.currentState = PlayerState.WalkingLeft;
+		}
+		else if(player.transform.position.x < target)
+		{
+			playerManager.currentState = PlayerState.WalkingRight;
+		}
+		else
+		{
+			playerManager.currentState = PlayerState.StandingBack;
+		}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{

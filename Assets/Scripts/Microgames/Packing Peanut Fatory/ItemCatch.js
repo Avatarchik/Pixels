@@ -14,11 +14,6 @@ var newPosition:float;
 
 var button:ButtonSquare;
 
-function Awake () {
-	GyroDetection.delay = .3;
-	GyroDetection.automatic = true;
-}
-
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
 	{
