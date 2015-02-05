@@ -7,7 +7,6 @@ var target:float;
 var children:GameObject[];
 
 function Start () {
-	Debug.Log("hey");
 	transform.position.y = 20;
 	origin = transform.position.y;
 	if(Application.loadedLevelName == "MicroTester")

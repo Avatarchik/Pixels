@@ -54,6 +54,7 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("Theater", 0);
 	}
+	// Options variables.
 	if(!PlayerPrefs.HasKey("Sound"))
 	{
 		PlayerPrefs.SetInt("Sound", 1);
@@ -62,6 +63,7 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("Music", 1);
 	}
+	// Character selection variables.
 	if(!PlayerPrefs.HasKey("HairSelection"))
 	{
 		PlayerPrefs.SetInt("HairSelection", 0);
@@ -93,5 +95,55 @@ function Initialize () {
 	if(!PlayerPrefs.HasKey("BottomColor"))
 	{
 		PlayerPrefs.SetInt("BottomColor", 0);
+	}
+	// Theater Theater selection variables.
+	if(!PlayerPrefs.HasKey("StageWallSelection"))
+	{
+		PlayerPrefs.SetInt("StageWallSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("StageFloorSelection"))
+	{
+		PlayerPrefs.SetInt("StageFloorSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("CeilingSelection"))
+	{
+		PlayerPrefs.SetInt("CeilingSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("TheaterWallSelection"))
+	{
+		PlayerPrefs.SetInt("TheaterWallSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("TheaterFloorSelection"))
+	{
+		PlayerPrefs.SetInt("TheaterFloorSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("CurtainSelection"))
+	{
+		PlayerPrefs.SetInt("CurtainSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("ChairsSelection"))
+	{
+		PlayerPrefs.SetInt("ChairsSelection", 0);
+	}
+	// Theater FOH selection variables.
+	if(!PlayerPrefs.HasKey("FOHWallSelection"))
+	{
+		PlayerPrefs.SetInt("FOHWallSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("FOHFloorSelection"))
+	{
+		PlayerPrefs.SetInt("FOHFloorSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("FOHBoozeSelection"))
+	{
+		PlayerPrefs.SetInt("FOHBoozeSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("FOHTicketBoothSelection"))
+	{
+		PlayerPrefs.SetInt("FOHTicketBoothSelection", 0);
+	}
+	if(!PlayerPrefs.HasKey("FOHDeskSelection"))
+	{
+		PlayerPrefs.SetInt("FOHDeskSelection", 0);
 	}
 }

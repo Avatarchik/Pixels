@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum TitleStatus{Home,CustomizeNoColor ,CustomizeColor,Options};
+public enum TitleStatus{Home,CustomizeNoColor,CustomizeColor,Options};
 
 static var currentState:TitleStatus;
 

@@ -7,22 +7,24 @@ var clearSprite:Sprite;
 var successSprite:Sprite;
 var failureSprite:Sprite;
 
+var displayObject:SpriteRenderer;
+
 function DisplayChange (status:String) { 
-	if(GetComponentInChildren(SpriteRenderer)!= null)
+	if(displayObject != null)
 	{
 		switch(status)
 		{
 			case "Clear":
-				GetComponentInChildren(SpriteRenderer).sprite = clearSprite;
+				displayObject.sprite = clearSprite;
 				break;
 			case "Success":
-				GetComponentInChildren(SpriteRenderer).sprite = successSprite;
+				displayObject.sprite = successSprite;
 				break;
 			case "Failure":
-				GetComponentInChildren(SpriteRenderer).sprite = failureSprite;
+				displayObject.sprite = failureSprite;
 				break;
 			case "Controls":
-				GetComponentInChildren(SpriteRenderer).sprite = GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).currentGames[GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).gameToLoad].GetComponent(MicroGameManager).controls;
+				displayObject.sprite = GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).currentGames[GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).gameToLoad].GetComponent(MicroGameManager).controls;
 				break;
 		}
 	}

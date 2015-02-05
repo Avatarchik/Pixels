@@ -11,6 +11,7 @@ var eyes:GameObject[];
 var tops:GameObject[];
 var bottoms:GameObject[];
 
+// Arrays with availabilities.
 private var hairAvailability:boolean[];
 private var eyesAvailability:boolean[];
 private var topsAvailability:boolean[];
@@ -51,43 +52,10 @@ function Start () {
 		currentBottom.transform.localScale = transform.lossyScale;
 		currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
 		currentBottom.transform.parent = transform;
-		Save();
+	Save();
 }
 
 function Update () {
-	
-	if(Input.GetKeyDown("up"))
-	{
-		currentState = PlayerState.WalkingBack;
-	}
-	if(Input.GetKeyUp("up"))
-	{
-		currentState = PlayerState.StandingBack;
-	}
-	if(Input.GetKeyDown("down"))
-	{
-		currentState = PlayerState.WalkingFront;
-	}
-	if(Input.GetKeyUp("down"))
-	{
-		currentState = PlayerState.StandingFront;
-	}
-	if(Input.GetKeyDown("left"))
-	{
-		currentState = PlayerState.WalkingLeft;
-	}
-	if(Input.GetKeyUp("left"))
-	{
-		currentState = PlayerState.StandingLeft;
-	}
-	if(Input.GetKeyDown("right"))
-	{
-		currentState = PlayerState.WalkingRight;
-	}
-	if(Input.GetKeyUp("right"))
-	{
-		currentState = PlayerState.StandingRight;
-	}
 }
 
 function ChangePart(part:String, change:int) {
@@ -95,23 +63,20 @@ function ChangePart(part:String, change:int) {
 	{
 		case "hair":
 			PlayerPrefs.SetInt("HairSelection",PlayerPrefs.GetInt("HairSelection")+change);
-			Refresh("hair",change);
 			break;
 		case "eyes":
 			PlayerPrefs.SetInt("EyesSelection",PlayerPrefs.GetInt("EyesSelection")+change);
-			Refresh("eyes",change);
 			break;
 		case "top":
 			PlayerPrefs.SetInt("TopSelection",PlayerPrefs.GetInt("TopSelection")+change);
-			Refresh("top",change);
 			break;
 		case "bottom":
 			PlayerPrefs.SetInt("BottomSelection",PlayerPrefs.GetInt("BottomSelection")+change);
-			Refresh("bottom",change);
 			break;
 		default:
 			break;
 	}
+	Refresh(part,change);
 }
 
 function ChangeColor(part:String, color:int) {
@@ -119,23 +84,20 @@ function ChangeColor(part:String, color:int) {
 	{
 		case "hair":
 			PlayerPrefs.SetInt("HairColor",color);
-			Refresh("hair");
 			break;
 		case "eyes":
 			PlayerPrefs.SetInt("EyesColor",color);
-			Refresh("eyes");
 			break;
 		case "top":
 			PlayerPrefs.SetInt("TopColor",color);
-			Refresh("top");
 			break;
 		case "bottom":
 			PlayerPrefs.SetInt("BottomColor",color);
-			Refresh("bottom");
 			break;
 		default:
 			break;
 	}
+	Refresh(part);
 }
 
 function Refresh(part:String) {
@@ -249,6 +211,7 @@ public function UpdateAvailability () {
 	eyesAvailability = new boolean[eyes.length + 1];
 	topsAvailability = new boolean[tops.length + 1];
 	bottomsAvailability = new boolean[bottoms.length + 1];
+	
 	for(var hairPiece:GameObject in hair)
 	{
 		if(!PlayerPrefs.HasKey("Hair:"+hairPiece.transform.name))
