@@ -22,7 +22,7 @@ function Start () {
 	}
 	// Reset important finger, create bounding box.
 	importantFinger = -1;
-	button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x, transform.lossyScale.y, 2));
+	button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x * boundMultiplier, transform.lossyScale.y * boundMultiplier, 2));
 }
 
 function Update () {
@@ -34,7 +34,7 @@ function Update () {
 			
 			if(Finger.GetExists(i))
 			{
-				button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x, transform.lossyScale.y, 2));
+				button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x * boundMultiplier, transform.lossyScale.y * boundMultiplier, 2));
 				if(button.Contains(Vector3(Finger.GetPosition(i).x,Finger.GetPosition(i).y,0)) && Finger.GetPhase(i) == TouchPhase.Began)
 				{
 					startPosition = Vector3(Finger.GetPosition(i).x,Finger.GetPosition(i).y,0);
@@ -73,7 +73,7 @@ function Update () {
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
-		button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x, transform.lossyScale.y, 2));
+		button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x * boundMultiplier, transform.lossyScale.y * boundMultiplier, 2));
 		// Touch button with importantFinger.
 		if(!WorldMapManager.mapMove && Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) < button.extents.x && button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{

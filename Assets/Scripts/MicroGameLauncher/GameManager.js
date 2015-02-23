@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 // Variable Types
-public enum WorldSelect{PackingPeanutFactory,Museum,test3};
+public enum WorldSelect{PackingPeanutFactory,Museum,Theater};
 var controller:Master;
 var transition:GameObject;
 var notification:GameObject;
@@ -59,6 +59,7 @@ var loadedText:GameObject;
 function Start () {
 	// Get required variables.
 	controller = Camera.main.GetComponent(Master);
+	Audio.PlaySongIntro(null,controller.selectedWorldMusic,1);	
 	controller.worldNameFull = "";
 	LoadWorld(controller.selectedWorld);
 	lives = controller.lives;
@@ -168,9 +169,12 @@ function GameOver () {
 	{
 		yield;
 	}
-	yield WaitForSeconds(1);
+	
+	Audio.PlaySoundTransition(controller.selectedWorldTransitionOut);
 	Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
-	yield WaitForSeconds(1);
+	yield WaitForSeconds(.7);
+	Audio.StopSong();
+	yield WaitForSeconds(1.3);
 	Application.LoadLevel("WorldSelect");
 }
 

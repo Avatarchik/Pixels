@@ -198,7 +198,6 @@ function Stamp(skip:boolean) {
 }
 
 function Finish(completionStatus:boolean) {
-	Debug.Log(completionStatus);
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

@@ -12,6 +12,9 @@ var selectedWorldColors:Color[];
 var selectedWorldUI:GameObject;
 var selectedWorldOpeningText:GameObject;
 var selectedWorldEndingText:GameObject;
+var selectedWorldTransitionIn:AudioClip;
+var selectedWorldTransitionOut:AudioClip;
+var selectedWorldMusic:AudioClip[];
 
 var initialWorldSpeed:int;
 var speedIncrease:int;
@@ -52,8 +55,9 @@ function Initialize () {
 	}
 	if(!PlayerPrefs.HasKey("Theater"))
 	{
-		PlayerPrefs.SetInt("Theater", 0);
+		PlayerPrefs.SetInt("Theater", 1);
 	}
+	PlayerPrefs.SetInt("Theater", 1);
 	// Options variables.
 	if(!PlayerPrefs.HasKey("Sound"))
 	{

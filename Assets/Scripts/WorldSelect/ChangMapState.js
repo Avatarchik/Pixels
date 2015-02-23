@@ -17,8 +17,11 @@ var thisWorldColors:Color[];
 var thisWorldUI:GameObject;
 var thisWorldOpeningText:GameObject;
 var thisWorldClosingText:GameObject;
+var thisWorldTransitionIn:AudioClip;
+var thisWorldTransitionOut:AudioClip;
+var thisWorldMusic:AudioClip[];
 
-var controller:Master;
+private var controller:Master;
 
 function Start () {
 	if(thisWorldDisplay.Length == 2)
@@ -31,7 +34,6 @@ function Start () {
 function Clicked () {
 	switch(newState)
 	{
-		
 		case MapStatus.Menu:
 			if(WorldMapManager.currentState == MapStatus.Clear && menu != null && currentMenu == null)
 			{
@@ -52,6 +54,7 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
+			Debug.Log(PlayerPrefs.GetInt(worldNameVar));
 			if(PlayerPrefs.GetInt(worldNameVar) == 1)
 			{
 				controller = Camera.main.GetComponent(Master);
@@ -65,6 +68,9 @@ function Clicked () {
 				controller.selectedWorldUI = thisWorldUI;
 				controller.selectedWorldOpeningText = thisWorldOpeningText;
 				controller.selectedWorldEndingText = thisWorldClosingText;
+				controller.selectedWorldTransitionIn = thisWorldTransitionIn;
+				controller.selectedWorldTransitionOut = thisWorldTransitionOut;
+				controller.selectedWorldMusic = thisWorldMusic;
 				if(WorldMapManager.currentState == MapStatus.Clear)
 				{
 					WorldMapManager.currentState = MapStatus.Confirmation;

@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
-static var musicSpeaker:AudioSource;
+static var musicGetter:Component[];
+static var musicSpeaker:AudioSource[];
 static var effectSpeaker:AudioSource;
 
 static var musicVolume:float = 1;
@@ -9,19 +10,34 @@ static var soundVolume:float = 1;
 static var musicChangeSpeed:float = 10;
 
 function Start () {
-	musicSpeaker = GetComponents(AudioSource)[0];
-	effectSpeaker = GetComponents(AudioSource)[1];
-	musicSpeaker.loop = true;
+	musicGetter	= GetComponents(AudioSource);
+	musicSpeaker = new AudioSource[musicGetter.length - 1];
+	for(var i:int = 1; i < musicGetter.length; i++)
+	{
+		musicSpeaker[i-1] = musicGetter[i];
+	}
+	effectSpeaker = musicGetter[0];
+	for(i = 0; i < musicSpeaker.length; i++)
+	{
+		musicSpeaker[i].loop = true;
+	}
+	//effectSpeaker.loop = false;
 }
 
 function Update () {
 	if(PlayerPrefs.GetInt("Music") == 1 && PlayerPrefs.HasKey("Music"))
 	{
-		musicSpeaker.volume = Mathf.MoveTowards(musicSpeaker.volume,musicVolume,Time.deltaTime*musicChangeSpeed);
+		for(var i:int = 1; i < musicSpeaker.length; i++)
+		{
+			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,Time.deltaTime*musicChangeSpeed);
+		}
 	}
 	else
 	{
-		musicSpeaker.volume = 0;
+		for(i = 1; i < musicSpeaker.length; i++)
+		{
+			musicSpeaker[i].volume = 0;
+		}
 	}
 	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
 	{
@@ -34,29 +50,57 @@ function Update () {
 }
 
 static function PlaySong (song:AudioClip) {
-	musicSpeaker.Stop();
-	musicSpeaker.clip = song;
-	musicSpeaker.Play();
+	StopSong();
+	musicSpeaker[0].clip = song;
+	musicSpeaker[0].Play();
+}
+static function PlaySong (song:AudioClip[]) {
+	for(var i:int = 0; i < song.length; i++)
+	{
+		musicSpeaker[i].Stop();
+		musicSpeaker[i].clip = song[i];
+		musicSpeaker[i].Play();
+	}
 }
 
 static function PlaySongIntro (intro:AudioClip, song:AudioClip, pause:float) {
-	musicSpeaker.Stop();
+	StopSong();
 	if(intro != null)
 	{
 		effectSpeaker.PlayOneShot(intro);
 	}
 	yield WaitForSeconds(pause);
-	musicSpeaker.clip = song;
-	musicSpeaker.Play();
+	musicSpeaker[0].clip = song;
+	musicSpeaker[0].Play();
+}
+
+static function PlaySongIntro (intro:AudioClip, song:AudioClip[], pause:float) {
+	StopSong();
+	if(intro != null)
+	{
+		effectSpeaker.PlayOneShot(intro);
+	}
+	yield WaitForSeconds(pause);
+	for(var i:int = 0; i < song.length; i++)
+	{
+		musicSpeaker[i].clip = song[i];
+		musicSpeaker[i].Play();
+	}
 }
 
 static function StopSong () {
-	musicSpeaker.clip = null;
-	musicSpeaker.Stop();
+	for(var i:int = 0; i < musicSpeaker.length; i++)
+	{
+		musicSpeaker[i].clip = null;
+		musicSpeaker[i].Stop();
+	}
 }
 
 static function SongVolumeChange (volume:float, speed:float) {
-	musicSpeaker.volume = volume;
+	for(var i:int = 0; i < musicSpeaker.length; i++)
+	{
+		musicSpeaker[i].volume = volume;
+	}
 	musicChangeSpeed = speed;
 }
 

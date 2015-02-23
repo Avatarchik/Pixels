@@ -12,9 +12,6 @@ function Start () {
 	StartCoroutine(Appear());
 }
 
-function Update () {
-}
-
 function Appear () {
 	while(transform.localPosition != origin)
 	{
