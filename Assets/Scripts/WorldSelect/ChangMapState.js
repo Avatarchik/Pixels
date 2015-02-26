@@ -15,11 +15,19 @@ var thisWorldGames:GameObject[];
 var thisWorldCovers:GameObject[];
 var thisWorldColors:Color[];
 var thisWorldUI:GameObject;
-var thisWorldOpeningText:GameObject;
-var thisWorldClosingText:GameObject;
+var thisWorldFirstTimeText:GameObject;
+var thisWorldRegularOpeningText:GameObject;
+var thisWorldBeatenText:GameObject;
+var thisWorldRegularClosingText:GameObject;
 var thisWorldTransitionIn:AudioClip;
 var thisWorldTransitionOut:AudioClip;
 var thisWorldMusic:AudioClip[];
+var thisWorldFirstTimeSong:AudioClip;
+var thisWorldRegularOpeningSong:AudioClip;
+var thisWorldBeatenSong:AudioClip;
+var thisWorldRegularClosingSong:AudioClip;
+var thisWorldSuccessSound:AudioClip;
+var thisWorldFailureSound:AudioClip;
 
 private var controller:Master;
 
@@ -54,23 +62,31 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
-			Debug.Log(PlayerPrefs.GetInt(worldNameVar));
 			if(PlayerPrefs.GetInt(worldNameVar) == 1)
 			{
 				controller = Camera.main.GetComponent(Master);
 				controller.selectedWorld = thisWorld;
 				controller.worldNameFull = worldNameFull;
+				controller.worldNameVar = worldNameVar;
 				controller.worldNameLine1 = worldNameLine1;
 				controller.worldNameLine2 = worldNameLine2;
 				controller.selectedWorldGames = thisWorldGames;
 				controller.selectedWorldCovers = thisWorldCovers;
 				controller.selectedWorldColors = thisWorldColors;
 				controller.selectedWorldUI = thisWorldUI;
-				controller.selectedWorldOpeningText = thisWorldOpeningText;
-				controller.selectedWorldEndingText = thisWorldClosingText;
+				controller.selectedWorldFirstTimeText = thisWorldFirstTimeText;
+				controller.selectedWorldRegularOpeningText = thisWorldRegularOpeningText;
+				controller.selectedWorldBeatenText = thisWorldBeatenText;
+				controller.selectedWorldRegularClosingText = thisWorldRegularClosingText;
 				controller.selectedWorldTransitionIn = thisWorldTransitionIn;
 				controller.selectedWorldTransitionOut = thisWorldTransitionOut;
 				controller.selectedWorldMusic = thisWorldMusic;
+				controller.selectedWorldFirstTimeSong = thisWorldFirstTimeSong;
+				controller.selectedWorldRegularOpeningSong = thisWorldRegularOpeningSong;
+				controller.selectedWorldBeatenSong = thisWorldBeatenSong;
+				controller.selectedWorldRegularClosingSong = thisWorldRegularClosingSong;
+				controller.selectedWorldSuccessSound = thisWorldSuccessSound;
+				controller.selectedWorldFailureSound = thisWorldFailureSound;
 				if(WorldMapManager.currentState == MapStatus.Clear)
 				{
 					WorldMapManager.currentState = MapStatus.Confirmation;

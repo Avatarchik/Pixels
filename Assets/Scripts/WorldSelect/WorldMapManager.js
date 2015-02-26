@@ -10,22 +10,22 @@ var worldMusic:AudioClip;
 
 // Clear
 static var cameraVelocity:float;
-var importantFinger:int;
-var startPosition:Vector3;
-var mapMoveSpeed:float;
-var worlds:Transform[];
-var closestWorld:int;
+private var importantFinger:int;
+private var startPosition:Vector3;
+private var mapMoveSpeed:float;
+private var worlds:Transform[];
+private var closestWorld:int;
 
 // Confirmation
 var ticket:GameObject;
-var worldTransition:GameObject;
+private var worldTransition:GameObject;
 
 // Menu
-var fade:Renderer;
+private var fade:Renderer;
 
 // Locations
-var showNot:Vector3;
-var hideNot:Vector3;
+private var showNot:Vector3;
+private var hideNot:Vector3;
 
 function Start () {
 	Audio.PlaySongIntro(null,worldMusic,1);	
@@ -42,7 +42,7 @@ function Start () {
 	mapMove = false;
 	if(mapMoveSpeed == 0 || mapMoveSpeed == null)
 	{
-		mapMoveSpeed = .07;
+		mapMoveSpeed = .025;
 	}
 }
 function Update () {

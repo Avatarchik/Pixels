@@ -27,14 +27,14 @@ function Start () {
 function Update () {
 	if(PlayerPrefs.GetInt("Music") == 1 && PlayerPrefs.HasKey("Music"))
 	{
-		for(var i:int = 1; i < musicSpeaker.length; i++)
+		for(var i:int = 0; i < musicSpeaker.length; i++)
 		{
 			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,Time.deltaTime*musicChangeSpeed);
 		}
 	}
 	else
 	{
-		for(i = 1; i < musicSpeaker.length; i++)
+		for(i = 0; i < musicSpeaker.length; i++)
 		{
 			musicSpeaker[i].volume = 0;
 		}

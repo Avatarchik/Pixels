@@ -9,9 +9,11 @@ function Start () {
 }
 
 function Update () {
+	// Updates which piece will change.
 	theaterPart = TheaterCustomizeManager.pieceName;
 }
 
 function Clicked () {
+	// Changes piece by Change.
 	manager.ChangePart(theaterPart,change);
 }

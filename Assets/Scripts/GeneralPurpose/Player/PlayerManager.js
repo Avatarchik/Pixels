@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 // Current position of the player.
-public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight}
+public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight,SpecialHandsOut}
 var currentState:PlayerState;
 static var speed:float;
 

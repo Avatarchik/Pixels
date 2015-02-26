@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Experimental\MicroTester.js" />
      <Compile Include="Assets\Scripts\Experimental\TestGame.js" />
      <Compile Include="Assets\Scripts\Experimental\TestMaster.js" />
+     <Compile Include="Assets\Scripts\Experimental\TextTester.js" />
      <Compile Include="Assets\Scripts\Experimental\WorldMapManagerBackup.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\AnimationManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Audio.js" />

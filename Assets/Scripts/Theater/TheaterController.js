@@ -15,26 +15,11 @@ function Start () {
 	controller = Camera.main.GetComponent(Master);
 	Audio.PlaySongIntro(null,controller.selectedWorldMusic,1);
 	currentState = TheaterStatus.Home;
+	speed = Time.deltaTime * 5;
 }
 
 function Update () {
-	if(Input.GetKeyDown("1"))
-	{
-		currentState = TheaterStatus.Front;
-	}
-	if(Input.GetKeyDown("2"))
-	{
-		currentState = TheaterStatus.Home;
-	}
-	if(Input.GetKeyDown("3"))
-	{
-		currentState = TheaterStatus.FrontLedger;
-	}
-	if(Input.GetKeyDown("4"))
-	{
-		currentState = TheaterStatus.HomeLedger;
-	}
-	speed = Time.deltaTime * 5;
+	// Moves pieces of theater based on its current state.
 	switch(currentState)
 	{
 		case TheaterStatus.Home:

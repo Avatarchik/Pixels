@@ -36,7 +36,7 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	distance = 1.5;
+	distance = 2.2;
 	successNumber = 0;
 	
 	paperPile = new GameObject[5+difficulty];

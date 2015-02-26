@@ -17,6 +17,7 @@ function Update () {
 }
 
 function Clicked () {
+	// Handles info if the ledger is being put away, regardless of location.
 	if(removeLedger)
 	{
 		if(TheaterController.currentState == TheaterStatus.HomeLedger)
@@ -29,12 +30,14 @@ function Clicked () {
 			TheaterController.currentState = TheaterStatus.Front;
 		}
 	}
+	// Handles info if the goal is to leave the scene.
 	else if(leave)
 	{
 		if(transition != null && !done)
 		{
 			var controller:Master = Camera.main.GetComponent(Master);
 			Audio.PlaySoundTransition(controller.selectedWorldTransitionOut);
+			Camera.main.GetComponent(Master).worldNameLine1 = "";
 			Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
 			done = true;
 		}

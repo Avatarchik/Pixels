@@ -4,17 +4,26 @@ static var initialLoad:boolean;
 
 var selectedWorld:WorldSelect;
 var worldNameFull:String;
+var worldNameVar:String;
 var worldNameLine1:String;
 var worldNameLine2:String;
 var selectedWorldGames:GameObject[];
 var selectedWorldCovers:GameObject[];
 var selectedWorldColors:Color[];
 var selectedWorldUI:GameObject;
-var selectedWorldOpeningText:GameObject;
-var selectedWorldEndingText:GameObject;
+var selectedWorldFirstTimeText:GameObject;
+var selectedWorldRegularOpeningText:GameObject;
+var selectedWorldBeatenText:GameObject;
+var selectedWorldRegularClosingText:GameObject;
 var selectedWorldTransitionIn:AudioClip;
 var selectedWorldTransitionOut:AudioClip;
 var selectedWorldMusic:AudioClip[];
+var selectedWorldFirstTimeSong:AudioClip;
+var selectedWorldRegularOpeningSong:AudioClip;
+var selectedWorldBeatenSong:AudioClip;
+var selectedWorldRegularClosingSong:AudioClip;
+var selectedWorldSuccessSound:AudioClip;
+var selectedWorldFailureSound:AudioClip;
 
 var initialWorldSpeed:int;
 var speedIncrease:int;
@@ -33,7 +42,7 @@ function Awake () {
 }
 
 function Update () {
-	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight) 
+	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
 	{
 		camera.orthographicSize = 9;
 	}
@@ -44,7 +53,7 @@ function Update () {
 }
 
 function Initialize () {
-	// World unlock variables.
+	///////////////////////////////////////////////////////////////////////// World unlock variables.
 	if(!PlayerPrefs.HasKey("PackingPeanutFactory"))
 	{
 		PlayerPrefs.SetInt("PackingPeanutFactory", 1);
@@ -57,8 +66,32 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("Theater", 1);
 	}
-	PlayerPrefs.SetInt("Theater", 1);
-	// Options variables.
+	///////////////////////////////////////////////////////////////////////// World visit variables.
+	if(!PlayerPrefs.HasKey("PackingPeanutFactoryPlayedOnce"))
+	{
+		PlayerPrefs.SetInt("PackingPeanutFactoryPlayedOnce", 0);
+	}
+	if(!PlayerPrefs.HasKey("PackingPeanutFactoryBeaten"))
+	{
+		PlayerPrefs.SetInt("PackingPeanutFactoryBeaten", 0);
+	}
+	if(!PlayerPrefs.HasKey("MuseumPlayedOnce"))
+	{
+		PlayerPrefs.SetInt("MuseumPlayedOnce", 0);
+	}
+	if(!PlayerPrefs.HasKey("MuseumBeaten"))
+	{
+		PlayerPrefs.SetInt("MuseumBeaten", 0);
+	}
+	if(!PlayerPrefs.HasKey("TheaterPlayedOnce"))
+	{
+		PlayerPrefs.SetInt("TheaterPlayedOnce", 0);
+	}
+	if(!PlayerPrefs.HasKey("TheaterBeaten"))
+	{
+		PlayerPrefs.SetInt("TheaterBeaten", 0);
+	}
+	///////////////////////////////////////////////////////////////////////// Options variables.
 	if(!PlayerPrefs.HasKey("Sound"))
 	{
 		PlayerPrefs.SetInt("Sound", 1);
@@ -67,7 +100,7 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("Music", 1);
 	}
-	// Character selection variables.
+	///////////////////////////////////////////////////////////////////////// Character selection variables.
 	if(!PlayerPrefs.HasKey("HairSelection"))
 	{
 		PlayerPrefs.SetInt("HairSelection", 0);
@@ -100,7 +133,7 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("BottomColor", 0);
 	}
-	// Theater Theater selection variables.
+	///////////////////////////////////////////////////////////////////////// Theater Theater selection variables.
 	if(!PlayerPrefs.HasKey("StageWallSelection"))
 	{
 		PlayerPrefs.SetInt("StageWallSelection", 0);
@@ -129,7 +162,7 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("ChairsSelection", 0);
 	}
-	// Theater FOH selection variables.
+	///////////////////////////////////////////////////////////////////////// Theater FOH selection variables.
 	if(!PlayerPrefs.HasKey("FOHWallSelection"))
 	{
 		PlayerPrefs.SetInt("FOHWallSelection", 0);
@@ -150,4 +183,7 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("FOHDeskSelection", 0);
 	}
+	
+	PlayerPrefs.SetInt("PackingPeanutFactoryPlayedOnce", 0);
+	PlayerPrefs.SetInt("PackingPeanutFactoryBeaten", 0);
 }

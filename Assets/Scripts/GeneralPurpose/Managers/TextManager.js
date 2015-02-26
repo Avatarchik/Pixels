@@ -3,8 +3,9 @@
 var dialogue:String[];
 var leftSprites:GameObject[];
 var rightSprites:GameObject[];
+var playerState:PlayerState[];
 var currentSpeaker:boolean[];
-var spriteObjects:GameObject[];
+private var spriteObjects:GameObject[];
 
 var targetTimes:float[];
 var textTypeSpeed:float = 1;
@@ -15,21 +16,25 @@ var lineLength:int;
 var numberOfLines:int;
 
 
-var dialogueMarker:int;
-var currentDialogue:Array;
+private var dialogueMarker:int;
+private var currentDialogue:Array;
 
-var numberOfLetters:int;
-var current:int;
+private var numberOfLetters:int;
+private var current:int;
+
+private var doneLine:boolean;
 
 function Start () {
-	spriteObjects = new GameObject[leftSprites.length];
+	//spriteObjects = new GameObject[leftSprites.length];
+	spriteObjects = new GameObject[2];
 	dialogueMarker = 0;
 	numberOfLetters = 0;
 	current = 0;
 	finished = false;
+	doneLine = false;
 	while(transform.position.x < -7.74)
 	{
-		transform.position.x = Mathf.MoveTowards(transform.position.x,-7.74,Time.deltaTime*30);
+		transform.position.x = Mathf.MoveTowards(transform.position.x,-7.74,Time.deltaTime*60);
 		yield;
 	}
 	if(dialogue.Length!=0)
@@ -50,6 +55,7 @@ function Start () {
 }
 
 function Update () {
+	//Debug.Log(Time.time);
 }
 
 // Updates the shown text. This should be edited if the TextMesh object is not attached to the same
@@ -67,9 +73,10 @@ function UpdateSet () {
 		}
 		if(finished)
 		{
-			transform.position.x = Mathf.MoveTowards(transform.position.x,12.26,Time.deltaTime*30);
+			GetComponent(TextMesh).text = "";
+			transform.position.x = Mathf.MoveTowards(transform.position.x,30,Time.deltaTime*60);
 		}
-		if(transform.position.x == 12.26)
+		if(transform.position.x == 30)
 		{
 			Destroy(gameObject);
 		}
@@ -79,22 +86,35 @@ function UpdateSet () {
 }
 
 function UpdateSprites(number:int) {
-	
 	if(leftSprites.Length >= dialogueMarker && rightSprites.Length >= dialogueMarker && spriteObjects.Length == 2 && currentSpeaker.Length >= dialogueMarker)
 	{
-		Destroy(spriteObjects[0]);
-		Destroy(spriteObjects[1]);
-		spriteObjects[0] = Instantiate(leftSprites[number]);
-		spriteObjects[1] = Instantiate(rightSprites[number]);
+		if(leftSprites[number]!=null)
+		{
+			Destroy(spriteObjects[0]);
+			spriteObjects[0] = Instantiate(leftSprites[number]);
+		}
+		if(rightSprites[number]!=null)
+		{
+			Destroy(spriteObjects[1]);
+			spriteObjects[1] = Instantiate(rightSprites[number]);
+		}
+		if(playerState.length >= number && spriteObjects[0].transform.tag == "Player")
+		{
+			spriteObjects[0].GetComponent(PlayerManager).currentState = playerState[number];
+		}
+		if(playerState.length >= number && spriteObjects[1].transform.tag == "Player")
+		{
+			spriteObjects[1].GetComponent(PlayerManager).currentState = playerState[number];
+		}
 		if(currentSpeaker[number])
 		{
-			spriteObjects[0].transform.position = Vector3(-4.5,0,-.2);
-			spriteObjects[1].transform.position = Vector3(4.5,.3,-.2);
+			spriteObjects[0].transform.position = Vector3(-4.5,0,transform.position.z+1);
+			spriteObjects[1].transform.position = Vector3(4.5,1,transform.position.z+1.5);
 		}
 		else
 		{
-			spriteObjects[0].transform.position = Vector3(-4.5,.3,-.2);
-			spriteObjects[1].transform.position = Vector3(4.5,0,-.2);
+			spriteObjects[0].transform.position = Vector3(-4.5,1,transform.position.z+1);
+			spriteObjects[1].transform.position = Vector3(4.5,0,transform.position.z+1.5);
 		}
 		spriteObjects[0].transform.parent = transform;
 		spriteObjects[1].transform.parent = transform;
@@ -133,71 +153,33 @@ function NextLine () {
 // value that can be set in the editor or above. If the targetTimes array is both full and the same length as
 // the dialogue array, the game will try to match one up to the other (not super reliable, needs fussing.)
 function IncreaseLetters () {
+	StartCoroutine(CountDown(targetTimes[dialogueMarker]));
 	while(numberOfLetters < currentDialogue[current].ToString().Length)
 	{
-		if(numberOfLetters > 0)
-		{
-			if(targetTimes == null || targetTimes.Length != dialogue.Length)
-			{
-				switch(currentDialogue[current].ToString()[numberOfLetters-1])
-				{
-					case ".":
-						yield WaitForSeconds(.46);
-						break;
-					case "!":
-						yield WaitForSeconds(.46);
-						break;
-					case "?":
-						yield WaitForSeconds(.46);
-						break;
-					case ",":
-						yield WaitForSeconds(.25);
-						break;
-					case ";":
-						yield WaitForSeconds(.25);
-						break;
-					default:
-						break;
-				}
-			}
-		}
-		if(targetTimes != null && targetTimes.Length == dialogue.Length)
-		{
-			if(dialogueMarker!=0)
-			{
-				yield WaitForSeconds((targetTimes[dialogueMarker]-targetTimes[dialogueMarker-1]) / ((dialogue[dialogueMarker].Length-5) * 2));
-			}
-			else
-			{
-				yield WaitForSeconds(targetTimes[dialogueMarker] / (dialogue[dialogueMarker].Length));
-			}
-		}
-		else
-		{
-			yield WaitForSeconds(.04 / textTypeSpeed);
-		}
-		numberOfLetters++;
+		numberOfLetters ++;
 		yield;
 	}
 	if(automatic)
-	{
-		if(targetTimes != null && targetTimes.Length == dialogue.Length)
+	{		
+		while(!doneLine)
 		{
-			if(dialogueMarker!=0)
-			{
-				yield WaitForSeconds(2 * (targetTimes[dialogueMarker]-targetTimes[dialogueMarker-1]) / (dialogue[dialogueMarker].Length+1));
-			}
-			else
-			{
-				yield WaitForSeconds(2 * targetTimes[dialogueMarker] / (dialogue[dialogueMarker].Length+1));
-			}
+			yield;
 		}
-		else
-		{
-			yield WaitForSeconds(.4);
-		}
+		doneLine = false;
 		NextLine();
 	}
+	yield;
+}
+
+function CountDown (counter:float) {
+	//Debug.Log(counter);
+	while(counter > 0)
+	{
+		//Debug.Log(counter);
+		counter -= Time.deltaTime;
+		yield;
+	}
+	doneLine = true;
 	yield;
 }
 
@@ -268,5 +250,5 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 }
 
 function Clicked () {
-	numberOfLetters = currentDialogue[current].ToString().Length;
+	//numberOfLetters = currentDialogue[current].ToString().Length;
 }

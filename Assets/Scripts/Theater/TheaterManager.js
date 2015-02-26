@@ -54,22 +54,12 @@ private var FOHTicketBoothAvailability:boolean[];
 private var FOHDeskAvailability:boolean[];
 
 function Start () {
-		PlayerPrefs.SetInt("StageWallSelection", 0);
-		PlayerPrefs.SetInt("StageFloorSelection", 0);
-		PlayerPrefs.SetInt("CeilingSelection", 0);
-		PlayerPrefs.SetInt("TheaterWallSelection", 0);
-		PlayerPrefs.SetInt("TheaterFloorSelection", 0);
-		PlayerPrefs.SetInt("CurtainSelection", 0);
-		PlayerPrefs.SetInt("ChairsSelection", 0);
-		PlayerPrefs.SetInt("FOHWallSelection", 0);
-		PlayerPrefs.SetInt("FOHFloorSelection", 0);
-		PlayerPrefs.SetInt("FOHBoozeSelection", 0);
-		PlayerPrefs.SetInt("FOHTicketBoothSelection", 0);
-		PlayerPrefs.SetInt("FOHDeskSelection", 0);
+	// Lock of unlock all pieces, and activate availability.
 	UpdateAvailability();
 	UnlockAllOptions();
 	UpdateAvailability();
 	
+	// Create all pieces.
 	currentStageWall = Instantiate(stageWall[PlayerPrefs.GetInt("StageWallSelection")]);
 	currentStageFloor = Instantiate(stageFloor[PlayerPrefs.GetInt("StageFloorSelection")]);
 	currentCeiling = Instantiate(ceiling[PlayerPrefs.GetInt("CeilingSelection")]);
@@ -84,6 +74,7 @@ function Start () {
 	currentFOHTicketBooth = Instantiate(FOHTicketBooth[PlayerPrefs.GetInt("FOHTicketBoothSelection")]);
 	currentFOHDesk = Instantiate(FOHDesk[PlayerPrefs.GetInt("FOHDeskSelection")]);
 	
+	// Set all pieces as children of the Theater Holder.
 	currentStageWall.transform.parent = theaterHolder.transform;
 	currentStageFloor.transform.parent = theaterHolder.transform;
 	currentCeiling.transform.parent = theaterHolder.transform;
@@ -98,6 +89,7 @@ function Start () {
 	currentFOHTicketBooth.transform.parent = FOHHolder.transform;
 	currentFOHDesk.transform.parent = FOHHolder.transform;
 	
+	// Name all objects for clarity.
 	currentStageWall.transform.name = "StageWall";
 	currentStageFloor.transform.name = "StageFloor";
 	currentCeiling.transform.name = "Ceiling";
@@ -112,6 +104,7 @@ function Start () {
 	currentFOHTicketBooth.transform.name = "FOHTicketBooth";
 	currentFOHDesk.transform.name = "FOHDesk";
 	
+	// Set object positions.
 	currentStageWall.transform.localPosition = Vector3(-3.3,3.3,10);
 	currentStageFloor.transform.localPosition = Vector3(15.9,-15.9,10);
 	currentCeiling.transform.localPosition = Vector3(15.9,-15.9,8);
@@ -128,40 +121,8 @@ function Start () {
 	
 }
 
-function Update () {
-	if(Input.GetKeyDown("right"))
-	{
-		ChangePart("StageWall",1);
-		ChangePart("StageFloor",1);
-		ChangePart("Ceiling",1);
-		ChangePart("TheaterWall",1);
-		ChangePart("TheaterFloor",1);
-		ChangePart("Curtain",1);
-		ChangePart("Chairs",1);
-		ChangePart("FOHWall",1);
-		ChangePart("FOHFloor",1);
-		ChangePart("FOHBooze",1);
-		ChangePart("FOHTicketBooth",1);
-		ChangePart("FOHDesk",1);
-	}
-	if(Input.GetKeyDown("left"))
-	{
-		ChangePart("StageWall",-1);
-		ChangePart("StageFloor",-1);
-		ChangePart("Ceiling",-1);
-		ChangePart("TheaterWall",-1);
-		ChangePart("TheaterFloor",-1);
-		ChangePart("Curtain",-1);
-		ChangePart("Chairs",-1);
-		ChangePart("FOHWall",-1);
-		ChangePart("FOHFloor",-1);
-		ChangePart("FOHBooze",-1);
-		ChangePart("FOHTicketBooth",-1);
-		ChangePart("FOHDesk",-1);
-	}
-}
-
 function ChangePart (part:String, change:int) {
+	// The function to call when you want to change a part by any amount. This is the main function to be called from external scripts.
 	switch(part)
 	{
 		case "StageWall":
@@ -207,9 +168,11 @@ function ChangePart (part:String, change:int) {
 }
 
 function Refresh(part:String) {
+	// Calls refresh when no change amount is designated.
 	Refresh(part,0);
 }
 function Refresh(part:String, change:int) {
+	// Updates the visuals based on which piece is selected. Also determines whether or not a piece is currently unlocked, and removes that piece from use if it is not.
 	switch(part)
 	{
 		case "StageWall":
@@ -447,6 +410,7 @@ function Refresh(part:String, change:int) {
 }
 
 function UpdateAvailability () {
+	// Sets the availability of pieces based on PlayerPrefs.
 	stageWallAvailability = new boolean[stageWall.length + 1];
 	stageFloorAvailability = new boolean[stageFloor.length + 1];
 	ceilingAvailability = new boolean[ceiling.length + 1];
@@ -460,6 +424,7 @@ function UpdateAvailability () {
 	FOHTicketBoothAvailability = new boolean[FOHTicketBooth.length + 1];
 	FOHDeskAvailability = new boolean[FOHDesk.length + 1];
 	
+	// Checks whether or not these keys exist and, if they don't, sets them to zero.
 	for(var stageWallPiece:GameObject in stageWall)
 	{
 		if(!PlayerPrefs.HasKey("StageWall:"+stageWallPiece.transform.name))
@@ -544,6 +509,7 @@ function UpdateAvailability () {
 			PlayerPrefs.SetInt("FOHDesk:"+FOHDeskPiece.transform.name,0);
 		}
 	}
+	// Unlocks the first of each set, so that we don't run into any problems where no pieces are drawable.
 	PlayerPrefs.SetInt("StageWall:"+stageWall[0].name,1);
 	PlayerPrefs.SetInt("StageFloor:"+stageFloor[0].name,1);
 	PlayerPrefs.SetInt("Ceiling:"+ceiling[0].name,1);
@@ -556,6 +522,8 @@ function UpdateAvailability () {
 	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[0].name,1);
 	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[0].name,1);
 	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[0].name,1);
+	
+	// Changes availability booleans to true or false based on the playerprefs values.
 	for(var stageWallCheck:int = 0; stageWallCheck < stageWall.length; stageWallCheck++)
 	{
 		if(PlayerPrefs.GetInt("StageWall:"+stageWall[stageWallCheck].transform.name) == 0)
@@ -691,6 +659,7 @@ function UpdateAvailability () {
 }	
 
 function UnlockAllOptions () {
+	// Unlocks all pieces, considered an override.
 	for(var stageWallPiece:GameObject in stageWall)
 	{
 		PlayerPrefs.SetInt("StageWall:"+stageWallPiece.transform.name,1);
@@ -741,6 +710,7 @@ function UnlockAllOptions () {
 	}
 }
 function LockAllOptions () {
+	// Locks all pieces, considered an override. Also unlocks the first of each piece type.
 	for(var stageWallPiece:GameObject in stageWall)
 	{
 		PlayerPrefs.SetInt("StageWall:"+stageWallPiece.transform.name,0);

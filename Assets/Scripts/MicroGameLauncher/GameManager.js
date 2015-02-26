@@ -52,22 +52,25 @@ var currentMenu:GameObject;
 var fade:Renderer;
 
 // "Cutscene" variables
-var openingText:GameObject;
-var endingText:GameObject;
+var firstTimeText:GameObject;
+var regularOpeningText:GameObject;
+var beatenText:GameObject;
+var regularClosingText:GameObject;
 var loadedText:GameObject;
 
 function Start () {
 	// Get required variables.
 	controller = Camera.main.GetComponent(Master);
-	Audio.PlaySongIntro(null,controller.selectedWorldMusic,1);	
 	controller.worldNameFull = "";
 	LoadWorld(controller.selectedWorld);
 	lives = controller.lives;
 	currentGames = controller.selectedWorldGames;
 	UI = Instantiate(controller.selectedWorldUI);
-	openingText = controller.selectedWorldOpeningText;
-	endingText = controller.selectedWorldEndingText;
 	
+	firstTimeText = controller.selectedWorldFirstTimeText;
+	regularOpeningText = controller.selectedWorldRegularOpeningText;
+	beatenText = controller.selectedWorldBeatenText;
+	regularClosingText = controller.selectedWorldRegularClosingText;	
 	
 	// Set game change variables.
 	changeOrder = "DifficultySpeed";
@@ -107,9 +110,19 @@ function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	yield WaitForSeconds (1);
-	loadedText = Instantiate(openingText);
+	if(PlayerPrefs.GetInt(controller.worldNameVar+"PlayedOnce") == 0)
+	{
+		Audio.PlaySound(controller.selectedWorldFirstTimeSong);
+		loadedText = Instantiate(firstTimeText);
+	}
+	else
+	{
+		Audio.PlaySound(controller.selectedWorldRegularOpeningSong);
+		loadedText = Instantiate(regularOpeningText);
+	}
 	// Wait for the text to finish.
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
+	Audio.PlaySong(controller.selectedWorldMusic);
 	GetRandomGame();
 	yield WaitForSeconds(1);
 	LaunchLevel(0);
@@ -126,12 +139,14 @@ function BetweenGame () {
 	{
 		UI.BroadcastMessage("NotifySuccess", false,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Failure");
+		Audio.PlaySound(controller.selectedWorldFailureSound);
 		lives--;
 	}
 	else
 	{
 		UI.BroadcastMessage("NotifySuccess", true,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Success");
+		Audio.PlaySound(controller.selectedWorldSuccessSound);
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
 	if(lives <= 0)
@@ -163,13 +178,25 @@ function GameComplete (success:boolean) {
 
 // Lose all lives.
 function GameOver () {
-	yield WaitForSeconds(1);
-	loadedText = Instantiate(endingText);
+	yield WaitForSeconds(.5);
+	PlayerPrefs.SetInt("PackingPeanutFactoryPlayedOnce", 1);
+	if(PlayerPrefs.GetInt(controller.worldNameVar+"Beaten") == 0 && gameNumber >= 15)
+	{
+		PlayerPrefs.SetInt(controller.worldNameVar+"Beaten",1);
+		Audio.PlaySound(controller.selectedWorldBeatenSong);
+		loadedText = Instantiate(beatenText);
+	}
+	else
+	{
+		Audio.PlaySound(controller.selectedWorldRegularClosingSong);
+		loadedText = Instantiate(regularClosingText);
+	}
+	yield WaitForSeconds(.2);
+	Audio.StopSong();
 	while(!loadedText.GetComponent(TextManager).finished)
 	{
 		yield;
 	}
-	
 	Audio.PlaySoundTransition(controller.selectedWorldTransitionOut);
 	Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
 	yield WaitForSeconds(.7);

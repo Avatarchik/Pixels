@@ -5,6 +5,8 @@ var walkSpriteBack:Sprite[];
 var walkSpriteFront:Sprite[];
 var walkSpriteSide:Sprite[];
 
+var specialHandsOut:Sprite;
+
 var waitTime:float;
 
 var playerManager:PlayerManager;
@@ -92,6 +94,17 @@ function Move() {
 				yield WaitForSeconds(waitTime);
 				GetComponent(SpriteRenderer).sprite = standingSprites[2];
 				yield WaitForSeconds(waitTime);
+				break;
+			case PlayerState.SpecialHandsOut:
+				transform.localScale.x = Mathf.Abs(transform.localScale.x);
+				if(specialHandsOut != null)
+				{
+					GetComponent(SpriteRenderer).sprite = specialHandsOut;
+				}
+				else
+				{
+					GetComponent(SpriteRenderer).sprite = standingSprites[1];
+				}
 				break;
 			default:
 				break;
