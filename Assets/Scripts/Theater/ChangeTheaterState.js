@@ -8,6 +8,8 @@ var leave:boolean;
 private var done:boolean;
 var transition:GameObject;
 
+var vertical:boolean;
+
 function Start () {
 	done = false;
 }
@@ -31,13 +33,13 @@ function Clicked () {
 		}
 	}
 	// Handles info if the goal is to leave the scene.
-	else if(leave)
+	else if(leave && (!vertical || TheaterController.currentState != TheaterStatus.HomeLedger))
 	{
 		if(transition != null && !done)
 		{
 			var controller:Master = Camera.main.GetComponent(Master);
 			Audio.PlaySoundTransition(controller.selectedWorldTransitionOut);
-			Camera.main.GetComponent(Master).worldNameLine1 = "";
+			Camera.main.GetComponent(Master).worldNameLine1 = " ";
 			Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
 			done = true;
 		}

@@ -1,11 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/TextManager.js">
-    <Files>
-      <File FileName="Assets/Scripts/Microgames/Packing Peanut Fatory/PeanutCannon.js" Line="30" Column="15" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/TextManager.js" Line="107" Column="19" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

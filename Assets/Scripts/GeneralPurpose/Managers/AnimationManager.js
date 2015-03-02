@@ -7,11 +7,17 @@ var walkSpriteSide:Sprite[];
 
 var specialHandsOut:Sprite;
 
+var flipped:int;
+
 var waitTime:float;
 
 var playerManager:PlayerManager;
 
 function Start () {
+	if(flipped != -1)
+	{
+		flipped = 1;
+	}
 	if(gameObject.tag == "Player")
 	{
 		playerManager = GetComponent(PlayerManager);
@@ -30,11 +36,11 @@ function Move() {
 		switch(playerManager.currentState)
 		{
 			case PlayerState.StandingFront:
-				transform.localScale.x = Mathf.Abs(transform.localScale.x);
+				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 				GetComponent(SpriteRenderer).sprite = standingSprites[1];
 				break;
 			case PlayerState.StandingBack:
-				transform.localScale.x = Mathf.Abs(transform.localScale.x);
+				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 				GetComponent(SpriteRenderer).sprite = standingSprites[0];
 				break;
 			case PlayerState.StandingLeft:
@@ -49,7 +55,7 @@ function Move() {
 				GetComponent(SpriteRenderer).sprite = standingSprites[2];
 				break;
 			case PlayerState.WalkingFront:
-				transform.localScale.x = Mathf.Abs(transform.localScale.x);
+				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 				GetComponent(SpriteRenderer).sprite = walkSpriteFront[0];
 				yield WaitForSeconds(waitTime);
 				GetComponent(SpriteRenderer).sprite = standingSprites[1];
@@ -60,7 +66,7 @@ function Move() {
 				yield WaitForSeconds(waitTime);
 				break;
 			case PlayerState.WalkingBack:
-				transform.localScale.x = Mathf.Abs(transform.localScale.x);
+				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 				GetComponent(SpriteRenderer).sprite = walkSpriteBack[0];
 				yield WaitForSeconds(waitTime);
 				GetComponent(SpriteRenderer).sprite = standingSprites[0];
@@ -96,7 +102,7 @@ function Move() {
 				yield WaitForSeconds(waitTime);
 				break;
 			case PlayerState.SpecialHandsOut:
-				transform.localScale.x = Mathf.Abs(transform.localScale.x);
+				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 				if(specialHandsOut != null)
 				{
 					GetComponent(SpriteRenderer).sprite = specialHandsOut;

@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Experimental\1X Value.js" />
      <Compile Include="Assets\Scripts\Experimental\1Y Value.js" />
+     <Compile Include="Assets\Scripts\Experimental\AnimationTester.js" />
      <Compile Include="Assets\Scripts\Experimental\Info\GSpeed.js" />
      <Compile Include="Assets\Scripts\Experimental\Info\Lives.js" />
      <Compile Include="Assets\Scripts\Experimental\Info\SpdProg.js" />
@@ -76,6 +77,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Visual\HighlightGlow.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\MicroGameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Controls.js" />
@@ -99,6 +101,8 @@
      <Compile Include="Assets\Scripts\Theater\ChangeTheaterState.js" />
      <Compile Include="Assets\Scripts\Theater\PieceChange.js" />
      <Compile Include="Assets\Scripts\Theater\PieceIcon.js" />
+     <Compile Include="Assets\Scripts\Theater\PlayerWalking.js" />
+     <Compile Include="Assets\Scripts\Theater\SpecificButton.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterController.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterCustomizeManager.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterManager.js" />

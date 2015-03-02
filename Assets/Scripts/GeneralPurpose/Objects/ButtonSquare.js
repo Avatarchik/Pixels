@@ -77,6 +77,7 @@ function Update () {
 		// Touch button with importantFinger.
 		if(!WorldMapManager.mapMove && Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) < button.extents.x && button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{
+			Debug.Log(transform.name);
 			// This is where clicking happens.
 			gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 			if(up!=null && GetComponent(SpriteRenderer)!=null)

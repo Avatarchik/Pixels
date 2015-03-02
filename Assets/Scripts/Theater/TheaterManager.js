@@ -106,19 +106,66 @@ function Start () {
 	
 	// Set object positions.
 	currentStageWall.transform.localPosition = Vector3(-3.3,3.3,10);
-	currentStageFloor.transform.localPosition = Vector3(15.9,-15.9,10);
-	currentCeiling.transform.localPosition = Vector3(15.9,-15.9,8);
-	currentTheaterWall.transform.localPosition = Vector3(15.9,-15.9,8);
-	currentTheaterFloor.transform.localPosition = Vector3(15.9,-15.9,8);
+	currentStageFloor.transform.localPosition = Vector3(-3.3,-15.9,10);
+	currentCeiling.transform.localPosition = Vector3(-1.8,3.3,8);
+	currentTheaterWall.transform.localPosition = Vector3(-1.8,3.3,8);
+	currentTheaterFloor.transform.localPosition = Vector3(-1.8,-15.9,8);
 	currentCurtain.transform.localPosition = Vector3(-3.3,3.3,7);
-	currentChairs.transform.localPosition = Vector3(15.9,-15.9,7);
+	currentChairs.transform.localPosition = Vector3(-3.3,-15.9,7);
 
-	currentFOHWall.transform.localPosition = Vector3(15.9,-15.9,10);
-	currentFOHFloor.transform.localPosition = Vector3(15.9,-15.9,9);
-	currentFOHBooze.transform.localPosition = Vector3(35.1,3.9,8);
+	currentFOHWall.transform.localPosition = Vector3(35.1,0.3,10);
+	currentFOHFloor.transform.localPosition = Vector3(35.1,-15.9,9);
+	currentFOHBooze.transform.localPosition = Vector3(25.5,3.9,9);
 	currentFOHTicketBooth.transform.localPosition = Vector3(36.07,0.3,8);
-	currentFOHDesk.transform.localPosition = Vector3(15.9,-15.9,7);
+	currentFOHDesk.transform.localPosition = Vector3(25.5,-6.45,7);
 	
+}
+function ChangePartSpecific (part:String, change:int) {
+	// The function to call when you want to change a part by any amount. This is the main function to be called from external scripts.
+	switch(part)
+	{
+		case "StageWall":
+			Debug.Log(change);
+			PlayerPrefs.SetInt("StageWallSelection",change);
+			Debug.Log(PlayerPrefs.GetInt("StageWallSelection"));
+			break;
+		case "StageFloor":
+			PlayerPrefs.SetInt("StageFloorSelection",change);
+			break;
+		case "Ceiling":
+			PlayerPrefs.SetInt("CeilingSelection",change);
+			break;
+		case "TheaterWall":
+			PlayerPrefs.SetInt("TheaterWallSelection",change);
+			break;
+		case "TheaterFloor":
+			PlayerPrefs.SetInt("TheaterFloorSelection",change);
+			break;
+		case "Curtain":
+			PlayerPrefs.SetInt("CurtainSelection",change);
+			break;
+		case "Chairs":
+			PlayerPrefs.SetInt("ChairsSelection",change);
+			break;
+		case "FOHWall":
+			PlayerPrefs.SetInt("FOHWallSelection",change);
+			break;
+		case "FOHFloor":
+			PlayerPrefs.SetInt("FOHFloorSelection",change);
+			break;
+		case "FOHBooze":
+			PlayerPrefs.SetInt("FOHBoozeSelection",change);
+			break;
+		case "FOHTicketBooth":
+			PlayerPrefs.SetInt("FOHTicketBoothSelection",change);
+			break;
+		case "FOHDesk":
+			PlayerPrefs.SetInt("FOHDeskSelection",change);
+			break;
+		default:
+			break;
+	}
+	Refresh(part,change);
 }
 
 function ChangePart (part:String, change:int) {
@@ -206,7 +253,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentStageFloor = Instantiate(stageFloor[PlayerPrefs.GetInt("StageFloorSelection")]);
 			currentStageFloor.transform.parent = theaterHolder.transform;
-			currentStageFloor.transform.localPosition = Vector3(15.9,-15.9,10);
+			currentStageFloor.transform.localPosition = Vector3(-3.3,-15.9,10);
 			currentStageFloor.transform.name = "StageFloor";
 			if(stageFloorAvailability[PlayerPrefs.GetInt("StageFloorSelection")]==false)
 			{
@@ -225,7 +272,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentCeiling = Instantiate(ceiling[PlayerPrefs.GetInt("CeilingSelection")]);
 			currentCeiling.transform.parent = theaterHolder.transform;
-			currentCeiling.transform.localPosition = Vector3(15.9,-15.9,8);
+			currentCeiling.transform.localPosition = Vector3(-1.8,3.3,8);
 			currentCeiling.transform.name = "Ceiling";
 			if(ceilingAvailability[PlayerPrefs.GetInt("CeilingSelection")]==false)
 			{
@@ -245,7 +292,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentTheaterWall = Instantiate(theaterWall[PlayerPrefs.GetInt("TheaterWallSelection")]);
 			currentTheaterWall.transform.parent = theaterHolder.transform;
-			currentTheaterWall.transform.localPosition = Vector3(15.9,-15.9,8);
+			currentTheaterWall.transform.localPosition = Vector3(-1.8,3.3,8);
 			currentTheaterWall.transform.name = "TheaterWall";
 			if(theaterWallAvailability[PlayerPrefs.GetInt("TheaterWallSelection")]==false)
 			{
@@ -264,7 +311,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentTheaterFloor = Instantiate(theaterFloor[PlayerPrefs.GetInt("TheaterFloorSelection")]);
 			currentTheaterFloor.transform.parent = theaterHolder.transform;
-			currentTheaterFloor.transform.localPosition = Vector3(15.9,-15.9,8);
+			currentTheaterFloor.transform.localPosition = Vector3(-1.8,-15.9,8);
 			currentTheaterFloor.transform.name = "TheaterFloor";
 			if(theaterFloorAvailability[PlayerPrefs.GetInt("TheaterFloorSelection")]==false)
 			{
@@ -302,7 +349,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentChairs = Instantiate(chairs[PlayerPrefs.GetInt("ChairsSelection")]);
 			currentChairs.transform.parent = theaterHolder.transform;
-			currentChairs.transform.localPosition = Vector3(15.9,-15.9,7);
+			currentChairs.transform.localPosition = Vector3(-3.3,-15.9,7);
 			currentChairs.transform.name = "Chairs";
 			if(chairsAvailability[PlayerPrefs.GetInt("ChairsSelection")]==false)
 			{
@@ -321,7 +368,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentFOHWall = Instantiate(FOHWall[PlayerPrefs.GetInt("FOHWallSelection")]);
 			currentFOHWall.transform.parent = FOHHolder.transform;
-			currentFOHWall.transform.localPosition = Vector3(15.9,-15.9,10);
+			currentFOHWall.transform.localPosition = Vector3(35.1,0.3,10);
 			currentFOHWall.transform.name = "FOHWall";
 			if(FOHWallAvailability[PlayerPrefs.GetInt("FOHWallSelection")]==false)
 			{
@@ -340,7 +387,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentFOHFloor = Instantiate(FOHFloor[PlayerPrefs.GetInt("FOHFloorSelection")]);
 			currentFOHFloor.transform.parent = FOHHolder.transform;
-			currentFOHFloor.transform.localPosition = Vector3(15.9,-15.9,10);
+			currentFOHFloor.transform.localPosition = Vector3(35.1,-15.9,10);
 			currentFOHFloor.transform.name = "FOHFloor";
 			if(FOHFloorAvailability[PlayerPrefs.GetInt("FOHFloorSelection")]==false)
 			{
@@ -359,7 +406,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentFOHBooze = Instantiate(FOHBooze[PlayerPrefs.GetInt("FOHBoozeSelection")]);
 			currentFOHBooze.transform.parent = FOHHolder.transform;
-			currentFOHBooze.transform.localPosition = Vector3(35.1,3.9,8);
+			currentFOHBooze.transform.localPosition = Vector3(25.5,3.9,9);
 			currentFOHBooze.transform.name = "FOHBooze";
 			if(FOHBoozeAvailability[PlayerPrefs.GetInt("FOHBoozeSelection")]==false)
 			{
@@ -397,7 +444,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentFOHDesk = Instantiate(FOHDesk[PlayerPrefs.GetInt("FOHDeskSelection")]);
 			currentFOHDesk.transform.parent = FOHHolder.transform;
-			currentFOHDesk.transform.localPosition = Vector3(15.9,-15.9,7);
+			currentFOHDesk.transform.localPosition = Vector3(25.5,-6.45,7);
 			currentFOHDesk.transform.name = "FOHDesk";
 			if(FOHDeskAvailability[PlayerPrefs.GetInt("FOHDeskSelection")]==false)
 			{

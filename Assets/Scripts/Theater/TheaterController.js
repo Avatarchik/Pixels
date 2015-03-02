@@ -27,11 +27,11 @@ function Update () {
 			transform.position = Vector2.MoveTowards(transform.position,Vector2(0,0),speed);
 			transform.position = Vector2.Lerp(transform.position,Vector2(0,0),speed/4);
 			
-			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(18,0,-5),speed);
-			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(18,0,-5),speed/4);
+			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(18,0,-5),speed*2);
+			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(18,0,-5),speed/2);
 			
-			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,15.6,-5),speed);
-			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,15.6,-5),speed/4);
+			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,15.6,-5),speed*2);
+			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,15.6,-5),speed/2);
 			
 			break;
 		case TheaterStatus.Front:
@@ -39,11 +39,11 @@ function Update () {
 			transform.position = Vector2.MoveTowards(transform.position,Vector2(-32,0),speed);
 			transform.position = Vector2.Lerp(transform.position,Vector2(-32,0),speed/4);
 			
-			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(18,0,-5),speed);
-			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(18,0,-5),speed/4);
+			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(18,0,-5),speed*2);
+			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(18,0,-5),speed/2);
 			
-			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,15.6,-5),speed);
-			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,15.6,-5),speed/4);
+			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,15.6,-5),speed*2);
+			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,15.6,-5),speed/2);
 			
 			break;
 		case TheaterStatus.HomeLedger:	
@@ -51,11 +51,11 @@ function Update () {
 			transform.position = Vector2.MoveTowards(transform.position,Vector2(0,0),speed);
 			transform.position = Vector2.Lerp(transform.position,Vector2(0,0),speed/4);
 			
-			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(10.2,0,2),speed);
-			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(10.2,0,2),speed/4);
+			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(10.2,0,2),speed*2);
+			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(10.2,0,2),speed/2);
 			
-			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,8.6,2),speed);
-			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,8.6,2),speed/4);
+			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,8.6,2),speed*2);
+			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,8.6,2),speed/2);
 			
 			break;
 		case TheaterStatus.FrontLedger:	
@@ -63,11 +63,11 @@ function Update () {
 			transform.position = Vector2.MoveTowards(transform.position,Vector2(-32,0),speed);
 			transform.position = Vector2.Lerp(transform.position,Vector2(-32,0),speed/4);
 			
-			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(10.2,0,2),speed);
-			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(10.2,0,2),speed/4);
+			ledgerRight.transform.position = Vector3.MoveTowards(ledgerRight.transform.position,Vector3(10.2,0,2),speed*2);
+			ledgerRight.transform.position = Vector3.Lerp(ledgerRight.transform.position,Vector3(10.2,0,2),speed/2);
 			
-			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,8.6,2),speed);
-			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,8.6,2),speed/4);
+			ledgerTop.transform.position = Vector3.MoveTowards(ledgerTop.transform.position,Vector3(0,8.6,2),speed*2);
+			ledgerTop.transform.position = Vector3.Lerp(ledgerTop.transform.position,Vector3(0,8.6,2),speed/2);
 			
 			break;
 		default:
