@@ -88,11 +88,11 @@ function FlatMovement () {
 function PlaySong () {
 	if(Master.initialLoad)
 	{
-		Audio.PlaySongIntro(intro,titleMusic,3.4);			
+		AudioManager.PlaySongIntro(intro,titleMusic,3.4);			
 	}
 	else
 	{
 		yield WaitForSeconds(.25);
-		Audio.PlaySongIntro(intro,titleMusic,3.4);
+		AudioManager.PlaySongIntro(intro,titleMusic,3.4);
 	}
 }

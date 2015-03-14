@@ -50,7 +50,7 @@ function Start () {
 	for(var i:int = 0; i < paperPile.Length; i++)
 	{
 		var newPaper:int;
-		if(difficulty > 1)
+		if(difficulty > 2)
 		{
 			newPaper = Random.Range(0,3);
 		}
@@ -69,7 +69,7 @@ function Start () {
 				paperValue[i] = 1;
 				break;
 			case 2:
-				paperPile[i] = Instantiate(trashPapers[Random.Range(0,redPapers.Length)],Vector3(startLocation.x,startLocation.y,transform.position.z - 3.5 + (i * (3.0/paperPile.Length))),Quaternion.identity);
+				paperPile[i] = Instantiate(trashPapers[Random.Range(0,trashPapers.Length)],Vector3(startLocation.x,startLocation.y,transform.position.z - 3.5 + (i * (3.0/paperPile.Length))),Quaternion.identity);
 				paperValue[i] = 2;
 				break;
 			default:
@@ -81,6 +81,8 @@ function Start () {
 	}
 	paperPile[0].GetComponent(ObjectMovementManager).allowMovement = true;
 	length = paperPile.Length * (1.2 - speed * .12);
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 	timer = length;
 }
 

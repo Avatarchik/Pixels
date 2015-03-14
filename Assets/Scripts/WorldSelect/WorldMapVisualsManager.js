@@ -7,13 +7,20 @@ var player:GameObject;
 var playerManager:PlayerManager;
 
 var playerDifference:float;
+static var wind:float;
 
 function Start () {
+	wind = 30;
 	playerManager = player.GetComponent(PlayerManager);
 	worldMapManager = worldMap.GetComponent(WorldMapManager);
 }
 
 function Update () {
+	wind -= Time.deltaTime * 10;
+	if(wind < -30)
+	{
+		wind = Random.Range(40,120);
+	}
 	transform.position = worldMap.transform.position;
 	player.transform.position.x = Mathf.MoveTowards(player.transform.position.x,0,Time.deltaTime * (3 + Mathf.Abs(player.transform.position.x * .2)));
 	playerManager.speed = .1;	

@@ -5,7 +5,7 @@ public enum WorldSelect{PackingPeanutFactory,Museum,Theater};
 var controller:Master;
 var transition:GameObject;
 var notification:GameObject;
-var curNotify:GameObject;
+private var curNotify:GameObject;
 var notified:boolean;
 var notificationText:String;
 
@@ -32,23 +32,28 @@ var instructions:GameObject;
 
 // Variables for Use
 var currentGames:GameObject[];
-var currentlyLoaded:GameObject;
-var numberAvoid:int;
-var previousGames:int[];
-var gameToLoad:int;
-var shuffled:boolean;
-var shuffleCount:int;
+private var currentlyLoaded:GameObject;
+private var numberAvoid:int;
+private var previousGames:int[];
+static var gameToLoad:int;
+private var shuffled:boolean;
+private var shuffleCount:int;
+static var movingBack:boolean;
 
 // Game change variables.
-var changeOrder:String;
-var smallAmount:int;
-var largeAmount:int;
+private var changeOrder:String;
+private var smallAmount:int;
+private var largeAmount:int;
+
+// First Time Variables
+static var gameNames:String[];
+static var firstTimeValues:boolean[];
 
 // Pausing Variables
 static var pausable:boolean;
 var paused:boolean;
 var menu:GameObject;
-var currentMenu:GameObject;
+private var currentMenu:GameObject;
 var fade:Renderer;
 
 // "Cutscene" variables
@@ -83,15 +88,25 @@ function Start () {
 	speed = 1;
 	
 	// Between game variables.
-	timeBeforeSuccessNotification = 1;
-	timeBeforeSpeedChange = 1;
-	timeIfSpeedChange = 3.5;
-	timeBeforeLevelLoad = 2;
+	timeBeforeSuccessNotification = .5;
+	timeBeforeSpeedChange = .75;
+	timeIfSpeedChange = 2.5;
+	timeBeforeLevelLoad = 1;
 	speedProgress = 0;
 	difficultyProgress = 0;
 	difficulty = 1;
 	gameNumber = 1;
 	notified = false;
+	movingBack = false;
+	
+	// "First time" variables.
+	gameNames = new String[currentGames.length];
+	firstTimeValues = new boolean[currentGames.length];
+	for(var gameNum:int = 0; gameNum < currentGames.length; gameNum++)
+	{
+		gameNames[gameNum] = currentGames[gameNum].transform.name;
+		firstTimeValues[gameNum] = false;
+	}
 	
 	// Pause variables.
 	pausable = false;
@@ -109,20 +124,21 @@ function Start () {
 function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
+	UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
 	yield WaitForSeconds (1);
 	if(PlayerPrefs.GetInt(controller.worldNameVar+"PlayedOnce") == 0)
 	{
-		Audio.PlaySound(controller.selectedWorldFirstTimeSong);
+		AudioManager.PlaySong(controller.selectedWorldFirstTimeSong);
 		loadedText = Instantiate(firstTimeText);
 	}
 	else
 	{
-		Audio.PlaySound(controller.selectedWorldRegularOpeningSong);
+		AudioManager.PlaySong(controller.selectedWorldRegularOpeningSong);
 		loadedText = Instantiate(regularOpeningText);
 	}
 	// Wait for the text to finish.
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
-	Audio.PlaySong(controller.selectedWorldMusic);
+	AudioManager.PlaySong(controller.selectedWorldMusic);
 	GetRandomGame();
 	yield WaitForSeconds(1);
 	LaunchLevel(0);
@@ -134,19 +150,21 @@ function BetweenGame () {
 	GetRandomGame();
 	yield WaitForSeconds(timeBeforeSuccessNotification);
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
+	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	// Say "Success" or "Failure."
 	if(failure) 
 	{
 		UI.BroadcastMessage("NotifySuccess", false,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Failure");
-		Audio.PlaySound(controller.selectedWorldFailureSound);
+		AudioManager.PlaySound(controller.selectedWorldFailureSound);
 		lives--;
+		UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
 	}
 	else
 	{
 		UI.BroadcastMessage("NotifySuccess", true,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Success");
-		Audio.PlaySound(controller.selectedWorldSuccessSound);
+		AudioManager.PlaySound(controller.selectedWorldSuccessSound);
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
 	if(lives <= 0)
@@ -183,24 +201,21 @@ function GameOver () {
 	if(PlayerPrefs.GetInt(controller.worldNameVar+"Beaten") == 0 && gameNumber >= 15)
 	{
 		PlayerPrefs.SetInt(controller.worldNameVar+"Beaten",1);
-		Audio.PlaySound(controller.selectedWorldBeatenSong);
+		AudioManager.PlaySound(controller.selectedWorldBeatenSong);
 		loadedText = Instantiate(beatenText);
 	}
 	else
 	{
-		Audio.PlaySound(controller.selectedWorldRegularClosingSong);
+		AudioManager.PlaySound(controller.selectedWorldRegularClosingSong);
 		loadedText = Instantiate(regularClosingText);
 	}
 	yield WaitForSeconds(.2);
-	Audio.StopSong();
-	while(!loadedText.GetComponent(TextManager).finished)
-	{
-		yield;
-	}
-	Audio.PlaySoundTransition(controller.selectedWorldTransitionOut);
+	AudioManager.StopSong();
+	while(!loadedText.GetComponent(TextManager).finished){yield;}
+	AudioManager.PlaySoundTransition(controller.selectedWorldTransitionOut);
 	Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
 	yield WaitForSeconds(.7);
-	Audio.StopSong();
+	AudioManager.StopSong();
 	yield WaitForSeconds(1.3);
 	Application.LoadLevel("WorldSelect");
 }
@@ -211,7 +226,7 @@ function GameOver () {
 
 function MoveAway () {
 	var countAway:int = 0;
-	while(countAway < gameCovers.length)
+	while(countAway < gameCovers.length && !movingBack)
 	{
 		countAway = 0;
 		for(var i:int = 0; i < gameCovers.Length; i++)
@@ -222,7 +237,7 @@ function MoveAway () {
 			}
 			else
 			{
-				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).destination, Time.deltaTime * 40);
+				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).destination, Time.deltaTime * 70);
 			}
 		}
 		yield;
@@ -232,6 +247,7 @@ function MoveAway () {
 
 function MoveBack () {
 	var countTowards:int = 0;
+	movingBack = true;
 	while(countTowards < gameCovers.length)
 	{
 		countTowards = 0;
@@ -243,11 +259,12 @@ function MoveBack () {
 			}
 			else
 			{
-				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).origin, Time.deltaTime * 40);
+				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).origin, Time.deltaTime * 70);
 			}
 		}
 		yield;
 	}
+	movingBack = false;
 	yield;
 }
 
@@ -278,32 +295,32 @@ function LaunchLevel (wait:float) {
 	{
 		Destroy(currentlyLoaded);
 	}
-	if(!paused)
+	while(paused){yield;}
+	
+	// Handles notification of speed or difficulty change.
+	DifficultSpeedCheck();
+	if(notified)
 	{
-		// Handles notification of speed or difficulty change.
-		DifficultSpeedCheck();
-		if(notified)
-		{
-			yield WaitForSeconds(timeIfSpeedChange);
-		}
-		notified = false;
-		BroadcastArray(gameCovers,"DisplayChange","Controls");
-		// Show instruction text and wait.
-		yield WaitForSeconds(timeBeforeLevelLoad/3);
-		Instantiate(instructions);
-		yield WaitForSeconds(wait + 2*timeBeforeLevelLoad/3);
-		StartCoroutine(MoveAway());
-		// Launch level.
-		currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);
-		GameManager.currentGame = currentlyLoaded;
-		// Shift list of previously loaded levels.
-		for(var x:int = numberAvoid - 1; x > 0; x--)
-		{
-			previousGames[x] = previousGames[x-1];
-		}
-		previousGames[0] = gameToLoad;
-		shuffled = false;
+		yield WaitForSeconds(timeIfSpeedChange);
 	}
+	notified = false;
+	BroadcastArray(gameCovers,"DisplayChange","Controls");
+	// Show instruction text and wait.
+	yield WaitForSeconds(timeBeforeLevelLoad/3);
+	Instantiate(instructions);
+	yield WaitForSeconds(wait + 2*timeBeforeLevelLoad/3);
+	UI.BroadcastMessage("TimerStart", gameNumber,SendMessageOptions.DontRequireReceiver);
+	StartCoroutine(MoveAway());
+	// Launch level.
+	currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);
+	GameManager.currentGame = currentlyLoaded;
+	// Shift list of previously loaded levels.
+	for(var x:int = numberAvoid - 1; x > 0; x--)
+	{
+		previousGames[x] = previousGames[x-1];
+	}
+	previousGames[0] = gameToLoad;
+	shuffled = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -385,13 +402,16 @@ function DifficultSpeedCheck() {
 				else if(difficultyProgress >= smallAmount) 
 				{
 					difficulty ++;
+					if(difficulty > 3)
+					{
+						difficulty = 3;
+					}
 					difficultyProgress = 0;
-					Notify("Difficulty\nUp!");
-					notified = true;
+					//Notify("Difficulty\nUp!");
+					//notified = true;
 				}
 			}
 			UI.BroadcastMessage("SpeedChange", speed,SendMessageOptions.DontRequireReceiver);
-			UI.BroadcastMessage("DifficultyChange", difficulty,SendMessageOptions.DontRequireReceiver);
 }
 
 function BroadcastArray(array:GameObject[],message:String,input:String){

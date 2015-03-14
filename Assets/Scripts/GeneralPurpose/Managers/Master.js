@@ -44,11 +44,11 @@ function Awake () {
 function Update () {
 	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
 	{
-		camera.orthographicSize = 9;
+		GetComponent.<Camera>().orthographicSize = 9;
 	}
 	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
 	{
-		camera.orthographicSize = 16;
+		GetComponent.<Camera>().orthographicSize = 16;
 	}
 }
 
@@ -132,6 +132,10 @@ function Initialize () {
 	if(!PlayerPrefs.HasKey("BottomColor"))
 	{
 		PlayerPrefs.SetInt("BottomColor", 0);
+	}
+	if(!PlayerPrefs.HasKey("BodyColor"))
+	{
+		PlayerPrefs.SetInt("BodyColor", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Theater Theater selection variables.
 	if(!PlayerPrefs.HasKey("StageWallSelection"))

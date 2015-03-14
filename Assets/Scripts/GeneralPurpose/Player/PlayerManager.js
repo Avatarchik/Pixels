@@ -22,6 +22,7 @@ var hairColor:Color[];
 var eyesColor:Color[];
 var topsColor:Color[];
 var bottomsColor:Color[];
+var bodyColor:Color[];
 
 // Current instantiated sprite sheets.
 var currentHair:GameObject;
@@ -35,6 +36,7 @@ function Start () {
 	UpdateAvailability();
 	UnlockAllOptions();
 	UpdateAvailability();
+	
 	// Instantiates and colors all paper doll sprites, scales them correctly, and parents them to the player.
 	currentHair = Instantiate(hair[PlayerPrefs.GetInt("HairSelection")],transform.position-Vector3(0,0,.08),Quaternion.identity);
 		currentHair.transform.localScale = transform.lossyScale;
@@ -52,6 +54,11 @@ function Start () {
 		currentBottom.transform.localScale = transform.lossyScale;
 		currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
 		currentBottom.transform.parent = transform;
+	if(PlayerPrefs.GetInt("BodyColor") < bodyColor.Length)
+	{
+		GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+	}
+	
 	Save();
 }
 
@@ -93,6 +100,9 @@ function ChangeColor(part:String, color:int) {
 			break;
 		case "bottom":
 			PlayerPrefs.SetInt("BottomColor",color);
+			break;
+		case "body":
+			PlayerPrefs.SetInt("BodyColor",PlayerPrefs.GetInt("BodyColor") + 1);
 			break;
 		default:
 			break;
@@ -182,11 +192,18 @@ function Refresh(part:String, change:int) {
 				ChangePart("bottom",change);
 			}
 			break;
+		case "body":
+			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
+			{
+				PlayerPrefs.SetInt("BodyColor",0);
+			}
+			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+			break;
 	}
 }
 
 function Save () {
-	save = [PlayerPrefs.GetInt("HairSelection"),PlayerPrefs.GetInt("EyesSelection"),PlayerPrefs.GetInt("TopSelection"),PlayerPrefs.GetInt("BottomSelection"),PlayerPrefs.GetInt("HairColor"),PlayerPrefs.GetInt("EyesColor"),PlayerPrefs.GetInt("TopColor"),PlayerPrefs.GetInt("BottomColor")];
+	save = [PlayerPrefs.GetInt("HairSelection"),PlayerPrefs.GetInt("EyesSelection"),PlayerPrefs.GetInt("TopSelection"),PlayerPrefs.GetInt("BottomSelection"),PlayerPrefs.GetInt("HairColor"),PlayerPrefs.GetInt("EyesColor"),PlayerPrefs.GetInt("TopColor"),PlayerPrefs.GetInt("BottomColor"),PlayerPrefs.GetInt("BodyColor")];
 }
 
 function Revert () {
@@ -199,11 +216,13 @@ function Revert () {
 	PlayerPrefs.SetInt("EyesColor",save[5]);
 	PlayerPrefs.SetInt("TopColor",save[6]);
 	PlayerPrefs.SetInt("BottomColor",save[7]);
+	PlayerPrefs.SetInt("BodyColor",save[8]);
 	
 	Refresh("hair");
 	Refresh("eyes");
 	Refresh("top");
 	Refresh("bottom");
+	Refresh("body");
 }
 
 public function UpdateAvailability () {

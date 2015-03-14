@@ -38,13 +38,27 @@ function Clicked () {
 		if(transition != null && !done)
 		{
 			var controller:Master = Camera.main.GetComponent(Master);
-			Audio.PlaySoundTransition(controller.selectedWorldTransitionOut);
-			Camera.main.GetComponent(Master).worldNameLine1 = " ";
+			AudioManager.PlaySoundTransition(controller.selectedWorldTransitionOut);
 			Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
 			done = true;
 		}
 		yield WaitForSeconds(.7);
-		Audio.StopSong();
+		AudioManager.StopSong();
+		yield WaitForSeconds(1.3);
+		Application.LoadLevel("WorldSelect");
+	}
+	else if(leave && vertical && TheaterController.currentState != TheaterStatus.HomeLedger)
+	{
+		Debug.Log("hey");
+		if(transition != null && !done)
+		{
+			controller = Camera.main.GetComponent(Master);
+			AudioManager.PlaySoundTransition(controller.selectedWorldTransitionOut);
+			Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
+			done = true;
+		}
+		yield WaitForSeconds(.7);
+		AudioManager.StopSong();
 		yield WaitForSeconds(1.3);
 		Application.LoadLevel("WorldSelect");
 	}

@@ -46,6 +46,8 @@ function Start () {
 	}
 	
 	length = 3 + 3/speed;
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 	timer = length;
 	PlayerManager.speed = .05;
 	Play();

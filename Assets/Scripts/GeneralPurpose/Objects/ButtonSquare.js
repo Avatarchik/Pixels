@@ -15,6 +15,10 @@ var subText:GameObject;
 var textOrigin:Vector3;
 var textOffset:Vector3;
 
+var clickSound:AudioClip;
+var click:boolean;
+var volume:float;
+
 function Start () {
 	if(subText != null)
 	{
@@ -38,6 +42,10 @@ function Update () {
 				if(button.Contains(Vector3(Finger.GetPosition(i).x,Finger.GetPosition(i).y,0)) && Finger.GetPhase(i) == TouchPhase.Began)
 				{
 					startPosition = Vector3(Finger.GetPosition(i).x,Finger.GetPosition(i).y,0);
+					if(click && clickSound != null)
+					{
+						AudioManager.PlaySound(clickSound,volume);
+					}
 					importantFinger = i;
 					if(down!=null && GetComponent(SpriteRenderer)!=null)
 					{
@@ -77,7 +85,6 @@ function Update () {
 		// Touch button with importantFinger.
 		if(!WorldMapManager.mapMove && Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) < button.extents.x && button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{
-			Debug.Log(transform.name);
 			// This is where clicking happens.
 			gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 			if(up!=null && GetComponent(SpriteRenderer)!=null)

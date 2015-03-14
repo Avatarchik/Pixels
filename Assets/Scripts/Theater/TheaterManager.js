@@ -38,25 +38,26 @@ var FOHTicketBooth:GameObject[];
 var FOHDesk:GameObject[];
 
 // Theater availability arrays.
-private var stageWallAvailability:boolean[];
-private var stageFloorAvailability:boolean[];
-private var ceilingAvailability:boolean[];
-private var theaterWallAvailability:boolean[];
-private var theaterFloorAvailability:boolean[];
-private var curtainAvailability:boolean[];
-private var chairsAvailability:boolean[];
+static var stageWallAvailability:boolean[];
+static var stageFloorAvailability:boolean[];
+static var ceilingAvailability:boolean[];
+static var theaterWallAvailability:boolean[];
+static var theaterFloorAvailability:boolean[];
+static var curtainAvailability:boolean[];
+static var chairsAvailability:boolean[];
 
 // FOH availability arrays.
-private var FOHWallAvailability:boolean[];
-private var FOHFloorAvailability:boolean[];
-private var FOHBoozeAvailability:boolean[];
-private var FOHTicketBoothAvailability:boolean[];
-private var FOHDeskAvailability:boolean[];
+static var FOHWallAvailability:boolean[];
+static var FOHFloorAvailability:boolean[];
+static var FOHBoozeAvailability:boolean[];
+static var FOHTicketBoothAvailability:boolean[];
+static var FOHDeskAvailability:boolean[];
 
 function Start () {
 	// Lock of unlock all pieces, and activate availability.
 	UpdateAvailability();
 	UnlockAllOptions();
+	LockAllOptions();
 	UpdateAvailability();
 	
 	// Create all pieces.
@@ -818,4 +819,30 @@ function LockAllOptions () {
 	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[0].name,1);
 	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[0].name,1);
 	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[0].name,1);
+	
+	PlayerPrefs.SetInt("StageWall:"+stageWall[1].name,1);
+	PlayerPrefs.SetInt("StageFloor:"+stageFloor[1].name,1);
+	PlayerPrefs.SetInt("Ceiling:"+ceiling[1].name,1);
+	PlayerPrefs.SetInt("TheaterWall:"+theaterWall[1].name,1);
+	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[1].name,1);
+	PlayerPrefs.SetInt("Curtain:"+curtain[1].name,1);
+	PlayerPrefs.SetInt("Chairs:"+chairs[1].name,1);
+	PlayerPrefs.SetInt("FOHWall:"+FOHWall[1].name,1);
+	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[1].name,1);
+	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[1].name,1);
+	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[1].name,1);
+	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[1].name,1);
+	
+	PlayerPrefs.SetInt("StageWall:"+stageWall[2].name,1);
+	PlayerPrefs.SetInt("StageFloor:"+stageFloor[2].name,1);
+	PlayerPrefs.SetInt("Ceiling:"+ceiling[2].name,1);
+	PlayerPrefs.SetInt("TheaterWall:"+theaterWall[2].name,1);
+	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[2].name,1);
+	PlayerPrefs.SetInt("Curtain:"+curtain[2].name,1);
+	PlayerPrefs.SetInt("Chairs:"+chairs[2].name,1);
+	PlayerPrefs.SetInt("FOHWall:"+FOHWall[2].name,1);
+	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[2].name,1);
+	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[2].name,1);
+	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[2].name,1);
+	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[2].name,1);
 }

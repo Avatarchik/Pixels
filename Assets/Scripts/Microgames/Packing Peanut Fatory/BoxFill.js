@@ -19,6 +19,8 @@ var boxSpeed:float;
 var progress:int;
 var goal:int;
 
+var length:float;
+
 
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
@@ -35,7 +37,7 @@ function Start () {
 	peanutsTarget = new float[peanuts.Length];
 	peanutsFree = new int[peanuts.Length];
 	currentPeanut = 0;
-	boxes = new GameObject[peanuts.Length + (5 - difficulty)];
+	boxes = new GameObject[peanuts.Length + (9 - difficulty)];
 	for(var i:int = 0; i < peanuts.Length; i++)
 	{
 		peanuts[i] = Instantiate(peanutBundlePrefab, injector.transform.position + Vector3(Random.Range(-.2,.3),-3 + (i * 1.3),.1), Quaternion.identity);
@@ -46,15 +48,19 @@ function Start () {
 	}
 	for(var y:int = 0; y < boxes.Length; y++)
 	{
-		boxes[y] = Instantiate(boxPrefab, transform.position - Vector3(12 + ((y * 6) + speed * 2),2.5,2), Quaternion.identity);
+		boxes[y] = Instantiate(boxPrefab, transform.position - Vector3(12 + ((y * 6) + speed * 2),4.5,2), Quaternion.identity);
 		boxes[y].transform.parent = transform;
 	}
 	progress = 0;
 	goal = peanuts.Length;
 	boxSpeed = Time.deltaTime * (speed * 3 + 5);
+	length = Mathf.Abs(boxes[boxes.length-1].transform.position.x-3)/(speed * 3 + 5);	
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 }
 
 function Update () {
+	Debug.Log(speed);
 	if(Input.GetKeyDown("space"))
 	{
 		Clicked();
@@ -79,7 +85,7 @@ function Update () {
 		boxes[y].transform.position.x += boxSpeed;
 		for(var x:int = 0; x < peanuts.Length; x++)
 		{
-			if(peanuts[x].transform.position.y < -.5 && peanuts[x].transform.position.y > -1.3 && Mathf.Abs(boxes[y].transform.position.x) < 1.4)
+			if(peanuts[x].transform.position.y < -2.5 && peanuts[x].transform.position.y > -3.3 && Mathf.Abs(boxes[y].transform.position.x) < 1.8)
 			{
 				peanuts[x].transform.parent = boxes[y].transform;
 				peanutsFree[x] = 2;

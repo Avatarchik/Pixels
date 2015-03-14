@@ -18,13 +18,13 @@ function Load () {
 	if(transition != null && !done)
 	{
 		controller = Camera.main.GetComponent(Master);
-		Audio.PlaySoundTransition(controller.selectedWorldTransitionIn);
+		AudioManager.PlaySoundTransition(controller.selectedWorldTransitionIn);
 		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
 		done = true;
 	}
 	yield WaitForSeconds(.7);
-	Audio.StopSong();
-	yield WaitForSeconds(1.3);
+	AudioManager.StopSong();
+	yield WaitForSeconds(1);
 	if(controller.selectedWorld == WorldSelect.Theater)
 	{
 		Application.LoadLevel("Theater");

@@ -1,4 +1,6 @@
 ﻿#pragma strict
+var speed:float;
+var difficultyAmount:int;
 
 // Variable Types
 var controller:TestMaster;
@@ -51,10 +53,8 @@ function Start () {
 	lives = controller.lives;
 	
 	// Microgame variables.
-	if(timeMultiplier == null || timeMultiplier < 7)
-	{
-		timeMultiplier = 2;
-	}
+	timeMultiplier = speed;
+	difficulty = difficultyAmount;
 	
 	// Between game variables.
 	if(speedChange == 0)
@@ -74,7 +74,6 @@ function Start () {
 		timeIfSpeedChange = .4;
 	}
 	speedProgress = 2;
-	difficulty = 3;
 	gameNumber = 1;
 	pausable = true;
 	paused = false;
@@ -140,11 +139,13 @@ function BetweenGame () {
 function GameComplete (success:boolean) {
 	if(success)
 	{
+		Debug.Log("SUCCESS");
 		failure = false;
 		speedProgress++;
 	}
 	else
 	{
+		Debug.Log("FAILURE");
 		speedProgress = 0;
 		failure = true;
 	}

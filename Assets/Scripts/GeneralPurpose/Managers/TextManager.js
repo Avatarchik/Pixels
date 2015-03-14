@@ -10,7 +10,9 @@ private var spriteObjects:GameObject[];
 var targetTimes:float[];
 var textTypeSpeed:float = 1;
 var automatic:boolean;
+var endCounter:int;
 var finished:boolean;
+var skipBox:Transform;
 
 var lineLength:int;
 var numberOfLines:int;
@@ -30,6 +32,7 @@ function Start () {
 	dialogueMarker = 0;
 	numberOfLetters = 0;
 	current = 0;
+	endCounter = 0;
 	finished = false;
 	doneLine = false;
 	while(transform.position.x < -7.74)
@@ -56,6 +59,10 @@ function Start () {
 
 function Update () {
 	//Debug.Log(Time.time);
+	if(Input.GetKeyDown("space"))
+	{
+		Clicked();
+	}
 }
 
 // Updates the shown text. This should be edited if the TextMesh object is not attached to the same
@@ -63,6 +70,19 @@ function Update () {
 function UpdateSet () {
 	while(true)
 	{
+		// Clickable ending code.
+		if(endCounter == 1)
+		{
+			skipBox.position.y = Mathf.MoveTowards(skipBox.transform.position.y, 14, Time.deltaTime*15);
+		}
+		else
+		{
+			skipBox.position.y = Mathf.MoveTowards(skipBox.transform.position.y, 18.5, Time.deltaTime*15);
+		}
+		if(endCounter >= 2)
+		{
+			finished = true;
+		}
 		if(numberOfLetters < currentDialogue[current].ToString().Length)
 		{
 			GetComponent(TextMesh).text = currentDialogue[current].ToString().Remove(numberOfLetters);
@@ -78,6 +98,7 @@ function UpdateSet () {
 		}
 		if(transform.position.x == 30)
 		{
+			//AudioManager.StopSong();
 			Destroy(gameObject);
 		}
 		yield;
@@ -86,7 +107,7 @@ function UpdateSet () {
 }
 
 function UpdateSprites(number:int) {
-	if(leftSprites.Length >= dialogueMarker && rightSprites.Length >= dialogueMarker && spriteObjects.Length == 2 && currentSpeaker.Length >= dialogueMarker)
+	if(leftSprites.Length >= dialogueMarker && rightSprites.Length >= dialogueMarker && spriteObjects.Length == 2 && currentSpeaker.Length >= dialogueMarker && !finished)
 	{
 		if(leftSprites[number]!=null)
 		{
@@ -250,5 +271,14 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 }
 
 function Clicked () {
-	//numberOfLetters = currentDialogue[current].ToString().Length;
+	if(endCounter != 1 || skipBox.transform.position.y == 14)
+	{
+		endCounter ++;
+		UnClick();
+	}
+}
+
+function UnClick() {
+	yield WaitForSeconds(3);
+	endCounter --;
 }

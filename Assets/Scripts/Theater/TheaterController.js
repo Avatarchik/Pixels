@@ -13,9 +13,12 @@ var controller:Master;
 
 function Start () {
 	controller = Camera.main.GetComponent(Master);
-	Audio.PlaySongIntro(null,controller.selectedWorldMusic,1);
+	AudioManager.PlaySongIntro(null,controller.selectedWorldMusic,0);
 	currentState = TheaterStatus.Home;
 	speed = Time.deltaTime * 5;
+	Camera.main.GetComponent(Master).worldNameLine1 = " ";
+	Camera.main.GetComponent(Master).worldNameLine2 = " ";
+	Camera.main.GetComponent(Master).worldNameFull = " ";
 }
 
 function Update () {

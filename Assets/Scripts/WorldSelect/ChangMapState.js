@@ -38,7 +38,6 @@ function Start () {
 	}
 }
 
-
 function Clicked () {
 	switch(newState)
 	{
@@ -62,7 +61,7 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
-			if(PlayerPrefs.GetInt(worldNameVar) == 1)
+			if(PlayerPrefs.GetInt(worldNameVar) == 1 && WorldMapManager.allowClick)
 			{
 				controller = Camera.main.GetComponent(Master);
 				controller.selectedWorld = thisWorld;

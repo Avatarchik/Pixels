@@ -15,6 +15,7 @@ private var startPosition:Vector3;
 private var mapMoveSpeed:float;
 private var worlds:Transform[];
 private var closestWorld:int;
+static var allowClick:boolean;
 
 // Confirmation
 var ticket:GameObject;
@@ -28,7 +29,7 @@ private var showNot:Vector3;
 private var hideNot:Vector3;
 
 function Start () {
-	Audio.PlaySongIntro(null,worldMusic,1);	
+	AudioManager.PlaySongIntro(null,worldMusic,1);	
 	worlds = new Transform[transform.childCount];
 	for(var i:int = 0; i < worlds.length; i++)
 	{
@@ -51,7 +52,7 @@ function Update () {
 	{
 		case MapStatus.Clear:
 			hideTicket();
-			fade.material.color.a = Mathf.MoveTowards(fade.renderer.material.color.a, 0, Time.deltaTime);
+			fade.material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
 			if(importantFinger == -1)
 			{
 				for(var i:int = 0; i < Finger.identity.length; i++)
@@ -80,9 +81,14 @@ function Update () {
 			}
 			else
 			{
-				if(Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) > 3)
+				if(Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) > 2)
 				{
 					mapMove = true;
+					allowClick = false;
+				}
+				else
+				{
+					allowClick = true;
 				}
 				if(!Finger.GetExists(importantFinger))
 				{
@@ -115,12 +121,17 @@ function Update () {
 			break;
 		case MapStatus.Confirmation:
 			showTicket();
+			if(Mathf.Abs(transform.position.x - (worlds[closestWorld].localPosition.x * transform.localScale.x * -1)) < 8 && Mathf.Abs(cameraVelocity) < 10)
+			{
+				transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*2);
+				transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.5);
+			}
 			break;
 		case MapStatus.Menu:
-			fade.renderer.material.color.a = Mathf.MoveTowards(fade.renderer.material.color.a, .4, Time.deltaTime);
+			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, .4, Time.deltaTime);
 			break;
 		case MapStatus.Returning:
-			fade.renderer.material.color.a = Mathf.MoveTowards(fade.renderer.material.color.a, 0, Time.deltaTime);
+			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
 			break;
 		default:
 			break;

@@ -216,10 +216,14 @@ function ReturnToTitle() {
 		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
 		if(Application.loadedLevelName == "WorldSelect")
 		{
-			Audio.PlaySoundTransition(transitionToTitle);
+			AudioManager.PlaySoundTransition(transitionToTitle);
+		}
+		else
+		{
+			AudioManager.PlaySoundTransition(Camera.main.GetComponent(Master).selectedWorldTransitionOut);
 		}
 		yield WaitForSeconds(.7);
-		Audio.StopSong();
+		AudioManager.StopSong();
 		yield WaitForSeconds(1);
 		if(Application.loadedLevelName == "WorldSelect")
 		{

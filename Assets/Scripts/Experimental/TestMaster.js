@@ -13,10 +13,10 @@ function Awake () {
 function Update () {
 	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight) 
 	{
-		camera.orthographicSize = 9;
+		GetComponent.<Camera>().orthographicSize = 9;
 	}
 	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
 	{
-		camera.orthographicSize = 16;
+		GetComponent.<Camera>().orthographicSize = 16;
 	}
 }

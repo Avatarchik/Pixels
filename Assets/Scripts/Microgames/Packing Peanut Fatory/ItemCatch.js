@@ -27,6 +27,8 @@ function Start () {
 	}
 	finished = false;
 	length = 3 + 5/speed;
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 	timer = length;
 	newPosition = 0;
 	button = GetComponent(ButtonSquare);
@@ -53,7 +55,7 @@ function Update () {
 				if(Mathf.Abs(objectsOnScreen[i].transform.position.x-crate.transform.position.x) < 4)
 				{
 					objectsOnScreenTarget[i] = true;
-					objectsOnScreen[i].particleSystem.Emit(15);
+					objectsOnScreen[i].GetComponent.<ParticleSystem>().Emit(15);
 				}
 			}
 			if(!objectsOnScreenTarget[i])

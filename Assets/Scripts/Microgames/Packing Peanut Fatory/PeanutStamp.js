@@ -68,7 +68,9 @@ function Start () {
 	oreCount = 0;
 	skipTimer = 0;
 	goal = platforms.Length;
-	length = 5 + 3/speed;
+	length = 3 + 2/speed + (1.5 * (difficulty - 1));
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 	for(i = 0; i < platforms.Length; i++)
 	{
 		if(objectValues[i] == 2)
@@ -112,7 +114,7 @@ function Update () {
 			skipTimer += Time.deltaTime;
 		}
 	}
-	if(skipTimer > 1.4 - speed * .2)
+	if(skipTimer > length / platforms.Length)
 	{
 		Stamp(false);
 	}
@@ -157,7 +159,7 @@ function Stamp(skip:boolean) {
 			switch(objectValues[currentPlatform])
 			{
 				case 0:
-					peanuts.particleSystem.Emit(5);
+					peanuts.GetComponent.<ParticleSystem>().Emit(10);
 					if(currentPlatform != platforms.Length)
 					{
 						object[currentPlatform].GetComponent(SpriteRenderer).sprite = oreSprite[3];
@@ -167,7 +169,7 @@ function Stamp(skip:boolean) {
 				case 1:	
 					if(skip)
 					{
-						shards.particleSystem.Emit(5);
+						shards.GetComponent.<ParticleSystem>().Emit(10);
 						Finish(false);
 					}
 					else
@@ -177,7 +179,7 @@ function Stamp(skip:boolean) {
 					}
 					break;
 				case 2:
-					peanuts.particleSystem.Emit(5);
+					peanuts.GetComponent.<ParticleSystem>().Emit(5);
 					if(oreCount < 2)
 					{
 						object[currentPlatform].GetComponent(SpriteRenderer).sprite = oreSprite[oreCount+1];

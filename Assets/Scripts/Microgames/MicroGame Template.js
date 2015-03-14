@@ -19,6 +19,8 @@ function Start () {
 	}
 	length = 3 + 5/speed;
 	timer = length;
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 	Play();
 }
 

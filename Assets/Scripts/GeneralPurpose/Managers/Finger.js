@@ -51,10 +51,11 @@ function Update () {
 					if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
 					{
 						identity[y] = -1;
+						velocity[y] = Vector2.zero;
 					}
 					else
 					{
-						location[y] = camera.ScreenToWorldPoint(Vector3(touch.position.x, touch.position.y, 0));
+						location[y] = GetComponent.<Camera>().ScreenToWorldPoint(Vector3(touch.position.x, touch.position.y, 0));
 						phase[y] = touch.phase;
 						if(location[y].x < 9 && location[y].x > -9 && location[y].y < 9 && location[y].y > -9)
 						{
@@ -112,5 +113,12 @@ static function GetPhase (finger:int) : TouchPhase {
 //Function to find a finger's velocity.
 
 static function GetVelocity (finger:int) : Vector2 {
-	return(Vector2(velocity[finger].x,velocity[finger].y));
+	if(velocity[finger] != null && velocity[finger] != Vector2.zero)
+	{
+		return(Vector2(velocity[finger].x,velocity[finger].y));
+	}
+	else
+	{
+		return Vector2(0,0);
+	}
 }

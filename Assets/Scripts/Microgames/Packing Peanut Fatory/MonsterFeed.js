@@ -27,7 +27,14 @@ var peanutEmitter:GameObject;
 var monsterSprites:Sprite[];
 var aimSprites:Sprite[];
 
+var warningSprites:Sprite[];
+var warningHolder:int;
+var warningRenderer:SpriteRenderer;
+var warningCounter:float;
+
 function Start () {
+	warningHolder = 0;
+	warningCounter = .2;
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;
@@ -39,7 +46,14 @@ function Start () {
 		difficulty = GameManager.difficulty;
 	}
 	
-	aim.GetComponent(SpriteRenderer).sprite = aimSprites[difficulty-1];
+	if(difficulty < 4)
+	{
+		aim.GetComponent(SpriteRenderer).sprite = aimSprites[difficulty-1];
+	}
+	else
+	{
+		aim.GetComponent(SpriteRenderer).sprite = aimSprites[2];
+	}	
 	aimAmountComplete = aimAmount.transform.localScale.y;
 	goal = 68.5;
 	goalLeniency = [27,15.5,8.5];
@@ -55,7 +69,9 @@ function Start () {
 		point.transform.position.y = pointerBottom;
 	}
 	currentLevel = goal;
-	length = 6 - speed;
+	length = 5 - speed/3;
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 	timer = length;
 	for(var point:GameObject in pointer)
 	{
@@ -90,10 +106,17 @@ function Play () {
 		if(Mathf.Abs(currentLevel - goal) > goalLeniency[difficulty-1])
 		{
 			monsterTimer -= Time.deltaTime;
+			Warning();
+		}
+		else
+		{
+			warningRenderer.sprite = warningSprites[0];
+			warningHolder = 0;
+			warningCounter = 0;
 		}
 		if(monsterTimer < 1 && monsterTimer > .5)
 		{
-			monsterShake = .2;
+			monsterShake = .1;
 			monster.GetComponent(SpriteRenderer).sprite = monsterSprites[1];
 		}
 		else if(monsterTimer < .5 && monsterTimer > 0)
@@ -111,12 +134,26 @@ function Play () {
 	yield;
 }
 
+function Warning() {
+	if(warningCounter <= 0)
+	{
+		warningHolder ++;
+		if(warningHolder >= warningSprites.Length)
+		{
+			warningHolder = 1;
+		}
+		warningRenderer.sprite = warningSprites[warningHolder];
+		warningCounter = .2;
+	}
+	warningCounter -= Time.deltaTime;
+}
+
 function Clicked() {
-	peanutEmitter.particleSystem.Emit(1);
-	var particleList:ParticleSystem.Particle[] = new ParticleSystem.Particle[peanutEmitter.particleSystem.particleCount];
-	peanutEmitter.particleSystem.GetParticles(particleList);
+	peanutEmitter.GetComponent.<ParticleSystem>().Emit(1);
+	var particleList:ParticleSystem.Particle[] = new ParticleSystem.Particle[peanutEmitter.GetComponent.<ParticleSystem>().particleCount];
+	peanutEmitter.GetComponent.<ParticleSystem>().GetParticles(particleList);
 	particleList[particleList.Length-1].rotation = Random.Range(0,4) * 90;
-	peanutEmitter.particleSystem.SetParticles(particleList,peanutEmitter.particleSystem.particleCount);
+	peanutEmitter.GetComponent.<ParticleSystem>().SetParticles(particleList,peanutEmitter.GetComponent.<ParticleSystem>().particleCount);
 	currentLevel += 5;
 }
 
