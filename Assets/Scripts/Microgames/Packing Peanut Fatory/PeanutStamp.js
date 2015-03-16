@@ -68,17 +68,17 @@ function Start () {
 	oreCount = 0;
 	skipTimer = 0;
 	goal = platforms.Length;
-	length = 3 + 2/speed + (1.5 * (difficulty - 1));
-	UITimer.currentTarget = length;
-	UITimer.counter = 0;
+	length = 4 + 2/speed + (3 * (difficulty - 1));
 	for(i = 0; i < platforms.Length; i++)
 	{
 		if(objectValues[i] == 2)
 		{	
 			object[i].GetComponent(SpriteRenderer).sprite = oreSprite[oreCount];
-			length += 1;
+			length += 1.5;
 		}
 	}
+	UITimer.currentTarget = length;
+	UITimer.counter = 0;
 	timer = length;
 }
 

@@ -16,7 +16,6 @@ function Start () {
 function Update () {
 	counter += Time.deltaTime;
 	
-	Debug.Log(currentTarget);
 	//Debug.Log(Mathf.Floor((counter*sprites.length)/currentTarget));
 	
 	if(Mathf.Floor(((counter*sprites.length)/currentTarget)/2) < sprites.Length && active)
