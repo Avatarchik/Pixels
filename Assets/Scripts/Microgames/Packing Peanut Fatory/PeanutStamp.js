@@ -90,12 +90,14 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
+		finished = true;
 		Finish(false);
 	}
 	if(currentPlatform == platforms.Length)
 	{
 		if(!finished)
 		{
+			finished = true;
 			Finish(true);
 		}
 	}
@@ -114,7 +116,7 @@ function Update () {
 			skipTimer += Time.deltaTime;
 		}
 	}
-	if(skipTimer > length / platforms.Length)
+	if(skipTimer > 1.35 - (speed * .15))
 	{
 		Stamp(false);
 	}
@@ -170,7 +172,11 @@ function Stamp(skip:boolean) {
 					if(skip)
 					{
 						shards.GetComponent.<ParticleSystem>().Emit(10);
-						Finish(false);
+						if(!finished)
+						{
+							finished = true;
+							Finish(false);
+						}
 					}
 					else
 					{

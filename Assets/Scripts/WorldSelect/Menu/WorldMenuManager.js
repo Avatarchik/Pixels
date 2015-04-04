@@ -10,6 +10,7 @@ var transition:GameObject;
 var transitionColors:Color[];
 var destination:float;
 
+
 function Start () {
 	if(!PlayerPrefs.HasKey("Sound"))
 	{
@@ -33,6 +34,7 @@ function Start () {
 	{
 		destination = 0;
 	}
+	
 }
 
 function Update () {
@@ -58,7 +60,8 @@ function MenuEffect(clicked:String) {
 			{
 				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).fade.material.color.a = 0;
 				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused = false;
-				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).LaunchLevel(.3);
+				Time.timeScale = 1;
+				//GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).LaunchLevel(.3);
 			}
 			else if(Application.loadedLevelName == "WorldSelect")
 			{
@@ -222,6 +225,7 @@ function ReturnToTitle() {
 		{
 			AudioManager.PlaySoundTransition(Camera.main.GetComponent(Master).selectedWorldTransitionOut);
 		}
+		Time.timeScale = 1;
 		yield WaitForSeconds(.7);
 		AudioManager.StopSong();
 		yield WaitForSeconds(1);

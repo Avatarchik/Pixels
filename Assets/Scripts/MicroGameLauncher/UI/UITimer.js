@@ -22,7 +22,7 @@ function Update () {
 	{
 		GetComponent(SpriteRenderer).sprite = sprites[Mathf.Floor(((counter*sprites.length)/currentTarget)/2)];
 	}
-	else
+	else if(!active)
 	{
 		GetComponent(SpriteRenderer).sprite = sprites[0];
 	}	

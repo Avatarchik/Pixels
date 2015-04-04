@@ -2,37 +2,98 @@
 
 static var initialLoad:boolean;
 
-var selectedWorld:WorldSelect;
-var worldNameFull:String;
-var worldNameVar:String;
-var worldNameLine1:String;
-var worldNameLine2:String;
-var selectedWorldGames:GameObject[];
-var selectedWorldCovers:GameObject[];
-var selectedWorldColors:Color[];
-var selectedWorldUI:GameObject;
-var selectedWorldFirstTimeText:GameObject;
-var selectedWorldRegularOpeningText:GameObject;
-var selectedWorldBeatenText:GameObject;
-var selectedWorldRegularClosingText:GameObject;
-var selectedWorldTransitionIn:AudioClip;
-var selectedWorldTransitionOut:AudioClip;
-var selectedWorldMusic:AudioClip[];
-var selectedWorldFirstTimeSong:AudioClip;
-var selectedWorldRegularOpeningSong:AudioClip;
-var selectedWorldBeatenSong:AudioClip;
-var selectedWorldRegularClosingSong:AudioClip;
-var selectedWorldSuccessSound:AudioClip;
-var selectedWorldFailureSound:AudioClip;
+static var selectedWorld:WorldSelect;
+static var worldNameFull:String;
+static var worldNameVar:String;
+static var worldNameLine1:String;
+static var worldNameLine2:String;
+static var selectedWorldGames:GameObject[];
+static var selectedWorldBossGame:GameObject;
+static var selectedWorldCovers:GameObject[];
+static var selectedWorldColors:Color[];
+static var selectedWorldUI:GameObject;
 
-var initialWorldSpeed:int;
-var speedIncrease:int;
-var lives:int;
-var worldColors:Color[];
+static var selectedWorldMusic:AudioClip[];
+static var selectedWorldTransitionIn:AudioClip;
+static var selectedWorldTransitionOut:AudioClip;
+static var selectedWorldSpeedUp:AudioClip;
+static var selectedWorldFailSound:AudioClip;
+static var selectedWorldSuccessSound:AudioClip;
+static var selectedWorldBossGameSounds:AudioClip[];
+
+static var selectedWorldFirstOpening:GameObject;
+static var selectedWorldRegularOpening:GameObject;
+static var selectedWorldEnd1:GameObject;
+static var selectedWorldEnd2:GameObject;
+static var selectedWorldEnd3:GameObject;
+static var selectedWorldEnd4:GameObject;
+static var selectedWorldBeatEnd:GameObject;
+
+static var selectedWorldFirstOpeningSong:AudioClip;
+static var selectedWorldRegularOpeningSong:AudioClip;
+static var selectedWorldEnd1Song:AudioClip;
+static var selectedWorldEnd2Song:AudioClip;
+static var selectedWorldEnd3Song:AudioClip;
+static var selectedWorldEnd4Song:AudioClip;
+static var selectedWorldBeatEndSong:AudioClip;
+
+static var selectedWorldUnlocksLevel1:String[];
+static var selectedWorldUnlocksLevel2:String[];
+static var selectedWorldUnlocksLevel3:String[];
+static var selectedWorldUnlockNotificationsLine1:String[];
+static var selectedWorldUnlockNotificationsLine2:String[];
+
+static var initialWorldSpeed:int;
+static var speedIncrease:int;
+static var lives:int;
+//var worldColors:Color[];
+
+static var lastScore:int;
+static var needToNotify:boolean;
+
+static var unlockLevels:float[];
+
+static var demoMode:boolean;
+static var unlockAll:boolean;
+static var resetAll:boolean;
 
 function Awake () {
+	demoMode = false;
+	unlockAll = false;
+	resetAll = true;
+	
+	unlockLevels = new float[6];
+	if(demoMode)
+	{
+		unlockLevels = [0.0,5,10,15,20,100];
+	}
+	else
+	{
+		unlockLevels = [0.0,15,30,45,70,100];
+	}
+	if(resetAll)
+	{
+		PlayerPrefs.DeleteAll();
+	}
+	if(unlockAll)
+	{
+		UnlockAllOptions();
+	}
+	
+	selectedWorldColors = [Color(.6,.8,1,1),Color(0,.5,1,1)];
+	lives = 3;
+	initialWorldSpeed = 1;
+	speedIncrease = 1;
+	needToNotify = false;
 	initialLoad = true;
+	
 	Application.targetFrameRate = 60;
+	Screen.orientation = ScreenOrientation.AutoRotation; 
+	Screen.autorotateToLandscapeLeft = true;
+	Screen.autorotateToLandscapeRight = true; 
+	Screen.autorotateToPortrait = true;
+	Screen.autorotateToPortraitUpsideDown = true;
+	
 	DontDestroyOnLoad(gameObject);
 	Initialize();
 	if(Application.loadedLevelName == "GameStart")
@@ -64,32 +125,42 @@ function Initialize () {
 	}
 	if(!PlayerPrefs.HasKey("Theater"))
 	{
-		PlayerPrefs.SetInt("Theater", 1);
+		PlayerPrefs.SetInt("Theater", 0);
+	}
+	///////////////////////////////////////////////////////////////////////// World reward variables.
+	if(!PlayerPrefs.HasKey("PackingPeanutFactoryUnlocks"))
+	{
+		PlayerPrefs.SetInt("PackingPeanutFactoryUnlocks", 0);
+	}
+	if(!PlayerPrefs.HasKey("MuseumUnlocks"))
+	{
+		PlayerPrefs.SetInt("MuseumUnlocks", 0);
+	}
+	if(!PlayerPrefs.HasKey("TheaterUnlocks"))
+	{
+		PlayerPrefs.SetInt("TheaterUnlocks", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// World visit variables.
 	if(!PlayerPrefs.HasKey("PackingPeanutFactoryPlayedOnce"))
 	{
 		PlayerPrefs.SetInt("PackingPeanutFactoryPlayedOnce", 0);
 	}
-	if(!PlayerPrefs.HasKey("PackingPeanutFactoryBeaten"))
-	{
-		PlayerPrefs.SetInt("PackingPeanutFactoryBeaten", 0);
-	}
 	if(!PlayerPrefs.HasKey("MuseumPlayedOnce"))
 	{
 		PlayerPrefs.SetInt("MuseumPlayedOnce", 0);
-	}
-	if(!PlayerPrefs.HasKey("MuseumBeaten"))
-	{
-		PlayerPrefs.SetInt("MuseumBeaten", 0);
 	}
 	if(!PlayerPrefs.HasKey("TheaterPlayedOnce"))
 	{
 		PlayerPrefs.SetInt("TheaterPlayedOnce", 0);
 	}
-	if(!PlayerPrefs.HasKey("TheaterBeaten"))
+	///////////////////////////////////////////////////////////////////////// Overall status variables.
+	if(!PlayerPrefs.HasKey("LastWorldVisited"))
 	{
-		PlayerPrefs.SetInt("TheaterBeaten", 0);
+		PlayerPrefs.SetString("LastWorldVisited", "Theater");
+	}
+	if(!PlayerPrefs.HasKey("CurrencyNumber"))
+	{
+		PlayerPrefs.SetInt("CurrencyNumber", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Options variables.
 	if(!PlayerPrefs.HasKey("Sound"))
@@ -103,11 +174,11 @@ function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Character selection variables.
 	if(!PlayerPrefs.HasKey("HairSelection"))
 	{
-		PlayerPrefs.SetInt("HairSelection", 0);
+		PlayerPrefs.SetInt("HairSelection", 1);
 	}
 	if(!PlayerPrefs.HasKey("HairColor"))
 	{
-		PlayerPrefs.SetInt("HairColor", 0);
+		PlayerPrefs.SetInt("HairColor", 1);
 	}
 	if(!PlayerPrefs.HasKey("EyesSelection"))
 	{
@@ -119,15 +190,15 @@ function Initialize () {
 	}
 	if(!PlayerPrefs.HasKey("TopSelection"))
 	{
-		PlayerPrefs.SetInt("TopSelection", 0);
+		PlayerPrefs.SetInt("TopSelection", 1);
 	}
 	if(!PlayerPrefs.HasKey("TopColor"))
 	{
-		PlayerPrefs.SetInt("TopColor", 0);
+		PlayerPrefs.SetInt("TopColor", 1);
 	}
 	if(!PlayerPrefs.HasKey("BottomSelection"))
 	{
-		PlayerPrefs.SetInt("BottomSelection", 0);
+		PlayerPrefs.SetInt("BottomSelection", 1);
 	}
 	if(!PlayerPrefs.HasKey("BottomColor"))
 	{
@@ -187,7 +258,14 @@ function Initialize () {
 	{
 		PlayerPrefs.SetInt("FOHDeskSelection", 0);
 	}
-	
-	PlayerPrefs.SetInt("PackingPeanutFactoryPlayedOnce", 0);
-	PlayerPrefs.SetInt("PackingPeanutFactoryBeaten", 0);
+}
+
+function UnlockAllOptions () {
+	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
+	PlayerPrefs.SetInt("Museum", 1);
+	PlayerPrefs.SetInt("Theater", 1);
+	PlayerPrefs.SetInt("PackingPeanutFactoryUnlocks", 3);
+	PlayerPrefs.SetInt("MuseumUnlocks", 3);
+	PlayerPrefs.SetInt("TheaterUnlocks", 3);
+	PlayerPrefs.SetInt("CurrencyNumber", 1000);
 }

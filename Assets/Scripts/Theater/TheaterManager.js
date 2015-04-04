@@ -54,11 +54,13 @@ static var FOHTicketBoothAvailability:boolean[];
 static var FOHDeskAvailability:boolean[];
 
 function Start () {
-	// Lock of unlock all pieces, and activate availability.
+	// Lock or unlock all pieces, and activate availability.
 	UpdateAvailability();
-	UnlockAllOptions();
-	LockAllOptions();
-	UpdateAvailability();
+	if(Master.unlockAll)
+	{
+		UnlockAllOptions();
+		UpdateAvailability();
+	}
 	
 	// Create all pieces.
 	currentStageWall = Instantiate(stageWall[PlayerPrefs.GetInt("StageWallSelection")]);

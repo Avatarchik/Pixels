@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Experimental\1X Value.js" />
      <Compile Include="Assets\Scripts\Experimental\1Y Value.js" />
      <Compile Include="Assets\Scripts\Experimental\AnimationTester.js" />
+     <Compile Include="Assets\Scripts\Experimental\BennettTest.js" />
      <Compile Include="Assets\Scripts\Experimental\Info\GSpeed.js" />
      <Compile Include="Assets\Scripts\Experimental\Info\Lives.js" />
      <Compile Include="Assets\Scripts\Experimental\Info\SpdProg.js" />
@@ -68,10 +69,12 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonRectangle.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\CurrencyCount.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectLoop.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectMovementManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectShake.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\PieceGetting.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\SpriteRotate.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
@@ -95,6 +98,7 @@
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\BoxFill.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\ItemCatch.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\MonsterFeed.js" />
+     <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\MouldPour.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PaperFile.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PeanutCannon.js" />
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatory\PeanutStamp.js" />
@@ -117,12 +121,18 @@
      <Compile Include="Assets\Scripts\TitleScreen\TitleManager.js" />
      <Compile Include="Assets\Scripts\TitleScreen\UndoCustomizationChanges.js" />
      <Compile Include="Assets\Scripts\WorldSelect\ChangMapState.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\CheckTheaterAvailability.js" />
      <Compile Include="Assets\Scripts\WorldSelect\GoToWorld.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\ChangeColor.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\ResultsScreen.js" />
      <Compile Include="Assets\Scripts\WorldSelect\SmokeStack.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Trees.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\AudioInfo.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\BasicWorldInfo.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\TextSystemInfo.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\UnlockInfo.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapVisualsManager.js" />
      <None Include="Assets\Art\Materials\3DText.shader" />

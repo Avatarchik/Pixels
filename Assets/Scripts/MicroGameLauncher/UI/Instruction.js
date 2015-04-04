@@ -15,7 +15,7 @@ function Start () {
 	}
 	else 
 	{
-		text = GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).currentGames[GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).gameToLoad].GetComponent(MicroGameManager).instruction;
+		text = GameManager.instructionText;
 	}
 	for(var i:int = 0; i < children.Length; i++)
 	{
@@ -31,6 +31,7 @@ function MoveTo(){
 		yield;
 	}
 	yield WaitForSeconds(.2);
+	/*
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		while(MicroTester.pausable)
@@ -45,6 +46,7 @@ function MoveTo(){
 			yield;
 		}
 	}
+	*/
 	MoveBack();
 	yield;
 }

@@ -19,6 +19,8 @@ var clickSound:AudioClip;
 var click:boolean;
 var volume:float;
 
+var inMinigame:boolean;
+
 function Start () {
 	if(subText != null)
 	{
@@ -65,7 +67,10 @@ function Update () {
 		location = Finger.GetPosition(importantFinger);
 		if(continuous)
 		{
-			gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+			if(!inMinigame)
+			{
+				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+			}
 		}
 		if(!button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{
@@ -86,7 +91,10 @@ function Update () {
 		if(!WorldMapManager.mapMove && Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) < button.extents.x && button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{
 			// This is where clicking happens.
-			gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+			if(!inMinigame || (!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager)!=null &&!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused))
+			{
+				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+			}
 			if(up!=null && GetComponent(SpriteRenderer)!=null)
 			{
 				GetComponent(SpriteRenderer).sprite = up;

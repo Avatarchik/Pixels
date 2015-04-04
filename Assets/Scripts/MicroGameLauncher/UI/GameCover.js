@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
-var origin:Vector2;
-var destination:Vector2;
+var origin:Vector3;
+var destination:Vector3;
 
 var clearSprite:Sprite;
 var successSprite:Sprite;
@@ -24,7 +24,7 @@ function DisplayChange (status:String) {
 				displayObject.sprite = failureSprite;
 				break;
 			case "Controls":
-				displayObject.sprite = GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).currentGames[GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).gameToLoad].GetComponent(MicroGameManager).controls;
+				displayObject.sprite = GameManager.instructionType;
 				break;
 		}
 	}

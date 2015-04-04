@@ -19,6 +19,8 @@ var importantFinger:int;
 var moveAmount:Vector3;
 var immediate:boolean;
 
+var inMinigame:boolean;
+
 function Start () {
 	if(followSpeed == null) { followSpeed = 1; }
 	if(constant == 	null) { constant = true; }
@@ -47,26 +49,29 @@ function Update () {
 		else
 		{
 			// Movement based on type of object.
-			switch (movement)
+			if(!inMinigame || (!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager)!=null &&!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused))
 			{
-				case MovementType.Basic:
-					immediate = true;
-					moveAmount = Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)-Vector3(transform.position.x, transform.position.y,0);
-					break;
-				case MovementType.Follow:
-					immediate = false;
-					moveAmount = Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)-Vector3(transform.position.x, transform.position.y,0);
-					break;
-				case MovementType.Linear:
-					immediate = true;
-					moveAmount = Vector3.Project(Vector3((Finger.GetPosition(importantFinger)-lastLoc).x,(Finger.GetPosition(importantFinger)-lastLoc).y,0),(linearVertex1-linearVertex2));
-					lastLoc = Finger.GetPosition(importantFinger);
-					break;
-				case MovementType.Radial:
-					immediate = true;
-					break;
-				default:
-					break;
+				switch (movement)
+				{
+					case MovementType.Basic:
+						immediate = true;
+						moveAmount = Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)-Vector3(transform.position.x, transform.position.y,0);
+						break;
+					case MovementType.Follow:
+						immediate = false;
+						moveAmount = Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)-Vector3(transform.position.x, transform.position.y,0);
+						break;
+					case MovementType.Linear:
+						immediate = true;
+						moveAmount = Vector3.Project(Vector3((Finger.GetPosition(importantFinger)-lastLoc).x,(Finger.GetPosition(importantFinger)-lastLoc).y,0),(linearVertex1-linearVertex2));
+						lastLoc = Finger.GetPosition(importantFinger);
+						break;
+					case MovementType.Radial:
+						immediate = true;
+						break;
+					default:
+						break;
+				}
 			}
 			
 			if(immediate)

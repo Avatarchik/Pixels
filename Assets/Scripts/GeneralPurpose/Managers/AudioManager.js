@@ -9,6 +9,8 @@ static var soundVolume:float = 1;
 
 static var musicChangeSpeed:float = 10;
 
+static var internalDeltaTime:float;
+
 function Start () {
 	musicGetter	= GetComponents(AudioSource);
 	musicSpeaker = new AudioSource[musicGetter.length - 1];
@@ -22,14 +24,16 @@ function Start () {
 		musicSpeaker[i].loop = true;
 	}
 	//effectSpeaker.loop = false;
+	internalDeltaTime = Time.realtimeSinceStartup;
 }
 
 function Update () {
+	internalDeltaTime = Time.realtimeSinceStartup - internalDeltaTime;
 	if(PlayerPrefs.GetInt("Music") == 1 && PlayerPrefs.HasKey("Music"))
 	{
 		for(var i:int = 0; i < musicSpeaker.length; i++)
 		{
-			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,Time.deltaTime*musicChangeSpeed);
+			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,internalDeltaTime*musicChangeSpeed);
 		}
 	}
 	else

@@ -46,22 +46,22 @@ function Start () {
 	}
 	
 	length = 3 + 3/speed;
-	UITimer.currentTarget = length;
+	if(difficulty == 3)
+	{
+		UITimer.currentTarget = length + .5;
+		timer = length + .5;
+	}
+	else
+	{
+		UITimer.currentTarget = length;
+		timer = length;
+	}
 	UITimer.counter = 0;
-	timer = length;
 	PlayerManager.speed = .05;
 	Play();
 }
 
 function Update () {
-	if(Input.GetKeyDown("left"))
-	{
-		Left();
-	}
-	if(Input.GetKeyDown("right"))
-	{
-		Right();
-	}
 	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
 		if(Mathf.Abs(player.transform.position.x - target) < .3)
 		{
@@ -172,8 +172,9 @@ function fireCannon1() {
 	newNut1.transform.parent = transform;
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep1;
 	yield WaitForSeconds(.05);
-	if(playerLocation == 1)
+	if(playerLocation == 1 && !finished)
 	{
+		finished = true;
 		Finish(false);
 	}
 	
@@ -193,6 +194,7 @@ function fireCannon2() {
 	yield WaitForSeconds(.05);
 	if(playerLocation == 2 && !finished)
 	{
+		finished = true;
 		Finish(false);
 	}
 }
@@ -211,6 +213,7 @@ function fireCannon3() {
 	yield WaitForSeconds(.05);
 	if(playerLocation == 3 && !finished)
 	{
+		finished = true;
 		Finish(false);
 	}
 }
@@ -248,7 +251,7 @@ function SetDestination () {
 	}
 }
 
-function Finish(completionStatus) {
+function Finish(completionStatus:boolean) {
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

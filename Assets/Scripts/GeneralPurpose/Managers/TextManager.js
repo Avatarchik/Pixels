@@ -177,6 +177,7 @@ function IncreaseLetters () {
 	StartCoroutine(CountDown(targetTimes[dialogueMarker]));
 	while(numberOfLetters < currentDialogue[current].ToString().Length)
 	{
+		//numberOfLetters = currentDialogue[current].ToString().Length;
 		numberOfLetters ++;
 		yield;
 	}

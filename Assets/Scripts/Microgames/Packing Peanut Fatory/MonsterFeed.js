@@ -42,8 +42,8 @@ function Start () {
 	}
 	else
 	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
+		speed = GameManager.bossDifficulty;
+		difficulty = GameManager.bossDifficulty;
 	}
 	
 	if(difficulty < 4)

@@ -45,7 +45,7 @@ function Transition () {
 	{
 		for(var y:int = 0; y < movingObjects.Length; y++)
 		{
-		 	movingObjects[y].transform.position.x -= speed[y] * Time.deltaTime;
+		 	movingObjects[y].transform.position.x -= speed[y] * 1.5 * Time.deltaTime;
 		}
 		yield;
 	}
@@ -56,12 +56,12 @@ function Title () {
 	
 	while(title[0].transform.position.x > .011)
 	{
-		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, 0, Time.deltaTime * 10);
+		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, 0, Time.deltaTime * 16);
 		yield;
 	}
 	while(title[0].transform.position.x > -30)
 	{
-		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, -35, Time.deltaTime * 6);
+		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, -35, Time.deltaTime * 9);
 		yield;
 	}
 	yield WaitForSeconds(2);

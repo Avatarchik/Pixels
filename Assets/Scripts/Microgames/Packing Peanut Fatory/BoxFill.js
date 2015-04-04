@@ -53,14 +53,13 @@ function Start () {
 	}
 	progress = 0;
 	goal = peanuts.Length;
-	boxSpeed = Time.deltaTime * (speed * 3 + 5);
 	length = Mathf.Abs(boxes[boxes.length-1].transform.position.x-3)/(speed * 3 + 5);	
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
 }
 
 function Update () {
-	Debug.Log(speed);
+	boxSpeed = Time.deltaTime * (speed * 3 + 5);
 	if(Input.GetKeyDown("space"))
 	{
 		Clicked();
@@ -73,7 +72,7 @@ function Update () {
 		}
 		else if(peanutsFree[i] == 1)
 		{
-			peanuts[i].transform.position.y -= Time.deltaTime * 22;
+			peanuts[i].transform.position.y -= Time.deltaTime * 25;
 		}
 		else if(peanutsFree[i] == 2)
 		{
@@ -85,7 +84,7 @@ function Update () {
 		boxes[y].transform.position.x += boxSpeed;
 		for(var x:int = 0; x < peanuts.Length; x++)
 		{
-			if(peanuts[x].transform.position.y < -2.5 && peanuts[x].transform.position.y > -3.3 && Mathf.Abs(boxes[y].transform.position.x) < 1.8)
+			if(peanuts[x].transform.position.y < -2.5 && peanuts[x].transform.position.y > -3.4 && Mathf.Abs(boxes[y].transform.position.x) < 2)
 			{
 				peanuts[x].transform.parent = boxes[y].transform;
 				peanutsFree[x] = 2;

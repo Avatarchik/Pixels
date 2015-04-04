@@ -10,6 +10,7 @@ var playerDifference:float;
 static var wind:float;
 
 function Start () {
+	player.transform.position.x = 0;
 	wind = 30;
 	playerManager = player.GetComponent(PlayerManager);
 	worldMapManager = worldMap.GetComponent(WorldMapManager);

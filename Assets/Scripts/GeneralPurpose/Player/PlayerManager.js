@@ -34,8 +34,11 @@ var save:int[];
 
 function Start () {	
 	UpdateAvailability();
-	UnlockAllOptions();
-	UpdateAvailability();
+	if(Master.unlockAll)
+	{
+		UnlockAllOptions();
+		UpdateAvailability();
+	}
 	
 	// Instantiates and colors all paper doll sprites, scales them correctly, and parents them to the player.
 	currentHair = Instantiate(hair[PlayerPrefs.GetInt("HairSelection")],transform.position-Vector3(0,0,.08),Quaternion.identity);
@@ -263,6 +266,9 @@ public function UpdateAvailability () {
 	PlayerPrefs.SetInt("Eyes:"+eyes[0].transform.name,1);
 	PlayerPrefs.SetInt("Tops:"+tops[0].transform.name,1);
 	PlayerPrefs.SetInt("Bottoms:"+bottoms[0].transform.name,1);
+	PlayerPrefs.SetInt("Hair:"+hair[1].transform.name,1);
+	PlayerPrefs.SetInt("Tops:"+tops[1].transform.name,1);
+	PlayerPrefs.SetInt("Bottoms:"+bottoms[1].transform.name,1);
 	for(var hairCheck:int = 0; hairCheck < hair.length; hairCheck++)
 	{
 		if(PlayerPrefs.GetInt("Hair:"+hair[hairCheck].transform.name) == 0)

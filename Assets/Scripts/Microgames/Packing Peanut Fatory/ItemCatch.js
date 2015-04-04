@@ -121,7 +121,7 @@ function AddBoolean (original:boolean[],addition:boolean):boolean[] {
 	return finalArray;
 }
 
-function Finish(completionStatus) {
+function Finish(completionStatus:boolean) {
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

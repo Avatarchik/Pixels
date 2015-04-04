@@ -9,25 +9,6 @@ var thisWorld:WorldSelect;
 var thisWorldDisplay:Sprite[];
 var worldNameFull:String;
 var worldNameVar:String;
-var worldNameLine1:String;
-var worldNameLine2:String;
-var thisWorldGames:GameObject[];
-var thisWorldCovers:GameObject[];
-var thisWorldColors:Color[];
-var thisWorldUI:GameObject;
-var thisWorldFirstTimeText:GameObject;
-var thisWorldRegularOpeningText:GameObject;
-var thisWorldBeatenText:GameObject;
-var thisWorldRegularClosingText:GameObject;
-var thisWorldTransitionIn:AudioClip;
-var thisWorldTransitionOut:AudioClip;
-var thisWorldMusic:AudioClip[];
-var thisWorldFirstTimeSong:AudioClip;
-var thisWorldRegularOpeningSong:AudioClip;
-var thisWorldBeatenSong:AudioClip;
-var thisWorldRegularClosingSong:AudioClip;
-var thisWorldSuccessSound:AudioClip;
-var thisWorldFailureSound:AudioClip;
 
 private var controller:Master;
 
@@ -61,31 +42,13 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
-			if(PlayerPrefs.GetInt(worldNameVar) == 1 && WorldMapManager.allowClick)
+			if(PlayerPrefs.GetInt(worldNameVar) == 1 && WorldMapManager.allowClick && WorldMapManager.currentState != MapStatus.Results)
 			{
 				controller = Camera.main.GetComponent(Master);
 				controller.selectedWorld = thisWorld;
+				SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
 				controller.worldNameFull = worldNameFull;
 				controller.worldNameVar = worldNameVar;
-				controller.worldNameLine1 = worldNameLine1;
-				controller.worldNameLine2 = worldNameLine2;
-				controller.selectedWorldGames = thisWorldGames;
-				controller.selectedWorldCovers = thisWorldCovers;
-				controller.selectedWorldColors = thisWorldColors;
-				controller.selectedWorldUI = thisWorldUI;
-				controller.selectedWorldFirstTimeText = thisWorldFirstTimeText;
-				controller.selectedWorldRegularOpeningText = thisWorldRegularOpeningText;
-				controller.selectedWorldBeatenText = thisWorldBeatenText;
-				controller.selectedWorldRegularClosingText = thisWorldRegularClosingText;
-				controller.selectedWorldTransitionIn = thisWorldTransitionIn;
-				controller.selectedWorldTransitionOut = thisWorldTransitionOut;
-				controller.selectedWorldMusic = thisWorldMusic;
-				controller.selectedWorldFirstTimeSong = thisWorldFirstTimeSong;
-				controller.selectedWorldRegularOpeningSong = thisWorldRegularOpeningSong;
-				controller.selectedWorldBeatenSong = thisWorldBeatenSong;
-				controller.selectedWorldRegularClosingSong = thisWorldRegularClosingSong;
-				controller.selectedWorldSuccessSound = thisWorldSuccessSound;
-				controller.selectedWorldFailureSound = thisWorldFailureSound;
 				if(WorldMapManager.currentState == MapStatus.Clear)
 				{
 					WorldMapManager.currentState = MapStatus.Confirmation;
@@ -94,5 +57,12 @@ function Clicked () {
 			break;
 		default:
 			break;
+	}
+}
+
+function UpdateWorldAvailability () {
+	if(thisWorldDisplay.Length == 2)
+	{
+		GetComponent(SpriteRenderer).sprite = thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)];
 	}
 }

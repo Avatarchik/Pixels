@@ -5,6 +5,7 @@ public enum AnimationType{SingleImage,RotatingImage,ChangingImage};
 var firstTimeNotifyType:AnimationType;
 var images:Sprite[];
 var firstTimeRenderer:SpriteRenderer;
+private var firstTimeStep:int;
 var speed:float;
 var marker:int;
 var glow:boolean;
@@ -15,6 +16,7 @@ var length:float;
 
 function Start () {
 	marker = 0;
+	firstTimeStep = 0;
 	if(Application.loadedLevelName == "MicroGameLauncher")
 	{
 		for(var nameCheck:int = 0; nameCheck < GameManager.gameNames.length; nameCheck ++)
@@ -32,7 +34,6 @@ function Start () {
 						StartCoroutine(Glow());
 					}
 					StartCoroutine(FirstTimeNotify());
-					GameManager.firstTimeValues[nameCheck] = true;
 					break;
 				}
 			}
@@ -76,6 +77,7 @@ function FirstTimeNotify () {
 				}
 				break;
 			case AnimationType.ChangingImage:
+				firstTimeRenderer.sprite = images[firstTimeStep];
 				break;
 			default:
 				break;
@@ -83,4 +85,8 @@ function FirstTimeNotify () {
 		yield;
 	}
 	yield;
+}
+
+function NextNotify () {
+	firstTimeStep ++;
 }
