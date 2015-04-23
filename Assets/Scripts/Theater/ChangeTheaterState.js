@@ -64,11 +64,11 @@ function Clicked () {
 	}
 	else
 	{
-		if(newState == TheaterStatus.Home && TheaterController.currentState == TheaterStatus.FrontLedger)
+		if(newState == TheaterStatus.Home && TheaterController.currentState == TheaterStatus.FrontLedger && !hidden)
 		{
 			TheaterController.currentState = TheaterStatus.HomeLedger;
 		}
-		else if(newState == TheaterStatus.Front && TheaterController.currentState == TheaterStatus.HomeLedger)
+		else if(newState == TheaterStatus.Front && TheaterController.currentState == TheaterStatus.HomeLedger && !hidden)
 		{
 			TheaterController.currentState = TheaterStatus.FrontLedger;
 		}
@@ -80,6 +80,10 @@ function Clicked () {
 		{
 			if((TheaterController.currentState == TheaterStatus.HomeLedger || TheaterController.currentState == TheaterStatus.FrontLedger) && hidden)
 			{
+			}
+			else if((TheaterController.currentState == TheaterStatus.CustomizeNoColor || TheaterController.currentState == TheaterStatus.CustomizeColor) && newState == TheaterStatus.CustomizeNoColor)
+			{
+				TheaterController.currentState = TheaterStatus.Home;
 			}
 			else
 			{

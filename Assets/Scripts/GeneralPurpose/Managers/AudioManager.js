@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+public enum Person{None,Peter,PeanutCEO};
+
 static var musicGetter:Component[];
 static var musicSpeaker:AudioSource[];
 static var effectSpeaker:AudioSource;
@@ -11,7 +13,12 @@ static var musicChangeSpeed:float = 10;
 
 static var internalDeltaTime:float;
 
+static var humCharacter:Person;
+static var humming:boolean;
+
 function Start () {
+	humming = false;
+	humCharacter = Person.None;
 	musicGetter	= GetComponents(AudioSource);
 	musicSpeaker = new AudioSource[musicGetter.length - 1];
 	for(var i:int = 1; i < musicGetter.length; i++)
@@ -57,6 +64,7 @@ static function PlaySong (song:AudioClip) {
 	StopSong();
 	musicSpeaker[0].clip = song;
 	musicSpeaker[0].Play();
+	humming = true;
 }
 static function PlaySong (song:AudioClip[]) {
 	for(var i:int = 0; i < song.length; i++)
@@ -65,6 +73,7 @@ static function PlaySong (song:AudioClip[]) {
 		musicSpeaker[i].clip = song[i];
 		musicSpeaker[i].Play();
 	}
+	humming = true;
 }
 
 static function PlaySongIntro (intro:AudioClip, song:AudioClip, pause:float) {
@@ -76,6 +85,7 @@ static function PlaySongIntro (intro:AudioClip, song:AudioClip, pause:float) {
 	yield WaitForSeconds(pause);
 	musicSpeaker[0].clip = song;
 	musicSpeaker[0].Play();
+	humming = true;
 }
 
 static function PlaySongIntro (intro:AudioClip, song:AudioClip[], pause:float) {
@@ -98,6 +108,7 @@ static function StopSong () {
 		musicSpeaker[i].clip = null;
 		musicSpeaker[i].Stop();
 	}
+	humming = false;
 }
 
 static function StopSound () {

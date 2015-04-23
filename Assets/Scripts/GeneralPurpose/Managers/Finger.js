@@ -104,7 +104,7 @@ static function GetInGame (finger:int) : boolean {
 	return(inGame[finger]);
 }
 
-//Fucntion to get the phase of a finger's touch.
+//Function to get the phase of a finger's touch.
 
 static function GetPhase (finger:int) : TouchPhase {
 	return(phase[finger]);

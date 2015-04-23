@@ -62,7 +62,51 @@ function Awake () {
 	unlockAll = false;
 	resetAll = true;
 	
+	// Sets initial variables for worlds.
 	unlockLevels = new float[6];
+	selectedWorldColors = [Color(.6,.8,1,1),Color(0,.5,1,1)];
+	lives = 3;
+	initialWorldSpeed = 1;
+	speedIncrease = 1;
+	needToNotify = false;
+	initialLoad = true;
+	
+	// Set iOS device settings, including framerate and permitted orientations.
+	Application.targetFrameRate = 60;
+	Screen.orientation = ScreenOrientation.AutoRotation; 
+	Screen.autorotateToLandscapeLeft = true;
+	Screen.autorotateToLandscapeRight = true; 
+	Screen.autorotateToPortrait = true;
+	Screen.autorotateToPortraitUpsideDown = true;
+	
+	DontDestroyOnLoad(gameObject);
+	Initialize();
+	if(Application.loadedLevelName == "GameStart")
+	{
+		if(PlayerPrefs.GetInt("TutorialFinished") == 0 && !unlockAll)
+		{
+			Application.LoadLevel("TutorialTitleScreen");
+		}
+		else
+		{
+			Application.LoadLevel("TitleScreen");
+		}
+	}
+}
+
+function Update () {
+	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
+	{
+		GetComponent.<Camera>().orthographicSize = 9;
+	}
+	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
+	{
+		GetComponent.<Camera>().orthographicSize = 16;
+	}
+}
+
+function Initialize () {
+	// Testing information.
 	if(demoMode)
 	{
 		unlockLevels = [0.0,5,10,15,20,100];
@@ -80,40 +124,6 @@ function Awake () {
 		UnlockAllOptions();
 	}
 	
-	selectedWorldColors = [Color(.6,.8,1,1),Color(0,.5,1,1)];
-	lives = 3;
-	initialWorldSpeed = 1;
-	speedIncrease = 1;
-	needToNotify = false;
-	initialLoad = true;
-	
-	Application.targetFrameRate = 60;
-	Screen.orientation = ScreenOrientation.AutoRotation; 
-	Screen.autorotateToLandscapeLeft = true;
-	Screen.autorotateToLandscapeRight = true; 
-	Screen.autorotateToPortrait = true;
-	Screen.autorotateToPortraitUpsideDown = true;
-	
-	DontDestroyOnLoad(gameObject);
-	Initialize();
-	if(Application.loadedLevelName == "GameStart")
-	{
-		Application.LoadLevel("TitleScreen");
-	}
-}
-
-function Update () {
-	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
-	{
-		GetComponent.<Camera>().orthographicSize = 9;
-	}
-	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
-	{
-		GetComponent.<Camera>().orthographicSize = 16;
-	}
-}
-
-function Initialize () {
 	///////////////////////////////////////////////////////////////////////// World unlock variables.
 	if(!PlayerPrefs.HasKey("PackingPeanutFactory"))
 	{
@@ -161,6 +171,10 @@ function Initialize () {
 	if(!PlayerPrefs.HasKey("CurrencyNumber"))
 	{
 		PlayerPrefs.SetInt("CurrencyNumber", 0);
+	}
+	if(!PlayerPrefs.HasKey("TutorialFinished"))
+	{
+		PlayerPrefs.SetInt("TutorialFinished", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Options variables.
 	if(!PlayerPrefs.HasKey("Sound"))

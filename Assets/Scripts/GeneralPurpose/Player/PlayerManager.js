@@ -200,6 +200,11 @@ function Refresh(part:String, change:int) {
 			{
 				PlayerPrefs.SetInt("BodyColor",0);
 			}
+			if(PlayerPrefs.GetInt("BodyColor") < 0)
+			{
+				PlayerPrefs.SetInt("BodyColor",bodyColor.Length-1);
+			}
+			Debug.Log(PlayerPrefs.GetInt("BodyColor"));
 			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
 			break;
 	}

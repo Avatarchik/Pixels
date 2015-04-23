@@ -19,7 +19,15 @@ function Update () {
 function Clicked () {
 	for(var i:int = 0; i < colorButtons1.Length; i++)
 	{
-		TitleManager.currentState = TitleStatus.CustomizeColor;
+		if(Application.loadedLevelName == "TitleScreen")
+		{
+			TitleManager.currentState = TitleStatus.CustomizeColor;
+		}
+		else if(Application.loadedLevelName == "Theater")
+		{
+			Debug.Log("Hey");
+			TheaterController.currentState = TheaterStatus.CustomizeColor;
+		}
 		switch(bodyPart)
 		{
 			case "hair":

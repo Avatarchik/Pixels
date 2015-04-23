@@ -7,20 +7,38 @@ var change:int;
 
 var color:int;
 
-var manager:PlayerManager;
+//var players:GameObject[];
+var manager:PlayerManager[];
 
 function Start () {
-	manager = GameObject.FindGameObjectWithTag("Player").GetComponent(PlayerManager);
+	FindPlayers();
 }
 
 function Clicked () {
+	FindPlayers();
 	TitleManager.currentState = TitleStatus.CustomizeNoColor;
 	if(part)
 	{
-		manager.ChangePart(bodyPart,change);
+		manager[0].ChangePart(bodyPart,change);
+		for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+		{
+			manager[i].Refresh(bodyPart);
+		}
 	}
 	else
 	{
-		manager.ChangeColor(bodyPart,color);
+		manager[0].ChangeColor(bodyPart,color);
+		for(i = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+		{
+			manager[i].Refresh(bodyPart);
+		}
+	}
+}
+
+function FindPlayers () {
+	manager = new PlayerManager[GameObject.FindGameObjectsWithTag("Player").length];
+	for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+	{
+		manager[i] = GameObject.FindGameObjectsWithTag("Player")[i].GetComponent(PlayerManager);
 	}
 }
