@@ -13,10 +13,7 @@ var worldNameVar:String;
 private var controller:Master;
 
 function Start () {
-	if(thisWorldDisplay.Length == 2)
-	{
-		GetComponent(SpriteRenderer).sprite = thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)];
-	}
+	StartCoroutine(UpdateWorldAvailability());
 }
 
 function Clicked () {
@@ -54,6 +51,7 @@ function Clicked () {
 					WorldMapManager.currentState = MapStatus.Confirmation;
 				}
 			}
+			WorldMapManager.selectedLocation = transform.localPosition.x;
 			break;
 		default:
 			break;
@@ -61,8 +59,13 @@ function Clicked () {
 }
 
 function UpdateWorldAvailability () {
-	if(thisWorldDisplay.Length == 2)
+	while(true)
 	{
-		GetComponent(SpriteRenderer).sprite = thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)];
+		if(thisWorldDisplay.Length == 2)
+		{
+			GetComponent(SpriteRenderer).sprite = thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)];
+		}
+		yield WaitForSeconds(1);
 	}
+	yield;
 }

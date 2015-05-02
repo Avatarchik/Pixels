@@ -573,6 +573,19 @@ function UpdateAvailability () {
 	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[0].name,1);
 	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[0].name,1);
 	
+	PlayerPrefs.SetInt("StageWall:"+stageWall[2].name,1);
+	PlayerPrefs.SetInt("StageFloor:"+stageFloor[2].name,1);
+	PlayerPrefs.SetInt("Ceiling:"+ceiling[2].name,1);
+	PlayerPrefs.SetInt("TheaterWall:"+theaterWall[2].name,1);
+	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[2].name,1);
+	PlayerPrefs.SetInt("Curtain:"+curtain[2].name,1);
+	PlayerPrefs.SetInt("Chairs:"+chairs[2].name,1);
+	PlayerPrefs.SetInt("FOHWall:"+FOHWall[2].name,1);
+	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[2].name,1);
+	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[2].name,1);
+	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[2].name,1);
+	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[2].name,1);
+	
 	// Changes availability booleans to true or false based on the playerprefs values.
 	for(var stageWallCheck:int = 0; stageWallCheck < stageWall.length; stageWallCheck++)
 	{

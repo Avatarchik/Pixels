@@ -12,6 +12,7 @@ function Start () {
 }
 
 function Update () {
+	// If there's an audiosource, check for a match between this character and currently humming character, and play sound.
 	if(hum != null)
 	{
 		if(AudioManager.humming && !hum.isPlaying)
@@ -20,11 +21,11 @@ function Update () {
 		}
 		if(thisCharacter == AudioManager.humCharacter)
 		{
-			hum.volume = Mathf.MoveTowards(hum.volume,.7,Time.deltaTime * .3);
+			hum.volume = Mathf.MoveTowards(hum.volume,.7,Time.deltaTime * .45);
 		}
 		else
 		{
-			hum.volume = Mathf.MoveTowards(hum.volume,0,Time.deltaTime * .3);
+			hum.volume = Mathf.MoveTowards(hum.volume,0,Time.deltaTime * .45);
 		}
 	}
 }

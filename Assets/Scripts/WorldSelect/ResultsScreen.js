@@ -17,7 +17,10 @@ static var notifying:boolean;
 
 var done:boolean;
 
+var ribbon:SpriteRenderer;
+
 function Start () {
+	ribbon.color.a = 0;
 	goalMarker = 0;
 	done = false;
 	notifying = false;
@@ -34,6 +37,10 @@ function Start () {
 
 function Update () {
 	progressBar.localScale.x = Mathf.MoveTowards(progressBar.localScale.x,currentLocationGoal,Time.deltaTime*4.5);
+	if(done && Master.lastScore < 15 && PlayerPrefs.GetInt(Master.worldNameVar+"Unlocks")<1 && progressBar.localScale.x == currentLocationGoal)
+	{
+		ribbon.color.a = 1;
+	}
 }
 
 function ProgressIncrease() {

@@ -1,12 +1,15 @@
 ﻿#pragma strict
 
-var speed:int;
-var difficulty:int;
-var finished:boolean;
-var length:float;
-var timer:float;
+static var speed:int;
+static var difficulty:int;
+static var finished:boolean;
+static var length:float;
+static var timer:float;
+
+static var importantFinger:int;
 
 function Start () {
+	importantFinger = -1;
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;
@@ -29,6 +32,24 @@ function Update () {
 	if(timer < 0 && !finished)
 	{
 		Finish(true);
+	}
+	if(importantFinger == -1)
+	{
+		for(var i:int = 0; i < Finger.identity.length; i++)
+		{
+			if(Finger.GetExists(i))
+			{
+				importantFinger = i;
+			}
+		}
+	}
+	else if(Finger.GetExists(importantFinger))
+	{
+		
+	}
+	else if(!Finger.GetExists(importantFinger))
+	{
+		importantFinger = -1;
 	}
 }
 

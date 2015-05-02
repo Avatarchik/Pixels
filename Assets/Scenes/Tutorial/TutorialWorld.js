@@ -2,8 +2,6 @@
 
 private var importantFinger:int;
 
-var blocker:GameObject;
-
 var showTheaterText:GameObject;
 var showFactoryText:GameObject;
 var explainPremiseText:GameObject;
@@ -42,9 +40,7 @@ function Start () {
 }
 
 function Update () {
-	blocker.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(blocker.GetComponent(SpriteRenderer).color.a,currentColor,Time.deltaTime);
-	transform.position.x = Mathf.Lerp(transform.position.x,goal,Time.deltaTime*4);
-	transform.position.x = Mathf.MoveTowards(transform.position.x,goal,Time.deltaTime*2);
+	transform.position.x = Mathf.MoveTowards(transform.position.x,goal,Time.deltaTime*8);
 	if(importantFinger == -1)
 	{
 		for(var i:int = 0; i < Finger.identity.length; i++)
@@ -65,43 +61,13 @@ function Update () {
 }
 
 function Tutorial () {
-	yield WaitForSeconds(1.5);
 		currentText = Instantiate(showTheaterText);
 	while(!currentText.GetComponent(TextManager).finished) {yield;}
 		goal = -3;
+		while(transform.position.x != goal) {yield;}
 		currentText = Instantiate(showFactoryText);
 	while(!currentText.GetComponent(TextManager).finished) {yield;}
-		currentButtonLocation = Vector2(0,-3);
-		button1.transform.position.z = shown;
-		finger.transform.position.y = 0;
-		finger.transform.position.x = -4.34;
-		currentColor = .35;
-	while(tutorialStage != 1) {yield;}
-		button1.transform.position.z = hidden;
-		finger.transform.position.y = 100;
-		finger.transform.position.x = 100;
 		factory.transform.SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
-		currentColor = 0;
-		currentButtonLocation = Vector2(-100,-100);
-	while(ticket.transform.position.y != 0)
-		{
-			ticket.transform.position.y = Mathf.Lerp(ticket.transform.position.y,0,Time.deltaTime*6);
-			ticket.transform.position.y = Mathf.MoveTowards(ticket.transform.position.y,0,Time.deltaTime*3);
-			yield;
-		}
-		currentText = Instantiate(explainPremiseText);
-	while(!currentText.GetComponent(TextManager).finished) {yield;}
-		currentColor = .35;
-		currentButtonLocation = Vector2(3.5,-1.7);
-		button2.transform.position.z = shown;
-		finger.transform.position.y = 4.548;
-		finger.transform.position.x = -3.172;
-	while(tutorialStage != 2) {yield;}
-		button2.transform.position.z = hidden;
-		finger.transform.position.y = 100;
-		finger.transform.position.x = 100;	
-		currentColor = 0;
-		currentButtonLocation = Vector2(-100,-100);
 		startGames.Load();
 		PlayerPrefs.SetInt("TutorialFinished", 1);
 	yield;

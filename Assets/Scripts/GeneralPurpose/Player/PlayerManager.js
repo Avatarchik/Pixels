@@ -1,9 +1,12 @@
 ﻿#pragma strict
 
 // Current position of the player.
-public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight,SpecialHandsOut}
+public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight,SpecialHandsOut,SpecialHeadBob,SpecialSinging,SpecialLoudSinging,SpecialHighNote,SpecialOneHandSing,SpecialHandsOutSing,SpecialHandsOutLoudSing,SpecialHandsOutHighNote}
 var currentState:PlayerState;
+var step:int;
 static var speed:float;
+var speedOverride:boolean;
+var thisSpeed:float;
 
 // Arrays with different types of sprites.
 var hair:GameObject[];
@@ -32,7 +35,9 @@ var currentBottom:GameObject;
 
 var save:int[];
 
-function Start () {	
+var standStill:boolean = false;
+
+function Awake () {	
 	UpdateAvailability();
 	if(Master.unlockAll)
 	{
@@ -61,7 +66,10 @@ function Start () {
 	{
 		GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
 	}
-	
+	if(!standStill)
+	{
+		StartCoroutine(Move());
+	}
 	Save();
 }
 
@@ -358,4 +366,28 @@ function LockAllOptions () {
 	PlayerPrefs.SetInt("Eyes:"+eyes[0].transform.name,1);
 	PlayerPrefs.SetInt("Tops:"+tops[0].transform.name,1);
 	PlayerPrefs.SetInt("Bottoms:"+bottoms[0].transform.name,1);
+}
+
+
+function Move() {
+	while(true)
+	{ 
+		var waitTime:float;
+		if(speedOverride)
+		{
+			waitTime = thisSpeed * .7;
+		}
+		else
+		{
+			waitTime = speed * .7;
+		}
+		step = 1;
+		yield WaitForSeconds(waitTime);
+		step = 2;
+		yield WaitForSeconds(waitTime);
+		step = 3;
+		yield WaitForSeconds(waitTime);
+		step = 4;
+		yield WaitForSeconds(waitTime);
+	}
 }

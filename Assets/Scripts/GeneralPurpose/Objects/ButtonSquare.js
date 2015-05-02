@@ -20,6 +20,7 @@ var click:boolean;
 var volume:float;
 
 var inMinigame:boolean;
+var inMinigameContinuousOverride:boolean = false;
 
 function Start () {
 	if(subText != null)
@@ -68,6 +69,10 @@ function Update () {
 		if(continuous)
 		{
 			if(!inMinigame)
+			{
+				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+			}
+			if(inMinigame && inMinigameContinuousOverride)
 			{
 				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 			}

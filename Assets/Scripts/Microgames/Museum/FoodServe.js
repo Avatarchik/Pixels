@@ -24,6 +24,7 @@ function Start () {
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	StartCoroutine(ColorChange());
 	Play();
 }
 
@@ -31,6 +32,7 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
+		finished = true;
 		Finish(true);
 	}
 }
@@ -48,5 +50,15 @@ function Finish(completionStatus:boolean) {
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
+	DarknessChange.newColor = Color(0,0,0,0);
 	finished = true;
+}
+
+function ColorChange () {
+	while(timer > length-.5)
+	{
+		yield;
+	}
+	DarknessChange.newColor = darknessAmount;
+	yield;
 }

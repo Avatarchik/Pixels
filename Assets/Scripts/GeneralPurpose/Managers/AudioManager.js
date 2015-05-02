@@ -30,7 +30,6 @@ function Start () {
 	{
 		musicSpeaker[i].loop = true;
 	}
-	//effectSpeaker.loop = false;
 	internalDeltaTime = Time.realtimeSinceStartup;
 }
 
@@ -41,6 +40,7 @@ function Update () {
 		for(var i:int = 0; i < musicSpeaker.length; i++)
 		{
 			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,internalDeltaTime*musicChangeSpeed);
+			musicSpeaker[i].pitch = Time.timeScale;
 		}
 	}
 	else
@@ -53,6 +53,7 @@ function Update () {
 	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
 	{
 		effectSpeaker.volume = soundVolume;
+		effectSpeaker.pitch = Time.timeScale;
 	}
 	else
 	{
@@ -103,10 +104,13 @@ static function PlaySongIntro (intro:AudioClip, song:AudioClip[], pause:float) {
 }
 
 static function StopSong () {
-	for(var i:int = 0; i < musicSpeaker.length; i++)
+	if(musicSpeaker != null)
 	{
-		musicSpeaker[i].clip = null;
-		musicSpeaker[i].Stop();
+		for(var i:int = 0; i < musicSpeaker.length; i++)
+		{
+			musicSpeaker[i].clip = null;
+			musicSpeaker[i].Stop();
+		}
 	}
 	humming = false;
 }

@@ -24,7 +24,7 @@ function Update () {
 	}
 	transform.position = worldMap.transform.position;
 	player.transform.position.x = Mathf.MoveTowards(player.transform.position.x,0,Time.deltaTime * (3 + Mathf.Abs(player.transform.position.x * .2)));
-	playerManager.speed = .1;	
+	//playerManager.speed = .1;	
 
 	if(player.transform.position.x > 0)
 	{

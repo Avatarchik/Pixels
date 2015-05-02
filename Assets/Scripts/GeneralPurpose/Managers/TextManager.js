@@ -4,6 +4,7 @@ var dialogue:String[];
 var leftSprites:GameObject[];
 var rightSprites:GameObject[];
 var playerState:PlayerState[];
+var playerSpeed:float[];
 var currentSpeaker:boolean[];
 private var spriteObjects:GameObject[];
 
@@ -27,7 +28,7 @@ private var current:int;
 private var doneLine:boolean;
 
 function Start () {
-	//spriteObjects = new GameObject[leftSprites.length];
+	// Initialize variable values.
 	spriteObjects = new GameObject[2];
 	dialogueMarker = 0;
 	numberOfLetters = 0;
@@ -35,11 +36,13 @@ function Start () {
 	endCounter = 0;
 	finished = false;
 	doneLine = false;
+	// Get the text box into place.
 	while(transform.position.x < -7.74)
 	{
 		transform.position.x = Mathf.MoveTowards(transform.position.x,-7.74,Time.deltaTime*60);
 		yield;
 	}
+	// Destroy if empty; otherwise, start the dialogue routine.
 	if(dialogue.Length!=0)
 	{
 		for(var i = 0; i < dialogue.Length; i++)
@@ -57,6 +60,11 @@ function Start () {
 	StartCoroutine(UpdateSet());
 }
 
+function KillObject(object:GameObject)
+{
+	//yield WaitForSeconds(.01);
+	Destroy(object);
+}
 function Update () {
 	//Debug.Log(Time.time);
 	if(Input.GetKeyDown("space"))
@@ -111,13 +119,30 @@ function UpdateSprites(number:int) {
 	{
 		if(leftSprites[number]!=null)
 		{
-			Destroy(spriteObjects[0]);
+			if(number >= 1 && leftSprites[number-1] != leftSprites[number])
+			{
+				KillObject(spriteObjects[0]);
 			spriteObjects[0] = Instantiate(leftSprites[number]);
+			}
+			else if(number == 0)
+			{
+				spriteObjects[0] = Instantiate(leftSprites[number]);
+			}
+			
 		}
 		if(rightSprites[number]!=null)
 		{
-			Destroy(spriteObjects[1]);
+			if(number >= 1 && rightSprites[number-1] != rightSprites[number])
+			{
+				
+				KillObject(spriteObjects[1]);
 			spriteObjects[1] = Instantiate(rightSprites[number]);
+			}
+			else if(number == 0)
+			{
+				spriteObjects[1] = Instantiate(rightSprites[number]);
+			}
+			
 		}
 		if(playerState.length >= number && spriteObjects[0].transform.tag == "Player")
 		{
@@ -126,6 +151,10 @@ function UpdateSprites(number:int) {
 		if(playerState.length >= number && spriteObjects[1].transform.tag == "Player")
 		{
 			spriteObjects[1].GetComponent(PlayerManager).currentState = playerState[number];
+		}
+		if(playerSpeed != null && playerSpeed.length >= number && playerSpeed[number] != 0)
+		{
+			PlayerManager.speed = playerSpeed[number];
 		}
 		if(currentSpeaker[number])
 		{
@@ -175,7 +204,7 @@ function NextLine () {
 // the dialogue array, the game will try to match one up to the other (not super reliable, needs fussing.)
 function IncreaseLetters () {
 	StartCoroutine(CountDown(targetTimes[dialogueMarker]));
-	while(numberOfLetters < currentDialogue[current].ToString().Length)
+	while(numberOfLetters < currentDialogue[current].ToString().Length && !doneLine)
 	{
 		//numberOfLetters = currentDialogue[current].ToString().Length;
 		numberOfLetters ++;

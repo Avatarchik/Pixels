@@ -21,8 +21,10 @@ var length:float;
 var timer:float;
 var finished:boolean;
 var previous:int;
+var importantFinger:int;
 
 function Start () {
+	importantFinger = -1;
 	player = Instantiate(playerPrefab, Vector3(0,-6.5,0), Quaternion.identity);
 	player.transform.localScale = Vector3(3,3,3);
 	player.transform.parent = transform;
@@ -62,27 +64,61 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log(playerLocation);
 	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
-		if(Mathf.Abs(player.transform.position.x - target) < .3)
-		{
-			playerManager.currentState = PlayerState.StandingBack;
-		}
-		else if(player.transform.position.x > target)
-		{
-			playerManager.currentState = PlayerState.WalkingLeft;
-		}
-		else if(player.transform.position.x < target)
-		{
-			playerManager.currentState = PlayerState.WalkingRight;
-		}
-		else
-		{
-			playerManager.currentState = PlayerState.StandingBack;
-		}
+	if(Mathf.Abs(player.transform.position.x - target) < .3)
+	{
+		playerManager.currentState = PlayerState.StandingBack;
+	}
+	else if(player.transform.position.x > target)
+	{
+		playerManager.currentState = PlayerState.WalkingLeft;
+	}
+	else if(player.transform.position.x < target)
+	{
+		playerManager.currentState = PlayerState.WalkingRight;
+	}
+	else
+	{
+		playerManager.currentState = PlayerState.StandingBack;
+	}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
 		Finish(true);
+	}
+	
+	if(importantFinger == -1)
+	{
+		for(var i:int = 0; i < Finger.identity.length; i++)
+		{
+			if(Finger.GetExists(i))
+			{
+				importantFinger = i;
+			}
+		}
+	}
+	else if(Finger.GetExists(importantFinger))
+	{
+		
+		if(Finger.GetPosition(importantFinger).x > 3 && Finger.GetPosition(importantFinger).x < 9)
+		{
+			playerLocation = 3;
+		}
+		else if(Finger.GetPosition(importantFinger).x < -3 && Finger.GetPosition(importantFinger).x > -9)
+		{
+			playerLocation = 1;
+		}
+		else if(Finger.GetPosition(importantFinger).x > -3 && Finger.GetPosition(importantFinger).x < 3)
+		{
+			playerLocation = 2;
+		}
+		SetDestination();
+	}
+	else if(!Finger.GetExists(importantFinger))
+	{
+
+		importantFinger = -1;
 	}
 }
 
@@ -216,22 +252,6 @@ function fireCannon3() {
 		finished = true;
 		Finish(false);
 	}
-}
-
-function Left () {
-	if(playerLocation > 1)
-	{
-		playerLocation --;
-	}
-	SetDestination();
-}
-
-function Right () {
-	if(playerLocation < 3)
-	{
-		playerLocation ++;
-	}
-	SetDestination();
 }
 
 function SetDestination () {

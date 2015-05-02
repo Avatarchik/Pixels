@@ -20,6 +20,7 @@ static var allowClick:boolean;
 // Confirmation
 var ticket:GameObject;
 private var worldTransition:GameObject;
+static var selectedLocation:float;
 
 // Results
 var results:GameObject;
@@ -33,6 +34,7 @@ private var showNot:Vector3;
 private var hideNot:Vector3;
 
 function Start () {
+	selectedLocation = transform.position.x;
 	AudioManager.PlaySongIntro(null,worldMusic,1);	
 	worlds = new Transform[transform.childCount];
 	for(var i:int = 0; i < worlds.length; i++)
@@ -62,7 +64,7 @@ function Start () {
 	mapMove = false;
 	if(mapMoveSpeed == 0 || mapMoveSpeed == null)
 	{
-		mapMoveSpeed = .025;
+		mapMoveSpeed = .035;
 	}
 }
 
@@ -111,8 +113,8 @@ function Update () {
 					{
 						PlayerPrefs.SetString("LastWorldVisited", worlds[closestWorld].name);
 					}
-					transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*2);
-					transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.5);
+					transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
+					transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);
 				}
 			}
 			else
@@ -157,11 +159,8 @@ function Update () {
 			break;
 		case MapStatus.Confirmation:
 			showTicket();
-			if(Mathf.Abs(transform.position.x - (worlds[closestWorld].localPosition.x * transform.localScale.x * -1)) < 8 && Mathf.Abs(cameraVelocity) < 10)
-			{
-				transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*4);
-				transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.85);
-			}
+			transform.position.x = Mathf.Lerp(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*3);
+			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.7);
 			break;
 		case MapStatus.Menu:
 			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, .4, Time.deltaTime);

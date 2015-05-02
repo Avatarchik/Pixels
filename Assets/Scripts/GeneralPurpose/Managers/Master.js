@@ -53,14 +53,34 @@ static var needToNotify:boolean;
 
 static var unlockLevels:float[];
 
+var topBar:GameObject;
+var bottomBar:GameObject;
+static var device:String;
+
 static var demoMode:boolean;
 static var unlockAll:boolean;
 static var resetAll:boolean;
 
+var unlockAndSkip:boolean;
+var quickProgress:boolean;
+var eraseOnLoad:boolean;
+
 function Awake () {
 	demoMode = false;
 	unlockAll = false;
-	resetAll = true;
+	resetAll = false;
+	if(unlockAndSkip)
+	{
+		unlockAll = true;
+	}
+	if(quickProgress)
+	{
+		demoMode = true;
+	}
+	if(eraseOnLoad)
+	{
+		resetAll = true;
+	}
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new float[6];
@@ -72,6 +92,14 @@ function Awake () {
 	initialLoad = true;
 	
 	// Set iOS device settings, including framerate and permitted orientations.
+	if(CheckDeviceType("iPad"))
+	{
+		device = "iPad";
+	}
+	else
+	{
+		device = "normal";
+	}
 	Application.targetFrameRate = 60;
 	Screen.orientation = ScreenOrientation.AutoRotation; 
 	Screen.autorotateToLandscapeLeft = true;
@@ -97,16 +125,58 @@ function Awake () {
 function Update () {
 	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
 	{
-		GetComponent.<Camera>().orthographicSize = 9;
+		if(device == "iPad")
+		{
+			topBar.transform.position = Vector3(0,25,-8.9);
+			bottomBar.transform.position = Vector3(0,-25,-8.9);
+			GetComponent.<Camera>().orthographicSize = 12;
+		}
+		else
+		{
+			GetComponent.<Camera>().orthographicSize = 9;
+		}
 	}
 	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
 	{
-		GetComponent.<Camera>().orthographicSize = 16;
+		if(device == "iPad")
+		{
+			topBar.transform.position = Vector3(25,0,-8.9);
+			bottomBar.transform.position = Vector3(-25,0,-8.9);
+			GetComponent.<Camera>().orthographicSize = 16;
+		}
+		else
+		{
+			GetComponent.<Camera>().orthographicSize = 16;
+		}
 	}
 }
 
+// This function returns the device type to adjust the screen size (and borders) for iPad and older iPhone models.
+function CheckDeviceType(search:String):boolean {
+	switch(search)
+	{
+		case "iPad":
+			if(iOS.Device.generation == iOS.DeviceGeneration.iPadAir1 || iOS.Device.generation == iOS.DeviceGeneration.iPadAir2|| iOS.Device.generation == iOS.DeviceGeneration.iPad1Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad2Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad3Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad4Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad5Gen || iOS.Device.generation == iOS.DeviceGeneration.iPadUnknown)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			break;
+		case "old iPhone":
+			return false;
+			break;
+		default:
+			return false;
+			break;
+	}
+		
+}
+
 function Initialize () {
-	// Testing information.
+	///////////////////////////////////////////////////////////////////////// Testing information.
 	if(demoMode)
 	{
 		unlockLevels = [0.0,5,10,15,20,100];
