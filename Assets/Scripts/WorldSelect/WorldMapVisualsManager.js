@@ -1,10 +1,10 @@
 ﻿#pragma strict
 
 var worldMap:GameObject;
-var worldMapManager:WorldMapManager;
+@HideInInspector var worldMapManager:WorldMapManager;
 
 var player:GameObject;
-var playerManager:PlayerManager;
+@HideInInspector var playerManager:PlayerManager;
 
 var playerDifference:float;
 static var wind:float;

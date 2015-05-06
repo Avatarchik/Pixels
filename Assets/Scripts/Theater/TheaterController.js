@@ -9,7 +9,7 @@ private var speed:float;
 var ledgerRight:GameObject;
 var ledgerTop:GameObject;
 
-var controller:Master;
+@HideInInspector var controller:Master;
 
 var colors1:GameObject;
 
@@ -27,7 +27,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(currentState);
 	// Moves pieces of theater based on its current state.
 	speed = Time.deltaTime * 8;
 	switch(currentState)

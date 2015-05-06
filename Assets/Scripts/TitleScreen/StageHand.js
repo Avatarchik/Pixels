@@ -1,10 +1,10 @@
 ﻿#pragma strict
 
 var effectObject:GameObject;
-var effect:SpriteRenderer;
-var sprite:SpriteRenderer;
+@HideInInspector var effect:SpriteRenderer;
+@HideInInspector var sprite:SpriteRenderer;
 
-var effectChoice:int;
+@HideInInspector var effectChoice:int;
 
 var sleepingSprites:Sprite[];
 var smokingSprites:Sprite[];

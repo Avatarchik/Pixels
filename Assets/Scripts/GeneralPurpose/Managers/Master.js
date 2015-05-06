@@ -46,40 +46,31 @@ static var selectedWorldUnlockNotificationsLine2:String[];
 static var initialWorldSpeed:int;
 static var speedIncrease:int;
 static var lives:int;
-//var worldColors:Color[];
 
 static var lastScore:int;
 static var needToNotify:boolean;
 
 static var unlockLevels:float[];
 
-var topBar:GameObject;
-var bottomBar:GameObject;
+private var topBar:GameObject;
+private var bottomBar:GameObject;
 static var device:String;
 
-static var demoMode:boolean;
-static var unlockAll:boolean;
-static var resetAll:boolean;
-
-var unlockAndSkip:boolean;
 var quickProgress:boolean;
+var unlockAndSkip:boolean;
 var eraseOnLoad:boolean;
+var demoMode:boolean;
+var demoTime:float;
+static var counter:float;
+static var unlockAll:boolean;
+static var demo:boolean;
 
 function Awake () {
-	demoMode = false;
 	unlockAll = false;
-	resetAll = false;
+	demo = false;
 	if(unlockAndSkip)
 	{
 		unlockAll = true;
-	}
-	if(quickProgress)
-	{
-		demoMode = true;
-	}
-	if(eraseOnLoad)
-	{
-		resetAll = true;
 	}
 	
 	// Sets initial variables for worlds.
@@ -91,7 +82,7 @@ function Awake () {
 	needToNotify = false;
 	initialLoad = true;
 	
-	// Set iOS device settings, including framerate and permitted orientations.
+	// Set iOS device settings, including framerate and permitted orientations, and find Top and Bottom objects.
 	if(CheckDeviceType("iPad"))
 	{
 		device = "iPad";
@@ -99,6 +90,18 @@ function Awake () {
 	else
 	{
 		device = "normal";
+	}
+	//var children:Transform[];
+	for(var child:Transform in gameObject.GetComponentsInChildren(Transform))
+	{
+		if(child.name == "Top")
+		{
+			topBar = child.gameObject;
+		}
+		if(child.name == "Bottom")
+		{
+			bottomBar = child.gameObject;
+		}
 	}
 	Application.targetFrameRate = 60;
 	Screen.orientation = ScreenOrientation.AutoRotation; 
@@ -119,6 +122,14 @@ function Awake () {
 		{
 			Application.LoadLevel("TitleScreen");
 		}
+	}
+}
+
+function Start () {
+	if(demoMode)
+	{
+		demo = true;
+		StartCoroutine(Demo());
 	}
 }
 
@@ -175,9 +186,31 @@ function CheckDeviceType(search:String):boolean {
 		
 }
 
+function Demo() {
+	counter = demoTime;
+	while(true)
+	{
+		if(Finger.GetExists(0) == true)
+		{
+			counter = demoTime;
+		}
+		else if(!Application.loadedLevelName.Contains("Tutorial"))
+		{
+			counter -= Time.deltaTime;
+		}
+		yield;
+		if(counter < 0)
+		{
+			Application.LoadLevel("GameStart");
+			Destroy(gameObject);
+		}
+	}
+	yield;
+}
+
 function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
-	if(demoMode)
+	if(quickProgress)
 	{
 		unlockLevels = [0.0,5,10,15,20,100];
 	}
@@ -185,7 +218,7 @@ function Initialize () {
 	{
 		unlockLevels = [0.0,15,30,45,70,100];
 	}
-	if(resetAll)
+	if(eraseOnLoad)
 	{
 		PlayerPrefs.DeleteAll();
 	}

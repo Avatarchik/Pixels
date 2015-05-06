@@ -14,7 +14,7 @@ var colors2:GameObject;
 var returnButton:GameObject;
 
 var flats:GameObject[];
-var currentFlat:GameObject;
+@HideInInspector var currentFlat:GameObject;
 
 function Start () {
 	PlaySong();

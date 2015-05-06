@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 var newState:TheaterStatus;
-var manager:PlayerManager;
+@HideInInspector var manager:PlayerManager;
 var removeLedger:boolean;
 var hidden:boolean;
 var leave:boolean;

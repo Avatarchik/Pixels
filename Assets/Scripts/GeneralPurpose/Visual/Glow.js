@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
-var sprite:SpriteRenderer;
-var randomness:float;
+@HideInInspector var sprite:SpriteRenderer;
+@HideInInspector var randomness:float;
 
 function Start () {
 	sprite = GetComponent(SpriteRenderer);

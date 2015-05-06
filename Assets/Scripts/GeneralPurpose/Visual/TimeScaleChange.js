@@ -17,9 +17,18 @@ function Update () {
 		Time.timeScale = 1;
 		AudioListener.volume = 1;
 	}
-	speed = false;
 }
 
 function Clicked () {
 	speed = true;
+}
+
+function Unclicked () {
+	speed = false;
+}
+
+function OnDestroy () {
+	speed = false;
+	Time.timeScale = 1;
+	AudioListener.volume = 1;
 }

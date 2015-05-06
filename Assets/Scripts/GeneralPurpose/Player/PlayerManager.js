@@ -118,7 +118,7 @@ function ChangeColor(part:String, color:int) {
 		default:
 			break;
 	}
-	Refresh(part);
+	RefreshColor(part);
 }
 
 function Refresh(part:String) {
@@ -212,7 +212,36 @@ function Refresh(part:String, change:int) {
 			{
 				PlayerPrefs.SetInt("BodyColor",bodyColor.Length-1);
 			}
-			Debug.Log(PlayerPrefs.GetInt("BodyColor"));
+			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+			break;
+	}
+}
+
+function RefreshColor(part:String) {
+	Debug.Log("color");
+	switch(part)
+	{
+		case "hair":
+			currentHair.GetComponent(SpriteRenderer).color = hairColor[PlayerPrefs.GetInt("HairColor")];
+			break;
+		case "eyes":
+			currentEyes.GetComponent(SpriteRenderer).color = eyesColor[PlayerPrefs.GetInt("EyesColor")];
+			break;
+		case "top":
+			currentTop.GetComponent(SpriteRenderer).color = topsColor[PlayerPrefs.GetInt("TopColor")];
+			break;
+		case "bottom":
+			currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
+			break;
+		case "body":
+			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
+			{
+				PlayerPrefs.SetInt("BodyColor",0);
+			}
+			if(PlayerPrefs.GetInt("BodyColor") < 0)
+			{
+				PlayerPrefs.SetInt("BodyColor",bodyColor.Length-1);
+			}
 			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
 			break;
 	}

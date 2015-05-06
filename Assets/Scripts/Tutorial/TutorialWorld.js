@@ -65,7 +65,7 @@ function Tutorial () {
 	while(!currentText.GetComponent(TextManager).finished) {yield;}
 		goal = -3;
 		while(transform.position.x != goal) {yield;}
-		currentText = Instantiate(showFactoryText);
+		LaunchText(showFactoryText);
 	while(!currentText.GetComponent(TextManager).finished) {yield;}
 		factory.transform.SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
 		startGames.Load();
@@ -77,5 +77,12 @@ function TutorialClick (location:Vector2) {
 	if(Vector2.Distance(location,currentButtonLocation) < 2)
 	{
 		tutorialStage ++;
+	}
+}
+
+function LaunchText(text:GameObject) {
+	if(GameObject.FindGameObjectWithTag("Transition") == null)
+	{
+		currentText = Instantiate(text);
 	}
 }

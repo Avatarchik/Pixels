@@ -24,7 +24,7 @@ static var selectedLocation:float;
 
 // Results
 var results:GameObject;
-var currentResults:GameObject;
+@HideInInspector var currentResults:GameObject;
 
 // Menu
 private var fade:Renderer;

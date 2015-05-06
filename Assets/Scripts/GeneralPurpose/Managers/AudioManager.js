@@ -131,6 +131,7 @@ static function PlaySoundTransition (sound:AudioClip) {
 	effectSpeaker.clip = sound;
 	effectSpeaker.Play();
 }
+
 static function PlaySound (sound:AudioClip) {
 	effectSpeaker.PlayOneShot(sound);
 }
@@ -144,4 +145,9 @@ static function PlaySound (sound:AudioClip, volume:float) {
 
 static function SoundVolumeChange (volume:float) {
 	effectSpeaker.volume = volume;
+}
+
+static function StopAll () {
+	StopSound();
+	StopSong();
 }

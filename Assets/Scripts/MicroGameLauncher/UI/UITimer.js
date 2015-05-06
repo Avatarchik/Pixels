@@ -6,7 +6,7 @@ static var currentTarget:float;
 
 static var counter:float;
 
-var active:boolean;
+static var active:boolean;
 
 function Start () {
 	active = true;

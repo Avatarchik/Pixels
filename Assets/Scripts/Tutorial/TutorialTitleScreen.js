@@ -84,7 +84,7 @@ function Tutorial () {
 		Destroy(logo);
 	}
 	yield WaitForSeconds(2);
-		currentText = Instantiate(introText);
+		LaunchText(introText);
 		yield WaitForSeconds(21.5);
 		if(songs.length > 1)
 		{
@@ -111,7 +111,7 @@ function Tutorial () {
 			transform.position = Vector2.MoveTowards(transform.position, Vector2(0,29),Time.deltaTime*2);
 			yield;
 		}
-		currentText = Instantiate(undressText);
+		LaunchText(undressText);
 	while(!currentText.GetComponent(TextManager).finished) {yield;}
 		currentButtonLocation = Vector2(3.56,-1.9);
 		button2.transform.position.z = shown;
@@ -137,7 +137,7 @@ function Tutorial () {
 		finger.transform.position.x = 100;
 		customizeBottom.Clicked();
 		currentButtonLocation = Vector2(-100,-100);
-		currentText = Instantiate(redressText);
+		LaunchText(redressText);
 	while(!currentText.GetComponent(TextManager).finished) {yield;}
 		currentButtonLocation = Vector2(3.56,-1.9);
 		button2.transform.position.z = shown;
@@ -163,7 +163,7 @@ function Tutorial () {
 		finger.transform.position.x = 100;
 		customizeBottom.Clicked();
 		currentButtonLocation = Vector2(-100,-100);
-		currentText = Instantiate(loadWorldText);
+		LaunchText(loadWorldText);
 	while(transform.position.y != 0)
 		{
 			transform.position = Vector2.Lerp(transform.position, Vector2(0,0),Time.deltaTime*4);
@@ -180,6 +180,13 @@ function Tutorial () {
 		PlayerPrefs.SetInt("TutorialFinished", 1);
 		Application.LoadLevel("TutorialWorld");
 	yield;
+}
+
+function LaunchText(text:GameObject) {
+	if(GameObject.FindGameObjectWithTag("Transition") == null)
+	{
+		currentText = Instantiate(text);
+	}
 }
 
 function TutorialClick (location:Vector2) {

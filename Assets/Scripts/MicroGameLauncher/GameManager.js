@@ -5,8 +5,8 @@ public enum WorldSelect{PackingPeanutFactory,Museum,Theater};
 var transition:GameObject;
 var notification:GameObject;
 private var curNotify:GameObject;
-var notified:boolean;
-var notificationText:String;
+@HideInInspector var notified:boolean;
+@HideInInspector var notificationText:String;
 
 // Controls time between games
 private var timeBeforeSuccessNotification:float;
@@ -26,15 +26,16 @@ static var lives:int;
 static var gameNumber:int;
 
 // UI elements
-var gameCovers:GameObject[];
-var UI:GameObject;
+@HideInInspector var gameCovers:GameObject[];
+@HideInInspector var UI:GameObject;
 var instructions:GameObject;
+var heartPrefab:GameObject;
 static var instructionText:String;
 static var instructionType:Sprite;
 
 // Variables for Use
-var currentGames:GameObject[];
-var bossGame:GameObject;
+@HideInInspector var currentGames:GameObject[];
+@HideInInspector var bossGame:GameObject;
 private var currentlyLoaded:GameObject;
 private var numberAvoid:int;
 private var previousGames:int[];
@@ -53,13 +54,13 @@ static var firstTimeValues:boolean[];
 
 // Pausing Variables
 static var pausable:boolean;
-var paused:boolean;
+@HideInInspector var paused:boolean;
 var menu:GameObject;
 private var currentMenu:GameObject;
-var fade:Renderer;
+@HideInInspector var fade:Renderer;
 
 // "Cutscene" variables
-var loadedText:GameObject;
+@HideInInspector var loadedText:GameObject;
 
 function Start () {
 	// Get required variables.
@@ -123,8 +124,8 @@ function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
-	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	yield WaitForSeconds (1);
+	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	if(PlayerPrefs.GetInt(Master.worldNameVar+"PlayedOnce") == 0)
 	{
 		AudioManager.PlaySong(Master.selectedWorldFirstOpeningSong);
@@ -158,6 +159,7 @@ function BetweenGame () {
 		BroadcastArray(gameCovers,"DisplayChange","Failure");
 		AudioManager.PlaySound(Master.selectedWorldFailSound,.5);
 		lives--;
+		Instantiate(heartPrefab);
 		UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
 	}
 	else
@@ -354,7 +356,7 @@ function LaunchLevel (wait:float) {
 			case Master.unlockLevels[1]:case Master.unlockLevels[2]:case Master.unlockLevels[3]:case Master.unlockLevels[4]:case Master.unlockLevels[5]:
 				bossDifficulty++;
 				currentlyLoaded = Instantiate(bossGame, Vector3(0,0,5), Quaternion.identity);
-				AudioManager.PlaySound(Master.selectedWorldBossGameSounds[Random.Range(0,Master.selectedWorldBossGameSounds.length)],.7);
+				AudioManager.PlaySound(Master.selectedWorldBossGameSounds[Random.Range(0,Master.selectedWorldBossGameSounds.length)],1);
 				break;
 			default:
 				currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);

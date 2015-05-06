@@ -14,8 +14,7 @@ function Clicked () {
 	manager[0].ChangeColor(bodyPart,colorSelection);
 	for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
 	{
-			Debug.Log(i);
-		manager[i].Refresh(bodyPart);
+		manager[i].RefreshColor(bodyPart);
 	}
 }
 

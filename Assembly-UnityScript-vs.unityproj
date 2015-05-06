@@ -46,10 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scenes\Tutorial\SkipButton.js" />
-     <Compile Include="Assets\Scenes\Tutorial\TimeScaleChange.js" />
-     <Compile Include="Assets\Scenes\Tutorial\TutorialTitleScreen.js" />
-     <Compile Include="Assets\Scenes\Tutorial\TutorialWorld.js" />
      <Compile Include="Assets\Scripts\Experimental\1X Value.js" />
      <Compile Include="Assets\Scripts\Experimental\1Y Value.js" />
      <Compile Include="Assets\Scripts\Experimental\AnimationTester.js" />
@@ -86,12 +82,14 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\HighlightGlow.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Visual\TimeScaleChange.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\MicroGameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Controls.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\DarknessChange.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameCover.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\GameNumberChanger.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\HeartNotifier.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Instruction.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\LifeSpriteChanger.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SpeedObject.js" />
@@ -127,6 +125,7 @@
      <Compile Include="Assets\Scripts\Theater\TheaterManager.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ChangeTitleState.js" />
      <Compile Include="Assets\Scripts\TitleScreen\CustomizationButton.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\DemoReset.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Logo.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Scrim.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ShowColorSelection.js" />
@@ -134,12 +133,17 @@
      <Compile Include="Assets\Scripts\TitleScreen\StartGame.js" />
      <Compile Include="Assets\Scripts\TitleScreen\TitleManager.js" />
      <Compile Include="Assets\Scripts\TitleScreen\UndoCustomizationChanges.js" />
+     <Compile Include="Assets\Scripts\Tutorial\Enlarge.js" />
+     <Compile Include="Assets\Scripts\Tutorial\SkipButton.js" />
+     <Compile Include="Assets\Scripts\Tutorial\TutorialTitleScreen.js" />
+     <Compile Include="Assets\Scripts\Tutorial\TutorialWorld.js" />
      <Compile Include="Assets\Scripts\WorldSelect\ChangeMapState.js" />
      <Compile Include="Assets\Scripts\WorldSelect\CheckTheaterAvailability.js" />
      <Compile Include="Assets\Scripts\WorldSelect\GoToWorld.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\ChangeColor.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\MoveIcons.js" />
      <Compile Include="Assets\Scripts\WorldSelect\ResultsScreen.js" />
      <Compile Include="Assets\Scripts\WorldSelect\SmokeStack.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Trees.js" />

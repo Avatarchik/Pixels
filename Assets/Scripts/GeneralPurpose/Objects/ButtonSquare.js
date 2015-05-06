@@ -1,18 +1,18 @@
 ﻿#pragma strict
 
 // Declare variables.
-var importantFinger:int;
-var button:Bounds;
-var startPosition:Vector3;
+@HideInInspector var importantFinger:int;
+@HideInInspector var button:Bounds;
+@HideInInspector var startPosition:Vector3;
 var continuous:boolean = false;
-var location:Vector2;
+@HideInInspector var location:Vector2;
 var boundMultiplier:float = 1;
 
 var down:Sprite;
 var up:Sprite;
 
 var subText:GameObject;
-var textOrigin:Vector3;
+@HideInInspector var textOrigin:Vector3;
 var textOffset:Vector3;
 
 var clickSound:AudioClip;
@@ -99,6 +99,7 @@ function Update () {
 			if(!inMinigame || (!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager)!=null &&!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused))
 			{
 				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+				gameObject.SendMessage("Unclicked", SendMessageOptions.DontRequireReceiver);
 			}
 			if(up!=null && GetComponent(SpriteRenderer)!=null)
 			{

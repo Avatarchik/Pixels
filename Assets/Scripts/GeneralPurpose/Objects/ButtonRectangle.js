@@ -86,6 +86,7 @@ function Update () {
 		{
 			// This is where clicking happens.
 			gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+			gameObject.SendMessage("Unclicked", SendMessageOptions.DontRequireReceiver);
 			if(up!=null && GetComponent(SpriteRenderer)!=null)
 			{
 				GetComponent(SpriteRenderer).sprite = up;

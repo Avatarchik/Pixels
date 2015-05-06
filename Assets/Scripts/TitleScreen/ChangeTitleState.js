@@ -2,7 +2,7 @@
 
 var newState:TitleStatus;
 var player:GameObject;
-var manager:PlayerManager;
+@HideInInspector var manager:PlayerManager;
 
 function Clicked () {
 	if(player != null)

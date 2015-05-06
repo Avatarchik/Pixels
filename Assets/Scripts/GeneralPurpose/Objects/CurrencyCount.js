@@ -8,6 +8,8 @@ var coin:SpriteRenderer;
 
 private var animating:boolean;
 
+var coinSound:AudioClip;
+
 function Start () {
 	animating = false;
 	currency = PlayerPrefs.GetInt("CurrencyNumber");
@@ -20,6 +22,7 @@ function CurrencyCounting(){
 		if(currency < PlayerPrefs.GetInt("CurrencyNumber"))
 		{
 			currency++;
+			AudioManager.PlaySound(coinSound,.3);
 			if(!animating)
 			{
 				CoinAnimate();
