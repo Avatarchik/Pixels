@@ -139,13 +139,11 @@ function BetweenGame () {
 function GameComplete (success:boolean) {
 	if(success)
 	{
-		Debug.Log("SUCCESS");
 		failure = false;
 		speedProgress++;
 	}
 	else
 	{
-		Debug.Log("FAILURE");
 		speedProgress = 0;
 		failure = true;
 	}

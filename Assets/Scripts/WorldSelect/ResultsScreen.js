@@ -44,7 +44,7 @@ function Update () {
 }
 
 function ProgressIncrease() {
-	yield WaitForSeconds(2);
+	yield WaitForSeconds(1.5);
 	PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+Master.lastScore);
 	while(!done)
 	{

@@ -1,12 +1,10 @@
 ﻿#pragma strict
 
 function Start () {
-	if(!Master.demo)
-	{
-		Destroy(gameObject);
-	}
+	
 }
 
 function Clicked () {
-	Master.counter = 0;
+	AudioManager.StopAll();
+	Application.LoadLevel("TutorialTitleScreen");
 }

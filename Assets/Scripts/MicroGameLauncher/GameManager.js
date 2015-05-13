@@ -236,6 +236,10 @@ function GameOver () {
 	AudioManager.StopSong();
 	yield WaitForSeconds(1.3);
 	Master.lastScore = gameNumber;
+	if(PlayerPrefs.GetInt(Master.worldNameVar+"HighScore") <= gameNumber)
+	{
+		PlayerPrefs.SetInt(Master.worldNameVar+"HighScore",gameNumber);
+	}
 	Master.needToNotify = true;
 	Application.LoadLevel("WorldSelect");
 }

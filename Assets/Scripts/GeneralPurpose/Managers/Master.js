@@ -56,6 +56,7 @@ private var topBar:GameObject;
 private var bottomBar:GameObject;
 static var device:String;
 
+var worldNames:String[];
 var quickProgress:boolean;
 var unlockAndSkip:boolean;
 var eraseOnLoad:boolean;
@@ -227,45 +228,31 @@ function Initialize () {
 		UnlockAllOptions();
 	}
 	
-	///////////////////////////////////////////////////////////////////////// World unlock variables.
-	if(!PlayerPrefs.HasKey("PackingPeanutFactory"))
+	for(var worldName:String in worldNames)
 	{
-		PlayerPrefs.SetInt("PackingPeanutFactory", 1);
+	    ///////////////////////////////////////////////////////////////////// World unlock variables.
+		if(!PlayerPrefs.HasKey(worldName))
+		{
+			PlayerPrefs.SetInt(worldName, 0);
+		}
+		///////////////////////////////////////////////////////////////////// World reward variables.
+		if(!PlayerPrefs.HasKey(worldName))
+		{
+			PlayerPrefs.SetInt(worldName, 0);
+		}
+		///////////////////////////////////////////////////////////////////// World high score variables.
+		if(!PlayerPrefs.HasKey(worldName))
+		{
+			PlayerPrefs.SetInt(worldName, 0);
+		}
+		///////////////////////////////////////////////////////////////////// World visit variables.
+		if(!PlayerPrefs.HasKey(worldName))
+		{
+			PlayerPrefs.SetInt(worldName, 0);
+		}
 	}
-	if(!PlayerPrefs.HasKey("Museum"))
-	{
-		PlayerPrefs.SetInt("Museum", 0);
-	}
-	if(!PlayerPrefs.HasKey("Theater"))
-	{
-		PlayerPrefs.SetInt("Theater", 0);
-	}
-	///////////////////////////////////////////////////////////////////////// World reward variables.
-	if(!PlayerPrefs.HasKey("PackingPeanutFactoryUnlocks"))
-	{
-		PlayerPrefs.SetInt("PackingPeanutFactoryUnlocks", 0);
-	}
-	if(!PlayerPrefs.HasKey("MuseumUnlocks"))
-	{
-		PlayerPrefs.SetInt("MuseumUnlocks", 0);
-	}
-	if(!PlayerPrefs.HasKey("TheaterUnlocks"))
-	{
-		PlayerPrefs.SetInt("TheaterUnlocks", 0);
-	}
-	///////////////////////////////////////////////////////////////////////// World visit variables.
-	if(!PlayerPrefs.HasKey("PackingPeanutFactoryPlayedOnce"))
-	{
-		PlayerPrefs.SetInt("PackingPeanutFactoryPlayedOnce", 0);
-	}
-	if(!PlayerPrefs.HasKey("MuseumPlayedOnce"))
-	{
-		PlayerPrefs.SetInt("MuseumPlayedOnce", 0);
-	}
-	if(!PlayerPrefs.HasKey("TheaterPlayedOnce"))
-	{
-		PlayerPrefs.SetInt("TheaterPlayedOnce", 0);
-	}
+	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
+	
 	///////////////////////////////////////////////////////////////////////// Overall status variables.
 	if(!PlayerPrefs.HasKey("LastWorldVisited"))
 	{

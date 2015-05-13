@@ -6,7 +6,7 @@ static var finished:boolean;
 static var length:float;
 static var timer:float;
 
-static var importantFinger:int;
+@HideInInspector var importantFinger:int;
 
 function Start () {
 	importantFinger = -1;

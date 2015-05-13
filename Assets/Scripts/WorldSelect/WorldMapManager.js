@@ -98,24 +98,7 @@ function Update () {
 						break;
 					}
 				}
-				var smallestDistance:float = 100;
-				for(var worldList:int = 0; worldList < worlds.length; worldList++)
-				{
-					if(Mathf.Abs(0 - worlds[worldList].position.x) < smallestDistance)
-					{
-						smallestDistance = Mathf.Abs(0 - worlds[worldList].position.x);
-						closestWorld = worldList;
-					}
-				}
-				if(Mathf.Abs(transform.position.x - (worlds[closestWorld].localPosition.x * transform.localScale.x * -1)) < 8 && Mathf.Abs(cameraVelocity) < 10)
-				{
-					if(PlayerPrefs.GetString("LastWorldVisited") != worlds[closestWorld].name)
-					{
-						PlayerPrefs.SetString("LastWorldVisited", worlds[closestWorld].name);
-					}
-					transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
-					transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);
-				}
+				FindClosest();
 			}
 			else
 			{
@@ -159,6 +142,7 @@ function Update () {
 			break;
 		case MapStatus.Confirmation:
 			showTicket();
+			FindClosest();
 			transform.position.x = Mathf.Lerp(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*3);
 			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.7);
 			break;
@@ -190,10 +174,14 @@ function showTicket() {
 		{
 			text.text = Camera.main.GetComponent(Master).worldNameLine1;
 		}	
-		if(text.transform.name == "Title2" || text.transform.name == "Shadow2")
+		else if(text.transform.name == "Title2" || text.transform.name == "Shadow2")
 		{
 			text.text = Camera.main.GetComponent(Master).worldNameLine2;
 		}	
+		else if(text.transform.name == "HighScore")
+		{
+			text.text = PlayerPrefs.GetInt(Master.worldNameVar+"HighScore").ToString();
+		}
 	}
 	while(Vector3.Distance(ticket.transform.position, showNot) > .1 && currentState == MapStatus.Confirmation)
 	{	
@@ -206,5 +194,26 @@ function hideTicket() {
 	{
 		ticket.transform.position = Vector3.Lerp(ticket.transform.position,hideNot, Time.deltaTime);
 		yield;
+	}
+}
+
+function FindClosest() {
+	var smallestDistance:float = 100;
+	for(var worldList:int = 0; worldList < worlds.length; worldList++)
+	{
+		if(Mathf.Abs(0 - worlds[worldList].position.x) < smallestDistance)
+		{
+			smallestDistance = Mathf.Abs(0 - worlds[worldList].position.x);
+			closestWorld = worldList;
+		}
+	}
+	if(Mathf.Abs(transform.position.x - (worlds[closestWorld].localPosition.x * transform.localScale.x * -1)) < 8 && Mathf.Abs(cameraVelocity) < 10)
+	{
+		if(PlayerPrefs.GetString("LastWorldVisited") != worlds[closestWorld].name)
+		{
+			PlayerPrefs.SetString("LastWorldVisited", worlds[closestWorld].name);
+		}
+		transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
+		transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);
 	}
 }
