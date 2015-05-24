@@ -73,14 +73,14 @@ function FlatMovement () {
 	var goal:float;
 	while(true && flats.Length != 0)
 	{
-		while(currentFlat == null && currentState != TitleStatus.CustomizeColor && currentState != TitleStatus.CustomizeColor)
+		while(currentFlat == null && currentState != TitleStatus.CustomizeColor)
 		{
-			goal = Random.Range(0,2);
+			goal = Random.Range(0,2); 
 			if(goal == 0)
 			{
 				goal = -1;
 			}
-			yield WaitForSeconds(Random.Range(4,8));
+			yield WaitForSeconds(Random.Range(4,8.0));
 			currentFlat = Instantiate(flats[Random.Range(0,flats.Length)], Vector3(transform.position.x + -16.7 * goal,transform.position.y - 4.95 + (.15 * Random.Range(-3,6)),3),Quaternion.identity);
 			currentFlat.transform.parent = transform;
 			yield;

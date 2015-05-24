@@ -1,10 +1,13 @@
 ﻿#pragma strict
 
-@HideInInspector var leftNotifier:Transform;
-@HideInInspector var rightNotifier:Transform;
+@HideInInspector var leftNotifierHorizontal:Transform;
+@HideInInspector var rightNotifierHorizontal:Transform;
 
-var leftLimit:float;
-var rightLimit:float;
+@HideInInspector var leftNotifierVertical:Transform;
+@HideInInspector var rightNotifierVertical:Transform;
+
+@HideInInspector var leftLimit:float;
+@HideInInspector var rightLimit:float;
 
 var worldMapObject:Transform;
 function Start () {
@@ -16,13 +19,21 @@ function Start () {
 	rightLimit = -21;
 	for(var child:Transform in gameObject.GetComponentsInChildren(Transform))
 	{
-		if(child.name == "Right")
+		if(child.name == "RightHorizontal")
 		{
-			rightNotifier = child;
+			rightNotifierHorizontal = child;
 		}
-		if(child.name == "Left")
+		if(child.name == "LeftHorizontal")
 		{
-			leftNotifier = child;
+			leftNotifierHorizontal = child;
+		}
+		if(child.name == "RightVertical")
+		{
+			rightNotifierVertical = child;
+		}
+		if(child.name == "LeftVertical")
+		{
+			leftNotifierVertical = child;
 		}
 	}
 }
@@ -30,18 +41,22 @@ function Start () {
 function Update () {
 	if(worldMapObject.position.x > leftLimit)
 	{
-		leftNotifier.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(leftNotifier.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
+		leftNotifierHorizontal.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(leftNotifierHorizontal.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
+		leftNotifierVertical.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(leftNotifierVertical.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
 	}
 	else
 	{
-		leftNotifier.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
+		leftNotifierHorizontal.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
+		leftNotifierVertical.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
 	}
 	if(worldMapObject.position.x < rightLimit)
 	{
-		rightNotifier.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(rightNotifier.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
+		rightNotifierHorizontal.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(rightNotifierHorizontal.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
+		rightNotifierVertical.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(rightNotifierVertical.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
 	}
 	else
 	{
-		rightNotifier.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
+		rightNotifierHorizontal.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
+		rightNotifierVertical.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
 	}
 }

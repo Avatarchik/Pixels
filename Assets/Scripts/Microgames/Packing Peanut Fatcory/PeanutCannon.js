@@ -64,7 +64,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(playerLocation);
 	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
 	if(Mathf.Abs(player.transform.position.x - target) < .3)
 	{

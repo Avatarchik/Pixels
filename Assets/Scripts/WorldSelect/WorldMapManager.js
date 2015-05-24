@@ -69,24 +69,24 @@ function Start () {
 }
 
 function Update () {
-	if(Input.GetKeyDown("up"))
-	{
-		currentState = MapStatus.Results;
-	}
 	// Move map if no pop-ups are on-screen.
 	switch(currentState)
 	{
 		case MapStatus.Clear:
 			hideTicket();
-			if(currentResults!=null && currentResults.transform.position.y != 30)
-			{
-				currentResults.transform.position.y = Mathf.MoveTowards(currentResults.transform.position.y,30, Time.deltaTime*30);
-			}
-			else if(currentResults!=null)
-			{
-				Destroy(currentResults);
-			}
 			fade.material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
+			if(currentResults!=null)
+			{
+				if(currentResults.transform.position.y != 30)
+				{
+					currentResults.transform.position.y = Mathf.MoveTowards(currentResults.transform.position.y,30, Time.deltaTime*30);
+				}
+				else
+				{
+					Destroy(currentResults);
+				}
+			}
+			// Get Finger
 			if(importantFinger == -1)
 			{
 				for(var i:int = 0; i < Finger.identity.length; i++)
@@ -109,7 +109,14 @@ function Update () {
 				}
 				else
 				{
-					allowClick = true;
+					if(Mathf.Abs(Finger.GetPosition(importantFinger).x) > 13.5 || (Mathf.Abs(Finger.GetPosition(importantFinger).x) > 6 && Finger.GetPosition(importantFinger).y < -12))
+					{
+						cameraVelocity = Finger.GetPosition(importantFinger).x * -2;
+					}
+					else
+					{
+						allowClick = true;
+					}
 				}
 				if(!Finger.GetExists(importantFinger))
 				{
@@ -123,22 +130,16 @@ function Update () {
 			}
 			
 			// Move camera according to finger velocity, but slow over time.
-			
-			if(Camera.main.orthographicSize == 9)
+			if(transform.position.x + (cameraVelocity * mapMoveSpeed) > -28 && transform.position.x + (cameraVelocity * mapMoveSpeed) < 28)
 			{
-				if(transform.position.x + (cameraVelocity * mapMoveSpeed) > -28 && transform.position.x + (cameraVelocity * mapMoveSpeed) < 28)
-				{
-					transform.position.x += cameraVelocity * mapMoveSpeed;
-				}
+				transform.position.x += cameraVelocity * mapMoveSpeed;
 			}
 			else
 			{
-				if(transform.position.x + (cameraVelocity * mapMoveSpeed) > -28 && transform.position.x + (cameraVelocity * mapMoveSpeed) < 28)
-				{
-					transform.position.x += cameraVelocity * mapMoveSpeed;
-				}
+				cameraVelocity = 0;
 			}
 			cameraVelocity = Mathf.Lerp(cameraVelocity,0,Time.deltaTime * 2.5);
+			
 			break;
 		case MapStatus.Confirmation:
 			showTicket();

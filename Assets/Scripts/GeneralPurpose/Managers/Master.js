@@ -58,21 +58,19 @@ static var device:String;
 
 var worldNames:String[];
 var quickProgress:boolean;
-var unlockAndSkip:boolean;
+var unlockEverything:boolean;
+var skipOpening:boolean;
 var eraseOnLoad:boolean;
 var demoMode:boolean;
 var demoTime:float;
 static var counter:float;
-static var unlockAll:boolean;
 static var demo:boolean;
+static var unlockAll:boolean;
 
 function Awake () {
-	unlockAll = false;
 	demo = false;
-	if(unlockAndSkip)
-	{
-		unlockAll = true;
-	}
+	unlockAll = false;
+	if(unlockEverything){unlockAll=true;}
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new float[6];
@@ -115,7 +113,7 @@ function Awake () {
 	Initialize();
 	if(Application.loadedLevelName == "GameStart")
 	{
-		if(PlayerPrefs.GetInt("TutorialFinished") == 0 && !unlockAll)
+		if(PlayerPrefs.GetInt("TutorialFinished") == 0 && !skipOpening)
 		{
 			Application.LoadLevel("TutorialTitleScreen");
 		}
@@ -256,7 +254,7 @@ function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Overall status variables.
 	if(!PlayerPrefs.HasKey("LastWorldVisited"))
 	{
-		PlayerPrefs.SetString("LastWorldVisited", "Theater");
+		PlayerPrefs.SetString("LastWorldVisited", "PackingPeanutFactory");
 	}
 	if(!PlayerPrefs.HasKey("CurrencyNumber"))
 	{
