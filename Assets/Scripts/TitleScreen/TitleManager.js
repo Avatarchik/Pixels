@@ -104,21 +104,21 @@ function FlyInMovement () {
 	{
 		yield WaitForSeconds(Random.Range(5,10));
 		var pullAmount:float = 1;
-		while(flyIn.transform.position.y != flyInTop)
+		while(flyIn.transform.localPosition.y != flyInTop)
 		{
-			if(Mathf.Abs(flyIn.transform.position.y-flyInTop) > pullAmount)
+			if(Mathf.Abs(flyIn.transform.localPosition.y-flyInTop) > pullAmount)
 			{
-				var tempGoal:float = flyIn.transform.position.y + pullAmount;
-				while(flyIn.transform.position.y != tempGoal)
+				var tempGoal:float = flyIn.transform.localPosition.y + pullAmount;
+				while(flyIn.transform.localPosition.y != tempGoal)
 				{
-					flyIn.transform.position.y = Mathf.MoveTowards(flyIn.transform.position.y,tempGoal,Time.deltaTime*1);
-					flyIn.transform.position.y = Mathf.Lerp(flyIn.transform.position.y,tempGoal,Time.deltaTime*2);
+					flyIn.transform.localPosition.y = Mathf.MoveTowards(flyIn.transform.localPosition.y,tempGoal,Time.deltaTime*1);
+					flyIn.transform.localPosition.y = Mathf.Lerp(flyIn.transform.localPosition.y,tempGoal,Time.deltaTime*2);
 					yield;
 				}
 			}
 			else
 			{
-				flyIn.transform.position.y = Mathf.MoveTowards(flyIn.transform.position.y,flyInTop,Time.deltaTime*5);
+				flyIn.transform.localPosition.y = Mathf.MoveTowards(flyIn.transform.localPosition.y,flyInTop,Time.deltaTime*5);
 			}
 			yield;
 		}
@@ -128,7 +128,7 @@ function FlyInMovement () {
 		flyIn2.GetComponent(SpriteRenderer).sprite = flyIns2Sprites[newFlyIn];
 		while(flyIn.transform.position.y != flyInBottom)
 		{
-			flyIn.transform.position.y = Mathf.MoveTowards(flyIn.transform.position.y,flyInBottom,Time.deltaTime*20);
+			flyIn.transform.localPosition.y = Mathf.MoveTowards(flyIn.transform.localPosition.y,flyInBottom,Time.deltaTime*20);
 			yield;
 		}
 		StartCoroutine(Shake(flyIn,10, Vector3(0.1,.1,0)));

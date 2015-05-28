@@ -10,17 +10,23 @@ var worldMusic:AudioClip;
 
 // Clear
 static var cameraVelocity:float;
-private var importantFinger:int;
-private var startPosition:Vector3;
-private var mapMoveSpeed:float;
-private var worlds:Transform[];
-private var closestWorld:int;
+@HideInInspector var importantFinger:int;
+@HideInInspector var startPosition:Vector3;
+@HideInInspector var mapMoveSpeed:float;
+@HideInInspector var worlds:Transform[];
+@HideInInspector var closestWorld:int;
 static var allowClick:boolean;
+@HideInInspector var leftCameraLimit:float;
+@HideInInspector var rightCameraLimit:float;
 
 // Confirmation
 var ticket:GameObject;
 private var worldTransition:GameObject;
 static var selectedLocation:float;
+
+// Banner
+var banner:GameObject;
+@HideInInspector var bannerText:TextMesh;
 
 // Results
 var results:GameObject;
@@ -35,7 +41,9 @@ private var hideNot:Vector3;
 
 function Start () {
 	selectedLocation = transform.position.x;
-	AudioManager.PlaySongIntro(null,worldMusic,1);	
+	AudioManager.PlaySongIntro(null,worldMusic,1);
+
+	bannerText = banner.GetComponentInChildren(TextMesh);
 	worlds = new Transform[transform.childCount];
 	for(var i:int = 0; i < worlds.length; i++)
 	{
@@ -51,6 +59,8 @@ function Start () {
 	fade = Camera.main.GetComponentInChildren(Renderer);
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
+	leftCameraLimit = -61;
+	rightCameraLimit = 28;
 	if(Master.needToNotify)
 	{
 		currentState = MapStatus.Results;
@@ -109,7 +119,7 @@ function Update () {
 				}
 				else
 				{
-					if(Mathf.Abs(Finger.GetPosition(importantFinger).x) > 13.5 || (Mathf.Abs(Finger.GetPosition(importantFinger).x) > 6 && Finger.GetPosition(importantFinger).y < -12))
+					if((Mathf.Abs(Finger.GetPosition(importantFinger).x) > 13.5 && Mathf.Abs(Finger.GetPosition(importantFinger).x) < 5.3)|| (Mathf.Abs(Finger.GetPosition(importantFinger).x) > 6 && Finger.GetPosition(importantFinger).y < -12))
 					{
 						cameraVelocity = Finger.GetPosition(importantFinger).x * -2;
 					}
@@ -130,7 +140,7 @@ function Update () {
 			}
 			
 			// Move camera according to finger velocity, but slow over time.
-			if(transform.position.x + (cameraVelocity * mapMoveSpeed) > -28 && transform.position.x + (cameraVelocity * mapMoveSpeed) < 28)
+			if(transform.position.x + (cameraVelocity * mapMoveSpeed) > leftCameraLimit && transform.position.x + (cameraVelocity * mapMoveSpeed) < rightCameraLimit)
 			{
 				transform.position.x += cameraVelocity * mapMoveSpeed;
 			}
@@ -164,6 +174,22 @@ function Update () {
 		default:
 			break;
 	}
+	if(closestWorld != null && Mathf.Abs(worlds[closestWorld].transform.position.x - transform.position.x) < 3)
+	{
+		if(worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine != null && worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine != "")
+		{
+			bannerText.text = worlds[closestWorld].GetComponent(BasicWorldInfo).topLine + "\n" + worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine;
+		}
+		else
+		{
+			bannerText.text = worlds[closestWorld].GetComponent(BasicWorldInfo).topLine;
+		}
+		showBanner();
+	}
+	else
+	{
+		hideBanner();	
+	}
 }
 
 function showTicket() {
@@ -196,6 +222,13 @@ function hideTicket() {
 		ticket.transform.position = Vector3.Lerp(ticket.transform.position,hideNot, Time.deltaTime);
 		yield;
 	}
+}
+
+function showBanner() {
+	banner.transform.position = Vector3.Lerp(banner.transform.position,showNot - Vector3(0,8,.5), Time.deltaTime * 2);
+}
+function hideBanner() {
+	banner.transform.position = Vector3.Lerp(banner.transform.position,-hideNot, Time.deltaTime * 2);
 }
 
 function FindClosest() {

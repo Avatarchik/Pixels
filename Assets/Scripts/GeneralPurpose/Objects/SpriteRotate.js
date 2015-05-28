@@ -1,12 +1,15 @@
 ﻿#pragma strict
 
+var defaultSprite:Sprite;
 var sprites:Sprite[];
 var waitTime:float;
-var currentSprite:int;
+@HideInInspector var currentSprite:int;
+@HideInInspector var shouldRotate:boolean;
 
 function Start () {
 	currentSprite = 0;
 	GetComponent(SpriteRenderer).sprite = sprites[currentSprite];
+	shouldRotate = true;
 	StartCoroutine(SpriteRotate());
 }
 
@@ -19,8 +22,28 @@ function SpriteRotate () {
 		{
 			currentSprite = 0;
 		}	
-		GetComponent(SpriteRenderer).sprite = sprites[currentSprite];
+		if(shouldRotate)
+		{
+			GetComponent(SpriteRenderer).sprite = sprites[currentSprite];
+		}
 		yield;
 	}
 	yield;
+}
+
+function StopRotation () {
+	shouldRotate = false;
+	if(defaultSprite != null)
+	{
+		GetComponent(SpriteRenderer).sprite = defaultSprite;
+	}
+	else
+	{
+		GetComponent(SpriteRenderer).sprite = null;
+	}
+	
+}
+
+function StartRotation () {
+	shouldRotate = true;
 }
