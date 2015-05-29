@@ -59,7 +59,7 @@ function Start () {
 	fade = Camera.main.GetComponentInChildren(Renderer);
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
-	leftCameraLimit = -61;
+	leftCameraLimit = -95;
 	rightCameraLimit = 28;
 	if(Master.needToNotify)
 	{

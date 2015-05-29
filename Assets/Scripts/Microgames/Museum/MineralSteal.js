@@ -15,6 +15,8 @@ var robot:GameObject;
 var lasers:GameObject[];
 var laserSprites:Sprite[];
 
+var gotDiamondSprite:Sprite;
+
 @HideInInspector var leftRobotLimit:float;
 @HideInInspector var rightRobotLimit:float;
 
@@ -34,7 +36,7 @@ var laserSprites:Sprite[];
 function Start () {
 	killDistance = 1;
 	grabDiamondDistance = 2.5;
-	fingerDistance = 4;
+	fingerDistance = 6;
 	
 	leftRobotLimit = -5.5;
 	rightRobotLimit = 2.96;
@@ -102,19 +104,27 @@ function Update () {
 	}
 	else if(Finger.GetExists(importantFinger))
 	{
-		if(Mathf.Abs(Finger.GetPosition(importantFinger).x - robot.transform.position.x) < fingerDistance)
+		if(Mathf.Abs(Finger.GetPosition(importantFinger).x - robot.transform.position.x) < fingerDistance && !finished)
 		{
+			if(Finger.GetPosition(importantFinger).x < robot.transform.position.x)
+			{
+				robot.transform.localScale.x = -1;
+			}
+			else if(Finger.GetPosition(importantFinger).x > robot.transform.position.x)
+			{
+				robot.transform.localScale.x = 1;
+			}	
 			if(Finger.GetPosition(importantFinger).x <= leftRobotLimit)
 			{
-				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,leftRobotLimit, Time.deltaTime * 5);
+				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,leftRobotLimit, Time.deltaTime * (3 + speed*2));
 			}	
 			else if(Finger.GetPosition(importantFinger).x >= rightRobotLimit)
 			{
-				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,rightRobotLimit, Time.deltaTime * 5);
+				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,rightRobotLimit, Time.deltaTime * (3 + speed*2));
 			}
 			else
 			{
-				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,Finger.GetPosition(importantFinger).x, Time.deltaTime * 5);
+				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,Finger.GetPosition(importantFinger).x, Time.deltaTime * (3 + speed*2));
 			}
 		}
 	}
@@ -124,7 +134,12 @@ function Update () {
 	}
 	if(Mathf.Abs(robot.transform.position.x - diamond.transform.position.x) < grabDiamondDistance)
 	{
-		Debug.Log("hey");
+		diamond.transform.parent = robot.transform;
+		if(!finished)
+		{
+			Finish(true);
+			diamond.GetComponent(SpriteRenderer).sprite = gotDiamondSprite;
+		}
 	}
 }
 
@@ -151,14 +166,18 @@ function LaserFire (laser:SpriteRenderer) {
 	yield WaitForSeconds(laserSpeed/2);
 	laser.sprite = laserSprites[3];
 	var tempCounter:float = laserSpeed;
-	while(tempCounter > 0)
+	if(!finished)
 	{
-		tempCounter -= Time.deltaTime;
-		if(Mathf.Abs(robot.transform.position.x-laser.transform.position.x) < killDistance)
+		while(tempCounter > 0)
 		{
-			Finish(false);
+			tempCounter -= Time.deltaTime;
+			if(Mathf.Abs(robot.transform.position.x-laser.transform.position.x) < killDistance && !finished)
+			{
+				robot.GetComponent(ParticleSystem).emissionRate = 200;
+				Finish(false);
+			}
+			yield;
 		}
-		yield;
 	}
 	laser.sprite = laserSprites[0];
 }
@@ -166,6 +185,14 @@ function Finish(completionStatus:boolean) {
 	if(!finished)
 	{
 		finished = true;
+		if(completionStatus)
+		{
+			yield WaitForSeconds(.5);
+		}
+		else
+		{
+			yield WaitForSeconds(.5);
+		}
 		if(Application.loadedLevelName == "MicroTester")
 		{
 			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

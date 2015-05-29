@@ -14,7 +14,7 @@ function Update () {
 function TreeCycle () {
 	while(true)
 	{
-		while(Mathf.Abs(transform.position.x - WorldMapVisualsManager.wind) >= 1)
+		while(Mathf.Abs(transform.localPosition.x - WorldMapVisualsManager.wind) >= 1)
 		{
 			yield;
 		}

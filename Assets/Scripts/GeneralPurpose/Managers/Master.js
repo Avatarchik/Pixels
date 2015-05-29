@@ -2,6 +2,8 @@
 
 static var initialLoad:boolean;
 
+public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland};
+
 static var selectedWorld:WorldSelect;
 static var worldNameFull:String;
 static var worldNameVar:String;
@@ -234,19 +236,19 @@ function Initialize () {
 			PlayerPrefs.SetInt(worldName, 0);
 		}
 		///////////////////////////////////////////////////////////////////// World reward variables.
-		if(!PlayerPrefs.HasKey(worldName))
+		if(!PlayerPrefs.HasKey(worldName+"Unlocks"))
 		{
-			PlayerPrefs.SetInt(worldName, 0);
+			PlayerPrefs.SetInt(worldName+"Unlocks", 0);
 		}
 		///////////////////////////////////////////////////////////////////// World high score variables.
-		if(!PlayerPrefs.HasKey(worldName))
+		if(!PlayerPrefs.HasKey(worldName)+"HighScore")
 		{
-			PlayerPrefs.SetInt(worldName, 0);
+			PlayerPrefs.SetInt(worldName+"HighScore", 0);
 		}
 		///////////////////////////////////////////////////////////////////// World visit variables.
-		if(!PlayerPrefs.HasKey(worldName))
+		if(!PlayerPrefs.HasKey(worldName)+"PlayedOnce")
 		{
-			PlayerPrefs.SetInt(worldName, 0);
+			PlayerPrefs.SetInt(worldName+"PlayedOnce", 0);
 		}
 	}
 	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
@@ -363,11 +365,28 @@ function Initialize () {
 }
 
 function UnlockAllOptions () {
-	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
-	PlayerPrefs.SetInt("Museum", 1);
-	PlayerPrefs.SetInt("Theater", 1);
-	PlayerPrefs.SetInt("PackingPeanutFactoryUnlocks", 3);
-	PlayerPrefs.SetInt("MuseumUnlocks", 3);
-	PlayerPrefs.SetInt("TheaterUnlocks", 3);
+	for(var worldName:String in worldNames)
+	{
+	    ///////////////////////////////////////////////////////////////////// World unlock variables.
+		if(!PlayerPrefs.HasKey(worldName))
+		{
+			PlayerPrefs.SetInt(worldName, 1);
+		}
+		///////////////////////////////////////////////////////////////////// World reward variables.
+		if(!PlayerPrefs.HasKey(worldName+"Unlocks"))
+		{
+			PlayerPrefs.SetInt(worldName+"Unlocks", 3);
+		}
+		///////////////////////////////////////////////////////////////////// World high score variables.
+		if(!PlayerPrefs.HasKey(worldName)+"HighScore")
+		{
+			PlayerPrefs.SetInt(worldName+"HighScore", 50);
+		}
+		///////////////////////////////////////////////////////////////////// World visit variables.
+		if(!PlayerPrefs.HasKey(worldName)+"PlayedOnce")
+		{
+			PlayerPrefs.SetInt(worldName+"PlayedOnce", 1);
+		}
+	}
 	PlayerPrefs.SetInt("CurrencyNumber", 1000);
 }

@@ -18,8 +18,13 @@ function Update () {
 
 function ReCheck ()
 {
-	yield WaitForSeconds(.5);
-	UpdateWorldAvailability();
+	while(true)
+	{
+		UpdateWorldAvailability();
+		yield WaitForSeconds(.2);
+		yield;
+	}
+	yield;
 }
 
 function UpdateWorldAvailability () {

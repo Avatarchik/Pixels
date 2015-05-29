@@ -116,7 +116,7 @@ function BetweenGame () {
 		{
 			if(speedUp != null)
 			{
-				speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
+				//speedUp.GetComponent(Animator).SetTrigger("SpeedUp");
 			}
 			if(timeMultiplier > 7)
 			{

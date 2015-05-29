@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-var controller:Master;
+@HideInInspector var controller:Master;
 
 var topLine:String;
 var bottomLine:String;

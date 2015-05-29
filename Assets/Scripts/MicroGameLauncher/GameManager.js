@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 // Variable Types
-public enum WorldSelect{PackingPeanutFactory,Museum,Theater};
+
 var transition:GameObject;
 var notification:GameObject;
 private var curNotify:GameObject;

@@ -26,6 +26,8 @@ var rocketOrder:int[];
 @HideInInspector var centerLimit:float;
 @HideInInspector var rightLimit:float;
 
+@HideInInspector var exploded:boolean[];
+
 var importantFinger:int;
 
 var doneness:boolean[];
@@ -61,7 +63,8 @@ function Start () {
 	{
 		rocketOrder[2] = 0;
 	}
-	
+	exploded = new boolean[3];
+	exploded = [false,false,false];
 	importantFinger = -1;
 	explodeHeighMinimum = .2;
 	explodeHeightMaximum = 6;
@@ -102,9 +105,9 @@ function Update () {
 			}
 		}
 	}
-	else if(Finger.GetExists(importantFinger))
+	else if(Finger.GetExists(importantFinger) && !finished)
 	{
-		if(Mathf.Abs(Finger.GetPosition(importantFinger).x-slider1.transform.position.x) <2.25)
+		if(Mathf.Abs(Finger.GetPosition(importantFinger).x-slider1.transform.position.x) < Mathf.Abs(Finger.GetPosition(importantFinger).x-slider2.transform.position.x) && Mathf.Abs(Finger.GetPosition(importantFinger).x-slider1.transform.position.x) <2.25)
 		{
 			if(Finger.GetPosition(importantFinger).x >leftLimit && Finger.GetPosition(importantFinger).x < centerLimit && Mathf.Abs(slider2.transform.position.x-Finger.GetPosition(importantFinger).x) > 4.5)
 			{
@@ -152,11 +155,13 @@ function Update () {
 		{
 			if(Mathf.Abs(rockets[i].transform.position.x-slider1.transform.position.x) < 2 && !finished)
 			{
+				exploded[i] = true;
 				finished = true;
 				Finish(false);
 			}
 			if(Mathf.Abs(rockets[i].transform.position.x-slider2.transform.position.x) < 2 && !finished)
 			{
+				exploded[i] = true;
 				finished = true;
 				Finish(false);
 			}
@@ -169,9 +174,9 @@ function Play () {
 	yield WaitForSeconds(1);
 	if(difficulty == 1)
 	{
-		StartCoroutine(Launch(rockets[rocketOrder[0]]));
+		StartCoroutine(Launch(rockets[rocketOrder[0]],rocketOrder[0]));
 		particles[rocketOrder[0]].emissionRate = emissionAmount;
-		while(rockets[rocketOrder[1]].transform.position.y < explodeHeightMaximum)
+		while(rockets[rocketOrder[0]].transform.position.y < explodeHeightMaximum)
 		{yield;}
 		if(!finished)
 		{
@@ -182,11 +187,11 @@ function Play () {
 	}
 	else if(difficulty == 2)
 	{
-		StartCoroutine(Launch(rockets[rocketOrder[0]]));
+		StartCoroutine(Launch(rockets[rocketOrder[0]],rocketOrder[0]));
 		particles[rocketOrder[0]].emissionRate = emissionAmount;
 		while(rockets[rocketOrder[0]].transform.position.y < launchHeight)
 		{yield;}
-		StartCoroutine(Launch(rockets[rocketOrder[1]]));
+		StartCoroutine(Launch(rockets[rocketOrder[1]],rocketOrder[1]));
 		particles[rocketOrder[1]].emissionRate = emissionAmount;
 		while(rockets[rocketOrder[1]].transform.position.y < explodeHeightMaximum)
 		{yield;}
@@ -199,15 +204,15 @@ function Play () {
 	}
 	else
 	{
-		StartCoroutine(Launch(rockets[rocketOrder[0]]));
+		StartCoroutine(Launch(rockets[rocketOrder[0]],rocketOrder[0]));
 		particles[rocketOrder[0]].emissionRate = emissionAmount;
 		while(rockets[rocketOrder[0]].transform.position.y < launchHeight)
 		{yield;}
-		StartCoroutine(Launch(rockets[rocketOrder[1]]));
+		StartCoroutine(Launch(rockets[rocketOrder[1]],rocketOrder[1]));
 		particles[rocketOrder[1]].emissionRate = emissionAmount;
 		while(rockets[rocketOrder[1]].transform.position.y < launchHeight)
 		{yield;}
-		StartCoroutine(Launch(rockets[rocketOrder[2]]));
+		StartCoroutine(Launch(rockets[rocketOrder[2]],rocketOrder[2]));
 		particles[rocketOrder[2	]].emissionRate = emissionAmount;
 		while(rockets[rocketOrder[2]].transform.position.y < explodeHeightMaximum)
 		{yield;}
@@ -222,15 +227,25 @@ function Play () {
 	yield;
 }
 
-function Launch (rocket:GameObject) {
+function Launch (rocket:GameObject, rocketNumber:int) {
 	var rocketSpeed:float = .2;
 	var origin:float = rocket.transform.position.x;
 	//Debug.Log(Time.time);
 	while(rocket.transform.position.y < 30)
 	{
-		rocket.transform.position.x = origin + (Random.Range(-.01,.01) * rocketSpeed);
-		rocketSpeed += Time.deltaTime * (.9 + (speed*.9));
-		rocket.transform.position.y += Time.deltaTime * rocketSpeed;
+		if(!exploded[rocketNumber])
+		{
+			rocket.transform.position.x = origin + (Random.Range(-.01,.01) * rocketSpeed);
+			rocketSpeed += Time.deltaTime * (.9 + (speed*.9));
+			rocket.transform.position.y += Time.deltaTime * rocketSpeed;
+		}
+		else
+		{
+			rocket.transform.position.x = origin + (Random.Range(-.03,.03) * rocketSpeed);
+			rocketSpeed += Time.deltaTime * (1.9 + (speed*.9));
+			particles[rocketNumber].startColor = Color.black;
+			particles[rocketNumber].emissionRate = 200;
+		}
 		yield;
 	}
 	yield;
