@@ -1,6 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Microgames/Museum/FishSlap.js">
+    <Files>
+      <File FileName="Assets/Scripts/Microgames/Museum/FishSlap.js" Line="170" Column="41" />
+      <File FileName="Assets/Scripts/Microgames/Museum/FoodServe.js" Line="116" Column="14" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
