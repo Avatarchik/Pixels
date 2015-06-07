@@ -17,6 +17,8 @@ var laserSprites:Sprite[];
 
 var gotDiamondSprite:Sprite;
 
+var robotNot:SpriteRenderer;
+
 @HideInInspector var leftRobotLimit:float;
 @HideInInspector var rightRobotLimit:float;
 
@@ -33,7 +35,12 @@ var gotDiamondSprite:Sprite;
 @HideInInspector var importantFinger:int;
 @HideInInspector var fingerDistance:float;
 
+@HideInInspector var positions:float[];
+@HideInInspector var goal:int;
+
 function Start () {
+	positions = new float[5];
+	goal = 0;
 	killDistance = 1;
 	grabDiamondDistance = 2.5;
 	fingerDistance = 6;
@@ -82,6 +89,11 @@ function Start () {
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	positions[0] = robot.transform.position.x;
+	positions[1] = lasers[0].transform.position.x;
+	positions[2] = lasers[1].transform.position.x;
+	positions[3] = lasers[2].transform.position.x;
+	positions[4] = rightRobotLimit;
 	StartCoroutine(ColorChange());
 	StartCoroutine(Play());
 }
@@ -102,35 +114,30 @@ function Update () {
 			}
 		}
 	}
-	else if(Finger.GetExists(importantFinger))
+	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
-		if(Mathf.Abs(Finger.GetPosition(importantFinger).x - robot.transform.position.x) < fingerDistance && !finished)
+		
+		if(Mathf.Abs(Finger.GetPosition(importantFinger).x) < 9.5 && Mathf.Abs(Finger.GetPosition(importantFinger).y) < 9.5)
 		{
-			if(Finger.GetPosition(importantFinger).x < robot.transform.position.x)
+			if(robot.transform.position.x >= positions[goal]-.1)
 			{
-				robot.transform.localScale.x = -1;
+				goal = Mathf.MoveTowards(goal,positions.Length-1,1);
 			}
-			else if(Finger.GetPosition(importantFinger).x > robot.transform.position.x)
-			{
-				robot.transform.localScale.x = 1;
-			}	
-			if(Finger.GetPosition(importantFinger).x <= leftRobotLimit)
-			{
-				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,leftRobotLimit, Time.deltaTime * (3 + speed*2));
-			}	
-			else if(Finger.GetPosition(importantFinger).x >= rightRobotLimit)
-			{
-				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,rightRobotLimit, Time.deltaTime * (3 + speed*2));
-			}
-			else
-			{
-				robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,Finger.GetPosition(importantFinger).x, Time.deltaTime * (3 + speed*2));
-			}
+			robotNot.color.a = 1;
+		}
+		else
+		{
+			robotNot.color.a = 0;
 		}
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
+		robotNot.color.a = 0;
 		importantFinger = -1;
+	}
+	if(!finished)
+	{
+		robot.transform.position.x = Mathf.MoveTowards(robot.transform.position.x,positions[goal], Time.deltaTime * (3 + speed*2));
 	}
 	if(Mathf.Abs(robot.transform.position.x - diamond.transform.position.x) < grabDiamondDistance)
 	{
@@ -191,7 +198,7 @@ function Finish(completionStatus:boolean) {
 		}
 		else
 		{
-			yield WaitForSeconds(.5);
+			yield WaitForSeconds(.8);
 		}
 		if(Application.loadedLevelName == "MicroTester")
 		{

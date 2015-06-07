@@ -116,7 +116,12 @@ function Update () {
 			skipTimer += Time.deltaTime;
 		}
 	}
-	if(skipTimer > 1.35 - (speed * .15))
+	var skipTimerMod:float = speed * .15;
+	if(skipTimerMod > .45)
+	{
+		skipTimerMod = .45;
+	}
+	if(skipTimer > 1.35 - skipTimerMod)
 	{
 		Stamp(false);
 	}

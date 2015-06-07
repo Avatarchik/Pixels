@@ -9,6 +9,8 @@ private var firstTimeStep:int;
 var speed:float;
 var marker:int;
 var glow:boolean;
+var flash:boolean;
+var flashSpeed:float;
 
 var instruction:String;
 var controls:Sprite;
@@ -33,6 +35,10 @@ function Start () {
 					{
 						StartCoroutine(Glow());
 					}
+					if(flash)
+					{
+						StartCoroutine(Flash());
+					}
 					StartCoroutine(FirstTimeNotify());
 					break;
 				}
@@ -53,6 +59,25 @@ function Glow () {
 	while(true)
 	{
 		firstTimeRenderer.color.a =  Mathf.Abs(Mathf.Sin(Time.time *2)/1.5) + .3;
+		yield;
+	}
+	yield;
+}
+
+function Flash () {
+	var on:boolean = true;
+	while(true)
+	{
+		yield WaitForSeconds(flashSpeed);
+		if(on)
+		{
+			firstTimeRenderer.color.a = 1;
+		}
+		else
+		{
+			firstTimeRenderer.color.a = 0;
+		}	
+		on = !on;
 		yield;
 	}
 	yield;
@@ -88,5 +113,5 @@ function FirstTimeNotify () {
 }
 
 function NextNotify () {
-	firstTimeStep ++;
+	firstTimeStep = Mathf.MoveTowards(firstTimeStep,images.Length-1,1);
 }

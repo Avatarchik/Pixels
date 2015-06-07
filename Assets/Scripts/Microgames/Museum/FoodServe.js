@@ -28,7 +28,16 @@ var overfillSprite:Sprite;
 
 @HideInInspector var distance:float;
 
+var people:GameObject[];
+@HideInInspector var peopleSpeed:float[];
+
+@HideInInspector var firstNotify:boolean;
+
+@HideInInspector var clickWait:float;
+
 function Start () {
+	clickWait = .1;
+	firstNotify = false;
 	distance = 5;
 	clicked = false;
 	if(Application.loadedLevelName == "MicroTester")
@@ -41,10 +50,19 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
+	peopleSpeed = new float[people.length];
+	for(var i:int = 0; i < peopleSpeed.length; i++)
+	{
+		peopleSpeed[i] = Random.Range(2.5,10.5);
+		if(people[i].transform.position.x > 0)
+		{
+			peopleSpeed[i] = -peopleSpeed[i];
+		}
+	}
 	plateFullness = new int[plates.length];
 	plateSpeed = new float[plates.length];
 	plateFoodType = new int[plates.length];
-	for(var i:int = 0;i<plates.length;i++)
+	for(i = 0;i<plates.length;i++)
 	{
 		plateFullness[i] = 1;
 		plateSpeed[i] = 1;
@@ -59,6 +77,7 @@ function Start () {
 }
 
 function Update () {
+	clickWait -= Time.deltaTime;
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
@@ -87,6 +106,18 @@ function Update () {
 			}
 		}
 	}
+	for(i = 0; i < peopleSpeed.length; i++)
+	{
+		if(Mathf.Abs(people[i].transform.position.x + (peopleSpeed[i] * Time.deltaTime)) > 9)
+		{
+			people[i].transform.localScale.x = people[i].transform.localScale.x * -1;
+			peopleSpeed[i] = -peopleSpeed[i];
+		}
+		else
+		{
+			people[i].transform.position.x += peopleSpeed[i] * Time.deltaTime;
+		}
+	}
 	if(importantFinger == -1)
 	{
 		clicked = false;
@@ -98,22 +129,23 @@ function Update () {
 			}
 		}
 	}
-	else if(Finger.GetExists(importantFinger))
+	if(importantFinger != i && Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger))
 	{
+		
 		var nearestNum:float = 1000;
 		var rightPlate:int = -1;
 		for(i = 0; i < plates.length; i++)
 		{
-			if(Vector2.Distance(Finger.GetPosition(importantFinger),plates[i].transform.position) < nearestNum)
+			if(Mathf.Abs(Finger.GetPosition(importantFinger).x - plates[i].transform.position.x) < nearestNum)
 			{
-				nearestNum = Vector2.Distance(Finger.GetPosition(importantFinger),plates[i].transform.position);
+				nearestNum = Mathf.Abs(Finger.GetPosition(importantFinger).x - plates[i].transform.position.x);
 				rightPlate = i;
 			}
 		}
-		if(Vector2.Distance(Finger.GetPosition(importantFinger),plates[rightPlate].transform.position) < distance && !clicked)
+		if(Mathf.Abs(Finger.GetPosition(importantFinger).x) < 9 && !clicked && clickWait < 0)
 		{
-			Debug.Log(rightPlate);
 			clicked = true;
+			clickWait = .1;
 			ClickPlate(rightPlate);
 		}
 	}
@@ -141,6 +173,8 @@ function ClickPlate(thisPlate:int) {
 		if(!finished)
 		{
 			plates[thisPlate].GetComponent(SpriteRenderer).sprite = overfillSprite;
+			finished = true;
+			yield WaitForSeconds(.5);
 			Finish(false);
 		}
 	}
@@ -148,14 +182,14 @@ function ClickPlate(thisPlate:int) {
 	{
 		plateFoodType[thisPlate] = Random.Range(0,4);
 		plateFullness[thisPlate] = 3;
-		plateSpeed[thisPlate] = Random.Range(1.5,2.5) + (Random.Range(.3,.6) * speed);
+		plateSpeed[thisPlate] = Random.Range(1.7,3.1) + (Random.Range(.4,.9) * speed);
 	}
 }
 
 function FoodServe(thisPlate:int) {
 	while(true && !finished)
 	{
-		var counter:float = 3;
+		var counter:float = 2.5;
 		while(counter > 0)
 		{
 			counter -= plateSpeed[thisPlate] * Time.deltaTime;
@@ -164,6 +198,11 @@ function FoodServe(thisPlate:int) {
 		if(plateFullness[thisPlate]>0)
 		{
 			plateFullness[thisPlate]--;
+			if(plateFullness[thisPlate] < 2 && !firstNotify)
+			{
+				firstNotify = true;
+				transform.BroadcastMessage("NextNotify",SendMessageOptions.DontRequireReceiver);
+			}
 		}
 		else if(!finished)
 		{

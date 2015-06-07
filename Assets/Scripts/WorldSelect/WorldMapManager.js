@@ -154,8 +154,8 @@ function Update () {
 		case MapStatus.Confirmation:
 			showTicket();
 			FindClosest();
-			transform.position.x = Mathf.Lerp(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*3);
-			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.7);
+			transform.position.x = Mathf.Lerp(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*5);
+			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.8);
 			break;
 		case MapStatus.Menu:
 			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, .4, Time.deltaTime);
@@ -174,7 +174,7 @@ function Update () {
 		default:
 			break;
 	}
-	if(closestWorld != null && Mathf.Abs(worlds[closestWorld].transform.position.x - transform.position.x) < 3)
+	if(closestWorld != null && Mathf.Abs(worlds[closestWorld].transform.position.x - 0) < 3)
 	{
 		if(worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine != null && worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine != "")
 		{

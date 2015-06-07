@@ -60,13 +60,19 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 5 + 5/speed;
+	numberOfTrees = 5+difficulty;
+	var treeLength:float = 2 - (speed*.2);
+	if(treeLength < 1.3)
+	{
+		treeLength = 1.3;
+	}
+	length = numberOfTrees * treeLength;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
 	
 	
-	numberOfTrees = 5+difficulty;
+	
 	trees = new GameObject[numberOfTrees];
 	treeSpriteValues = new int[numberOfTrees];
 	treeRingValues = new int[numberOfTrees];
@@ -110,6 +116,14 @@ function Update () {
 	}
 	for(var i:int = 0;i < numberOfTrees;i++)
 	{
+		if(currentTree < i)
+		{
+			trees[i].GetComponent(SpriteRenderer).color = Color(.6,.6,.6,1);
+		}
+		else if(currentTree == i)
+		{
+			trees[i].GetComponent(SpriteRenderer).color = Color(1,1,1,1);
+		}
 		if(trees[i]!=null)
 		{
 			if(i<currentTree && trees[i].transform.position.x != treeGoal[i])
@@ -174,7 +188,7 @@ function Update () {
 			}
 		}
 	}
-	else if(Finger.GetExists(importantFinger))
+	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
 		if(currentTree < trees.Length && Vector2.Distance(Finger.GetPosition(importantFinger),trees[currentTree].transform.position) < 2)
 		{
@@ -188,9 +202,9 @@ function Update () {
 			{
 				trees[currentTree].transform.position.x = -9;
 			}
-			if(trees[currentTree].transform.position.y < -9)
+			if(trees[currentTree].transform.position.y < -6)
 			{
-				trees[currentTree].transform.position.y = -9;
+				trees[currentTree].transform.position.y = -6;
 			}
 			if(trees[currentTree].transform.position.y > goalHeight + .1)
 			{

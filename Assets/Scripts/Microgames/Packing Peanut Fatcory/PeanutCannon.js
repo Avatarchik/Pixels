@@ -26,7 +26,7 @@ var importantFinger:int;
 function Start () {
 	importantFinger = -1;
 	player = Instantiate(playerPrefab, Vector3(0,-6.5,0), Quaternion.identity);
-	player.transform.localScale = Vector3(3,3,3);
+	player.transform.localScale = Vector3(1.5,1.5,1.5);
 	player.transform.parent = transform;
 	player.transform.localPosition.z = -.1;
 	playerManager = player.GetComponent(PlayerManager);
@@ -97,7 +97,7 @@ function Update () {
 			}
 		}
 	}
-	else if(Finger.GetExists(importantFinger))
+	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
 		
 		if(Finger.GetPosition(importantFinger).x > 3 && Finger.GetPosition(importantFinger).x < 9)

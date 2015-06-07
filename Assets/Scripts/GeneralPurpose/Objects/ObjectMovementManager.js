@@ -46,7 +46,7 @@ function Update () {
 				}
 			}
 		}
-		else
+		if(Finger.GetExists(importantFinger))
 		{
 			// Movement based on type of object.
 			if(!inMinigame || (!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager)!=null &&!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused))

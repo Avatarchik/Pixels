@@ -43,7 +43,7 @@ function Update () {
 			}
 		}
 	}
-	else if(Finger.GetExists(importantFinger))
+	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
 		
 	}

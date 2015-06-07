@@ -81,7 +81,7 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	fishMovementSpeed = 6 + (speed * 2);
+	fishMovementSpeed = 9 + (speed * 2);
 	currentFish = 0;
 	fish = new GameObject[8];
 	leftFish = new boolean[fish.length];
@@ -200,7 +200,10 @@ function Start () {
 	}
 	UpdateCounters();
 	length = 11 - (speed * 1);
-	//length = 30 + 5/speed;
+	if(length < 7)
+	{
+		length = 7 - (speed *.1);
+	}
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
@@ -222,16 +225,19 @@ function Update () {
 			}
 		}
 	}
-	else if(Finger.GetExists(importantFinger))
+	if(Finger.GetExists(importantFinger))
 	{
-		Debug.Log(Finger.GetPosition(importantFinger));
+		if(Master.paused)
+		{	
+			clicked = true;
+		}
 		if(Mathf.Abs(Finger.GetPosition(importantFinger).x) < 10 && Mathf.Abs(Finger.GetPosition(importantFinger).y) < 10)
 		{
-			clicked = true;
-			if(currentFish < fish.Length && fish[currentFish] != null && fish[currentFish].transform.position == topCenter)
+			if(currentFish < fish.Length && fish[currentFish] != null && fish[currentFish].transform.position == topCenter && !clicked)
 			{
 				if(Finger.GetPosition(importantFinger).x < 0)
 				{
+					clicked = true;
 					barrierGoal = 6;
 					fish[currentFish].transform.localScale.x = -1;
 					selection[currentFish] = -1;
@@ -239,6 +245,7 @@ function Update () {
 				}
 				else
 				{
+					clicked = true;
 					barrierGoal = 0;
 					fishDirection[currentFish] = true;
 					selection[currentFish] = 1;
@@ -415,7 +422,6 @@ function EndGame(status:boolean,waitTime:float) {
 }
 
 function Finish(completionStatus:boolean) {
-	Debug.Log(completionStatus);
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

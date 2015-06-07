@@ -96,7 +96,15 @@ function Update () {
 		if(!WorldMapManager.mapMove && Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) < button.extents.x && button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{
 			// This is where clicking happens.
-			if(!inMinigame || (!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager)!=null &&!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused))
+			if(Application.loadedLevelName != "MicroTester")
+			{
+				if(!inMinigame || (!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager)!=null && !GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused))
+				{
+					gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
+					gameObject.SendMessage("Unclicked", SendMessageOptions.DontRequireReceiver);
+				}
+			}
+			else
 			{
 				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 				gameObject.SendMessage("Unclicked", SendMessageOptions.DontRequireReceiver);

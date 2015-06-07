@@ -6,6 +6,8 @@ var walkSpriteFront:Sprite[];
 var walkSpriteSide:Sprite[];
 
 var specialHandsOut:Sprite;
+var specialFrown:Sprite;
+var specialFrownSinging:Sprite;
 var specialHeadBob:Sprite;
 var specialHighNote:Sprite;
 var specialSinging:Sprite;
@@ -140,6 +142,20 @@ function Move() {
 				rotatingSprites[2] = specialHeadBob;
 				rotatingSprites[3] = standingSprites[1];
 				break;
+			case PlayerState.SpecialFrown:
+				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
+				rotatingSprites[0] = specialFrown;
+				rotatingSprites[1] = specialFrown;
+				rotatingSprites[2] = specialFrown;
+				rotatingSprites[3] = specialFrown;
+				break;
+			case PlayerState.SpecialFrownSinging:
+				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
+				rotatingSprites[0] = specialFrown;
+				rotatingSprites[1] = specialFrownSinging;
+				rotatingSprites[2] = specialFrown;
+				rotatingSprites[3] = specialFrownSinging;
+				break;
 			case PlayerState.SpecialSinging:
 				transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 				rotatingSprites[0] = standingSprites[1];
@@ -205,6 +221,10 @@ function FillInBlanks () {
 	{
 		specialHeadBob = standingSprites[1];
 	}
+	if(specialFrown == null)
+	{
+		specialFrown = standingSprites[1];
+	}
 	if(specialHighNote == null)
 	{
 		specialHighNote = standingSprites[1];
@@ -212,6 +232,10 @@ function FillInBlanks () {
 	if(specialSinging == null)
 	{
 		specialSinging = standingSprites[1];
+	}
+	if(specialFrownSinging == null)
+	{
+		specialFrownSinging = specialSinging;
 	}
 	if(specialLoudSing == null)
 	{

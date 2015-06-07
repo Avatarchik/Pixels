@@ -48,6 +48,7 @@ static var selectedWorldUnlockNotificationsLine2:String[];
 static var initialWorldSpeed:int;
 static var speedIncrease:int;
 static var lives:int;
+static var paused:boolean;
 
 static var lastScore:int;
 static var needToNotify:boolean;
@@ -78,6 +79,7 @@ function Awake () {
 	unlockLevels = new float[6];
 	selectedWorldColors = [Color(.6,.8,1,1),Color(0,.5,1,1)];
 	lives = 3;
+	paused = false;
 	initialWorldSpeed = 1;
 	speedIncrease = 1;
 	needToNotify = false;

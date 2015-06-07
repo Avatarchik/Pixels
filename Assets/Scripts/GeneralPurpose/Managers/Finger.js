@@ -82,7 +82,7 @@ static function GetId (finger:int) : int {
 //Function to find if a finger exists.
 
 static function GetExists (finger:int) : boolean {
-	if(identity[finger] == -1)
+	if(finger < 0 || finger >= identity.Length || identity[finger] == -1)
 	{
 		return false;
 	}
