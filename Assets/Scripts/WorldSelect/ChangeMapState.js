@@ -7,10 +7,12 @@ static var currentMenu:GameObject;
 
 var thisWorld:WorldSelect;
 var thisWorldDisplay:Sprite[];
-var worldNameFull:String;
-var worldNameVar:String;
 
 private var controller:Master;
+
+var worldNameVar:String;
+var topLine:String;
+var bottomLine:String;
 
 function Start () {
 	StartCoroutine(UpdateWorldAvailability());
@@ -42,10 +44,15 @@ function Clicked () {
 			if(PlayerPrefs.GetInt(worldNameVar) == 1 && WorldMapManager.allowClick && WorldMapManager.currentState != MapStatus.Results)
 			{
 				controller = Camera.main.GetComponent(Master);
-				controller.selectedWorld = thisWorld;
+				controller.currentWorld.basic.world = thisWorld;
 				SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
-				controller.worldNameFull = worldNameFull;
-				controller.worldNameVar = worldNameVar;
+				for(var level:World in controller.worlds)
+				{
+					if(level.basic.worldNameVar == worldNameVar)
+					{
+						Master.currentWorld = level;
+					}
+				}
 				if(WorldMapManager.currentState == MapStatus.Clear)
 				{
 					WorldMapManager.currentState = MapStatus.Confirmation;

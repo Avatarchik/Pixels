@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\CurrencyCount.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\MoveToCorner.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectLoop.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectMovementManager.js" />
@@ -80,6 +81,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\HighlightGlow.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Visual\SkipCounterIncrease.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\TimeScaleChange.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\MicroGameManager.js" />
@@ -113,14 +115,18 @@
      <Compile Include="Assets\Scripts\Microgames\Packing Peanut Fatcory\PeanutStamp.js" />
      <Compile Include="Assets\Scripts\Theater\CategoryChange.js" />
      <Compile Include="Assets\Scripts\Theater\CategoryIcon.js" />
+     <Compile Include="Assets\Scripts\Theater\ChangeSelectedWorld.js" />
      <Compile Include="Assets\Scripts\Theater\ChangeTheaterState.js" />
+     <Compile Include="Assets\Scripts\Theater\LedgerController.js" />
      <Compile Include="Assets\Scripts\Theater\PieceChange.js" />
      <Compile Include="Assets\Scripts\Theater\PieceIcon.js" />
      <Compile Include="Assets\Scripts\Theater\PlayerWalking.js" />
      <Compile Include="Assets\Scripts\Theater\SpecificButton.js" />
+     <Compile Include="Assets\Scripts\Theater\StatScreenMenuOption.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterController.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterCustomizeManager.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterManager.js" />
+     <Compile Include="Assets\Scripts\Theater\TheaterSongLoader.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ChangeTitleState.js" />
      <Compile Include="Assets\Scripts\TitleScreen\CustomizationButton.js" />
      <Compile Include="Assets\Scripts\TitleScreen\DemoReset.js" />
@@ -145,10 +151,6 @@
      <Compile Include="Assets\Scripts\WorldSelect\ResultsScreen.js" />
      <Compile Include="Assets\Scripts\WorldSelect\SmokeStack.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Wind.js" />
-     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\AudioInfo.js" />
-     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\BasicWorldInfo.js" />
-     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\TextSystemInfo.js" />
-     <Compile Include="Assets\Scripts\WorldSelect\WorldInformation\UnlockInfo.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapVisualsManager.js" />
      <None Include="Assets\Art\Materials\3DText.shader" />

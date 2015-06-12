@@ -64,17 +64,16 @@ private var currentMenu:GameObject;
 
 function Start () {
 	// Get required variables.
-	Master.worldNameFull = "";
-	LoadWorld(Master.selectedWorld);
+	LoadWorld();
 	lives = Master.lives;
-	currentGames = Master.selectedWorldGames;
-	bossGame = Master.selectedWorldBossGame;
-	UI = Instantiate(Master.selectedWorldUI);
+	currentGames = Master.currentWorld.basic.games;
+	bossGame = Master.currentWorld.basic.bossGame;
+	UI = Instantiate(Master.currentWorld.basic.UI);
 	
 	// Set game change variables.
 	smallAmount = 3;
 	largeAmount = 10;
-	if(PlayerPrefs.GetInt(Master.worldNameVar+"Beaten") == 0)
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0)
 	{
 		smallAmount = 3;
 		largeAmount = 5;
@@ -130,20 +129,20 @@ function BeforeGames () {
 	UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
 	yield WaitForSeconds (1);
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
-	if(PlayerPrefs.GetInt(Master.worldNameVar+"PlayedOnce") == 0)
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
 	{
-		AudioManager.PlaySong(Master.selectedWorldFirstOpeningSong);
-		loadedText = Instantiate(Master.selectedWorldFirstOpening);
+		AudioManager.PlaySong(Master.currentWorld.text.firstOpeningSong);
+		loadedText = Instantiate(Master.currentWorld.text.firstOpening);
 	}
 	else
 	{
-		AudioManager.PlaySong(Master.selectedWorldRegularOpeningSong);
-		loadedText = Instantiate(Master.selectedWorldRegularOpening);
+		AudioManager.PlaySong(Master.currentWorld.text.regularOpeningSong);
+		loadedText = Instantiate(Master.currentWorld.text.regularOpening);
 	}
 	// Wait for the text to finish.
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
 	pausable = true;
-	AudioManager.PlaySong(Master.selectedWorldMusic[speed-1]);
+	AudioManager.PlaySong(Master.currentWorld.audio.music[speed-1]);
 	GetRandomGame();
 	yield WaitForSeconds(1);
 	LaunchLevel(0);
@@ -161,7 +160,7 @@ function BetweenGame () {
 	{
 		UI.BroadcastMessage("NotifySuccess", false,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Failure");
-		AudioManager.PlaySound(Master.selectedWorldFailSound,.5);
+		AudioManager.PlaySound(Master.currentWorld.audio.failure,.5);
 		lives--;
 		Instantiate(heartPrefab);
 		UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
@@ -170,10 +169,10 @@ function BetweenGame () {
 	{
 		UI.BroadcastMessage("NotifySuccess", true,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Success");
-		AudioManager.PlaySound(Master.selectedWorldSuccessSound,.5);
+		AudioManager.PlaySound(Master.currentWorld.audio.success,.5);
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
-	if(lives <= 0 || (PlayerPrefs.GetInt(Master.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1]))
+	if(lives <= 0 || (PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1]))
 	{
 		StartCoroutine(GameOver());
 	}
@@ -204,45 +203,45 @@ function GameComplete (success:boolean) {
 function GameOver () {
 	yield WaitForSeconds(.5);
 	pausable = false;
-	PlayerPrefs.SetInt(Master.worldNameVar+"PlayedOnce", 1);
-	if(PlayerPrefs.GetInt(Master.worldNameVar+"Beaten") == 0 && gameNumber >= Master.unlockLevels[1])
+	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber >= Master.unlockLevels[1])
 	{
-		PlayerPrefs.SetInt(Master.worldNameVar+"Beaten",1);
-		AudioManager.PlaySound(Master.selectedWorldBeatEndSong);
-		loadedText = Instantiate(Master.selectedWorldBeatEnd);
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Beaten",1);
+		AudioManager.PlaySound(Master.currentWorld.text.beatEndSong);
+		loadedText = Instantiate(Master.currentWorld.text.beatEnd);
 	}
 	else if(gameNumber >= Master.unlockLevels[3])
 	{
-		AudioManager.PlaySound(Master.selectedWorldEnd4Song);
-		loadedText = Instantiate(Master.selectedWorldEnd4);
+		AudioManager.PlaySound(Master.currentWorld.text.end4Song);
+		loadedText = Instantiate(Master.currentWorld.text.end4);
 	}
 	else if(gameNumber >= Master.unlockLevels[2])
 	{
-		AudioManager.PlaySound(Master.selectedWorldEnd3Song);
-		loadedText = Instantiate(Master.selectedWorldEnd3);
+		AudioManager.PlaySound(Master.currentWorld.text.end3Song);
+		loadedText = Instantiate(Master.currentWorld.text.end3);
 	}
-	else if(PlayerPrefs.GetInt(Master.worldNameVar+"Beaten") == 1 && gameNumber >= Master.unlockLevels[1])
+	else if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber >= Master.unlockLevels[1])
 	{
-		AudioManager.PlaySound(Master.selectedWorldEnd2Song);
-		loadedText = Instantiate(Master.selectedWorldEnd2);
+		AudioManager.PlaySound(Master.currentWorld.text.end2Song);
+		loadedText = Instantiate(Master.currentWorld.text.end2);
 	}
 	else
 	{
-		AudioManager.PlaySound(Master.selectedWorldEnd1Song);
-		loadedText = Instantiate(Master.selectedWorldEnd1);
+		AudioManager.PlaySound(Master.currentWorld.text.end1Song);
+		loadedText = Instantiate(Master.currentWorld.text.end1);
 	}
 	yield WaitForSeconds(.2);
 	AudioManager.StopSong();
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
-	AudioManager.PlaySoundTransition(Master.selectedWorldTransitionOut);
+	AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
 	Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
 	yield WaitForSeconds(.7);
 	AudioManager.StopSong();
 	yield WaitForSeconds(1.3);
 	Master.lastScore = gameNumber;
-	if(PlayerPrefs.GetInt(Master.worldNameVar+"HighScore") <= gameNumber)
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
 	{
-		PlayerPrefs.SetInt(Master.worldNameVar+"HighScore",gameNumber);
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
 	}
 	Master.needToNotify = true;
 	Application.LoadLevel("WorldSelect");
@@ -300,11 +299,11 @@ function MoveBack () {
 //////////////////////// Level Selection Code  ///////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-function LoadWorld (world:WorldSelect) {
-	gameCovers = new GameObject[Master.selectedWorldCovers.Length];
-	for(var i:int = 0; i < Master.selectedWorldCovers.Length; i++)
+function LoadWorld () {
+	gameCovers = new GameObject[Master.currentWorld.basic.covers.Length];
+	for(var i:int = 0; i < Master.currentWorld.basic.covers.Length; i++)
 	{
-		gameCovers[i] = Instantiate(Master.selectedWorldCovers[i]);	
+		gameCovers[i] = Instantiate(Master.currentWorld.basic.covers[i]);	
 		gameCovers[i].transform.position = gameCovers[i].GetComponent(GameCover).origin;
 	}
 	numberAvoid = 3;
@@ -329,10 +328,10 @@ function LaunchLevel (wait:float) {
 	if(notified)
 	{
 		yield WaitForSeconds(timeIfSpeedChange);
-		if(Master.selectedWorldMusic.length >= speed)
+		if(Master.currentWorld.audio.music.length >= speed)
 		{
 			AudioManager.StopSong();
-			AudioManager.PlaySong(Master.selectedWorldMusic[speed-1]);
+			AudioManager.PlaySong(Master.currentWorld.audio.music[speed-1]);
 		}
 	}
 	notified = false;
@@ -364,7 +363,7 @@ function LaunchLevel (wait:float) {
 			case Master.unlockLevels[1]:case Master.unlockLevels[2]:case Master.unlockLevels[3]:case Master.unlockLevels[4]:case Master.unlockLevels[5]:
 				bossDifficulty++;
 				currentlyLoaded = Instantiate(bossGame, Vector3(0,0,5), Quaternion.identity);
-				AudioManager.PlaySound(Master.selectedWorldBossGameSounds[Random.Range(0,Master.selectedWorldBossGameSounds.length)],1);
+				AudioManager.PlaySound(Master.currentWorld.audio.bossGameSounds[Random.Range(0,Master.currentWorld.audio.bossGameSounds.length)],1);
 				break;
 			default:
 				currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);
@@ -433,7 +432,7 @@ function DifficultSpeedCheck() {
 	if(speedProgress >= largeAmount)
 	{
 		speed ++;
-		AudioManager.PlaySound(Master.selectedWorldSpeedUp);
+		AudioManager.PlaySound(Master.currentWorld.audio.speedUp);
 		difficulty = 1;
 		speedProgress = 0;
 		Notify("Speed\nUp!");

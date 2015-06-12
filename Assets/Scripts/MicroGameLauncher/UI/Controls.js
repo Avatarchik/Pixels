@@ -41,7 +41,7 @@ function Start () {
 	}
 	if(Camera.main.GetComponent(Master) != null)
 	{
-		GetComponent(SpriteRenderer).color = Camera.main.GetComponent(Master).selectedWorldColors[Random.Range(0,Camera.main.GetComponent(Master).selectedWorldColors.Length)];
+		GetComponent(SpriteRenderer).color = Camera.main.GetComponent(Master).currentWorld.basic.colors[Random.Range(0,Camera.main.GetComponent(Master).currentWorld.basic.colors.Length)];
 	}
 	MoveTo();
 }

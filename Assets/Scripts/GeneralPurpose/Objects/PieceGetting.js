@@ -20,11 +20,11 @@ function Start () {
 	{
 		if(i%2==0)
 		{
-			movingObjects[i].GetComponent.<Renderer>().material.color = controller.selectedWorldColors[0];
+			movingObjects[i].GetComponent.<Renderer>().material.color = controller.currentWorld.basic.colors[0];
 		}
 		if(i%2==1)
 		{
-			movingObjects[i].GetComponent.<Renderer>().material.color = controller.selectedWorldColors[1];
+			movingObjects[i].GetComponent.<Renderer>().material.color = controller.currentWorld.basic.colors[1];
 		}
 		speed[i] = Random.Range(125,135.1);
 	}

@@ -27,7 +27,7 @@ function Start () {
 	progressBar.localScale.x = 1;
 	for(var i:int = 1; i < 4; i++)
 	{
-		if(PlayerPrefs.GetInt(Master.worldNameVar+"Unlocks")>=i)
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks")>=i)
 		{
 			iconHolders[i-1].sprite = iconOldUnlockWorldSprites[i-1];
 		}
@@ -37,7 +37,7 @@ function Start () {
 
 function Update () {
 	progressBar.localScale.x = Mathf.MoveTowards(progressBar.localScale.x,currentLocationGoal,Time.deltaTime*4.5);
-	if(done && Master.lastScore < 15 && PlayerPrefs.GetInt(Master.worldNameVar+"Unlocks")<1 && progressBar.localScale.x == currentLocationGoal)
+	if(done && Master.lastScore < 15 && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks")<1 && progressBar.localScale.x == currentLocationGoal)
 	{
 		ribbon.color.a = 1;
 	}
@@ -53,7 +53,7 @@ function ProgressIncrease() {
 		if(notifying)
 		{
 			currentAlert = Instantiate(alert);
-			currentAlert.GetComponent(PieceGetting).text = Master.selectedWorldUnlockNotificationsLine1[goalMarker-1] + "\n" + Master.selectedWorldUnlockNotificationsLine2[goalMarker-1];
+			currentAlert.GetComponent(PieceGetting).text = Master.currentWorld.unlocks.unlockNotificationTextLine1[goalMarker-1] + "\n" + Master.currentWorld.unlocks.unlockNotificationTextLine1[goalMarker-1];
 			yield WaitForSeconds(.3);
 			iconHolders[goalMarker-1].sprite = iconNewUnlockWorldSprites[goalMarker-1];
 		}
@@ -72,26 +72,26 @@ function NextGoal(goalNumber:float) {
 		{
 			done = true;
 		}
-		if(PlayerPrefs.GetInt(Master.worldNameVar+"Unlocks")<goalNumber && goalNumber < 4)
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks")<goalNumber && goalNumber < 4)
 		{
-			PlayerPrefs.SetInt(Master.worldNameVar+"Unlocks",goalNumber);
+			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",goalNumber);
 			notifying = true;
 			switch(goalNumber)
 			{
 				case 1:
-					for(var variableName:String in Master.selectedWorldUnlocksLevel1)
+					for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel1)
 					{
 						PlayerPrefs.SetInt(variableName,1);
 					}
 					break;
 				case 2:
-					for(var variableName:String in Master.selectedWorldUnlocksLevel2)
+					for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel2)
 					{
 						PlayerPrefs.SetInt(variableName,1);
 					}
 					break;
 				case 3:
-					for(var variableName:String in Master.selectedWorldUnlocksLevel3)
+					for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel3)
 					{
 						PlayerPrefs.SetInt(variableName,1);
 					}

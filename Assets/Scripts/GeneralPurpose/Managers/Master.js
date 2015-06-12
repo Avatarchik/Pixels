@@ -4,47 +4,6 @@ static var initialLoad:boolean;
 
 public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland};
 
-static var selectedWorld:WorldSelect;
-static var worldNameFull:String;
-static var worldNameVar:String;
-static var worldNameLine1:String;
-static var worldNameLine2:String;
-static var selectedWorldGames:GameObject[];
-static var selectedWorldBossGame:GameObject;
-static var selectedWorldCovers:GameObject[];
-static var selectedWorldColors:Color[];
-static var selectedWorldUI:GameObject;
-
-static var selectedWorldMusic:AudioClip[];
-static var selectedWorldTransitionIn:AudioClip;
-static var selectedWorldTransitionOut:AudioClip;
-static var selectedWorldSpeedUp:AudioClip;
-static var selectedWorldFailSound:AudioClip;
-static var selectedWorldSuccessSound:AudioClip;
-static var selectedWorldBossGameSounds:AudioClip[];
-
-static var selectedWorldFirstOpening:GameObject;
-static var selectedWorldRegularOpening:GameObject;
-static var selectedWorldEnd1:GameObject;
-static var selectedWorldEnd2:GameObject;
-static var selectedWorldEnd3:GameObject;
-static var selectedWorldEnd4:GameObject;
-static var selectedWorldBeatEnd:GameObject;
-
-static var selectedWorldFirstOpeningSong:AudioClip;
-static var selectedWorldRegularOpeningSong:AudioClip;
-static var selectedWorldEnd1Song:AudioClip;
-static var selectedWorldEnd2Song:AudioClip;
-static var selectedWorldEnd3Song:AudioClip;
-static var selectedWorldEnd4Song:AudioClip;
-static var selectedWorldBeatEndSong:AudioClip;
-
-static var selectedWorldUnlocksLevel1:String[];
-static var selectedWorldUnlocksLevel2:String[];
-static var selectedWorldUnlocksLevel3:String[];
-static var selectedWorldUnlockNotificationsLine1:String[];
-static var selectedWorldUnlockNotificationsLine2:String[];
-
 static var initialWorldSpeed:int;
 static var speedIncrease:int;
 static var lives:int;
@@ -58,6 +17,7 @@ static var unlockLevels:float[];
 private var topBar:GameObject;
 private var bottomBar:GameObject;
 static var device:String;
+static var vertical:boolean;
 
 var worldNames:String[];
 var quickProgress:boolean;
@@ -70,14 +30,19 @@ static var counter:float;
 static var demo:boolean;
 static var unlockAll:boolean;
 
+var worlds:World[];
+static var currentWorld:World;
+
 function Awake () {
+	vertical = false;
 	demo = false;
 	unlockAll = false;
 	if(unlockEverything){unlockAll=true;}
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new float[6];
-	selectedWorldColors = [Color(.6,.8,1,1),Color(0,.5,1,1)];
+	currentWorld = worlds[0];
+	//currentWorld.basic.colors = [Color(.6,.8,1,1),Color(0,.5,1,1)];
 	lives = 3;
 	paused = false;
 	initialWorldSpeed = 1;
@@ -139,6 +104,7 @@ function Start () {
 function Update () {
 	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
 	{
+		vertical = false;
 		if(device == "iPad")
 		{
 			topBar.transform.position = Vector3(0,25,-8.9);
@@ -152,6 +118,7 @@ function Update () {
 	}
 	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
 	{
+		vertical = true;
 		if(device == "iPad")
 		{
 			topBar.transform.position = Vector3(25,0,-8.9);
@@ -367,8 +334,10 @@ function Initialize () {
 }
 
 function UnlockAllOptions () {
-	for(var worldName:String in worldNames)
+	for(var aWorld:World in worlds)
 	{
+		var worldName:String;
+		worldName = aWorld.basic.worldNameVar;
 	    ///////////////////////////////////////////////////////////////////// World unlock variables.
 		if(!PlayerPrefs.HasKey(worldName))
 		{
@@ -389,6 +358,67 @@ function UnlockAllOptions () {
 		{
 			PlayerPrefs.SetInt(worldName+"PlayedOnce", 1);
 		}
+		if(!PlayerPrefs.HasKey(worldName)+"Beaten")
+		{
+			PlayerPrefs.SetInt(worldName+"Beaten", 1);
+		}
 	}
 	PlayerPrefs.SetInt("CurrencyNumber", 1000);
+}
+
+class BasicVariables {
+	var world:WorldSelect;
+	var worldNameFull:String;
+	var worldNameVar:String;
+	var topLine:String;
+	var bottomLine:String;
+	var games:GameObject[];
+	var bossGame:GameObject;
+	var covers:GameObject[];
+	var colors:Color[];
+	var UI:GameObject;
+}
+
+class TextVariables {
+	var firstOpening:GameObject;
+	var regularOpening:GameObject;
+	var end1:GameObject;
+	var end2:GameObject;
+	var end3:GameObject;
+	var end4:GameObject;
+	var beatEnd:GameObject;
+
+	var firstOpeningSong:AudioClip;
+	var regularOpeningSong:AudioClip;
+	var end1Song:AudioClip;
+	var end2Song:AudioClip;
+	var end3Song:AudioClip;
+	var end4Song:AudioClip;
+	var beatEndSong:AudioClip;
+}
+
+class AudioVariables {
+	var transitionIn:AudioClip;
+	var transitionOut:AudioClip;
+	var speedUp:AudioClip;
+	var success:AudioClip;
+	var failure:AudioClip;
+	var bossGameSounds:AudioClip[];
+	var music:AudioClip[];
+}
+
+class UnlockVariables {
+	var unlocksLevel1:String[];
+	var unlocksLevel2:String[];
+	var unlocksLevel3:String[];
+
+	var unlockNotificationTextLine1:String[];
+	var unlockNotificationTextLine2:String[];
+}
+
+class World {
+	var basic:BasicVariables;
+	var text:TextVariables;
+	var audio:AudioVariables;
+	var unlocks:UnlockVariables;
 }

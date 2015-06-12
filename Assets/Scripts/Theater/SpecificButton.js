@@ -12,16 +12,19 @@ function Start () {
 }
 
 function Clicked () {
-	if(!hide || (controller.currentState == TheaterStatus.Home || controller.currentState == TheaterStatus.Front))
+	if(TheaterController.currentState != TheaterStatus.Stats && TheaterController.buttonCooldown < 0)
 	{
-		manager.currentSelected = thisPartNumber;
-	}
-	if(controller.currentState == TheaterStatus.Home)
-	{
-		controller.currentState = TheaterStatus.HomeLedger;
-	}
-	if(controller.currentState == TheaterStatus.Front)
-	{
-		controller.currentState = TheaterStatus.FrontLedger;
+		if(!hide || (controller.currentState == TheaterStatus.Home || controller.currentState == TheaterStatus.Front))
+		{
+			manager.currentSelected = thisPartNumber;
+		}
+		if(controller.currentState == TheaterStatus.Home)
+		{
+			controller.currentState = TheaterStatus.HomeLedger;
+		}
+		if(controller.currentState == TheaterStatus.Front)
+		{
+			controller.currentState = TheaterStatus.FrontLedger;
+		}
 	}
 }

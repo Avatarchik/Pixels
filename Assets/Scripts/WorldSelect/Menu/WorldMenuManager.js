@@ -212,10 +212,7 @@ function Exit () {
 
 function ReturnToTitle() {
 		WorldMapManager.currentState = MapStatus.Returning;
-		Camera.main.GetComponent(Master).selectedWorldColors = transitionColors;
-		Camera.main.GetComponent(Master).worldNameFull = "";
-		Camera.main.GetComponent(Master).worldNameLine1 = "";
-		Camera.main.GetComponent(Master).worldNameLine2 = "";
+		//Camera.main.GetComponent(Master).currentWorld.basic.colors = transitionColors;
 		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
 		if(Application.loadedLevelName == "WorldSelect")
 		{
@@ -223,7 +220,7 @@ function ReturnToTitle() {
 		}
 		else
 		{
-			AudioManager.PlaySoundTransition(Camera.main.GetComponent(Master).selectedWorldTransitionOut);
+			AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
 		}
 		Time.timeScale = 1;
 		yield WaitForSeconds(.7);

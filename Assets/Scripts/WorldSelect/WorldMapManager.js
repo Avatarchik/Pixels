@@ -176,13 +176,13 @@ function Update () {
 	}
 	if(closestWorld != null && Mathf.Abs(worlds[closestWorld].transform.position.x - 0) < 3)
 	{
-		if(worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine != null && worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine != "")
+		if(worlds[closestWorld].GetComponent(ChangeMapState).bottomLine != null && worlds[closestWorld].GetComponent(ChangeMapState).bottomLine != "")
 		{
-			bannerText.text = worlds[closestWorld].GetComponent(BasicWorldInfo).topLine + "\n" + worlds[closestWorld].GetComponent(BasicWorldInfo).bottomLine;
+			bannerText.text = worlds[closestWorld].GetComponent(ChangeMapState).topLine + "\n" + worlds[closestWorld].GetComponent(ChangeMapState).bottomLine;
 		}
 		else
 		{
-			bannerText.text = worlds[closestWorld].GetComponent(BasicWorldInfo).topLine;
+			bannerText.text = worlds[closestWorld].GetComponent(ChangeMapState).topLine;
 		}
 		showBanner();
 	}
@@ -199,15 +199,15 @@ function showTicket() {
 	{
 		if(text.transform.name == "Title1" || text.transform.name == "Shadow1")
 		{
-			text.text = Camera.main.GetComponent(Master).worldNameLine1;
+			text.text = Camera.main.GetComponent(Master).currentWorld.basic.topLine;
 		}	
 		else if(text.transform.name == "Title2" || text.transform.name == "Shadow2")
 		{
-			text.text = Camera.main.GetComponent(Master).worldNameLine2;
+			text.text = Camera.main.GetComponent(Master).currentWorld.basic.bottomLine;
 		}	
 		else if(text.transform.name == "HighScore")
 		{
-			text.text = PlayerPrefs.GetInt(Master.worldNameVar+"HighScore").ToString();
+			text.text = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore").ToString();
 		}
 	}
 	while(Vector3.Distance(ticket.transform.position, showNot) > .1 && currentState == MapStatus.Confirmation)

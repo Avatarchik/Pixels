@@ -32,7 +32,7 @@ function Start () {
 	button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x * boundMultiplier, transform.lossyScale.y * boundMultiplier, 2));
 }
 
-function Update () {
+function FixedUpdate () {
 	// Find important finger.
 	if(importantFinger == -1)
 	{

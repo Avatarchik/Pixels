@@ -157,83 +157,20 @@ function Refresh(part:String) {
 	Refresh(part,0);
 }
 function Refresh(part:String, change:int) {
+	var lastObject:GameObject;
 	switch(part)
 	{
 		case "hair":
-			Destroy(currentHair);
-			if(PlayerPrefs.GetInt("HairSelection") >= hair.Length)
-			{
-				PlayerPrefs.SetInt("HairSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("HairSelection") < 0)
-			{
-				PlayerPrefs.SetInt("HairSelection", hair.Length-1);
-			}
-			currentHair = Instantiate(hair[PlayerPrefs.GetInt("HairSelection")],transform.position-Vector3(0,0,.08),Quaternion.identity);
-			currentHair.transform.localScale = transform.localScale;
-			currentHair.GetComponent(SpriteRenderer).color = hairColor[PlayerPrefs.GetInt("HairColor")];
-			currentHair.transform.parent = transform;
-			if(hairAvailability[PlayerPrefs.GetInt("HairSelection")]==false)
-			{
-				ChangePart("hair",change);
-			}
+			currentHair = CreateObject(currentHair,hair,hairColor,.08,"Hair","hair",change);
 			break;
 		case "eyes":
-			Destroy(currentEyes);
-			if(PlayerPrefs.GetInt("EyesSelection") >= eyes.Length)
-			{
-				PlayerPrefs.SetInt("EyesSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("EyesSelection") < 0)
-			{
-				PlayerPrefs.SetInt("EyesSelection", eyes.Length-1);
-			}
-			currentEyes = Instantiate(eyes[PlayerPrefs.GetInt("EyesSelection")],transform.position-Vector3(0,0,.06),Quaternion.identity);
-			currentEyes.transform.localScale = transform.localScale;
-			currentEyes.GetComponent(SpriteRenderer).color = eyesColor[PlayerPrefs.GetInt("EyesColor")];
-			currentEyes.transform.parent = transform;
-			if(eyesAvailability[PlayerPrefs.GetInt("EyesSelection")]==false)
-			{
-				ChangePart("eyes",change);
-			}
+			currentEyes = CreateObject(currentEyes,eyes,eyesColor,.06,"Eyes","eyes",change);
 			break;
 		case "top":
-			Destroy(currentTop);
-			if(PlayerPrefs.GetInt("TopSelection") >= tops.Length)
-			{
-				PlayerPrefs.SetInt("TopSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("TopSelection") < 0)
-			{
-				PlayerPrefs.SetInt("TopSelection", tops.Length-1);
-			}
-			currentTop = Instantiate(tops[PlayerPrefs.GetInt("TopSelection")],transform.position-Vector3(0,0,.07),Quaternion.identity);
-			currentTop.transform.localScale = transform.localScale;
-			currentTop.GetComponent(SpriteRenderer).color = topsColor[PlayerPrefs.GetInt("TopColor")];
-			currentTop.transform.parent = transform;
-			if(topsAvailability[PlayerPrefs.GetInt("TopSelection")]==false)
-			{
-				ChangePart("top",change);
-			}
+			currentTop = CreateObject(currentTop,tops,topsColor,.07,"Top","top",change);
 			break;
 		case "bottom":
-			Destroy(currentBottom);
-			if(PlayerPrefs.GetInt("BottomSelection") >= bottoms.Length)
-			{
-				PlayerPrefs.SetInt("BottomSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("BottomSelection") < 0)
-			{
-				PlayerPrefs.SetInt("BottomSelection", bottoms.Length-1);
-			}
-			currentBottom = Instantiate(bottoms[PlayerPrefs.GetInt("BottomSelection")],transform.position-Vector3(0,0,.05),Quaternion.identity);
-			currentBottom.transform.localScale = transform.localScale;
-			currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
-			currentBottom.transform.parent = transform;
-			if(bottomsAvailability[PlayerPrefs.GetInt("BottomSelection")]==false)
-			{
-				ChangePart("bottom",change);
-			}
+			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,.05,"Bottom","bottom",change);
 			break;
 		case "body":
 			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
@@ -249,8 +186,36 @@ function Refresh(part:String, change:int) {
 	}
 }
 
+function CreateObject (objectHolder:GameObject,objectArray:GameObject[],objectColorArray:Color[],zLocation:float,variableNameCap:String,variableNameLower:String, change:int) : GameObject
+{
+	var lastObject:GameObject = objectHolder;
+	if(PlayerPrefs.GetInt(variableNameCap + "Selection") >= objectArray.Length)
+	{
+		PlayerPrefs.SetInt(variableNameCap + "Selection", 0);
+	}
+	else if(PlayerPrefs.GetInt(variableNameCap + "Selection") < 0)
+	{
+		PlayerPrefs.SetInt(variableNameCap + "Selection", objectArray.Length-1);
+	}
+	objectHolder = Instantiate(objectArray[PlayerPrefs.GetInt(variableNameCap + "Selection")],transform.position-Vector3(0,0,zLocation),Quaternion.identity);
+	ReplaceObject(lastObject,1);
+	objectHolder.transform.localScale = transform.localScale;
+	objectHolder.GetComponent(SpriteRenderer).color = objectColorArray[PlayerPrefs.GetInt(variableNameCap + "Color")];
+	objectHolder.transform.parent = transform;
+	if(bottomsAvailability[PlayerPrefs.GetInt(variableNameCap + "Selection")]==false)
+	{
+		ChangePart(variableNameLower,change);
+	}
+	return objectHolder;
+}
+
+function ReplaceObject (lastObject:GameObject,frames:int) {
+	var waitFrames:int = 0;
+	while(waitFrames < frames){waitFrames++;yield;}
+	Destroy(lastObject);
+}
+
 function RefreshColor(part:String) {
-	Debug.Log("color");
 	switch(part)
 	{
 		case "hair":
