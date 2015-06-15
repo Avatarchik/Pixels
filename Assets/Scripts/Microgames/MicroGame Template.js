@@ -1,15 +1,23 @@
 ﻿#pragma strict
 
-static var speed:int;
-static var difficulty:int;
-static var finished:boolean;
-static var length:float;
-static var timer:float;
+var colorChange:boolean;
+var colorForChange:Color;
 
 @HideInInspector var importantFinger:int;
 
+@HideInInspector var speed:int;
+@HideInInspector var difficulty:int;
+@HideInInspector var finished:boolean;
+@HideInInspector var length:float;
+@HideInInspector var timer:float;
+
 function Start () {
+	// Basic world variable initialization.
 	importantFinger = -1;
+	
+	// Level specific variable initialization.
+	
+	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;
@@ -24,6 +32,12 @@ function Start () {
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	// If the color of the UI should change.
+	if(colorChange)
+	{
+		StartCoroutine(ColorChange());
+	}
+	// If The game doesn't just run in Update.
 	Play();
 }
 
@@ -31,8 +45,9 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(true);
+		Finish(true,0);
 	}
+	// Get important finger.
 	if(importantFinger == -1)
 	{
 		for(var i:int = 0; i < Finger.identity.length; i++)
@@ -43,6 +58,7 @@ function Update () {
 			}
 		}
 	}
+	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
 		
@@ -57,14 +73,23 @@ function Play () {
 
 }
 
-function Finish(completionStatus:boolean) {
-	if(Application.loadedLevelName == "MicroTester")
+function Finish(completionStatus:boolean,waitTime:float) {
+	if(!finished)
 	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
+		finished = true;
+		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
+		if(colorChange)
+		{
+			GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+		}
 	}
-	else 
+}
+
+function ColorChange () {
+	while(timer > length-.5)
 	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
+		yield;
 	}
-	finished = true;
+	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", colorForChange,SendMessageOptions.DontRequireReceiver);
+	yield;
 }

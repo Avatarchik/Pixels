@@ -253,6 +253,7 @@ function GameOver () {
 
 function MoveAway () {
 	var countAway:int = 0;
+	movingBack = false;
 	while(countAway < gameCovers.length && !movingBack)
 	{
 		countAway = 0;
@@ -275,7 +276,7 @@ function MoveAway () {
 function MoveBack () {
 	var countTowards:int = 0;
 	movingBack = true;
-	while(countTowards < gameCovers.length)
+	while(countTowards < gameCovers.length && movingBack)
 	{
 		countTowards = 0;
 		for(var i:int = 0; i < gameCovers.Length; i++)

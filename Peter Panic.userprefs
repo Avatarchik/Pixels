@@ -1,29 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
-    <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="223" Column="48" />
-    </Files>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True">
-                  <Node name="Master.js" selected="True" />
-                </Node>
                 <Node name="Objects" expanded="True" />
-                <Node name="Player" expanded="True" />
-                <Node name="Visual" expanded="True" />
               </Node>
-              <Node name="MicroGameLauncher" expanded="True">
-                <Node name="UI" expanded="True" />
-              </Node>
-              <Node name="Theater" expanded="True" />
-              <Node name="TitleScreen" expanded="True" />
-              <Node name="WorldSelect" expanded="True">
-                <Node name="Menu" expanded="True" />
+              <Node name="Microgames" expanded="True">
+                <Node name="01. Packing Peanut Factory" expanded="True">
+                  <Node name="BoxFill.js" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>

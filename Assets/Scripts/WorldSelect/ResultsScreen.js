@@ -53,7 +53,7 @@ function ProgressIncrease() {
 		if(notifying)
 		{
 			currentAlert = Instantiate(alert);
-			currentAlert.GetComponent(PieceGetting).text = Master.currentWorld.unlocks.unlockNotificationTextLine1[goalMarker-1] + "\n" + Master.currentWorld.unlocks.unlockNotificationTextLine1[goalMarker-1];
+			currentAlert.GetComponent(PieceGetting).text = Master.currentWorld.unlocks.unlockNotificationTextLine1[goalMarker-1] + "\n" + Master.currentWorld.unlocks.unlockNotificationTextLine2[goalMarker-1];
 			yield WaitForSeconds(.3);
 			iconHolders[goalMarker-1].sprite = iconNewUnlockWorldSprites[goalMarker-1];
 		}

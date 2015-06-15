@@ -22,7 +22,7 @@ function CurrencyCounting(){
 		if(currency < PlayerPrefs.GetInt("CurrencyNumber"))
 		{
 			currency++;
-			AudioManager.PlaySound(coinSound,.3);
+			AudioManager.PlaySound(coinSound,.1);
 			if(!animating)
 			{
 				CoinAnimate();

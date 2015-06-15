@@ -22,6 +22,7 @@ static var failure:boolean;
 static var currentGame:GameObject;
 static var lives:int;
 static var gameNumber:int;
+static var movingBack:boolean;
 
 // Prefabs
 var gameCovers:GameObject[];
@@ -77,6 +78,7 @@ function Start () {
 	gameNumber = 1;
 	pausable = true;
 	paused = false;
+	movingBack = false;
 	fade = Camera.main.GetComponentInChildren(Renderer);
 	// Start the pre-game animation;
 	StartCoroutine(BeforeGames());
@@ -163,7 +165,8 @@ function GameOver () {
 
 function MoveAway () {
 	var countAway:int = 0;
-	while(countAway < gameCovers.length)
+	movingBack = false;
+	while(countAway < gameCovers.length && !movingBack)
 	{
 		countAway = 0;
 		for(var i:int = 0; i < gameCovers.Length; i++)
@@ -174,7 +177,7 @@ function MoveAway () {
 			}
 			else
 			{
-				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).destination, Time.deltaTime * 40);
+				gameCovers[i].transform.position = Vector3.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).destination, Time.deltaTime * 40);
 			}
 		}
 		yield;
@@ -184,7 +187,8 @@ function MoveAway () {
 
 function MoveBack () {
 	var countTowards:int = 0;
-	while(countTowards < gameCovers.length)
+	movingBack = true;
+	while(countTowards < gameCovers.length && movingBack)
 	{
 		countTowards = 0;
 		for(var i:int = 0; i < gameCovers.Length; i++)
@@ -195,11 +199,12 @@ function MoveBack () {
 			}
 			else
 			{
-				gameCovers[i].transform.position = Vector2.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).origin, Time.deltaTime * 40);
+				gameCovers[i].transform.position = Vector3.MoveTowards(gameCovers[i].transform.position, gameCovers[i].GetComponent(GameCover).origin, Time.deltaTime * 40);
 			}
 		}
 		yield;
 	}
+	movingBack = false;
 	yield;
 }
 
