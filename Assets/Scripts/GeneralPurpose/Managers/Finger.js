@@ -21,6 +21,7 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log(location[0]);
 	for (var touch:Touch in Input.touches) {
 		var recognized:boolean = false;
 		for(var x:int = 0; x < identity.length; x++)

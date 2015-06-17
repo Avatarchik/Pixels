@@ -6,6 +6,11 @@ private var finished:boolean;
 private var length:float;
 private var timer:float;
 
+var failBack:GameObject;
+var failBackMove:boolean;
+
+var worldIntros:AudioClip[];
+
 var darknessAmount:Color;
 
 var fishSizeSprites:Sprite[];
@@ -62,6 +67,12 @@ var warningSprite:Sprite;
 @HideInInspector var clicked:boolean;
 
 function Start () {
+	failBackMove = false;
+	failBack.transform.position.y = 12;
+	if(Random.Range(0,10) < 3)
+	{
+		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+	}
 	clicked = false;
 	importantFinger = -1;
 	startLocation = Vector3(0,6.5,3.65);
@@ -213,6 +224,10 @@ function Start () {
 }
 
 function Update () {
+	if(failBackMove)
+	{
+		failBack.transform.position.y = Mathf.MoveTowards(failBack.transform.position.y,0,Time.deltaTime * 10);
+	}
 	if(importantFinger == -1)
 	{
 		clicked = false;
@@ -236,6 +251,10 @@ function Update () {
 			{
 				if(Finger.GetPosition(importantFinger).x < 0)
 				{
+					if(!leftFish[currentFish])
+					{
+						failBackMove = true;
+					}
 					clicked = true;
 					barrierGoal = 6;
 					fish[currentFish].transform.localScale.x = -1;
@@ -244,6 +263,10 @@ function Update () {
 				}
 				else
 				{
+					if(leftFish[currentFish])
+					{
+						failBackMove = true;
+					}
 					clicked = true;
 					barrierGoal = 0;
 					fishDirection[currentFish] = true;
@@ -436,7 +459,7 @@ function Finish(completionStatus:boolean) {
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
 	finished = true;
 }
 
@@ -530,6 +553,6 @@ function ColorChange () {
 	{
 		yield;
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
 	yield;
 }

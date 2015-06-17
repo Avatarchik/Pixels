@@ -12,6 +12,7 @@ function Update () {
 }
 
 function ChangeBackgroundColor (newColor:Color) {
+	Debug.Log("hello");
 	if(special)
 	{
 		objectColor = newColor;

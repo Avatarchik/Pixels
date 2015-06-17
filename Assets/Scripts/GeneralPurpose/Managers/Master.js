@@ -19,6 +19,8 @@ private var bottomBar:GameObject;
 static var device:String;
 static var vertical:boolean;
 
+var appVersion:float;
+var eraseOnNewVersion:boolean;
 var worldNames:String[];
 var quickProgress:boolean;
 var unlockEverything:boolean;
@@ -188,8 +190,9 @@ function Initialize () {
 	{
 		unlockLevels = [0.0,15,30,45,70,100];
 	}
-	if(eraseOnLoad)
+	if(eraseOnLoad || (eraseOnNewVersion && PlayerPrefs.GetFloat("AppVersion") != appVersion))
 	{
+		PlayerPrefs.SetFloat("AppVersion",appVersion);
 		PlayerPrefs.DeleteAll();
 	}
 	if(unlockAll)

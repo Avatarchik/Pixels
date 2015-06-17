@@ -7,6 +7,8 @@ private var length:float;
 private var timer:float;
 
 private var darknessObject;
+
+var worldIntros:AudioClip[];
 var darknessAmount:Color;
 
 var people:GameObject[];
@@ -33,6 +35,10 @@ var creditsObject:GameObject;
 @HideInInspector var lengthOfCountdown:float;
 
 function Start () {
+	if(Random.Range(0,10) < 3)
+	{
+		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;
@@ -188,7 +194,7 @@ function Finish(completionStatus:boolean,waitTime) {
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
 	finished = true;
 }
 
@@ -197,7 +203,7 @@ function ColorChange () {
 	{
 		yield;
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
 	yield;
 }
 

@@ -7,6 +7,11 @@ private var length:float;
 private var timer:float;
 
 private var darknessObject;
+
+var failBack:GameObject;
+var failBackMove:boolean;
+
+var worldIntros:AudioClip[];
 var darknessAmount:Color;
 
 var treePrefab:GameObject;
@@ -40,6 +45,12 @@ var smokeParts:ParticleSystem[];
 private var importantFinger:int;
 
 function Start () {
+	failBackMove = false;
+	failBack.transform.position.y = 12;
+	if(Random.Range(0,10) < 3)
+	{
+		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+	}
 	currentTree = 0;
 	importantFinger = -1;
 	treeStartValue = Vector3(-1.41,-4.78,2.5);
@@ -105,6 +116,10 @@ function Start () {
 }
 
 function Update () {
+	if(failBackMove)
+	{
+		failBack.transform.position.y = Mathf.MoveTowards(failBack.transform.position.y,0,Time.deltaTime * 10);
+	}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
@@ -231,7 +246,7 @@ function Finish(completionStatus:boolean) {
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
 	finished = true;
 }
 
@@ -250,6 +265,7 @@ function SpriteRotate(object:GameObject,sprite:int,treeNumber:int) {
 }
 
 function EndGame(lane:int) { 
+	failBackMove = true;
 	yield WaitForSeconds(1);
 	//Stuff with particles.
 	if(!finished)
@@ -264,7 +280,7 @@ function ColorChange () {
 	{
 		yield;
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
 	yield;
 }
 

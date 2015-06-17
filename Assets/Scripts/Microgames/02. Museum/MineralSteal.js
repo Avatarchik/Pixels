@@ -7,6 +7,12 @@
 @HideInInspector var timer:float;
 
 @HideInInspector var darknessObject;
+
+var failBack:GameObject;
+var failBackMove:boolean;
+
+var worldIntros:AudioClip[];
+
 var darknessAmount:Color;
 
 
@@ -39,6 +45,12 @@ var robotNot:SpriteRenderer;
 @HideInInspector var goal:int;
 
 function Start () {
+	failBackMove = false;
+	failBack.transform.position.y = 12;
+	if(Random.Range(0,10) < 3)
+	{
+		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+	}
 	positions = new float[5];
 	goal = 0;
 	killDistance = 1;
@@ -99,6 +111,10 @@ function Start () {
 }
 
 function Update () {
+	if(failBackMove)
+	{
+		failBack.transform.position.y = Mathf.MoveTowards(failBack.transform.position.y,0,Time.deltaTime * 10);
+	}
 	timer -= Time.deltaTime;
 	if(timer < 0)
 	{
@@ -181,6 +197,7 @@ function LaserFire (laser:SpriteRenderer) {
 			if(Mathf.Abs(robot.transform.position.x-laser.transform.position.x) < killDistance && !finished)
 			{
 				robot.GetComponent(ParticleSystem).emissionRate = 200;
+				failBackMove = true;
 				Finish(false);
 			}
 			yield;
@@ -208,7 +225,7 @@ function Finish(completionStatus:boolean) {
 		{
 			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 		}
-		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+		GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
 	}
 }
 
@@ -217,6 +234,6 @@ function ColorChange () {
 	{
 		yield;
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
 	yield;
 }
