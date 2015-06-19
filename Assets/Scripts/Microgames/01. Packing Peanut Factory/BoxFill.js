@@ -21,8 +21,13 @@ var goal:int;
 
 var length:float;
 
+var clicked:boolean;
+
+var importantFinger:int;
 
 function Start () {
+	importantFinger = -1;
+	clicked = false;
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;
@@ -59,12 +64,36 @@ function Start () {
 }
 
 function Update () {
+	if(importantFinger == -1)
+	{
+		clicked = false;
+		for(var i:int = 0; i < Finger.identity.length; i++)
+		{
+			if(Finger.GetExists(i))
+			{
+				importantFinger = i;
+			}
+		}
+	}
+	if(importantFinger != i && Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger))
+	{
+		if(Mathf.Abs(Finger.GetPosition(importantFinger).x) < 9 && Mathf.Abs(Finger.GetPosition(importantFinger).y) < 9 && !clicked)
+		{
+			Clicked();
+			clicked = true;
+		}
+	}
+	else if(!Finger.GetExists(importantFinger))
+	{
+		importantFinger = -1;
+	}
+
 	boxSpeed = Time.deltaTime * (speed * 3 + 5);
 	if(Input.GetKeyDown("space"))
 	{
 		Clicked();
 	}
-	for(var i:int = 0; i < peanuts.Length; i++)
+	for(i = 0; i < peanuts.Length; i++)
 	{
 		if(peanutsFree[i] == 0)
 		{
