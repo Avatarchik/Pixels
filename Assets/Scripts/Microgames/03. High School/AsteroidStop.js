@@ -11,11 +11,33 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var asteroidPrefab:GameObject;
+var missilePrefab:GameObject;
+
+@HideInInspector var gameMissiles:GameObject[];
+
+@HideInInspector var asteroidStartLocation:Vector3;
+@HideInInspector var asteroidGoal:Vector3;
+@HideInInspector var missileStart:Vector3[];
+@HideInInspector var missileGoal:Vector3[];
+
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	asteroidStartLocation = Vector3(9.5,7.1,3.8);
+	asteroidGoal = Vector3(-4,-3.7,3.8);
+	missileStart = new Vector3[3];
+	missileGoal = new Vector3[3];
+	
+	missileStart[0] = Vector3(.44,-.23,.27);
+	missileGoal[0] = Vector3(-.2,.61,.27);
+	missileStart[1] = Vector3(.4,-.25,.27);
+	missileGoal[1] = Vector3(-.24,.59,.27);
+	missileStart[2] = Vector3(.36,-.27,.27);
+	missileGoal[2] = Vector3(-.28,.57,.27);
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -80,7 +102,7 @@ function Finish(completionStatus:boolean,waitTime:float) {
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)
 		{
-			GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+			GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
 		}
 	}
 }
@@ -90,6 +112,6 @@ function ColorChange () {
 	{
 		yield;
 	}
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("ChangeBackgroundColor", colorForChange,SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", colorForChange,SendMessageOptions.DontRequireReceiver);
 	yield;
 }
