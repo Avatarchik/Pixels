@@ -11,15 +11,28 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var laser:SpriteRenderer;
+var laserSprites:Sprite[];
 var asteroidPrefab:GameObject;
 var missilePrefab:GameObject;
+var bar:GameObject;
 
 @HideInInspector var gameMissiles:GameObject[];
+@HideInInspector var asteroid:GameObject;
 
 @HideInInspector var asteroidStartLocation:Vector3;
 @HideInInspector var asteroidGoal:Vector3;
 @HideInInspector var missileStart:Vector3[];
 @HideInInspector var missileGoal:Vector3[];
+
+@HideInInspector var missileAllowance:int;
+@HideInInspector var missileCountdown:float;
+@HideInInspector var missileSpeed:float;
+@HideInInspector var asteroidSpeed:float;
+@HideInInspector var asteroidsLeft:int;
+
+@HideInInspector var barTop:float;
+@HideInInspector var counterTop:float;
 
 
 function Start () {
@@ -32,12 +45,14 @@ function Start () {
 	missileStart = new Vector3[3];
 	missileGoal = new Vector3[3];
 	
-	missileStart[0] = Vector3(.44,-.23,.27);
-	missileGoal[0] = Vector3(-.2,.61,.27);
-	missileStart[1] = Vector3(.4,-.25,.27);
-	missileGoal[1] = Vector3(-.24,.59,.27);
-	missileStart[2] = Vector3(.36,-.27,.27);
-	missileGoal[2] = Vector3(-.28,.57,.27);
+	missileStart[2] = Vector3(6.184,-3.233,3.8);
+	missileGoal[2] = Vector3(-2.812,8.576,3.8);
+	missileStart[1] = Vector3(5.624,-3.515,3.8);
+	missileGoal[1] = Vector3(-3.374,8.3,3.8);
+	missileStart[0] = Vector3(5.06,-3.8,3.8);
+	missileGoal[0] = Vector3(-3.93,8.01,3.8);
+	
+	missileCountdown = 0;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -50,24 +65,60 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 3 + 5/speed;
+	length = 8;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	missileAllowance = 4 - difficulty;
+	gameMissiles = new GameObject[missileAllowance];
+	missileSpeed = 10 + speed*4;
+	asteroidSpeed = 5 + speed*3;
+	if(speed > 3)
+	{
+		asteroidSpeed -= difficulty *1.5;
+	}
+	asteroidsLeft = 3;
+	laser.sprite = laserSprites[difficulty-1];
+	
+	barTop = bar.transform.localScale.y;
+	counterTop = .7 - .1*speed;
+	
 	// If the color of the UI should change.
 	if(colorChange)
 	{
 		StartCoroutine(ColorChange());
 	}
+	
 	// If The game doesn't just run in Update.
 	Play();
 }
 
 function Update () {
+	bar.transform.localScale.y = Mathf.Lerp(0,barTop,1-(missileCountdown/counterTop));
+	if(missileCountdown <= 0)
+	{
+		bar.GetComponent(SpriteRenderer).color = Color.green;
+	}
+	else
+	{
+		bar.GetComponent(SpriteRenderer).color = Color.red;
+	}
+	if(!finished)
+	{
+		missileCountdown = Mathf.MoveTowards(missileCountdown,0,Time.deltaTime);
+	}
+	if(Input.GetKeyDown("space"))
+	{
+		Clicked();
+	}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
 		Finish(true,0);
+	}
+	if(asteroidsLeft == 0)
+	{
+		Finish(true,1);
 	}
 	// Get important finger.
 	if(importantFinger == -1)
@@ -92,7 +143,64 @@ function Update () {
 }
 
 function Play () {
+	yield WaitForSeconds(.5);
+	while(true && asteroidsLeft > 0)
+	{
+		if(asteroid == null)
+		{
+			yield WaitForSeconds(.3);
+			asteroid = Instantiate(asteroidPrefab,asteroidStartLocation,Quaternion.identity);
+			asteroid.transform.parent = transform;
+		}
+		else
+		{
+			asteroid.transform.position = Vector3.MoveTowards(asteroid.transform.position,asteroidGoal,Time.deltaTime * asteroidSpeed);
+		}
+		if(Vector3.Distance(asteroid.transform.position,asteroidGoal) < .2)
+		{
+			Finish(false,1);
+		}
+		yield;
+	}
+}
 
+function Clicked() {
+	if(missileCountdown <= 0)
+	{
+		missileCountdown = counterTop;
+		if(missileCountdown < .3)
+		{
+			missileCountdown = .3;
+		}
+		for(var i:int = 0; i < missileAllowance; i++)
+		{
+			Fire(Instantiate(missilePrefab,missileStart[i],Quaternion.identity),missileGoal[i]);
+		}
+	}
+}
+
+function Fire(thisMissile:GameObject,thisGoal:Vector3) {
+	thisMissile.transform.parent = transform;
+	while(thisMissile.transform.position != thisGoal)
+	{
+		if(asteroid!= null)
+		{
+			if(Vector2.Distance(thisMissile.transform.position,asteroid.transform.position) < 1)
+			{
+				Destroy(thisMissile);
+				Explode();
+				break;
+			}
+		}
+		thisMissile.transform.position = Vector3.MoveTowards(thisMissile.transform.position, thisGoal,Time.deltaTime * missileSpeed);
+		yield;
+	}
+}
+
+function Explode () {
+	asteroidsLeft--;
+	Destroy(asteroid);
+	asteroid = null;
 }
 
 function Finish(completionStatus:boolean,waitTime:float) {
