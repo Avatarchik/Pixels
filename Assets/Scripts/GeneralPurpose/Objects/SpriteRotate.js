@@ -3,6 +3,7 @@
 var defaultSprite:Sprite;
 var sprites:Sprite[];
 var waitTime:float;
+var destroyAfterFirstTime:boolean = false;
 @HideInInspector var currentSprite:int;
 @HideInInspector var shouldRotate:boolean;
 
@@ -20,7 +21,15 @@ function SpriteRotate () {
 		currentSprite += 1;
 		if(currentSprite == sprites.Length)
 		{
-			currentSprite = 0;
+			if(destroyAfterFirstTime)
+			{
+				Destroy(gameObject);
+				shouldRotate = false;
+			}
+			else
+			{
+				currentSprite = 0;
+			}
 		}	
 		if(shouldRotate)
 		{

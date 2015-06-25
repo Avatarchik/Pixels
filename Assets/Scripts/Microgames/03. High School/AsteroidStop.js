@@ -15,7 +15,10 @@ var laser:SpriteRenderer;
 var laserSprites:Sprite[];
 var asteroidPrefab:GameObject;
 var missilePrefab:GameObject;
+var explosion:GameObject;
 var bar:GameObject;
+var white:SpriteRenderer;
+var mushroom:SpriteRenderer;
 
 @HideInInspector var gameMissiles:GameObject[];
 @HideInInspector var asteroid:GameObject;
@@ -53,6 +56,8 @@ function Start () {
 	missileGoal[0] = Vector3(-3.93,8.01,3.8);
 	
 	missileCountdown = 0;
+	white.color.a = 0;
+	mushroom.color.a = 0;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -94,6 +99,7 @@ function Start () {
 }
 
 function Update () {
+	white.color.a -= Time.deltaTime * .13;
 	bar.transform.localScale.y = Mathf.Lerp(0,barTop,1-(missileCountdown/counterTop));
 	if(missileCountdown <= 0)
 	{
@@ -134,7 +140,10 @@ function Update () {
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
-		
+		if(Mathf.Abs(Finger.GetPosition(importantFinger).x) < 9 && Mathf.Abs(Finger.GetPosition(importantFinger).y) < 9)
+		{
+			Clicked();
+		}
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
@@ -156,9 +165,11 @@ function Play () {
 		{
 			asteroid.transform.position = Vector3.MoveTowards(asteroid.transform.position,asteroidGoal,Time.deltaTime * asteroidSpeed);
 		}
-		if(Vector3.Distance(asteroid.transform.position,asteroidGoal) < .2)
+		if(Vector3.Distance(asteroid.transform.position,asteroidGoal) < .2 && !finished)
 		{
-			Finish(false,1);
+			mushroom.color.a = 1;
+			white.color.a = 1;
+			Finish(false,1.5);
 		}
 		yield;
 	}
@@ -187,6 +198,7 @@ function Fire(thisMissile:GameObject,thisGoal:Vector3) {
 		{
 			if(Vector2.Distance(thisMissile.transform.position,asteroid.transform.position) < 1)
 			{
+				
 				Destroy(thisMissile);
 				Explode();
 				break;
@@ -198,6 +210,7 @@ function Fire(thisMissile:GameObject,thisGoal:Vector3) {
 }
 
 function Explode () {
+	Instantiate(explosion,asteroid.transform.position, Quaternion.identity);
 	asteroidsLeft--;
 	Destroy(asteroid);
 	asteroid = null;
@@ -207,6 +220,7 @@ function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
 		finished = true;
+		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)
 		{
