@@ -1,25 +1,25 @@
 ﻿#pragma strict
 
-var dialogue:String[];
-var leftSprites:GameObject[];
-var rightSprites:GameObject[];
-var playerState:PlayerState[];
-var playerSpeed:float[];
-var currentSpeaker:boolean[];
-private var spriteObjects:GameObject[];
-
-var targetTimes:float[];
-var textTypeSpeed:float = 1;
 var automatic:boolean;
-var endCounter:int;
-var finished:boolean;
+
+var lines:Line[];
+
+@HideInInspector var spriteObjects:GameObject[];
+@HideInInspector var endCounter:int;
+@HideInInspector var finished:boolean;
 var skipBox:Transform;
 
-var lineLength:int;
-var numberOfLines:int;
+@HideInInspector var lineLength:int;
+@HideInInspector  var numberOfLines:int;
 
+var song:AudioClip;
 
-private var dialogueMarker:int;
+var record:boolean = false;
+
+static var leftSpriteNumber:int;
+static var rightSpriteNumber:int;
+
+private var lineMarker:int;
 private var currentDialogue:Array;
 
 private var numberOfLetters:int;
@@ -30,12 +30,23 @@ private var doneLine:boolean;
 function Start () {
 	// Initialize variable values.
 	spriteObjects = new GameObject[2];
-	dialogueMarker = 0;
+	lineMarker = 0;
 	numberOfLetters = 0;
 	current = 0;
 	endCounter = 0;
 	finished = false;
 	doneLine = false;
+	PlayerManager.speed = 1000000;
+	lineLength = 16;
+	numberOfLines = 3;
+	leftSpriteNumber = 0;
+	leftSpriteNumber = 0;
+	
+	if(song!=null)
+	{
+		AudioManager.PlaySong(song);
+	}
+	
 	// Get the text box into place.
 	while(transform.position.x < -7.74)
 	{
@@ -43,20 +54,34 @@ function Start () {
 		yield;
 	}
 	// Destroy if empty; otherwise, start the dialogue routine.
-	if(dialogue.Length!=0)
+	if(lines.Length!=0)
 	{
-		for(var i = 0; i < dialogue.Length; i++)
+		for(var i = 0; i < lines.Length; i++)
 		{
-			dialogue[i] = Format(dialogue[i],lineLength);
+			lines[i].dialogue = Format(lines[i].dialogue,lineLength);
 		}
-		currentDialogue = BoxCut(dialogue[dialogueMarker],numberOfLines);
+		currentDialogue = BoxCut(lines[lineMarker].dialogue,numberOfLines);
 		IncreaseLetters();
 	}
 	else
 	{
 		Destroy(gameObject);
 	}
-	UpdateSprites(dialogueMarker);
+	if(record)
+	{
+		for(i = 0; i < lines.length; i++)
+		{
+			lines[i].leftMouth = new MouthState[0];
+			lines[i].rightMouth = new MouthState[0];
+		}
+		Record();
+	}
+	else
+	{
+		MouthShape(true);
+		MouthShape(false);
+	}
+	UpdateSprites(lineMarker);
 	StartCoroutine(UpdateSet());
 }
 
@@ -66,10 +91,94 @@ function KillObject(object:GameObject)
 	Destroy(object);
 }
 function Update () {
-	//Debug.Log(Time.time);
-	if(Input.GetKeyDown("space"))
+}
+
+// Recording function for mouth movement.
+function Record () {
+	while(true)
 	{
-		Clicked();
+		if(Input.GetKeyDown("space"))
+		{
+			SetSprite(spriteObjects[0],1);
+			SetSprite(spriteObjects[1],1);
+			lines[lineMarker].leftMouth = ChangeMouthValue(lines[lineMarker].leftMouth,1);
+			lines[lineMarker].rightMouth = ChangeMouthValue(lines[lineMarker].rightMouth,1);
+		}
+		else if(Input.GetKeyUp("space"))
+		{
+			SetSprite(spriteObjects[0],0);
+			SetSprite(spriteObjects[1],0);
+			lines[lineMarker].leftMouth = ChangeMouthValue(lines[lineMarker].leftMouth,0);
+			lines[lineMarker].rightMouth = ChangeMouthValue(lines[lineMarker].rightMouth,0);
+		}
+		if((Input.GetKeyDown("x") && Input.GetKey("space")) || Input.GetKeyDown("c"))
+		{
+			SetSprite(spriteObjects[0],2);
+			SetSprite(spriteObjects[1],2);
+			lines[lineMarker].leftMouth = ChangeMouthValue(lines[lineMarker].leftMouth,2);
+			lines[lineMarker].rightMouth = ChangeMouthValue(lines[lineMarker].rightMouth,2);
+		}
+		yield;
+	}
+}
+
+function SetSprite (object:GameObject,spriteSetNumber:int) {
+	if(object != null)
+	{
+		object.SendMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
+	}
+}
+function ChangeMouthValue(mouthArray:MouthState[],spriteValue:int):MouthState[] {
+		var tempArray:MouthState[] = mouthArray;
+		mouthArray = new MouthState[mouthArray.length + 1];
+		mouthArray[mouthArray.length-1] = new MouthState();
+		for(var i:int = 0; i < tempArray.length; i++)
+		{
+			mouthArray[i] = tempArray[i];
+		}
+		mouthArray[mouthArray.length-1].time = AudioManager.GetLocation();
+		mouthArray[mouthArray.length-1].sprite = spriteValue;
+		return mouthArray;
+}
+
+// Changes the sprites mouths if there is mouth change information.
+function MouthShape(left:boolean) {
+	var movementMarker:int = 0;
+	var currentLine:int = 0;
+	while(true)
+	{
+		if(currentLine != lineMarker)
+		{
+			movementMarker = 0;
+			currentLine = lineMarker;
+		}
+		if(left && lines[currentLine].leftMouth.length > movementMarker)
+		{
+			Debug.Log("MMarker: " + movementMarker + "Length: " + lines[currentLine].leftMouth.length);
+			while(AudioManager.GetLocation() < lines[currentLine].leftMouth[movementMarker].time)
+			{
+				yield;
+			}
+			if(lines[currentLine].leftMouth.length > movementMarker && spriteObjects[0] != null)
+			{
+				SetSprite(spriteObjects[0],lines[currentLine].leftMouth[movementMarker].sprite);
+			}
+			movementMarker++;
+		}
+		else if (!left && lines[currentLine].rightMouth.length > movementMarker)
+		{
+			while(AudioManager.GetLocation() < lines[currentLine].rightMouth[movementMarker].time)
+			{
+				yield;
+			}
+			if(lines[currentLine].rightMouth.length > movementMarker && spriteObjects[1] != null)
+			{
+				SetSprite(spriteObjects[1],lines[currentLine].rightMouth[movementMarker].sprite);
+			}
+			movementMarker ++;
+		}
+		
+		yield;
 	}
 }
 
@@ -104,9 +213,8 @@ function UpdateSet () {
 			GetComponent(TextMesh).text = "";
 			transform.position.x = Mathf.MoveTowards(transform.position.x,30,Time.deltaTime*60);
 		}
-		if(transform.position.x == 30)
+		if(transform.position.x == 30 && !record)
 		{
-			//AudioManager.StopSong();
 			Destroy(gameObject);
 		}
 		yield;
@@ -115,48 +223,42 @@ function UpdateSet () {
 }
 
 function UpdateSprites(number:int) {
-	if(leftSprites.Length >= dialogueMarker && rightSprites.Length >= dialogueMarker && spriteObjects.Length == 2 && currentSpeaker.Length >= dialogueMarker && !finished)
+	if(lines.Length >= lineMarker && spriteObjects.Length == 2 && !finished)
 	{
-		if(leftSprites[number]!=null)
+		if(lines[number].leftSprite!=null)
 		{
-			if(number >= 1 && leftSprites[number-1] != leftSprites[number])
+			if(number >= 1 && lines[number-1].leftSprite != lines[number].leftSprite)
 			{
 				KillObject(spriteObjects[0]);
-			spriteObjects[0] = Instantiate(leftSprites[number]);
+				spriteObjects[0] = Instantiate(lines[number].leftSprite);
 			}
 			else if(number == 0)
 			{
-				spriteObjects[0] = Instantiate(leftSprites[number]);
+				spriteObjects[0] = Instantiate(lines[number].leftSprite);
 			}
 			
 		}
-		if(rightSprites[number]!=null)
+		if(lines[number].rightSprite!=null)
 		{
-			if(number >= 1 && rightSprites[number-1] != rightSprites[number])
+			if(number >= 1 && lines[number-1].rightSprite != lines[number].rightSprite)
 			{
-				
 				KillObject(spriteObjects[1]);
-			spriteObjects[1] = Instantiate(rightSprites[number]);
+				spriteObjects[1] = Instantiate(lines[number].rightSprite);
 			}
 			else if(number == 0)
 			{
-				spriteObjects[1] = Instantiate(rightSprites[number]);
+				spriteObjects[1] = Instantiate(lines[number].rightSprite);
 			}
-			
 		}
-		if(playerState.length >= number && spriteObjects[0].transform.tag == "Player")
+		if(lines.length >= number && spriteObjects[0].transform.tag == "Player")
 		{
-			spriteObjects[0].GetComponent(PlayerManager).currentState = playerState[number];
+			spriteObjects[0].GetComponent(PlayerManager).currentState = lines[number].playerState;
 		}
-		if(playerState.length >= number && spriteObjects[1].transform.tag == "Player")
+		if(lines.length >= number && spriteObjects[1].transform.tag == "Player")
 		{
-			spriteObjects[1].GetComponent(PlayerManager).currentState = playerState[number];
+			spriteObjects[1].GetComponent(PlayerManager).currentState = lines[number].playerState;
 		}
-		if(playerSpeed != null && playerSpeed.length >= number && playerSpeed[number] != 0)
-		{
-			PlayerManager.speed = playerSpeed[number];
-		}
-		if(currentSpeaker[number])
+		if(lines[number].currentSpeaker)
 		{
 			spriteObjects[0].transform.position = Vector3(-4.5,0,transform.position.z+1);
 			spriteObjects[1].transform.position = Vector3(4.5,1,transform.position.z+1.5);
@@ -182,16 +284,16 @@ function NextLine () {
 		numberOfLetters = 0;
 		IncreaseLetters();
 	}
-	else if(dialogueMarker < dialogue.Length-1)
+	else if(lineMarker < lines.Length-1)
 	{
 		current = 0;
 		numberOfLetters = 0;
-		dialogueMarker++;
-		currentDialogue = BoxCut(dialogue[dialogueMarker],numberOfLines);
-		UpdateSprites(dialogueMarker);
+		lineMarker++;
+		currentDialogue = BoxCut(lines[lineMarker].dialogue,numberOfLines);
+		UpdateSprites(lineMarker);
 		IncreaseLetters();
 	}
-	else if(dialogueMarker == dialogue.Length-1)
+	else if(lineMarker == lines.Length-1)
 	{
 		finished = true;
 	}
@@ -203,7 +305,7 @@ function NextLine () {
 // value that can be set in the editor or above. If the targetTimes array is both full and the same length as
 // the dialogue array, the game will try to match one up to the other (not super reliable, needs fussing.)
 function IncreaseLetters () {
-	StartCoroutine(CountDown(targetTimes[dialogueMarker]));
+	StartCoroutine(CountDown(lines[lineMarker].targetTime));
 	while(numberOfLetters < currentDialogue[current].ToString().Length && !doneLine)
 	{
 		//numberOfLetters = currentDialogue[current].ToString().Length;
@@ -223,11 +325,9 @@ function IncreaseLetters () {
 }
 
 function CountDown (counter:float) {
-	//Debug.Log(counter);
-	while(counter > 0)
+	//var song:AudioClip
+	while(AudioManager.GetLocation() < counter)
 	{
-		//Debug.Log(counter);
-		counter -= Time.deltaTime;
 		yield;
 	}
 	doneLine = true;
@@ -241,7 +341,7 @@ function Format (text:String,lineLength:int):String {
 	return Format(text,lineLength,0);
 }
 function Format (text:String,lineLength:int,marker:int):String {
-	if(text.Length > marker + lineLength)
+	if(text.Length > marker + lineLength && !record)
 	{
 		var success:boolean = false;
 		for(var i:int = marker+lineLength; i > marker; i--)
@@ -264,7 +364,7 @@ function Format (text:String,lineLength:int,marker:int):String {
 			marker += lineLength;
 		}
 	}
-	if(text.Length > marker + lineLength + 1)
+	if(text.Length > marker + lineLength + 1 && !record)
 	{
 		text = Format(text,lineLength,marker);
 	}
@@ -311,4 +411,20 @@ function Clicked () {
 function UnClick() {
 	yield WaitForSeconds(3);
 	endCounter --;
+}
+
+class Line {
+	var dialogue:String;
+	var leftSprite:GameObject;
+	var rightSprite:GameObject;
+	var playerState:PlayerState;
+	var currentSpeaker:boolean;
+	var targetTime:float;
+	var leftMouth:MouthState[];
+	var rightMouth:MouthState[];
+}
+
+class MouthState {
+	var time:float;
+	var sprite:int;
 }

@@ -5,6 +5,7 @@ public enum Person{None,Peter,PeanutCEO};
 static var musicGetter:Component[];
 static var musicSpeaker:AudioSource[];
 static var effectSpeaker:AudioSource;
+static var musicPosition:float;
 
 static var musicVolume:float = 1;
 static var soundVolume:float = 1;
@@ -16,7 +17,7 @@ static var internalDeltaTime:float;
 static var humCharacter:Person;
 static var humming:boolean;
 
-function Start () {
+function Awake () {
 	humming = false;
 	humCharacter = Person.None;
 	musicGetter	= GetComponents(AudioSource);
@@ -58,6 +59,21 @@ function Update () {
 	else
 	{
 		effectSpeaker.volume = 0;
+	}
+}
+
+static function GetLocation ():float {
+	if(musicSpeaker[0].isPlaying)
+	{
+		return musicSpeaker[0].time;
+	}
+	else if(effectSpeaker.isPlaying)
+	{
+		return effectSpeaker.time;
+	}
+	else
+	{
+		return 0;	
 	}
 }
 

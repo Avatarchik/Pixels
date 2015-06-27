@@ -14,7 +14,6 @@ function Update () {
 }
 
 function Stuff () {
-	speaker.PlayOneShot(song);
 	yield WaitForSeconds(waitTime);
 	Instantiate(text);
 	yield;

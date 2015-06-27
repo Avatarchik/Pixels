@@ -4,6 +4,7 @@ var colorChange:boolean;
 var colorForChange:Color;
 
 @HideInInspector var importantFinger:int;
+@HideInInspector var importantLens:int;
 
 @HideInInspector var speed:int;
 @HideInInspector var difficulty:int;
@@ -26,6 +27,10 @@ var lenses:SpriteRenderer[];
 @HideInInspector var lensLocations:Vector3[];
 @HideInInspector var lensLocationsAvailable:boolean[];
 
+@HideInInspector var plugLocation:Vector3;
+
+@HideInInspector var reloading:boolean;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -33,6 +38,8 @@ function Start () {
 	// Level specific variable initialization.
 	gameProgress = 0;
 	lensChoices = new int[2];
+	importantLens = 0;
+	lensesPlugged = new boolean[lenses.length];
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -45,29 +52,31 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 3 + 5/speed;
+	length = 30 + 5/speed;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	reloading = false;
 	if(difficulty == 3)
 	{
 		lensLocations = new Vector3[4];
-		lensLocations[0] = Vector3(-8.28,.689,transform.position.z);
-		lensLocations[1] = Vector3(-5,-3.23,transform.position.z);
-		lensLocations[2] = Vector3(.5,-3.23,transform.position.z);
-		lensLocations[3] = Vector3(3.78,.689,transform.position.z);
+		lensLocations[0] = Vector3(-6.03,-1.561,transform.position.z);
+		lensLocations[1] = Vector3(-2.25,-5.48,transform.position.z);
+		lensLocations[2] = Vector3(2.25,-5.48,transform.position.z);
+		lensLocations[3] = Vector3(6.03,-1.561,transform.position.z);
 	}
 	else
 	{
 		lensLocations = new Vector3[3];
-		lensLocations[0] = Vector3(-7.6,-1.2,transform.position.z);
-		lensLocations[1] = Vector3(-2.25,-3.23,transform.position.z);
-		lensLocations[2] = Vector3(3.1,-1.2,transform.position.z);
+		lensLocations[0] = Vector3(-5.35,-3.45,transform.position.z);
+		lensLocations[1] = Vector3(0,-5.48,transform.position.z);
+		lensLocations[2] = Vector3(5.35,-3.45,transform.position.z);
 	}
 	lensLocationsAvailable = new boolean[lensLocations.length];
 	optionChoices = new int[lensLocations.length];
 	allowableHeader = new SpriteRenderer[3 + difficulty];
 	allowableLenses = new SpriteRenderer[3 + difficulty];
+	plugLocation = Vector3(0,0.85,transform.position.z);
 	for(var i:int = 0; i < 3 + difficulty;i++)
 	{
 		allowableHeader[i] = headers[i];
@@ -88,6 +97,7 @@ function Start () {
 function PickNewColors () {
 	for(var i:int = 0; i < lenses.length; i++)
 	{
+		lensesPlugged[i] = false;
 		lenses[i].color.a = 0;
 		lenses[i].transform.position.x = 1000;
 	}
@@ -110,6 +120,7 @@ function PickNewColors () {
 	}
 	var location1:int = Random.Range(0,lensLocations.length);
 	var location2:int = Random.Range(0,lensLocations.length);
+	var location3:int = -1;
 	hangPrevent = 0;
 	while(location2 == location1 && hangPrevent < 40)
 	{
@@ -127,7 +138,16 @@ function PickNewColors () {
 		{
 			for(var y:int = 0; y < allowableLenses.length; y++)
 			{
-				if(y != optionChoices[location1] && y != optionChoices[location2]) 
+				var doesContain:boolean = false;
+				for(var p:int = 0; p < optionChoices.length; p++)
+				{
+					if(optionChoices[p] == y)
+					{
+						doesContain = true;
+					}
+				}
+				//if(y != optionChoices[location1] && y != optionChoices[location2]) 
+				if(!doesContain)
 				{
 					optionChoices[i] = y;
 					lensLocationsAvailable[i] = false;
@@ -163,6 +183,7 @@ function PickNewColors () {
 }
 
 function Update () {
+	Debug.Log(gameProgress);
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
@@ -171,28 +192,91 @@ function Update () {
 	// Get important finger.
 	if(importantFinger == -1)
 	{
-		for(var i:int = 0; i < Finger.identity.length; i++)
+		for(var i:int = 0; i < allowableLenses.length; i++)
+		{
+			if(Vector3.Distance(allowableLenses[i].transform.position,plugLocation) < 2)
+			{
+				lensesPlugged[i] = true;
+				allowableLenses[i].transform.position = Vector3.MoveTowards(allowableLenses[i].transform.position,plugLocation,Time.deltaTime*5);
+			}
+			else
+			{
+				lensesPlugged[i] = false;
+			}
+		}
+		for(i = 0; i < Finger.identity.length; i++)
 		{
 			if(Finger.GetExists(i))
 			{
+				importantLens = 0;
 				importantFinger = i;
+				for(var y:int = 0; y < allowableLenses.length; y++)
+				{
+					if(Vector3.Distance(allowableLenses[y].transform.position,Finger.GetPosition(i)) < Vector3.Distance(allowableLenses[importantLens].transform.position,Finger.GetPosition(i)))
+					{
+						importantLens = y;
+					}
+				}
 			}
 		}
 	}
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
-		
+		if(Vector3.Distance(allowableLenses[importantLens].transform.position,Finger.GetPosition(importantFinger)) < 10)
+		{
+			lensesPlugged[importantLens] = false;
+			allowableLenses[importantLens].transform.position.x = Finger.GetPosition(importantFinger).x - 1;
+			allowableLenses[importantLens].transform.position.y = Finger.GetPosition(importantFinger).y + 1;
+		}
+		else
+		{
+			importantFinger = -1;	
+		}
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
 		importantFinger = -1;
 	}
+	
+	var successNumber:int = 0;
+	for(i = 0; i < allowableLenses.length; i++)
+	{
+		if(lensesPlugged[i])
+		{
+			
+			if(i == lensChoices[0] || i == lensChoices[1])
+			{
+				successNumber ++;
+			}
+			else
+			{
+				successNumber --;
+			}
+		}
+	}
+	
+	if(successNumber == 2 && !reloading)
+	{
+		reloading = true;
+		Reload(.2);
+		gameProgress ++;
+	}
 }
 
 function Play () {
-
 }
+
+function Reload (counter:float) {
+	while(counter > 0)
+	{
+		PickNewColors();
+		counter -= Time.deltaTime;
+		yield;
+	}
+	reloading = false;
+}
+
 
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)

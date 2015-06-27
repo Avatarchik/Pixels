@@ -62,11 +62,13 @@ function Update () {
 
 function Tutorial () {
 		currentText = Instantiate(showTheaterText);
-	while(!currentText.GetComponent(TextManager).finished) {yield;}
+		yield;
+		//yield WaitForSeconds(.1);
+	while(currentText != null) {yield;}
 		goal = -3;
 		while(transform.position.x != goal) {yield;}
 		LaunchText(showFactoryText);
-	while(!currentText.GetComponent(TextManager).finished) {yield;}
+	while(currentText != null) {yield;}
 		factory.transform.SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
 		startGames.Load();
 		PlayerPrefs.SetInt("TutorialFinished", 1);

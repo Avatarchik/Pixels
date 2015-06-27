@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Objects/ButtonSquare.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/TextManager.js">
     <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Objects/ButtonSquare.js" Line="78" Column="26" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/TextManager.js" Line="226" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

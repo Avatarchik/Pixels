@@ -31,7 +31,7 @@ function Start () {
 
 function Update () {
 	// Find important finger.
-	if(importantFinger == -1)
+	if(importantFinger == -1 && Application.loadedLevelName != "LyricsTest")
 	{
 		for(var i:int = 0; i < Finger.identity.length; i++)
 		{

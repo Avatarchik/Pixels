@@ -90,7 +90,7 @@ function Tutorial () {
 		{
 			AudioManager.PlaySoundTransition(songs[1]);
 		}
-	while(!currentText.GetComponent(TextManager).finished) {yield;}
+	//while(!currentText.GetComponent(TextManager).finished) {yield;}
 		currentButtonLocation = Vector2(-.25,-7.57);
 		button1.transform.position.z = shown;
 		finger.transform.position.y = -7.57;
@@ -112,7 +112,7 @@ function Tutorial () {
 			yield;
 		}
 		LaunchText(undressText);
-	while(!currentText.GetComponent(TextManager).finished) {yield;}
+	while(currentText != null) {yield;}
 		currentButtonLocation = Vector2(3.56,-1.9);
 		button2.transform.position.z = shown;
 		finger.transform.position.y = -3.325;
@@ -138,7 +138,7 @@ function Tutorial () {
 		customizeBottom.Clicked();
 		currentButtonLocation = Vector2(-100,-100);
 		LaunchText(redressText);
-	while(!currentText.GetComponent(TextManager).finished) {yield;}
+	while(currentText != null) {yield;}
 		currentButtonLocation = Vector2(3.56,-1.9);
 		button2.transform.position.z = shown;
 		finger.transform.position.y = -3.325;
@@ -170,7 +170,7 @@ function Tutorial () {
 			transform.position = Vector2.MoveTowards(transform.position, Vector2(0,0),Time.deltaTime*2);
 			yield;
 		}
-	while(!currentText.GetComponent(TextManager).finished) {yield;}
+	while(currentText != null) {yield;}
 		finger.transform.position.y = 100;
 		finger.transform.position.x = 100;
 		blocker.transform.position = Vector3(-23,12,-3.5);

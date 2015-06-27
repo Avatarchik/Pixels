@@ -102,7 +102,6 @@ function FixedUpdate () {
 			{
 				if(!inMinigame || (!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager)!=null && !GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused))
 				{
-					Debug.Log(Time.time);
 					gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 					gameObject.SendMessage("Unclicked", SendMessageOptions.DontRequireReceiver);
 				}

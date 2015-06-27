@@ -11,7 +11,6 @@ function Update () {
 	{
 		if(frontOfHousePlayer)
 		{
-			GetComponent(PlayerManager).speed = .2;
 			if(transform.localPosition.x != 52)
 			{
 				GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;
@@ -24,7 +23,6 @@ function Update () {
 		}
 		else
 		{
-			GetComponent(PlayerManager).speed = .2;
 			if(transform.localPosition.x != 3.579)
 			{
 				GetComponent(PlayerManager).currentState = PlayerState.WalkingLeft;
@@ -40,7 +38,6 @@ function Update () {
 	{
 		if(frontOfHousePlayer)
 		{
-			GetComponent(PlayerManager).speed = .2;
 			if(transform.localPosition.x != 37)
 			{
 				GetComponent(PlayerManager).currentState = PlayerState.WalkingLeft;
@@ -53,7 +50,6 @@ function Update () {
 		}
 		else
 		{
-			GetComponent(PlayerManager).speed = .2;
 			if(transform.localPosition.x != 13)
 			{
 				GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;

@@ -417,3 +417,7 @@ function Move() {
 		yield WaitForSeconds(waitTime);
 	}
 }
+
+function SetSongSprite(spriteNumber:int) {
+	step = spriteNumber+1;
+}
