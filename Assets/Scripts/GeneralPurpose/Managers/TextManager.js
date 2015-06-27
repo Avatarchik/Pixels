@@ -6,7 +6,7 @@ var lines:Line[];
 
 @HideInInspector var spriteObjects:GameObject[];
 @HideInInspector var endCounter:int;
-@HideInInspector var finished:boolean;
+var finished:boolean;
 var skipBox:Transform;
 
 @HideInInspector var lineLength:int;
@@ -154,7 +154,6 @@ function MouthShape(left:boolean) {
 		}
 		if(left && lines[currentLine].leftMouth.length > movementMarker)
 		{
-			Debug.Log("MMarker: " + movementMarker + "Length: " + lines[currentLine].leftMouth.length);
 			while(AudioManager.GetLocation() < lines[currentLine].leftMouth[movementMarker].time)
 			{
 				yield;

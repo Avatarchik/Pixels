@@ -199,28 +199,26 @@ function Initialize () {
 	{
 		UnlockAllOptions();
 	}
-	
-	for(var worldName:String in worldNames)
+	for(var i:int = 0; i < worlds.length; i++)
 	{
-	    ///////////////////////////////////////////////////////////////////// World unlock variables.
-		if(!PlayerPrefs.HasKey(worldName))
+		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar))
 		{
-			PlayerPrefs.SetInt(worldName, 0);
+			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar, 0);
 		}
 		///////////////////////////////////////////////////////////////////// World reward variables.
-		if(!PlayerPrefs.HasKey(worldName+"Unlocks"))
+		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+"Unlocks"))
 		{
-			PlayerPrefs.SetInt(worldName+"Unlocks", 0);
+			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+"Unlocks", 0);
 		}
 		///////////////////////////////////////////////////////////////////// World high score variables.
-		if(!PlayerPrefs.HasKey(worldName)+"HighScore")
+		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+"HighScore"))
 		{
-			PlayerPrefs.SetInt(worldName+"HighScore", 0);
+			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+"HighScore", 0);
 		}
 		///////////////////////////////////////////////////////////////////// World visit variables.
-		if(!PlayerPrefs.HasKey(worldName)+"PlayedOnce")
+		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+"PlayedOnce"))
 		{
-			PlayerPrefs.SetInt(worldName+"PlayedOnce", 0);
+			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+"PlayedOnce", 0);
 		}
 	}
 	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
@@ -420,6 +418,7 @@ class UnlockVariables {
 }
 
 class World {
+	var nameOfWorld:String;
 	var basic:BasicVariables;
 	var text:TextVariables;
 	var audio:AudioVariables;

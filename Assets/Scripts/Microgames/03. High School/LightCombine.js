@@ -15,6 +15,9 @@ var colorForChange:Color;
 var headers:SpriteRenderer[];
 var lenses:SpriteRenderer[];
 
+var arrows:SpriteRenderer;
+var arrowSprites:Sprite[];
+
 @HideInInspector var allowableHeader:SpriteRenderer[];
 @HideInInspector var allowableLenses:SpriteRenderer[];
 
@@ -30,6 +33,8 @@ var lenses:SpriteRenderer[];
 @HideInInspector var plugLocation:Vector3;
 
 @HideInInspector var reloading:boolean;
+
+@HideInInspector var numberToBeat:int;
 
 function Start () {
 	// Basic world variable initialization.
@@ -52,7 +57,12 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 30 + 5/speed;
+	var lengthModifier:float = .5 * speed;
+	if(lengthModifier > 2)
+	{
+		lengthModifier = 2 + .1 * speed;
+	}
+	length = 3 * (5-lengthModifier);
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
@@ -60,28 +70,29 @@ function Start () {
 	if(difficulty == 3)
 	{
 		lensLocations = new Vector3[4];
-		lensLocations[0] = Vector3(-6.03,-1.561,transform.position.z);
-		lensLocations[1] = Vector3(-2.25,-5.48,transform.position.z);
-		lensLocations[2] = Vector3(2.25,-5.48,transform.position.z);
-		lensLocations[3] = Vector3(6.03,-1.561,transform.position.z);
+		lensLocations[0] = Vector3(-6.03,-1.561,transform.position.z-1);
+		lensLocations[1] = Vector3(-2.25,-5.48,transform.position.z-1);
+		lensLocations[2] = Vector3(2.25,-5.48,transform.position.z-1);
+		lensLocations[3] = Vector3(6.03,-1.561,transform.position.z-1);
 	}
 	else
 	{
 		lensLocations = new Vector3[3];
-		lensLocations[0] = Vector3(-5.35,-3.45,transform.position.z);
-		lensLocations[1] = Vector3(0,-5.48,transform.position.z);
-		lensLocations[2] = Vector3(5.35,-3.45,transform.position.z);
+		lensLocations[0] = Vector3(-5.35,-3.45,transform.position.z-1);
+		lensLocations[1] = Vector3(0,-5.48,transform.position.z-1);
+		lensLocations[2] = Vector3(5.35,-3.45,transform.position.z-1);
 	}
 	lensLocationsAvailable = new boolean[lensLocations.length];
 	optionChoices = new int[lensLocations.length];
 	allowableHeader = new SpriteRenderer[3 + difficulty];
 	allowableLenses = new SpriteRenderer[3 + difficulty];
-	plugLocation = Vector3(0,0.85,transform.position.z);
+	plugLocation = Vector3(0,0.85,transform.position.z-1);
 	for(var i:int = 0; i < 3 + difficulty;i++)
 	{
 		allowableHeader[i] = headers[i];
 		allowableLenses[i] = lenses[i];
 	}
+	numberToBeat = 3;
 	
 	PickNewColors();
 	
@@ -183,7 +194,6 @@ function PickNewColors () {
 }
 
 function Update () {
-	Debug.Log(gameProgress);
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
@@ -255,12 +265,20 @@ function Update () {
 			}
 		}
 	}
-	
+	if(successNumber < 0)
+	{
+		successNumber = 0;
+	}
+	arrows.sprite = arrowSprites[successNumber];
 	if(successNumber == 2 && !reloading)
 	{
 		reloading = true;
-		Reload(.2);
+		Reload(.3);
 		gameProgress ++;
+	}
+	if(gameProgress > numberToBeat)
+	{
+		Finish(true,.3);
 	}
 }
 

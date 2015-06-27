@@ -230,7 +230,7 @@ function RunVideo (text:GameObject,song:AudioClip) {
 	videoPlaying = true;
 	loadedText = Instantiate(text);
 	AudioManager.StopAll();
-	AudioManager.PlaySound(song);
+//	AudioManager.PlaySound(song);
 	while(loadedText != null)
 	{
 		blackout.color.a = Mathf.MoveTowards(blackout.color.a,.75,Time.deltaTime);

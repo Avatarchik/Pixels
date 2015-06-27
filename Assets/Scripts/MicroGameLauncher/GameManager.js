@@ -131,12 +131,12 @@ function BeforeGames () {
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
 	{
-		AudioManager.PlaySong(Master.currentWorld.text.firstOpeningSong);
+		//AudioManager.PlaySong(Master.currentWorld.text.firstOpeningSong);
 		loadedText = Instantiate(Master.currentWorld.text.firstOpening);
 	}
 	else
 	{
-		AudioManager.PlaySong(Master.currentWorld.text.regularOpeningSong);
+		//AudioManager.PlaySong(Master.currentWorld.text.regularOpeningSong);
 		loadedText = Instantiate(Master.currentWorld.text.regularOpening);
 	}
 	// Wait for the text to finish.
@@ -207,31 +207,25 @@ function GameOver () {
 	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber >= Master.unlockLevels[1])
 	{
 		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Beaten",1);
-		AudioManager.PlaySound(Master.currentWorld.text.beatEndSong);
 		loadedText = Instantiate(Master.currentWorld.text.beatEnd);
 	}
 	else if(gameNumber >= Master.unlockLevels[3])
 	{
-		AudioManager.PlaySound(Master.currentWorld.text.end4Song);
 		loadedText = Instantiate(Master.currentWorld.text.end4);
 	}
 	else if(gameNumber >= Master.unlockLevels[2])
 	{
-		AudioManager.PlaySound(Master.currentWorld.text.end3Song);
 		loadedText = Instantiate(Master.currentWorld.text.end3);
 	}
 	else if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber >= Master.unlockLevels[1])
 	{
-		AudioManager.PlaySound(Master.currentWorld.text.end2Song);
 		loadedText = Instantiate(Master.currentWorld.text.end2);
 	}
 	else
 	{
-		AudioManager.PlaySound(Master.currentWorld.text.end1Song);
 		loadedText = Instantiate(Master.currentWorld.text.end1);
 	}
 	yield WaitForSeconds(.2);
-	AudioManager.StopSong();
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
 	AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
 	Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
