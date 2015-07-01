@@ -18,6 +18,9 @@ var lenses:SpriteRenderer[];
 var arrows:SpriteRenderer;
 var arrowSprites:Sprite[];
 
+var completeness:SpriteRenderer;
+var completenessSprites:Sprite[];
+
 @HideInInspector var allowableHeader:SpriteRenderer[];
 @HideInInspector var allowableLenses:SpriteRenderer[];
 
@@ -106,6 +109,7 @@ function Start () {
 }
 
 function PickNewColors () {
+	completeness.sprite = completenessSprites[gameProgress];
 	for(var i:int = 0; i < lenses.length; i++)
 	{
 		lensesPlugged[i] = false;
@@ -197,7 +201,7 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(true,0);
+		Finish(false,0);
 	}
 	// Get important finger.
 	if(importantFinger == -1)
@@ -275,10 +279,18 @@ function Update () {
 		reloading = true;
 		Reload(.3);
 		gameProgress ++;
+		if(gameProgress >= numberToBeat)
+		{
+			Reload(2);
+		}
+		else
+		{
+			Reload(.3);
+		}
 	}
-	if(gameProgress > numberToBeat)
+	if(gameProgress >= numberToBeat)
 	{
-		Finish(true,.3);
+		Finish(true,1);
 	}
 }
 

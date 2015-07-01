@@ -37,6 +37,7 @@ var player:GameObject;
 @HideInInspector var gameSpeed:float;
 @HideInInspector var waitTime:float;
 @HideInInspector var jumpCounter:float;
+@HideInInspector var clicked:boolean;
 
 function Start () {
 	// Basic world variable initialization.
@@ -52,6 +53,7 @@ function Start () {
 	playerOrigin = player.transform.position.y;
 	playerDistance = 2.5;
 	dead = false;
+	clicked = false;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -122,6 +124,7 @@ function Update () {
 	// Get important finger.
 	if(importantFinger == -1)
 	{
+		clicked = false;
 		for(var i:int = 0; i < Finger.identity.length; i++)
 		{
 			if(Finger.GetExists(i))
@@ -131,9 +134,14 @@ function Update () {
 		}
 	}
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && !Master.paused)
+	if(Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger) && !Master.paused)
 	{
-		
+		if(Mathf.Abs(jumpCounter-Mathf.PI) < .1)
+		{
+			jumpCounter = 0;
+			//Clicked();
+		}
+		clicked = true;
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{

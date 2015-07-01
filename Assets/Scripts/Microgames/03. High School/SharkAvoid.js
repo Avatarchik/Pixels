@@ -20,11 +20,13 @@ var colorForChange:Color;
 @HideInInspector var sharkLimit:float;
 @HideInInspector var sharkExists:boolean;
 @HideInInspector var defaultSharkSpeed:float;
+@HideInInspector var deathDistance:float;
 
 @HideInInspector var choices:int[];
 
 @HideInInspector var playerDest:float;
 @HideInInspector var playerStart:float;
+@HideInInspector var clicked:boolean;
 
 var sharkPrefab:GameObject;
 var rockPrefab:GameObject;
@@ -41,6 +43,11 @@ function Start () {
 	sharkLimit = 7.5;
 	sharkExists = false;
 	choices = new int[heights.length];
+	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingBack;
+	clicked = false;
+	playerStart = -7.5;
+	playerDest = playerStart;
+	deathDistance = 1.2;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -53,11 +60,11 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 3 + 5/speed;
+	length = (3.6) - (speed * .3) + (difficulty * 1.5);
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
-	defaultSharkSpeed = 8 + speed * 3;
+	defaultSharkSpeed = 9 + speed * 2;
 	
 	for(var i:int = 0; i < heights.length; i++)
 	{
@@ -71,21 +78,30 @@ function Start () {
 		}
 		else if(randomNumber > 0)
 		{
-			var tempArray:GameObject[];
-			tempArray = new GameObject[sharks.length];
-			for(var y:int = 0; y < sharks.length; y++)
+			if(i == 2 && choices[i-1] == 1)
 			{
-				tempArray[y] = sharks[y];
+				Instantiate(rockPrefab,Vector3(Random.Range(leftSide*.8,leftSide*1.2),heights[i],transform.position.z-1),Quaternion.identity).transform.parent = transform;
+				Instantiate(rockPrefab,Vector3(Random.Range(rightSide*.8,rightSide*1.2),heights[i],transform.position.z-1),Quaternion.identity).transform.parent = transform;
+				choices[i] = 0;
 			}
-			sharks = new GameObject[sharks.length+1];
-			for(y = 0; y < tempArray.length; y++)
+			else
 			{
-				sharks[y] = tempArray[y];
+				var tempArray:GameObject[];
+				tempArray = new GameObject[sharks.length];
+				for(var y:int = 0; y < sharks.length; y++)
+				{
+					tempArray[y] = sharks[y];
+				}
+				sharks = new GameObject[sharks.length+1];
+				for(y = 0; y < tempArray.length; y++)
+				{
+					sharks[y] = tempArray[y];
+				}
+				sharks[sharks.length-1] = Instantiate(sharkPrefab,Vector3(Random.Range(-sharkLimit,sharkLimit),heights[i],transform.position.z-1),Quaternion.identity);
+				sharks[sharks.length-1].transform.parent = transform;
+				sharkExists = true;
+				choices[i] = 1;
 			}
-			sharks[sharks.length-1] = Instantiate(sharkPrefab,Vector3(Random.Range(-sharkLimit,sharkLimit),heights[i],transform.position.x-1),Quaternion.identity);
-			sharks[sharks.length-1].transform.parent = transform;
-			sharkExists = true;
-			choices[i] = 1;
 		}
 		else
 		{
@@ -97,7 +113,7 @@ function Start () {
 	speeds = new float[sharks.length];
 	for(i=0;i<speeds.length;i++)
 	{
-		speeds[i] = Random.Range(defaultSharkSpeed*.7,defaultSharkSpeed*1.3);
+		speeds[i] = Random.Range(defaultSharkSpeed*.7,defaultSharkSpeed*1.15);
 	}
 	
 	// If the color of the UI should change.
@@ -118,6 +134,7 @@ function Update () {
 	// Get important finger.
 	if(importantFinger == -1)
 	{
+		clicked = false;
 		for(var i:int = 0; i < Finger.identity.length; i++)
 		{
 			if(Finger.GetExists(i))
@@ -127,9 +144,13 @@ function Update () {
 		}
 	}
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && !Master.paused)
+	if(Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger) && !Master.paused)
 	{
-		
+		if(!clicked)
+		{
+			Clicked();
+			clicked = true;
+		}
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
@@ -151,8 +172,35 @@ function Update () {
 			sharks[spot].transform.localScale.x = 1;
 		}
 		sharks[spot].transform.position.x += speeds[spot] * Time.deltaTime;
+		if(Vector3.Distance(sharks[spot].transform.position,player.transform.position) < deathDistance)
+		{
+			player.transform.parent = sharks[spot].transform;
+			Finish(false,0);
+		}
+	}
+	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingBack;
+	
+	if(Input.GetKeyDown("space"))
+	{
+		Clicked();
+	}
+	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingBack;
+	if(!finished)
+	{
+		playerDest = Mathf.MoveTowards(playerDest,playerStart,Time.deltaTime * (1 + .1 * speed));
+		player.transform.position.y = Mathf.MoveTowards(player.transform.position.y,playerDest,Time.deltaTime* (10 +speed * 2));
+	}
+	
+	if(player.transform.position.y > 8)
+	{
+		player.transform.position.y = Mathf.MoveTowards(player.transform.position.y,20,Time.deltaTime* (10 +speed * 2));
+		Finish(true,0);
 	}
 }
+
+function Clicked() {
+	playerDest += 1;
+}	
 
 function Play () {
 
@@ -161,6 +209,7 @@ function Play () {
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
+		Debug.Log(completionStatus);
 		finished = true;
 		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);

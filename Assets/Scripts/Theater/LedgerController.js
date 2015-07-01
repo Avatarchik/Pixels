@@ -189,10 +189,10 @@ function VideoButtonPress (which:String) {
 		switch (which)
 		{
 			case "Opening":
-				RunVideo(world.text.firstOpening,world.text.firstOpeningSong);
+				RunVideo(world.text.firstOpening);
 				break;
 			case "Reprise":
-				RunVideo(world.text.regularOpening,world.text.regularOpeningSong);
+				RunVideo(world.text.regularOpening);
 				break;
 			case "Entracte":
 				if(songPlaying)
@@ -207,30 +207,29 @@ function VideoButtonPress (which:String) {
 				}
 				break;
 			case "Fin":
-				RunVideo(world.text.beatEnd,world.text.beatEndSong);
+				RunVideo(world.text.beatEnd);
 				break;
 			case "1":
-				RunVideo(world.text.end1,world.text.end1Song);
+				RunVideo(world.text.end1);
 				break;
 			case "2":
-				RunVideo(world.text.end2,world.text.end2Song);
+				RunVideo(world.text.end2);
 				break;
 			case "3":
-				RunVideo(world.text.end3,world.text.end3Song);
+				RunVideo(world.text.end3);
 				break;
 			case "4":
-				RunVideo(world.text.end4,world.text.end4Song);
+				RunVideo(world.text.end4);
 				break;
 		}
 	}
 }
 
-function RunVideo (text:GameObject,song:AudioClip) {
+function RunVideo (text:GameObject) {
 	songPlaying = false;
 	videoPlaying = true;
 	loadedText = Instantiate(text);
 	AudioManager.StopAll();
-//	AudioManager.PlaySound(song);
 	while(loadedText != null)
 	{
 		blackout.color.a = Mathf.MoveTowards(blackout.color.a,.75,Time.deltaTime);

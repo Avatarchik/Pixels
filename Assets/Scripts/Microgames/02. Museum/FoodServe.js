@@ -144,7 +144,7 @@ function Update () {
 			}
 		}
 	}
-	if(importantFinger != i && Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger))
+	if(importantFinger != i && Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger) && !Master.paused)
 	{
 		
 		var nearestNum:float = 1000;

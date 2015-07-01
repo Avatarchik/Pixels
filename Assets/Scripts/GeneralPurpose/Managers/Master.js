@@ -388,14 +388,6 @@ class TextVariables {
 	var end3:GameObject;
 	var end4:GameObject;
 	var beatEnd:GameObject;
-
-	var firstOpeningSong:AudioClip;
-	var regularOpeningSong:AudioClip;
-	var end1Song:AudioClip;
-	var end2Song:AudioClip;
-	var end3Song:AudioClip;
-	var end4Song:AudioClip;
-	var beatEndSong:AudioClip;
 }
 
 class AudioVariables {
