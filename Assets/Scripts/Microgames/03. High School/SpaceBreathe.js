@@ -124,7 +124,7 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(true,0);
+		Finish(false,0);
 	}
 	// Get important finger.
 	if(importantFinger == -1)

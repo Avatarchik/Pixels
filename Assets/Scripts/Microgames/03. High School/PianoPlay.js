@@ -18,6 +18,14 @@ var lights:GameObject[];
 var keyUpSprites:Sprite[];
 var keyDownSprites:Sprite[];
 
+var page1Sprites:Sprite[];
+var page2Sprites:Sprite[];
+var page3Sprites:Sprite[];
+
+var page1:SpriteRenderer;
+var page2:SpriteRenderer;
+var page3:SpriteRenderer;
+
 var keyNotes:AudioClip[];
 
 var correctKeyTimer:float;
@@ -58,7 +66,13 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 30 + 5/speed;
+	var noteLength:float;
+	noteLength = 2;
+	for(var x:int = 0; x < speed; x++)
+	{
+		noteLength = Mathf.MoveTowards(noteLength,1,.3);
+	}
+	length = noteLength  * 5;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
@@ -98,12 +112,21 @@ function Update () {
 	correctKeyTimer -= Time.deltaTime;
 	if(gameProgress < notes.length)
 	{
+		page1.sprite = page1Sprites[gameProgress];
+		page2.sprite = page2Sprites[gameProgress];
+		page3.sprite = page3Sprites[gameProgress];
 		desiredKey = notes[gameProgress];
+	}
+	else
+	{
+		page1.sprite = page1Sprites[notes.length];
+		page2.sprite = page2Sprites[notes.length];
+		page3.sprite = page3Sprites[notes.length];
 	}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(true,0);
+		Finish(false,0);
 	}
 	// Get important finger.
 	if(importantFinger == -1)
@@ -171,11 +194,11 @@ function Update () {
 				contains = true;
 			}
 		}
-		if(contains)
+		if(contains && gameProgress < notes.length)
 		{
 			if(keys[key].GetComponent(SpriteRenderer).sprite != keyDownSprites[key])
 			{
-				AudioManager.PlaySound(keyNotes[key]);
+				AudioManager.PlaySound(keyNotes[key],.3);
 				keys[key].GetComponent(SpriteRenderer).sprite = keyDownSprites[key];
 			}
 			var isGood:boolean = false;
