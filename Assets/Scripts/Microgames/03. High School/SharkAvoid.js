@@ -129,7 +129,14 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(false,0);
+		if(player.transform.position.y < 7.5)
+		{
+			Finish(false,0);
+		}
+		else
+		{
+			Finish(true,0);
+		}
 	}
 	// Get important finger.
 	if(importantFinger == -1)

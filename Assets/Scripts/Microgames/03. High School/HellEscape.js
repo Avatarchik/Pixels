@@ -11,11 +11,28 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var demonArms:SpriteRenderer[];
+var demonSprites:Sprite[];
+var demonAltSprites:Sprite[];
+
+var lasers:SpriteRenderer[];
+@HideInInspector var currentSprites:Sprite[];
+@HideInInspector var demonArmSpeed:float[];
+@HideInInspector var demonArmProgress:float[];
+@HideInInspector var touchDistance:float;
+
+@HideInInspector var clicked:boolean;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	demonArmProgress = new float[demonArms.length];
+	demonArmSpeed = new float[demonArms.length];
+	currentSprites = demonSprites;
+	clicked = false;
+	touchDistance = 2;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -25,10 +42,10 @@ function Start () {
 	}
 	else
 	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
+		speed = GameManager.bossDifficulty;
+		difficulty = GameManager.bossDifficulty;
 	}
-	length = 3 + 5/speed;
+	length = 8;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
@@ -38,7 +55,11 @@ function Start () {
 		StartCoroutine(ColorChange());
 	}
 	// If The game doesn't just run in Update.
-	Play();
+	for(var i:int = 0; i < demonArms.length; i++)
+	{
+		Play(demonArms[i],i);
+		Sprites();
+	}
 }
 
 function Update () {
@@ -65,17 +86,60 @@ function Update () {
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
+		clicked = false;
 		importantFinger = -1;
 	}
 }
 
-function Play () {
+function Play (arm:SpriteRenderer,number:int) {
+	demonArmProgress[number] = 0;
+	demonArmSpeed[number] = Random.Range(.7,1.2) + Random.Range(.2,1.6) * speed;
+	while(true && !finished)
+	{
+		if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && Mathf.Abs(Finger.GetPosition(importantFinger).x-arm.transform.position.x) < touchDistance)
+		{
+			clicked = true;
+			if(demonArmProgress[number] > 3)
+			{
+				LaserFire(number);
+				demonArmProgress[number] = 0;
+				demonArmSpeed[number] = Random.Range(.7,1.2	) + Random.Range(.2,1.6) * speed;
+			}
+		}
+		demonArmProgress[number] = Mathf.MoveTowards(demonArmProgress[number], 8,Time.deltaTime * demonArmSpeed[number]);
+		arm.sprite = currentSprites[Mathf.Min(Mathf.Floor(demonArmProgress[number]),5.5)];
+		if(demonArmProgress[number] > 7)
+		{
+			Finish(false,.5);
+		}
+		yield;
+	}
+}
 
+function LaserFire (which:int) {
+	lasers[which].enabled = true;
+	yield WaitForSeconds(.5);
+	lasers[which].enabled = false;
+}
+
+function Sprites () {
+	while(true)
+	{
+		currentSprites = demonSprites;
+		yield WaitForSeconds(.3);
+		currentSprites = demonAltSprites;
+		yield WaitForSeconds(.1);
+		yield;
+	}
 }
 
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
+		if(!completionStatus)
+		{
+			Redness();
+		}
 		finished = true;
 		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
@@ -83,6 +147,14 @@ function Finish(completionStatus:boolean,waitTime:float) {
 		{
 			GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
 		}
+	}
+}
+
+function Redness () {
+	while(true)
+	{
+		GetComponent(SpriteRenderer).color = Color.Lerp(GetComponent(SpriteRenderer).color,Color.red,Time.deltaTime);
+		yield;
 	}
 }
 

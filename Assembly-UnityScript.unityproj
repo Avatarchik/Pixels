@@ -80,6 +80,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Flicker.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\HighlightGlow.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\SkipCounterIncrease.js" />

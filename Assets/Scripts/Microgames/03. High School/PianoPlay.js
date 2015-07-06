@@ -168,7 +168,7 @@ function Update () {
 				}
 				if(oneOfGoals)
 				{
-					distanceToKey = Mathf.MoveTowards(distanceToKey,0,1);
+					distanceToKey = Mathf.MoveTowards(distanceToKey,0,1.6);
 				}
 				if(Finger.GetInGame(finger) && (nearestKey == -1 || distanceToKey < Vector2.Distance(Finger.GetPosition(finger),keys[nearestKey].transform.position)))
 				{

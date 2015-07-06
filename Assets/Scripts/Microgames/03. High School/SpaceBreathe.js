@@ -170,7 +170,7 @@ function Success() {
 	while(spaceman[currentSpaceman-1].transform.position.x != 8 && !finished)
 	{
 		spaceman[currentSpaceman-1].transform.position.y = Mathf.Cos(spaceman[currentSpaceman-1].transform.position.x / 4);
-		spaceman[currentSpaceman-1].transform.position.x = Mathf.MoveTowards(spaceman[currentSpaceman-1].transform.position.x,8,Time.deltaTime*spacemanSpeed * 1.3);
+		spaceman[currentSpaceman-1].transform.position.x = Mathf.MoveTowards(spaceman[currentSpaceman-1].transform.position.x,8,Time.deltaTime*spacemanSpeed * 2);
 		yield;
 	}
 	if(currentSpaceman == 3)
@@ -186,7 +186,7 @@ function Failure() {
 	while(spaceman[currentSpaceman].transform.position.x != -2 && !finished)
 	{
 		spaceman[currentSpaceman].transform.position.y = Mathf.Cos(spaceman[currentSpaceman].transform.position.x / 6);
-		spaceman[currentSpaceman].transform.position.x = Mathf.MoveTowards(spaceman[currentSpaceman].transform.position.x,-2,Time.deltaTime*spacemanSpeed * 1.3);
+		spaceman[currentSpaceman].transform.position.x = Mathf.MoveTowards(spaceman[currentSpaceman].transform.position.x,-2,Time.deltaTime*spacemanSpeed * 2);
 		yield;
 	}
 	particleThing[currentSpaceman].emissionRate = 0;
