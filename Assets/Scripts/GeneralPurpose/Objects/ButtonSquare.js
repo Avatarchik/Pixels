@@ -70,12 +70,10 @@ function FixedUpdate () {
 		{
 			if(!inMinigame)
 			{
-				Debug.Log(Time.time);
 				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 			}
 			if(inMinigame && inMinigameContinuousOverride)
 			{
-				Debug.Log(Time.time);
 				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 			}
 		}

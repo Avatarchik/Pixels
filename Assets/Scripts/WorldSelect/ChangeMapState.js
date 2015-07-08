@@ -41,7 +41,7 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
-			if(PlayerPrefs.GetInt(worldNameVar) == 1 && WorldMapManager.allowClick && WorldMapManager.currentState != MapStatus.Results)
+			if(PlayerPrefs.GetInt(worldNameVar) == 1 && WorldMapManager.allowClick)
 			{
 				controller = Camera.main.GetComponent(Master);
 				controller.currentWorld.basic.world = thisWorld;

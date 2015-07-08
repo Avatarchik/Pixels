@@ -44,6 +44,7 @@ function Start () {
 	
 	if(song!=null)
 	{
+		AudioManager.Loop(false);
 		AudioManager.PlaySong(song);
 	}
 	
@@ -65,6 +66,7 @@ function Start () {
 	}
 	else
 	{
+		AudioManager.Loop(false);
 		Destroy(gameObject);
 	}
 	if(record)

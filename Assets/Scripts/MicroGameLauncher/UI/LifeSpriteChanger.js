@@ -21,7 +21,7 @@ function Start () {
 function LifeChange (lives:int) {
 	if(sprites)
 	{
-		gameObject.GetComponent(SpriteRenderer).sprite = sprite[lives];
+		gameObject.GetComponent(SpriteRenderer).sprite = sprite[Mathf.Max(lives,0)];
 	}
 	if(words)
 	{

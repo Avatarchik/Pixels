@@ -145,27 +145,33 @@ function UpdateDisplay(worldName:String){
 	EnableButton(encore4Button,encore4ButtonOriginalSprite);
 	if(PlayerPrefs.GetInt(worldName+"PlayedOnce") != 1)
 	{
-		DisableButton(openingButton);
 		DisableButton(entracteButton);
+	}
+	if(PlayerPrefs.GetInt(worldName+"FirstOpeningPlayed") < 1)
+	{
+		DisableButton(openingButton);
+	}
+	if(PlayerPrefs.GetInt(worldName+"RegularOpeningPlayed") < 1)
+	{
 		DisableButton(repriseButton);
 	}
-	if(PlayerPrefs.GetInt(worldName+"HighScore") < 1)
-	{
-		DisableButton(encore1Button);
-	}
-	if(PlayerPrefs.GetInt(worldName+"Beaten") < 1)
+	if(PlayerPrefs.GetInt(worldName+"BeatEndPlayed") < 1)
 	{
 		DisableButton(act2Button);
 	}
-	if(PlayerPrefs.GetInt(worldName+"Unlocks") < 1)
+	if(PlayerPrefs.GetInt(worldName+"End1Played") < 1)
+	{
+		DisableButton(encore1Button);
+	}
+	if(PlayerPrefs.GetInt(worldName+"End2Played") < 1)
 	{	
 		DisableButton(encore2Button);
 	}
-	if(PlayerPrefs.GetInt(worldName+"Unlocks") < 2)
+	if(PlayerPrefs.GetInt(worldName+"End3Played") < 2)
 	{
 		DisableButton(encore3Button);
 	}
-	if(PlayerPrefs.GetInt(worldName+"Unlocks") < 3)
+	if(PlayerPrefs.GetInt(worldName+"End4Played") < 3)
 	{
 		DisableButton(encore4Button);
 	}

@@ -50,23 +50,7 @@ function MenuEffect(clicked:String) {
 	{
 		// From initial menu.
 		case "Continue":
-			if(Application.loadedLevelName == "MicroTester")
-			{
-				GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).fade.material.color.a = 0;
-				GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).paused = false;
-				GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).LaunchLevel(.3);
-			}
-			else if(Application.loadedLevelName == "MicroGameLauncher")
-			{
-				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).fade.material.color.a = 0;
-				GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused = false;
-				Time.timeScale = 1;
-				//GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).LaunchLevel(.3);
-			}
-			else if(Application.loadedLevelName == "WorldSelect")
-			{
-				WorldMapManager.currentState = MapStatus.Clear;
-			}
+			Continue();
 			Exit();
 			break;
 		case "Options":
@@ -210,7 +194,35 @@ function Exit () {
 	yield;
 }
 
+function Continue () {
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).fade.material.color.a = 0;
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).paused = false;
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).LaunchLevel(.3);
+	}
+	else if(Application.loadedLevelName == "MicroGameLauncher")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).fade.material.color.a = 0;
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused = false;
+		Time.timeScale = 1;
+		//GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).LaunchLevel(.3);
+	}
+	else if(Application.loadedLevelName == "WorldSelect")
+	{
+		WorldMapManager.currentState = MapStatus.Clear;
+	}
+}
+
 function ReturnToTitle() {
+	if(Application.loadedLevelName == "MicroGameLauncher")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).Quit();
+		Exit();
+		Continue();
+	}
+	else
+	{
 		WorldMapManager.currentState = MapStatus.Returning;
 		//Camera.main.GetComponent(Master).currentWorld.basic.colors = transitionColors;
 		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
@@ -234,4 +246,5 @@ function ReturnToTitle() {
 		{
 			Application.LoadLevel("WorldSelect");
 		}
+	}
 }

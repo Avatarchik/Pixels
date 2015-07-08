@@ -10,7 +10,6 @@ static var lives:int;
 static var paused:boolean;
 
 static var lastScore:int;
-static var needToNotify:boolean;
 
 static var unlockLevels:float[];
 
@@ -28,6 +27,7 @@ var skipOpening:boolean;
 var eraseOnLoad:boolean;
 var demoMode:boolean;
 var demoTime:float;
+var varNames:String[];
 static var counter:float;
 static var demo:boolean;
 static var unlockAll:boolean;
@@ -44,12 +44,10 @@ function Awake () {
 	// Sets initial variables for worlds.
 	unlockLevels = new float[6];
 	currentWorld = worlds[0];
-	//currentWorld.basic.colors = [Color(.6,.8,1,1),Color(0,.5,1,1)];
 	lives = 3;
 	paused = false;
 	initialWorldSpeed = 1;
 	speedIncrease = 1;
-	needToNotify = false;
 	initialLoad = true;
 	
 	// Set iOS device settings, including framerate and permitted orientations, and find Top and Bottom objects.
@@ -205,20 +203,12 @@ function Initialize () {
 		{
 			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar, 0);
 		}
-		///////////////////////////////////////////////////////////////////// World reward variables.
-		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+"Unlocks"))
+		for(var varName:int = 0; varName < varNames.length; varName++)
 		{
-			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+"Unlocks", 0);
-		}
-		///////////////////////////////////////////////////////////////////// World high score variables.
-		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+"HighScore"))
-		{
-			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+"HighScore", 0);
-		}
-		///////////////////////////////////////////////////////////////////// World visit variables.
-		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+"PlayedOnce"))
-		{
-			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+"PlayedOnce", 0);
+			if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+varNames[varName]))
+			{
+				PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+varNames[varName], 0);
+			}
 		}
 	}
 	PlayerPrefs.SetInt("PackingPeanutFactory", 1);

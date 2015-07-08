@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\SpriteRotate.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Player\CreatePlayer.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Flicker.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
@@ -87,6 +88,8 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\TimeScaleChange.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\MicroGameManager.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\ResultsClick.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\ResultsScreen.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\BinaryCover.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Controls.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\DarknessChange.js" />
@@ -172,7 +175,6 @@
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
      <Compile Include="Assets\Scripts\WorldSelect\MoveIcons.js" />
-     <Compile Include="Assets\Scripts\WorldSelect\ResultsScreen.js" />
      <Compile Include="Assets\Scripts\WorldSelect\SmokeStack.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Wind.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />

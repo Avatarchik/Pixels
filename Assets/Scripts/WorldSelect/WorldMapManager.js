@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Results};
+public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning};
 
 static var currentState:MapStatus;
 static var mapMove:boolean;
@@ -27,10 +27,6 @@ static var selectedLocation:float;
 // Banner
 var banner:GameObject;
 @HideInInspector var bannerText:TextMesh;
-
-// Results
-var results:GameObject;
-@HideInInspector var currentResults:GameObject;
 
 // Menu
 private var fade:Renderer;
@@ -61,15 +57,7 @@ function Start () {
 	hideNot = Vector3(0,30,-1);
 	leftCameraLimit = -95;
 	rightCameraLimit = 28;
-	if(Master.needToNotify)
-	{
-		currentState = MapStatus.Results;
-		Master.needToNotify = false;
-	}
-	else
-	{
-		currentState = MapStatus.Clear;
-	}
+	currentState = MapStatus.Clear;
 	importantFinger = -1;
 	mapMove = false;
 	if(mapMoveSpeed == 0 || mapMoveSpeed == null)
@@ -85,17 +73,6 @@ function Update () {
 		case MapStatus.Clear:
 			hideTicket();
 			fade.material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
-			if(currentResults!=null)
-			{
-				if(currentResults.transform.position.y != 30)
-				{
-					currentResults.transform.position.y = Mathf.MoveTowards(currentResults.transform.position.y,30, Time.deltaTime*30);
-				}
-				else
-				{
-					Destroy(currentResults);
-				}
-			}
 			// Get Finger
 			if(importantFinger == -1)
 			{
@@ -162,14 +139,6 @@ function Update () {
 			break;
 		case MapStatus.Returning:
 			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
-			break;
-		case MapStatus.Results:
-			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, .4, Time.deltaTime);
-			if(currentResults == null)
-			{
-				currentResults = Instantiate(results);
-			} 
-			currentResults.transform.position.y = Mathf.Lerp(currentResults.transform.position.y,showNot.y, Time.deltaTime * 5);
 			break;
 		default:
 			break;

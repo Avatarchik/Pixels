@@ -105,6 +105,13 @@ static function PlaySongIntro (intro:AudioClip, song:AudioClip, pause:float) {
 	humming = true;
 }
 
+static function Loop (yes:boolean) {
+	for(var i:int = 0; i < musicSpeaker.length; i++)
+	{
+		musicSpeaker[i].loop = yes;
+	}
+}
+
 static function PlaySongIntro (intro:AudioClip, song:AudioClip[], pause:float) {
 	StopSong();
 	if(intro != null)

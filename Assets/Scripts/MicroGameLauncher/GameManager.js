@@ -1,18 +1,19 @@
 ﻿#pragma strict
 
 // Variable Types
-
 var transition:GameObject;
 var notification:GameObject;
+var results:GameObject;
+@HideInInspector var currentResults:GameObject;
 private var curNotify:GameObject;
 @HideInInspector var notified:boolean;
 @HideInInspector var notificationText:String;
 
 // Controls time between games
-private var timeBeforeSuccessNotification:float;
-private var timeBeforeSpeedChange:float;
-private var timeIfSpeedChange:float;
-private var timeBeforeLevelLoad:float;
+@HideInInspector var timeBeforeSuccessNotification:float;
+@HideInInspector var timeBeforeSpeedChange:float;
+@HideInInspector var timeIfSpeedChange:float;
+@HideInInspector var timeBeforeLevelLoad:float;
 
 // Game variables.
 static var speed:float;
@@ -36,17 +37,19 @@ static var instructionType:Sprite;
 // Variables for Use
 @HideInInspector var currentGames:GameObject[];
 @HideInInspector var bossGame:GameObject;
-private var currentlyLoaded:GameObject;
-private var numberAvoid:int;
-private var previousGames:int[];
+@HideInInspector var currentlyLoaded:GameObject;
+@HideInInspector var numberAvoid:int;
+@HideInInspector var previousGames:int[];
 static var gameToLoad:int;
-private var shuffled:boolean;
-private var shuffleCount:int;
+@HideInInspector var shuffled:boolean;
+@HideInInspector var shuffleCount:int;
 static var movingBack:boolean;
+@HideInInspector var quitting:boolean;
+static var replay:boolean;
 
 // Game change variables.
-private var smallAmount:int;
-private var largeAmount:int;
+@HideInInspector var smallAmount:int;
+@HideInInspector var largeAmount:int;
 
 // First Time Variables
 static var gameNames:String[];
@@ -56,7 +59,7 @@ static var firstTimeValues:boolean[];
 static var pausable:boolean;
 @HideInInspector var paused:boolean;
 var menu:GameObject;
-private var currentMenu:GameObject;
+@HideInInspector var currentMenu:GameObject;
 @HideInInspector var fade:Renderer;
 
 // "Cutscene" variables
@@ -65,12 +68,25 @@ private var currentMenu:GameObject;
 function Start () {
 	// Get required variables.
 	LoadWorld();
-	lives = Master.lives;
 	currentGames = Master.currentWorld.basic.games;
 	bossGame = Master.currentWorld.basic.bossGame;
 	UI = Instantiate(Master.currentWorld.basic.UI);
 	
+	// Start the pre-game animation.
+	StartCoroutine(BeforeGames());
+}
+
+function Update () {
+	Master.paused = paused;
+}
+
+//////////////////////////////////////////////////////////////////////////
+/////////////////////////// Game Cycle Code //////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+function BeforeGames () {
 	// Set game change variables.
+	lives = Master.lives;
 	smallAmount = 3;
 	largeAmount = 10;
 	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0)
@@ -96,6 +112,9 @@ function Start () {
 	gameNumber = 1;
 	notified = false;
 	movingBack = false;
+	quitting = false;
+	replay = false;
+	BroadcastArray(gameCovers,"DisplayChange","Clear");
 	
 	// "First time" variables.
 	gameNames = new String[currentGames.length];
@@ -110,20 +129,6 @@ function Start () {
 	pausable = false;
 	paused = false;
 	fade = Camera.main.GetComponentInChildren(Renderer);
-	
-	// Start the pre-game animation.
-	StartCoroutine(BeforeGames());
-}
-
-function Update () {
-	Master.paused = paused;
-}
-
-//////////////////////////////////////////////////////////////////////////
-/////////////////////////// Game Cycle Code //////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-
-function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
@@ -131,12 +136,12 @@ function BeforeGames () {
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
 	{
-		//AudioManager.PlaySong(Master.currentWorld.text.firstOpeningSong);
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"FirstOpeningPlayed",1);
 		loadedText = Instantiate(Master.currentWorld.text.firstOpening);
 	}
 	else
 	{
-		//AudioManager.PlaySong(Master.currentWorld.text.regularOpeningSong);
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"RegularOpeningPlayed",1);
 		loadedText = Instantiate(Master.currentWorld.text.regularOpening);
 	}
 	// Wait for the text to finish.
@@ -149,10 +154,12 @@ function BeforeGames () {
 }
 
 function BetweenGame () {
+											if(quitting){return;}
 	BroadcastArray(gameCovers,"DisplayChange","Clear");
 	StartCoroutine(MoveBack());
 	GetRandomGame();
 	yield WaitForSeconds(timeBeforeSuccessNotification);
+											if(quitting){return;}
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	// Say "Success" or "Failure."
@@ -172,6 +179,7 @@ function BetweenGame () {
 		AudioManager.PlaySound(Master.currentWorld.audio.success,.5);
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
+											if(quitting){return;}
 	if(lives <= 0 || (PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1]))
 	{
 		StartCoroutine(GameOver());
@@ -182,8 +190,18 @@ function BetweenGame () {
 	}	
 }
 
+function Quit () {
+	quitting = true;
+	MoveBack();
+	lives = 0;
+	BroadcastArray(gameCovers,"DisplayChange","Clear");
+	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
+	GameOver();
+}
+
 // End game and reset timer.
 function GameComplete (success:boolean) {
+											if(quitting){return;}
 	if(success)
 	{
 		failure = false;
@@ -204,41 +222,61 @@ function GameOver () {
 	yield WaitForSeconds(.5);
 	pausable = false;
 	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber >= Master.unlockLevels[1])
+	loadedText = Instantiate(FindEnding());
+	yield WaitForSeconds(.2);
+	Destroy(currentlyLoaded);
+	while(!loadedText.GetComponent(TextManager).finished){yield;}
+	Master.lastScore = gameNumber;
+	yield WaitForSeconds(.2);
+	currentResults = Instantiate(results);
+	while(!currentResults.GetComponent(ResultsScreen).finished) {yield;};
+	Destroy(currentResults);
+	if(replay)
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Beaten",1);
-		loadedText = Instantiate(Master.currentWorld.text.beatEnd);
-	}
-	else if(gameNumber >= Master.unlockLevels[3])
-	{
-		loadedText = Instantiate(Master.currentWorld.text.end4);
-	}
-	else if(gameNumber >= Master.unlockLevels[2])
-	{
-		loadedText = Instantiate(Master.currentWorld.text.end3);
-	}
-	else if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber >= Master.unlockLevels[1])
-	{
-		loadedText = Instantiate(Master.currentWorld.text.end2);
+		BeforeGames();
 	}
 	else
 	{
-		loadedText = Instantiate(Master.currentWorld.text.end1);
+		AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
+		Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
+		yield WaitForSeconds(.7);
+		AudioManager.StopSong();
+		yield WaitForSeconds(1.3);
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
+		{
+			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
+		}
+		Application.LoadLevel("WorldSelect");
 	}
-	yield WaitForSeconds(.2);
-	while(!loadedText.GetComponent(TextManager).finished){yield;}
-	AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
-	Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
-	yield WaitForSeconds(.7);
-	AudioManager.StopSong();
-	yield WaitForSeconds(1.3);
-	Master.lastScore = gameNumber;
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
+}
+
+function FindEnding ():GameObject{
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber >= Master.unlockLevels[1])
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Beaten",1);
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed",1);
+		return Master.currentWorld.text.beatEnd;
 	}
-	Master.needToNotify = true;
-	Application.LoadLevel("WorldSelect");
+	else if(gameNumber >= Master.unlockLevels[3])
+	{
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End4Played",1);
+		return Master.currentWorld.text.end4;
+	}
+	else if(gameNumber >= Master.unlockLevels[2])
+	{
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End3Played",1);
+		return Master.currentWorld.text.end3;
+	}
+	else if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber >= Master.unlockLevels[1])
+	{
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End2Played",1);
+		return Master.currentWorld.text.end2;
+	}
+	else
+	{
+		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End1Played",1);
+		return Master.currentWorld.text.end1;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -310,8 +348,8 @@ function LoadWorld () {
 }
 
 function LaunchLevel (wait:float) {
+											if(quitting){return;}
 	// Delete Level
-	
 	if(currentlyLoaded != null)
 	{
 		Destroy(currentlyLoaded);
@@ -341,13 +379,15 @@ function LaunchLevel (wait:float) {
 			instructionType = currentGames[gameToLoad].GetComponent(MicroGameManager).controls;
 			break;
 	}
+											if(quitting){return;}
 	BroadcastArray(gameCovers,"DisplayChange","Controls");
 	
 	// Show instruction text and wait.
 	yield WaitForSeconds(timeBeforeLevelLoad/3);
-	
+											if(quitting){return;}
 	Instantiate(instructions);
 	yield WaitForSeconds(wait + 2*timeBeforeLevelLoad/3);
+											if(quitting){return;}
 	UI.BroadcastMessage("TimerStart", gameNumber,SendMessageOptions.DontRequireReceiver);
 	StartCoroutine(MoveAway());
 	// Launch level.
