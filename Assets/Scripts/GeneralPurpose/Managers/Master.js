@@ -11,7 +11,7 @@ static var paused:boolean;
 
 static var lastScore:int;
 
-static var unlockLevels:float[];
+static var unlockLevels:int[];
 
 private var topBar:GameObject;
 private var bottomBar:GameObject;
@@ -42,7 +42,7 @@ function Awake () {
 	if(unlockEverything){unlockAll=true;}
 	
 	// Sets initial variables for worlds.
-	unlockLevels = new float[6];
+	unlockLevels = new int[6];
 	currentWorld = worlds[0];
 	lives = 3;
 	paused = false;
@@ -182,11 +182,11 @@ function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
 	if(quickProgress)
 	{
-		unlockLevels = [0.0,5,10,15,20,100];
+		unlockLevels = [0,5,10,15,20,100];
 	}
 	else
 	{
-		unlockLevels = [0.0,15,30,45,70,100];
+		unlockLevels = [0,15,30,45,70,100];
 	}
 	if(eraseOnLoad || (eraseOnNewVersion && PlayerPrefs.GetFloat("AppVersion") != appVersion))
 	{

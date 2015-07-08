@@ -27,12 +27,12 @@ function CurrencyCounting(){
 			{
 				CoinAnimate();
 			}
-			yield WaitForSeconds(.1);
+			//yield WaitForSeconds(.1);
 		}
 		else if(currency > PlayerPrefs.GetInt("CurrencyNumber"))
 		{
 			currency--;
-			yield WaitForSeconds(.01);
+			//yield WaitForSeconds(.01);
 		}
 		if(GetComponent(TextMesh)!=null)
 		{

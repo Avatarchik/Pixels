@@ -404,7 +404,7 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 function Clicked () {
 	if(endCounter != 1 || skipBox.transform.position.y == 14)
 	{
-		endCounter ++;
+		endCounter = 2;
 		UnClick();
 	}
 }

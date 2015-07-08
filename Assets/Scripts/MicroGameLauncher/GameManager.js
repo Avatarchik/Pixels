@@ -228,13 +228,19 @@ function GameOver () {
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
 	Master.lastScore = gameNumber;
 	yield WaitForSeconds(.2);
-	currentResults = Instantiate(results,Vector3(-30,results.transform.position.y,results.transform.position.z), Quaternion.identity);
+	currentResults = Instantiate(results,Vector3(results.transform.position.x,20,results.transform.position.z), Quaternion.identity);
+	var sinCounter:float = 0;
+	var sinMultiplier:float = 20;
 	while(!currentResults.GetComponent(ResultsScreen).finished) {
-		currentResults.transform.position.x = Mathf.MoveTowards(currentResults.transform.position.x,0,Time.deltaTime*40);
+		fade.material.color.a = Mathf.MoveTowards(fade.material.color.a,.5,Time.deltaTime);
+		currentResults.transform.position.y = Mathf.Abs(Mathf.Cos(sinCounter) * sinMultiplier);
+		sinCounter += Time.deltaTime * 6;
+		sinMultiplier = Mathf.Lerp(sinMultiplier,0,Time.deltaTime * 3.5);
 		yield;
 	}
 	if(replay)
 	{
+		fade.material.color.a = 0;
 		BeforeGames();
 	}
 	else

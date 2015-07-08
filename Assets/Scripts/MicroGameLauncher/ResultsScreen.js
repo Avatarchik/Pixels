@@ -1,134 +1,134 @@
 ﻿#pragma strict
 
-var progressBar:Transform;
+@HideInInspector var score:int;
+@HideInInspector var smallFont:int;
+@HideInInspector var largeFont:int;
+@HideInInspector var skip:boolean;
+@HideInInspector var currentDisplayedScore:int;
+@HideInInspector var numberOfUnlocks:int;
+@HideInInspector var unlockLevels:int[];
+@HideInInspector var waitTime:float;
+@HideInInspector var skipWaitTime:float;
+@HideInInspector var showTime:float;
+var announcement:GameObject;
+@HideInInspector var currentAnnouncement:GameObject;
+var particles:ParticleSystem[];
 
-var goals:float[];
-@HideInInspector var goalMarker:int;
-@HideInInspector var currentLocationGoal:float;
-
-var iconHolders:SpriteRenderer[];
-var iconDefaultSprites:Sprite[];
-var iconNewUnlockWorldSprites:Sprite[];
-var iconOldUnlockWorldSprites:Sprite[];
-
-var alert:GameObject;
-var currentAlert:GameObject;
+var text:TextMesh[];
 static var notifying:boolean;
-
-var done:boolean;
 
 var finished:boolean;
 
-var ribbon:SpriteRenderer;
-
 function Start () {
-	ribbon.color.a = 0;
-	goalMarker = 0;
-	done = false;
+	score = Master.lastScore;
+	score = 50;
+	currentDisplayedScore = 0;
+	smallFont = 400;
+	largeFont = 606;
 	notifying = false;
-	progressBar.localScale.x = 1;
-	for(var i:int = 1; i < 4; i++)
+	skip = false;
+	numberOfUnlocks = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks");
+	unlockLevels = Master.unlockLevels;
+	waitTime = .4;
+	skipWaitTime = .02;
+	for(var thisText:TextMesh in text)
 	{
-		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks")>=i)
-		{
-			iconHolders[i-1].sprite = iconOldUnlockWorldSprites[i-1];
-		}
+		thisText.text = currentDisplayedScore.ToString();
+		thisText.fontSize = smallFont;
 	}
-	StartCoroutine(ProgressIncrease());
+	CountScore();
 }
 
 function Update () {
 	if(finished)
 	{
-		if(transform.position.x != -30)
+		if(transform.position.y != 20)
 		{
-			transform.position.x = Mathf.MoveTowards(transform.position.x,-30,Time.deltaTime*40);
+			transform.position.y = Mathf.MoveTowards(transform.position.y,20,Time.deltaTime*40);
 		}
 		else
 		{
 			Destroy(gameObject);
 		}
 	}
-	progressBar.localScale.x = Mathf.MoveTowards(progressBar.localScale.x,currentLocationGoal,Time.deltaTime*10);
-	if(done && Master.lastScore < 15 && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks")<1 && progressBar.localScale.x == currentLocationGoal)
-	{
-		ribbon.color.a = 1;
-	}
 }
 
-function ProgressIncrease() {
-	yield WaitForSeconds(.3);
-	PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+Master.lastScore);
-	while(!done)
+function CountScore() {
+	yield WaitForSeconds(1);
+	while(currentDisplayedScore < score)
 	{
-		NextGoal(goalMarker);
-		while(progressBar.localScale.x != currentLocationGoal) { yield; }
-		if(notifying)
+		yield WaitForSeconds(waitTime);
+		currentDisplayedScore ++;
+		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+1);
+		for(var thisText:TextMesh in text)
 		{
-			currentAlert = Instantiate(alert);
-			currentAlert.GetComponent(PieceGetting).text = Master.currentWorld.unlocks.unlockNotificationTextLine1[goalMarker-1] + "\n" + Master.currentWorld.unlocks.unlockNotificationTextLine2[goalMarker-1];
-			yield WaitForSeconds(.3);
-			iconHolders[goalMarker-1].sprite = iconNewUnlockWorldSprites[goalMarker-1];
+			thisText.fontSize = smallFont;
+			thisText.text = currentDisplayedScore.ToString();
 		}
-		while(notifying) { yield; }
-		goalMarker++;
-		yield;
-	}
-	yield;
-}
-
-function NextGoal(goalNumber:float) {
-	if(Master.lastScore >= Master.unlockLevels[goalNumber])
-	{
-		currentLocationGoal = goals[goalNumber];
-		if(Master.lastScore <= Master.unlockLevels[goalNumber])
+		if(waitTime != skipWaitTime)
 		{
-			done = true;
-		}
-		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks")<goalNumber && goalNumber < 4)
-		{
-			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",goalNumber);
-			notifying = true;
-			switch(goalNumber)
+			if(currentDisplayedScore + 5 < score)
 			{
-				case 1:
-					for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel1)
-					{
-						PlayerPrefs.SetInt(variableName,1);
-					}
-					break;
-				case 2:
-					for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel2)
-					{
-						PlayerPrefs.SetInt(variableName,1);
-					}
-					break;
-				case 3:
-					for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel3)
-					{
-						PlayerPrefs.SetInt(variableName,1);
-					}
-					break;
-				default:
-					break;
+				waitTime = Mathf.MoveTowards(waitTime,.05,.03);
+			}
+			else
+			{
+				waitTime = Mathf.MoveTowards(waitTime,.15,.03);
 			}
 		}
+		for(var i:int = 0; i < unlockLevels.length; i++)
+		{
+			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i)
+			{
+				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",i);
+				for(var thisParticle:ParticleSystem in particles)
+				{
+					thisParticle.Emit(300);
+				}
+				for(var thisText:TextMesh in text)
+				{
+					thisText.fontSize = largeFont;
+				}
+				if(waitTime != skipWaitTime)
+				{
+					waitTime = .15;
+				}
+				yield(WaitForSeconds(1));
+			}
+		}
+		if(currentDisplayedScore == score)
+		{
+			break;
+		}
 	}
-	else
+	if(score > 15)
 	{
-		currentLocationGoal = goals[goalNumber-1] + ((Master.lastScore-Master.unlockLevels[goalNumber-1]) / (Master.unlockLevels[goalNumber] - Master.unlockLevels[goalNumber-1])) * (goals[goalNumber]-goals[goalNumber-1]);
-		done = true;
+		for(var thisParticle:ParticleSystem in particles)
+		{
+			Debug.Log("hey");
+			thisParticle.Emit(500);
+		}
 	}
-	
+	while(!finished)
+	{
+		yield;
+	}
+	while(transform.position.y != 20)
+	{
+		transform.position.y = Mathf.MoveTowards(transform.position.y,20,Time.deltaTime*40);
+		yield;
+	}
+	Destroy(gameObject);
 }
 
 function Clicked() {
-	if(progressBar.localScale.x != currentLocationGoal)
+	if(currentDisplayedScore == score)
 	{
-		progressBar.localScale.x = currentLocationGoal;
-	}
-	else if(done)
-	{
+		
 		finished = true;
+	}
+	else
+	{
+		waitTime = skipWaitTime;
 	}
 }
