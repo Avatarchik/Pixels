@@ -38,7 +38,7 @@ function Start () {
 }
 
 function Update () {
-	if(finished && GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).replay)
+	if(finished)
 	{
 		if(transform.position.x != -30)
 		{
