@@ -228,9 +228,11 @@ function GameOver () {
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
 	Master.lastScore = gameNumber;
 	yield WaitForSeconds(.2);
-	currentResults = Instantiate(results);
-	while(!currentResults.GetComponent(ResultsScreen).finished) {yield;};
-	Destroy(currentResults);
+	currentResults = Instantiate(results,Vector3(-30,results.transform.position.y,results.transform.position.z), Quaternion.identity);
+	while(!currentResults.GetComponent(ResultsScreen).finished) {
+		currentResults.transform.position.x = Mathf.MoveTowards(currentResults.transform.position.x,0,Time.deltaTime*40);
+		yield;
+	}
 	if(replay)
 	{
 		BeforeGames();

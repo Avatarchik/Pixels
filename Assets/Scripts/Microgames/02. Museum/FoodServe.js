@@ -16,6 +16,10 @@ var darknessAmount:Color;
 
 var plates:GameObject[];
 
+var buttons:SpriteRenderer[];
+
+var offColor:Color;
+
 var food0Sprites:Sprite[];
 var food1Sprites:Sprite[];
 var food2Sprites:Sprite[];
@@ -119,6 +123,14 @@ function Update () {
 			{
 				plates[i].GetComponent(SpriteRenderer).sprite = food3Sprites[plateFullness[i]];
 			}
+		}
+		if(plateFullness[i] <= 1)
+		{
+			buttons[i].color = Color.white;
+		}
+		else
+		{
+			buttons[i].color = offColor;
 		}
 	}
 	for(i = 0; i < peopleSpeed.length; i++)

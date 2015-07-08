@@ -38,6 +38,17 @@ function Start () {
 }
 
 function Update () {
+	if(finished && GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).replay)
+	{
+		if(transform.position.x != -30)
+		{
+			transform.position.x = Mathf.MoveTowards(transform.position.x,-30,Time.deltaTime*40);
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+	}
 	progressBar.localScale.x = Mathf.MoveTowards(progressBar.localScale.x,currentLocationGoal,Time.deltaTime*10);
 	if(done && Master.lastScore < 15 && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks")<1 && progressBar.localScale.x == currentLocationGoal)
 	{
