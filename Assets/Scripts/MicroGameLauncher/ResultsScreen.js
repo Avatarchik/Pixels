@@ -10,7 +10,6 @@
 @HideInInspector var waitTime:float;
 @HideInInspector var skipWaitTime:float;
 @HideInInspector var showTime:float;
-var announcement:GameObject;
 @HideInInspector var currentAnnouncement:GameObject;
 var particles:ParticleSystem[];
 
@@ -19,7 +18,14 @@ static var notifying:boolean;
 
 var finished:boolean;
 
+var announcement:Announcement;
+
+var goodApplause:AudioClip;
+var badApplause:AudioClip;
+var unlockApplause:AudioClip[];
+
 function Start () {
+	AnnouncementOff();
 	score = Master.lastScore;
 	currentDisplayedScore = 0;
 	smallFont = 400;
@@ -30,6 +36,14 @@ function Start () {
 	unlockLevels = Master.unlockLevels;
 	waitTime = .4;
 	skipWaitTime = .02;
+	if(score >= 15)
+	{
+		AudioManager.PlaySound(goodApplause,.4);	
+	}
+	else
+	{
+		AudioManager.PlaySound(badApplause,.4);	
+	}
 	for(var thisText:TextMesh in text)
 	{
 		thisText.text = currentDisplayedScore.ToString();
@@ -95,7 +109,41 @@ function CountScore() {
 				{
 					waitTime = .15;
 				}
-				yield(WaitForSeconds(1));
+				if(i < 4)
+				{
+					switch(i-1)
+					{
+						case 0:
+							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel1)
+							{
+								PlayerPrefs.SetInt(variableName,1);
+							}
+							break;
+						case 1:
+							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel2)
+							{
+								PlayerPrefs.SetInt(variableName,1);
+							}
+							break;
+						case 2:
+							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel3)
+							{
+								PlayerPrefs.SetInt(variableName,1);
+							}
+							break;
+						default:
+							break;
+					}
+					yield WaitForSeconds(.3);
+					AnnouncementStep1(.6);
+					yield WaitForSeconds(1.5);
+					AnnouncementStep2();
+					yield WaitForSeconds(.7);
+					AudioManager.PlaySound(unlockApplause[i-1],.4);	
+					AnnouncementStep3(i-1);
+					yield WaitForSeconds(4);
+					AnnouncementOff();
+				}
 			}
 		}
 		if(currentDisplayedScore == score)
@@ -103,11 +151,10 @@ function CountScore() {
 			break;
 		}
 	}
-	if(score > 15)
+	if(score >= 15)
 	{
 		for(var thisParticle:ParticleSystem in particles)
 		{
-			Debug.Log("hey");
 			thisParticle.Emit(500);
 		}
 	}
@@ -140,4 +187,72 @@ function Clicked() {
 			waitTime = skipWaitTime;
 		}
 	}
+}
+
+function AnnouncementOff () {
+	announcement.unlockParticle.emissionRate = 0;
+	announcement.unlock.sprite = null;
+	announcement.chest.sprite = null;
+	announcement.cover.color.a = 0;
+	announcement.lockImage.sprite = null;
+	announcement.text.text = "";
+}	
+function AnnouncementStep1 (time:float) {
+	announcement.chest.sprite = announcement.chestSprites[0];
+	announcement.cover.color.a = 1;
+	announcement.lockImage.sprite = announcement.lockImageSprites[0];
+	announcement.text.text = "";
+	var counter:float = 0;
+	var originChest:Vector3;
+	var originLock:Vector3;
+	var difference:float;
+	difference = .01;
+	originChest = announcement.chest.transform.localPosition;
+	originLock = announcement.lockImage.transform.localPosition;
+	while (counter < time/2)
+	{
+		var xChange:float = Random.Range(-difference,difference);
+		var yChange:float = Random.Range(-difference,difference);
+		announcement.chest.transform.localPosition = Vector3(originChest.x + xChange,originChest.y + yChange,originChest.z);
+		announcement.lockImage.transform.localPosition = Vector3(originLock.x + xChange, originLock.y + yChange,originLock.z);
+		yield WaitForSeconds(.03);
+		counter += .03;
+		yield;
+	}	
+	difference = .02;
+	while (counter < time)
+	{
+		xChange = Random.Range(-difference,difference);
+		yChange = Random.Range(-difference,difference);
+		announcement.chest.transform.localPosition = Vector3(originChest.x + xChange,originChest.y + yChange,originChest.z);
+		announcement.lockImage.transform.localPosition = Vector3(originLock.x + xChange, originLock.y + yChange,originLock.z);
+		yield WaitForSeconds(.03);
+		counter += .03;
+		yield;
+	}
+	announcement.chest.transform.localPosition = originChest;
+	announcement.lockImage.transform.localPosition = originLock;
+}
+
+function AnnouncementStep2 () {
+	announcement.chest.sprite = announcement.chestSprites[0];
+	announcement.lockImage.sprite = announcement.lockImageSprites[1];
+}
+function AnnouncementStep3 (level:int) {
+	announcement.unlockParticle.emissionRate = 100;
+	announcement.unlock.sprite = Master.currentWorld.unlocks.unlockIcons[level];
+	announcement.chest.sprite = announcement.chestSprites[1];
+	announcement.lockImage.sprite = null;
+	announcement.text.text = Master.currentWorld.unlocks.unlockNotificationTextLine1[level] + "\n" + Master.currentWorld.unlocks.unlockNotificationTextLine2[level];;
+}
+
+class Announcement {
+	var cover:SpriteRenderer;
+	var chest:SpriteRenderer;
+	var lockImage:SpriteRenderer;
+	var text:TextMesh;
+	var chestSprites:Sprite[];
+	var lockImageSprites:Sprite[];
+	var unlock:SpriteRenderer;
+	var unlockParticle:ParticleSystem;
 }

@@ -11,7 +11,7 @@
 
 var worldMapObject:Transform;
 function Start () {
-	if(PlayerPrefs.GetInt("PackingPeanutFactoryUnlocks") > 0 || worldMapObject == null)
+	if(PlayerPrefs.GetInt("PackingPeanutFactoryUnlocks") > 1 || worldMapObject == null)
 	{
 		Destroy(gameObject);
 	}

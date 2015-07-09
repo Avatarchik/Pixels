@@ -20,7 +20,6 @@ static var vertical:boolean;
 
 var appVersion:float;
 var eraseOnNewVersion:boolean;
-var worldNames:String[];
 var quickProgress:boolean;
 var unlockEverything:boolean;
 var skipOpening:boolean;
@@ -162,15 +161,19 @@ function Demo() {
 	{
 		if(Finger.GetExists(0) == true)
 		{
-			counter = demoTime;
+			if((Finger.GetPosition(0).x < -13 && Finger.GetPosition(0).y > 6.5) || (Finger.GetPosition(0).x < -6 && Finger.GetPosition(0).y > 13.5))
+			{
+				counter -= Time.deltaTime;
+			}
 		}
-		else if(!Application.loadedLevelName.Contains("Tutorial"))
+		else
 		{
-			counter -= Time.deltaTime;
+			counter = demoTime;
 		}
 		yield;
 		if(counter < 0)
 		{
+			PlayerPrefs.DeleteAll();
 			Application.LoadLevel("GameStart");
 			Destroy(gameObject);
 		}
@@ -188,10 +191,10 @@ function Initialize () {
 	{
 		unlockLevels = [0,15,30,45,70,100];
 	}
-	if(eraseOnLoad || (eraseOnNewVersion && PlayerPrefs.GetFloat("AppVersion") != appVersion))
+	if(eraseOnLoad || (eraseOnNewVersion && PlayerPrefs.GetFloat("ion") != appVersion))
 	{
-		PlayerPrefs.SetFloat("AppVersion",appVersion);
 		PlayerPrefs.DeleteAll();
+		PlayerPrefs.SetFloat("AppVersion",appVersion);
 	}
 	if(unlockAll)
 	{
@@ -394,9 +397,9 @@ class UnlockVariables {
 	var unlocksLevel1:String[];
 	var unlocksLevel2:String[];
 	var unlocksLevel3:String[];
-
 	var unlockNotificationTextLine1:String[];
 	var unlockNotificationTextLine2:String[];
+	var unlockIcons:Sprite[];
 }
 
 class World {
