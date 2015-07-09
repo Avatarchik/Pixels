@@ -21,7 +21,6 @@ var finished:boolean;
 
 function Start () {
 	score = Master.lastScore;
-	score = 50;
 	currentDisplayedScore = 0;
 	smallFont = 400;
 	largeFont = 606;
@@ -57,7 +56,10 @@ function CountScore() {
 	yield WaitForSeconds(1);
 	while(currentDisplayedScore < score)
 	{
-		yield WaitForSeconds(waitTime);
+		if(waitTime != 0)
+		{
+			yield WaitForSeconds(waitTime);
+		}
 		currentDisplayedScore ++;
 		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+1);
 		for(var thisText:TextMesh in text)
@@ -65,7 +67,7 @@ function CountScore() {
 			thisText.fontSize = smallFont;
 			thisText.text = currentDisplayedScore.ToString();
 		}
-		if(waitTime != skipWaitTime)
+		if(waitTime > skipWaitTime)
 		{
 			if(currentDisplayedScore + 5 < score)
 			{
@@ -89,7 +91,7 @@ function CountScore() {
 				{
 					thisText.fontSize = largeFont;
 				}
-				if(waitTime != skipWaitTime)
+				if(waitTime > skipWaitTime)
 				{
 					waitTime = .15;
 				}
@@ -129,6 +131,13 @@ function Clicked() {
 	}
 	else
 	{
-		waitTime = skipWaitTime;
+		if(waitTime == skipWaitTime)
+		{
+			waitTime = 0;
+		}
+		else
+		{
+			waitTime = skipWaitTime;
+		}
 	}
 }

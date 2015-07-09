@@ -47,6 +47,8 @@ var pageFlip:SpriteRenderer;
 
 var pieces:StatPieces;
 
+@HideInInspector var startTime:float;
+
 static var videoPlaying:boolean;
 static var songPlaying:boolean;
 
@@ -76,10 +78,11 @@ function Start () {
 	currentSelection = 0;
 	ChooseWorld();
 	UpdateDisplay(world.basic.worldNameVar);
+	startTime = 0;
 }
-
 function Update () {
-	if(theaterController.currentState == TheaterStatus.Stats)
+	startTime += Time.deltaTime;
+	if(theaterController.currentState == TheaterStatus.Stats && startTime > 1)
 	{
 		if(currentState == LedgerState.Closed && Mathf.Abs(transform.position.x) < 1)
 		{

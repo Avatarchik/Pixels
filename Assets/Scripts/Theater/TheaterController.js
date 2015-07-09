@@ -17,7 +17,7 @@ var colors2:GameObject;
 function Start () {
 	controller = Camera.main.GetComponent(Master);
 	PlayAudio();
-	currentState = TheaterStatus.Home;
+	currentState = TheaterStatus.Stats;
 	buttonCooldown = 0;
 }
 

@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/ResultsScreen.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Theater/LedgerController.js">
     <Files>
-      <File FileName="Assets/Scripts/MicroGameLauncher/ResultsScreen.js" Line="86" Column="27" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/GameManager.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Theater/TheaterController.js" Line="20" Column="36" />
+      <File FileName="Assets/Scripts/TitleScreen/UndoCustomizationChanges.js" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/Theater/LedgerController.js" Line="85" Column="75" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
