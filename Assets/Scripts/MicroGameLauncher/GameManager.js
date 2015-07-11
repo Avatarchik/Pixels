@@ -132,7 +132,7 @@ function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
-	yield WaitForSeconds (1);
+	yield WaitForSeconds (.15);
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
 	{
@@ -146,10 +146,10 @@ function BeforeGames () {
 	}
 	// Wait for the text to finish.
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
-	pausable = true;
 	AudioManager.PlaySong(Master.currentWorld.audio.music[speed-1]);
 	GetRandomGame();
 	yield WaitForSeconds(1);
+	pausable = true;
 	LaunchLevel(0);
 }
 
@@ -227,7 +227,7 @@ function GameOver () {
 	Destroy(currentlyLoaded);
 	while(!loadedText.GetComponent(TextManager).finished){yield;}
 	Master.lastScore = gameNumber;
-	yield WaitForSeconds(.2);
+//	yield WaitForSeconds(.2);
 	currentResults = Instantiate(results,Vector3(results.transform.position.x,20,results.transform.position.z), Quaternion.identity);
 	var sinCounter:float = 0;
 	var sinMultiplier:float = 20;
@@ -246,7 +246,7 @@ function GameOver () {
 	else
 	{
 		AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
-		Instantiate(transition,Vector3(0,0,-5), Quaternion.identity);
+		Instantiate(transition,Vector3(0,0,-9.5), Quaternion.identity);
 		yield WaitForSeconds(.7);
 		AudioManager.StopSong();
 		yield WaitForSeconds(1.3);
@@ -406,7 +406,10 @@ function LaunchLevel (wait:float) {
 			case Master.unlockLevels[1]:case Master.unlockLevels[2]:case Master.unlockLevels[3]:case Master.unlockLevels[4]:case Master.unlockLevels[5]:
 				bossDifficulty++;
 				currentlyLoaded = Instantiate(bossGame, Vector3(0,0,5), Quaternion.identity);
-				AudioManager.PlaySound(Master.currentWorld.audio.bossGameSounds[Random.Range(0,Master.currentWorld.audio.bossGameSounds.length)],1);
+				if(Master.currentWorld.audio.bossGameSounds.length > 0)
+				{
+					AudioManager.PlaySound(Master.currentWorld.audio.bossGameSounds[Random.Range(0,Master.currentWorld.audio.bossGameSounds.length)],1);
+				}
 				break;
 			default:
 				currentlyLoaded = Instantiate(currentGames[gameToLoad], Vector3(0,0,5), Quaternion.identity);

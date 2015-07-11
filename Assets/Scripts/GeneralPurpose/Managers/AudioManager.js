@@ -62,6 +62,17 @@ function Update () {
 	}
 }
 
+static function GetPlaying ():boolean {
+	if(musicSpeaker[0].isPlaying)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 static function GetLocation ():float {
 	if(musicSpeaker[0].isPlaying)
 	{
@@ -70,6 +81,21 @@ static function GetLocation ():float {
 	else if(effectSpeaker.isPlaying)
 	{
 		return effectSpeaker.time;
+	}
+	else
+	{
+		return 0;	
+	}
+}
+
+static function GetLength ():float {
+	if(musicSpeaker[0].isPlaying)
+	{
+		return musicSpeaker[0].clip.length;
+	}
+	else if(effectSpeaker.isPlaying)
+	{
+		return effectSpeaker.clip.length;
 	}
 	else
 	{

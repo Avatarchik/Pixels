@@ -216,7 +216,6 @@ function Play () {
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
-		Debug.Log(completionStatus);
 		finished = true;
 		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);

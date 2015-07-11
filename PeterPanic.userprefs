@@ -1,6 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
+    <Files>
+      <File FileName="Assets/Scripts/GeneralPurpose/Player/PlayerManager.js" Line="48" Column="1" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="181" Column="28" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

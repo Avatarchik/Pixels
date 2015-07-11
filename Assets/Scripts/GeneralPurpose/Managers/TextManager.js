@@ -5,7 +5,6 @@ var automatic:boolean;
 var lines:Line[];
 
 @HideInInspector var spriteObjects:GameObject[];
-@HideInInspector var endCounter:int;
 var finished:boolean;
 var skipBox:Transform;
 
@@ -33,7 +32,6 @@ function Start () {
 	lineMarker = 0;
 	numberOfLetters = 0;
 	current = 0;
-	endCounter = 0;
 	finished = false;
 	doneLine = false;
 	PlayerManager.speed = 1000000;
@@ -48,12 +46,14 @@ function Start () {
 		AudioManager.PlaySong(song);
 	}
 	
+	
 	// Get the text box into place.
 	while(transform.position.x < -7.74)
 	{
 		transform.position.x = Mathf.MoveTowards(transform.position.x,-7.74,Time.deltaTime*60);
 		yield;
 	}
+	
 	// Destroy if empty; otherwise, start the dialogue routine.
 	if(lines.Length!=0)
 	{
@@ -66,7 +66,8 @@ function Start () {
 	}
 	else
 	{
-		AudioManager.Loop(false);
+		AudioManager.StopAll();
+		AudioManager.Loop(true);
 		Destroy(gameObject);
 	}
 	if(record)
@@ -89,7 +90,6 @@ function Start () {
 
 function KillObject(object:GameObject)
 {
-	//yield WaitForSeconds(.01);
 	Destroy(object);
 }
 function Update () {
@@ -188,19 +188,6 @@ function MouthShape(left:boolean) {
 function UpdateSet () {
 	while(true)
 	{
-		// Clickable ending code.
-		if(endCounter == 1)
-		{
-			skipBox.position.y = Mathf.MoveTowards(skipBox.transform.position.y, 14, Time.deltaTime*15);
-		}
-		else
-		{
-			skipBox.position.y = Mathf.MoveTowards(skipBox.transform.position.y, 18.5, Time.deltaTime*15);
-		}
-		if(endCounter >= 2)
-		{
-			finished = true;
-		}
 		if(numberOfLetters < currentDialogue[current].ToString().Length)
 		{
 			GetComponent(TextMesh).text = currentDialogue[current].ToString().Remove(numberOfLetters);
@@ -216,6 +203,7 @@ function UpdateSet () {
 		}
 		if(transform.position.x == 30 && !record)
 		{
+			AudioManager.Loop(true);
 			Destroy(gameObject);
 		}
 		yield;
@@ -296,9 +284,21 @@ function NextLine () {
 	}
 	else if(lineMarker == lines.Length-1)
 	{
-		finished = true;
+		End(true);
 	}
 }
+function End (waitForEnd:boolean) {
+	if(waitForEnd)
+	{
+		while(AudioManager.GetPlaying())
+		{
+			yield;
+		}
+	}
+	AudioManager.StopAll();
+	AudioManager.Loop(true);
+	finished = true;
+}	
 
 // This, when used as a coroutine, continuously increases the current displayed letter depending on what letter
 // was just drawn. Punctuation has different "wait" times, which can be edited below. This produces a sort of
@@ -402,16 +402,8 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 }
 
 function Clicked () {
-	if(endCounter != 1 || skipBox.transform.position.y == 14)
-	{
-		endCounter = 2;
-		UnClick();
-	}
-}
+	End(false);
 
-function UnClick() {
-	yield WaitForSeconds(3);
-	endCounter --;
 }
 
 class Line {

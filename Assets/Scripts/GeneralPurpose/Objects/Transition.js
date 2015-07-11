@@ -7,8 +7,12 @@ var title:GameObject[];
 var text:String;
 
 var controller:Master;
+@HideInInspector var baseSpeed:float;
+@HideInInspector var textSpeed:float;
 
 function Start () {
+	baseSpeed = 110;
+	textSpeed = baseSpeed / 15;
 	DontDestroyOnLoad(gameObject);
 	controller = Camera.main.GetComponent(Master);
 	var newText:String = controller.currentWorld.basic.worldNameFull;
@@ -35,7 +39,7 @@ function Start () {
 		{
 			movingObjects[i].GetComponent.<Renderer>().material.color = controller.currentWorld.basic.colors[1];
 		}
-		speed[i] = Random.Range(90,100.1);
+		speed[i] = Random.Range(baseSpeed,baseSpeed + 10.1);
 	}
 	Transition();
 	Title();
@@ -57,12 +61,12 @@ function Title () {
 	
 	while(title[0].transform.position.x > .011)
 	{
-		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, 0, Time.deltaTime * 5);
+		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, 0, Time.deltaTime * textSpeed);
 		yield;
 	}
 	while(title[0].transform.position.x > -30)
 	{
-		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, -50, Time.deltaTime * 3);
+		title[0].transform.position.x = Mathf.Lerp(title[0].transform.position.x, -50, Time.deltaTime * textSpeed);
 		yield;
 	}
 	yield WaitForSeconds(2);

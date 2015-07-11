@@ -44,7 +44,6 @@ function Awake () {
 		UnlockAllOptions();
 		UpdateAvailability();
 	}
-	
 	// Instantiates and colors all paper doll sprites, scales them correctly, and parents them to the player.
 	currentHair = Instantiate(hair[PlayerPrefs.GetInt("HairSelection")],transform.position-Vector3(0,0,.08),Quaternion.identity);
 		currentHair.transform.localScale = transform.lossyScale;
@@ -54,11 +53,11 @@ function Awake () {
 		currentEyes.transform.localScale = transform.lossyScale;
 		currentEyes.GetComponent(SpriteRenderer).color = eyesColor[PlayerPrefs.GetInt("EyesColor")];
 		currentEyes.transform.parent = transform;
-	currentTop = Instantiate(tops[PlayerPrefs.GetInt("TopSelection")],transform.position-Vector3(0,0,.07),Quaternion.identity);
+	currentTop = Instantiate(tops[PlayerPrefs.GetInt("TopSelection")],transform.position-Vector3(0,0,.05),Quaternion.identity);
 		currentTop.transform.localScale = transform.lossyScale;
 		currentTop.GetComponent(SpriteRenderer).color = topsColor[PlayerPrefs.GetInt("TopColor")];
 		currentTop.transform.parent = transform;
-	currentBottom = Instantiate(bottoms[PlayerPrefs.GetInt("BottomSelection")],transform.position-Vector3(0,0,.05),Quaternion.identity);
+	currentBottom = Instantiate(bottoms[PlayerPrefs.GetInt("BottomSelection")],transform.position-Vector3(0,0,.07),Quaternion.identity);
 		currentBottom.transform.localScale = transform.lossyScale;
 		currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
 		currentBottom.transform.parent = transform;
@@ -71,6 +70,14 @@ function Awake () {
 		StartCoroutine(Move());
 	}
 	Save();
+}
+function Start () {
+	UpdateAvailability();
+	if(Master.unlockAll)
+	{
+		UnlockAllOptions();
+		UpdateAvailability();
+	}
 }
 
 function Update () {
@@ -109,18 +116,76 @@ function Update () {
 }
 
 function ChangePart(part:String, change:int) {
+	var fix:int;
+	if(change > 0)
+	{
+		fix = 1;
+	}
+	else
+	{
+		fix = -1;
+	}
 	switch(part)
 	{
 		case "hair":
+			while(PlayerPrefs.GetInt("HairSelection")+change < 0 || !hairAvailability[PlayerPrefs.GetInt("HairSelection")+change])
+			{
+				change += fix;
+				if(PlayerPrefs.GetInt("HairSelection")+change >= hair.length)
+				{
+					change -= hair.length+1;
+				}
+				if(PlayerPrefs.GetInt("HairSelection")+change < 0)
+				{
+					change = hair.length-1;
+				}			
+			}
 			PlayerPrefs.SetInt("HairSelection",PlayerPrefs.GetInt("HairSelection")+change);
 			break;
 		case "eyes":
+			while(PlayerPrefs.GetInt("EyesSelection")+change < 0 || !eyesAvailability[PlayerPrefs.GetInt("EyesSelection")+change])
+			{
+				change += fix;
+				if(PlayerPrefs.GetInt("EyesSelection")+change >= eyes.length)
+				{
+					change -= eyes.length+1;
+				}
+				if(PlayerPrefs.GetInt("EyesSelection")+change < 0)
+				{
+					change = eyes.length-1;
+				}
+				yield;
+			}
 			PlayerPrefs.SetInt("EyesSelection",PlayerPrefs.GetInt("EyesSelection")+change);
 			break;
 		case "top":
+			while(PlayerPrefs.GetInt("TopSelection")+change < 0 || !topsAvailability[PlayerPrefs.GetInt("TopSelection")+change])
+			{
+				change += fix;
+				if(PlayerPrefs.GetInt("TopSelection")+change >= tops.length)
+				{
+					change -= tops.length+1;
+				}
+				if(PlayerPrefs.GetInt("TopSelection")+change < 0)
+				{
+					change = tops.length-1;
+				}
+			}
 			PlayerPrefs.SetInt("TopSelection",PlayerPrefs.GetInt("TopSelection")+change);
 			break;
 		case "bottom":
+			while(PlayerPrefs.GetInt("BottomSelection")+change < 0 || !bottomsAvailability[PlayerPrefs.GetInt("BottomSelection")+change])
+			{
+				change += fix;
+				if(PlayerPrefs.GetInt("BottomSelection")+change >= bottoms.length)
+				{
+					change -= bottoms.length+1;
+				}
+				if(PlayerPrefs.GetInt("BottomSelection")+change < 0)
+				{
+					change = bottoms.length-1;
+				}
+			}
 			PlayerPrefs.SetInt("BottomSelection",PlayerPrefs.GetInt("BottomSelection")+change);
 			break;
 		default:
@@ -161,18 +226,33 @@ function Refresh(part:String, change:int) {
 	switch(part)
 	{
 		case "hair":
-			currentHair = CreateObject(currentHair,hair,hairColor,.08,"Hair","hair",change);
+			currentHair = CreateObject(currentHair,hair,hairColor,hairAvailability,.08,"Hair","hair",change);
 			break;
 		case "eyes":
-			currentEyes = CreateObject(currentEyes,eyes,eyesColor,.06,"Eyes","eyes",change);
+			currentEyes = CreateObject(currentEyes,eyes,eyesColor,eyesAvailability,.06,"Eyes","eyes",change);
 			break;
 		case "top":
-			currentTop = CreateObject(currentTop,tops,topsColor,.07,"Top","top",change);
+			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.05,"Top","top",change);
 			break;
 		case "bottom":
-			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,.05,"Bottom","bottom",change);
+			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.07,"Bottom","bottom",change);
 			break;
 		case "body":
+			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
+			{
+				PlayerPrefs.SetInt("BodyColor",0);
+			}
+			if(PlayerPrefs.GetInt("BodyColor") < 0)
+			{
+				PlayerPrefs.SetInt("BodyColor",bodyColor.Length-1);
+			}
+			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+			break;
+		case "all":
+			currentHair = CreateObject(currentHair,hair,hairColor,hairAvailability,.08,"Hair","hair",change);
+			currentEyes = CreateObject(currentEyes,eyes,eyesColor,eyesAvailability,.06,"Eyes","eyes",change);
+			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.05,"Top","top",change);
+			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.07,"Bottom","bottom",change);
 			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
 			{
 				PlayerPrefs.SetInt("BodyColor",0);
@@ -186,26 +266,14 @@ function Refresh(part:String, change:int) {
 	}
 }
 
-function CreateObject (objectHolder:GameObject,objectArray:GameObject[],objectColorArray:Color[],zLocation:float,variableNameCap:String,variableNameLower:String, change:int) : GameObject
+function CreateObject (objectHolder:GameObject,objectArray:GameObject[],objectColorArray:Color[],availability:boolean[],zLocation:float,variableNameCap:String,variableNameLower:String, change:int) : GameObject
 {
 	var lastObject:GameObject = objectHolder;
-	if(PlayerPrefs.GetInt(variableNameCap + "Selection") >= objectArray.Length)
-	{
-		PlayerPrefs.SetInt(variableNameCap + "Selection", 0);
-	}
-	else if(PlayerPrefs.GetInt(variableNameCap + "Selection") < 0)
-	{
-		PlayerPrefs.SetInt(variableNameCap + "Selection", objectArray.Length-1);
-	}
 	objectHolder = Instantiate(objectArray[PlayerPrefs.GetInt(variableNameCap + "Selection")],transform.position-Vector3(0,0,zLocation),Quaternion.identity);
 	ReplaceObject(lastObject,1);
 	objectHolder.transform.localScale = transform.localScale;
 	objectHolder.GetComponent(SpriteRenderer).color = objectColorArray[PlayerPrefs.GetInt(variableNameCap + "Color")];
 	objectHolder.transform.parent = transform;
-	if(bottomsAvailability[PlayerPrefs.GetInt(variableNameCap + "Selection")]==false)
-	{
-		ChangePart(variableNameLower,change);
-	}
 	return objectHolder;
 }
 
@@ -272,7 +340,7 @@ public function UpdateAvailability () {
 	eyesAvailability = new boolean[eyes.length + 1];
 	topsAvailability = new boolean[tops.length + 1];
 	bottomsAvailability = new boolean[bottoms.length + 1];
-	
+		
 	for(var hairPiece:GameObject in hair)
 	{
 		if(!PlayerPrefs.HasKey("Hair:"+hairPiece.transform.name))
@@ -388,9 +456,9 @@ function LockAllOptions () {
 	{
 		PlayerPrefs.SetInt("Bottoms:"+bottomsPiece.transform.name,0);
 	}
-	PlayerPrefs.SetInt("Hair:"+hair[0].transform.name,1);
+	PlayerPrefs.SetInt("Hair:"+hair[1].transform.name,1);
 	PlayerPrefs.SetInt("Eyes:"+eyes[0].transform.name,1);
-	PlayerPrefs.SetInt("Tops:"+tops[0].transform.name,1);
+	PlayerPrefs.SetInt("Tops:"+tops[1].transform.name,1);
 	PlayerPrefs.SetInt("Bottoms:"+bottoms[0].transform.name,1);
 }
 

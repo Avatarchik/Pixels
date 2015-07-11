@@ -225,7 +225,7 @@ function ReturnToTitle() {
 	{
 		WorldMapManager.currentState = MapStatus.Returning;
 		//Camera.main.GetComponent(Master).currentWorld.basic.colors = transitionColors;
-		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
+		Instantiate(transition, Vector3(0,0,-9.5), Quaternion.identity);
 		if(Application.loadedLevelName == "WorldSelect")
 		{
 			AudioManager.PlaySoundTransition(transitionToTitle);

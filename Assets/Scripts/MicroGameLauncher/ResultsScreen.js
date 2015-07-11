@@ -12,10 +12,10 @@
 @HideInInspector var showTime:float;
 @HideInInspector var currentAnnouncement:GameObject;
 var particles:ParticleSystem[];
-
 var text:TextMesh[];
+var sign:SpriteRenderer;
+var signSprites:Sprite[];
 static var notifying:boolean;
-
 var finished:boolean;
 
 var announcement:Announcement;
@@ -25,6 +25,7 @@ var badApplause:AudioClip;
 var unlockApplause:AudioClip[];
 
 function Start () {
+	sign.sprite = signSprites[0];
 	AnnouncementOff();
 	score = Master.lastScore;
 	currentDisplayedScore = 0;
@@ -49,10 +50,20 @@ function Start () {
 		thisText.text = currentDisplayedScore.ToString();
 		thisText.fontSize = smallFont;
 	}
+	
 	CountScore();
 }
 
 function Update () {
+	for(var thisText:TextMesh in text)
+	{
+		thisText.text = currentDisplayedScore.ToString();
+	}
+	announcement.unlock.transform.localScale = Vector3.MoveTowards(announcement.unlock.transform.localScale,Vector3(1,1,1),Time.deltaTime * 2);
+	if(sign.transform.localPosition.y != .39)
+	{
+		sign.transform.localPosition.y = Mathf.MoveTowards(sign.transform.localPosition.y, .39, Time.deltaTime * .3);
+	}
 	if(finished)
 	{
 		if(transform.position.y != 20)
@@ -68,9 +79,10 @@ function Update () {
 
 function CountScore() {
 	yield WaitForSeconds(1);
+	var nextGoal:int = 1;
 	while(currentDisplayedScore < score)
 	{
-		if(waitTime != 0)
+		if(waitTime != .01)
 		{
 			yield WaitForSeconds(waitTime);
 		}
@@ -79,7 +91,6 @@ function CountScore() {
 		for(var thisText:TextMesh in text)
 		{
 			thisText.fontSize = smallFont;
-			thisText.text = currentDisplayedScore.ToString();
 		}
 		if(waitTime > skipWaitTime)
 		{
@@ -94,6 +105,10 @@ function CountScore() {
 		}
 		for(var i:int = 0; i < unlockLevels.length; i++)
 		{
+			if(currentDisplayedScore == unlockLevels[i])
+			{
+				nextGoal = i + 1;
+			}
 			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i)
 			{
 				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",i);
@@ -158,6 +173,8 @@ function CountScore() {
 			thisParticle.Emit(500);
 		}
 	}
+	yield WaitForSeconds(1.2);
+	sign.sprite = signSprites[nextGoal];
 	while(!finished)
 	{
 		yield;
@@ -180,7 +197,7 @@ function Clicked() {
 	{
 		if(waitTime == skipWaitTime)
 		{
-			waitTime = 0;
+			waitTime = 0.01;
 		}
 		else
 		{
@@ -240,6 +257,7 @@ function AnnouncementStep2 () {
 }
 function AnnouncementStep3 (level:int) {
 	announcement.unlockParticle.emissionRate = 100;
+	announcement.unlock.transform.localScale = Vector3(.5,.5,1);
 	announcement.unlock.sprite = Master.currentWorld.unlocks.unlockIcons[level];
 	announcement.chest.sprite = announcement.chestSprites[1];
 	announcement.lockImage.sprite = null;

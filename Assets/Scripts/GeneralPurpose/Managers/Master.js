@@ -165,6 +165,10 @@ function Demo() {
 			{
 				counter -= Time.deltaTime;
 			}
+			if((Finger.GetPosition(0).x > -13 && Finger.GetPosition(0).y > 6.5) || (Finger.GetPosition(0).x > -6 && Finger.GetPosition(0).y > 13.5))
+			{
+				counter += Time.deltaTime;
+			}
 		}
 		else
 		{
@@ -173,9 +177,17 @@ function Demo() {
 		yield;
 		if(counter < 0)
 		{
+			
 			PlayerPrefs.DeleteAll();
 			Application.LoadLevel("GameStart");
 			Destroy(gameObject);
+		}
+		else if (counter > demoTime * 2)
+		{
+			UnlockAllOptions();
+			unlockEverything = true;
+			unlockAll = true;
+			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
 	yield;

@@ -19,7 +19,7 @@ function Load () {
 	{
 		controller = Camera.main.GetComponent(Master);
 		AudioManager.PlaySoundTransition(controller.currentWorld.audio.transitionIn);
-		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
+		Instantiate(transition, Vector3(0,0,-9.5), Quaternion.identity);
 		done = true;
 	}
 	yield WaitForSeconds(.7);

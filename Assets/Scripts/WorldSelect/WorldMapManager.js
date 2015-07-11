@@ -153,7 +153,11 @@ function Update () {
 		{
 			bannerText.text = worlds[closestWorld].GetComponent(ChangeMapState).topLine;
 		}
-		showBanner();
+		if(PlayerPrefs.GetInt(worlds[closestWorld].GetComponent(ChangeMapState).worldNameVar) == 1)
+		{
+			Debug.Log("hey");
+			showBanner();
+		}
 	}
 	else
 	{

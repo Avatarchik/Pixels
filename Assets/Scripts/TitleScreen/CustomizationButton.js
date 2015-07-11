@@ -22,7 +22,7 @@ function Clicked () {
 		manager[0].ChangePart(bodyPart,change);
 		for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
 		{
-			manager[i].Refresh(bodyPart);
+			//manager[i].Refresh(bodyPart);
 		}
 	}
 	else
@@ -30,7 +30,7 @@ function Clicked () {
 		manager[0].ChangeColor(bodyPart,color);
 		for(i = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
 		{
-			manager[i].Refresh(bodyPart);
+			//manager[i].Refresh(bodyPart);
 		}
 	}
 }
