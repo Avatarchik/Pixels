@@ -23,6 +23,8 @@ var announcement:Announcement;
 var goodApplause:AudioClip;
 var badApplause:AudioClip;
 var unlockApplause:AudioClip[];
+var unlockSounds:AudioClip[];
+var drum:AudioClip;
 
 function Start () {
 	sign.sprite = signSprites[0];
@@ -36,7 +38,7 @@ function Start () {
 	numberOfUnlocks = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks");
 	unlockLevels = Master.unlockLevels;
 	waitTime = .4;
-	skipWaitTime = .02;
+	skipWaitTime = .02;	
 	if(score >= 15)
 	{
 		AudioManager.PlaySound(goodApplause,.4);	
@@ -155,6 +157,7 @@ function CountScore() {
 					AnnouncementStep2();
 					yield WaitForSeconds(.7);
 					AudioManager.PlaySound(unlockApplause[i-1],.4);	
+					AudioManager.PlaySound(unlockSounds[i-1],1);
 					AnnouncementStep3(i-1);
 					yield WaitForSeconds(4);
 					AnnouncementOff();

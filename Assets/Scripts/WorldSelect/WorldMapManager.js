@@ -155,7 +155,6 @@ function Update () {
 		}
 		if(PlayerPrefs.GetInt(worlds[closestWorld].GetComponent(ChangeMapState).worldNameVar) == 1)
 		{
-			Debug.Log("hey");
 			showBanner();
 		}
 	}

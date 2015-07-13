@@ -1,30 +1,26 @@
 ﻿#pragma strict
 
 var automatic:boolean;
-
 var lines:Line[];
-
-@HideInInspector var spriteObjects:GameObject[];
-var finished:boolean;
-var skipBox:Transform;
 
 @HideInInspector var lineLength:int;
 @HideInInspector  var numberOfLines:int;
+@HideInInspector var spriteObjects:GameObject[];
+@HideInInspector var finished:boolean;
 
 var song:AudioClip;
-
+var background:SpriteRenderer;
+@HideInInspector var currentBackgroundColor:Color;
 var record:boolean = false;
 
 static var leftSpriteNumber:int;
 static var rightSpriteNumber:int;
 
-private var lineMarker:int;
-private var currentDialogue:Array;
-
-private var numberOfLetters:int;
-private var current:int;
-
-private var doneLine:boolean;
+@HideInInspector var lineMarker:int;
+@HideInInspector var currentDialogue:Array;
+@HideInInspector var numberOfLetters:int;
+@HideInInspector var current:int;
+@HideInInspector var doneLine:boolean;
 
 function Start () {
 	// Initialize variable values.
@@ -82,6 +78,7 @@ function Start () {
 		MouthShape(false);
 	}
 	UpdateSprites(lineMarker);
+	ChangeColor(false);
 	StartCoroutine(UpdateSet());
 }
 
@@ -265,12 +262,14 @@ function UpdateSprites(number:int) {
 function NextLine () {
 	if(current < currentDialogue.length-1)
 	{
+		ChangeColor(false);
 		current++;
 		numberOfLetters = 0;
 		IncreaseLetters();
 	}
 	else if(lineMarker < lines.Length-1)
 	{
+		ChangeColor(false);
 		current = 0;
 		numberOfLetters = 0;
 		lineMarker++;
@@ -280,6 +279,7 @@ function NextLine () {
 	}
 	else if(lineMarker == lines.Length-1)
 	{
+		ChangeColor(true);
 		finished = true;
 	}
 }
@@ -385,8 +385,27 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 	}
 }
 
+function ChangeColor(finished:boolean) {
+	if(finished)
+	{
+		
+	}
+	else
+	{
+		while(background.color != lines[lineMarker].backgroundColor.r)
+		{
+			background.color.r = Mathf.MoveTowards(background.color.r,lines[lineMarker].backgroundColor.r,Time.deltaTime * 2);
+			background.color.g = Mathf.MoveTowards(background.color.g,lines[lineMarker].backgroundColor.g,Time.deltaTime * 2);
+			background.color.b = Mathf.MoveTowards(background.color.b,lines[lineMarker].backgroundColor.b,Time.deltaTime * 2);
+			background.color.a = Mathf.MoveTowards(background.color.a,lines[lineMarker].backgroundColor.a,Time.deltaTime * 2);
+			yield;
+		}	
+	}
+}
+
 function Clicked () {
 	AudioManager.EndCutscene();
+	ChangeColor(true);
 	finished = true;
 }
 
@@ -394,6 +413,7 @@ class Line {
 	var dialogue:String;
 	var leftSprite:GameObject;
 	var rightSprite:GameObject;
+	var backgroundColor:Color;
 	var playerState:PlayerState;
 	var currentSpeaker:boolean;
 	var targetTime:float;

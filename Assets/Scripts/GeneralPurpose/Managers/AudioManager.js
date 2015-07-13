@@ -230,7 +230,7 @@ static function FastForwardCutscene (speed:float) {
 static function EndCutscene () {
 	while(cutsceneSpeaker.volume != 0)
 	{
-		cutsceneSpeaker.volume = Mathf.MoveTowards(cutsceneSpeaker.volume,0,Time.deltaTime * .7);
+		cutsceneSpeaker.volume = Mathf.MoveTowards(cutsceneSpeaker.volume,0,Time.deltaTime * 3);
 		yield;
 	}
 	cutsceneSpeaker.Stop();

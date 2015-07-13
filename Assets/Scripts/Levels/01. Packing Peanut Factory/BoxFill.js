@@ -64,7 +64,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(importantFinger);
 	if(importantFinger == -1)
 	{
 		clicked = false;
