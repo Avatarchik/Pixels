@@ -19,13 +19,9 @@ function Appear () {
 		yield;
 	}
 	StartCoroutine(Shake(10, Vector2(0,.03)));
-	if(Master.initialLoad)
+	while(AudioManager.GetLocation() < 2.2)
 	{
-		yield WaitForSeconds(1.4);
-	}
-	else
-	{
-		yield WaitForSeconds(2.5);
+		yield;
 	}
 	StartCoroutine(Shake(10, Vector2(0.01,.01)));
 	GetComponent(SpriteRenderer).sprite = logo;

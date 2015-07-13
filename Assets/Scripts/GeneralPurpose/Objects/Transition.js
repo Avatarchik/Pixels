@@ -11,7 +11,7 @@ var controller:Master;
 @HideInInspector var textSpeed:float;
 
 function Start () {
-	baseSpeed = 110;
+	baseSpeed = 90;
 	textSpeed = baseSpeed / 15;
 	DontDestroyOnLoad(gameObject);
 	controller = Camera.main.GetComponent(Master);

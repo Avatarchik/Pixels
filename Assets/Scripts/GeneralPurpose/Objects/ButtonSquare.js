@@ -106,7 +106,6 @@ function FixedUpdate () {
 			}
 			else
 			{
-				Debug.Log(Time.time);
 				gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);
 				gameObject.SendMessage("Unclicked", SendMessageOptions.DontRequireReceiver);
 			}

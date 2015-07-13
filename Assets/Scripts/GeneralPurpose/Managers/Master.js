@@ -368,6 +368,13 @@ function UnlockAllOptions () {
 		{
 			PlayerPrefs.SetInt(worldName+"Beaten", 1);
 		}
+		for(var varName:int = 0; varName < varNames.length; varName++)
+		{
+			if(!PlayerPrefs.HasKey(aWorld.basic.worldNameVar+varNames[varName]))
+			{
+				PlayerPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 1);
+			}
+		}
 	}
 	PlayerPrefs.SetInt("CurrencyNumber", 1000);
 }

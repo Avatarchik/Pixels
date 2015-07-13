@@ -42,8 +42,7 @@ function Start () {
 	
 	if(song!=null)
 	{
-		AudioManager.Loop(false);
-		AudioManager.PlaySong(song);
+		AudioManager.PlayCutscene(song);
 	}
 	
 	
@@ -66,8 +65,6 @@ function Start () {
 	}
 	else
 	{
-		AudioManager.StopAll();
-		AudioManager.Loop(true);
 		Destroy(gameObject);
 	}
 	if(record)
@@ -203,7 +200,6 @@ function UpdateSet () {
 		}
 		if(transform.position.x == 30 && !record)
 		{
-			AudioManager.Loop(true);
 			Destroy(gameObject);
 		}
 		yield;
@@ -284,21 +280,9 @@ function NextLine () {
 	}
 	else if(lineMarker == lines.Length-1)
 	{
-		End(true);
+		finished = true;
 	}
 }
-function End (waitForEnd:boolean) {
-	if(waitForEnd)
-	{
-		while(AudioManager.GetPlaying())
-		{
-			yield;
-		}
-	}
-	AudioManager.StopAll();
-	AudioManager.Loop(true);
-	finished = true;
-}	
 
 // This, when used as a coroutine, continuously increases the current displayed letter depending on what letter
 // was just drawn. Punctuation has different "wait" times, which can be edited below. This produces a sort of
@@ -402,8 +386,8 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 }
 
 function Clicked () {
-	End(false);
-
+	AudioManager.EndCutscene();
+	finished = true;
 }
 
 class Line {

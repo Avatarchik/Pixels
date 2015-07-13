@@ -5,6 +5,7 @@ public enum Person{None,Peter,PeanutCEO};
 static var musicGetter:Component[];
 static var musicSpeaker:AudioSource[];
 static var effectSpeaker:AudioSource;
+static var cutsceneSpeaker:AudioSource;
 static var musicPosition:float;
 
 static var musicVolume:float = 1;
@@ -21,16 +22,21 @@ function Awake () {
 	humming = false;
 	humCharacter = Person.None;
 	musicGetter	= GetComponents(AudioSource);
-	musicSpeaker = new AudioSource[musicGetter.length - 1];
-	for(var i:int = 1; i < musicGetter.length; i++)
+	musicSpeaker = new AudioSource[musicGetter.length - 2];
+	for(var i:int = 2; i < musicGetter.length; i++)
 	{
-		musicSpeaker[i-1] = musicGetter[i];
+		musicSpeaker[i-2] = musicGetter[i];
 	}
 	effectSpeaker = musicGetter[0];
+	cutsceneSpeaker = musicGetter[1];
+	
 	for(i = 0; i < musicSpeaker.length; i++)
 	{
 		musicSpeaker[i].loop = true;
 	}
+	effectSpeaker.loop = false;
+	cutsceneSpeaker.loop = false;
+	
 	internalDeltaTime = Time.realtimeSinceStartup;
 }
 
@@ -43,6 +49,7 @@ function Update () {
 			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,internalDeltaTime*musicChangeSpeed);
 			musicSpeaker[i].pitch = Time.timeScale;
 		}
+		cutsceneSpeaker.pitch = Time.timeScale;
 	}
 	else
 	{
@@ -63,7 +70,7 @@ function Update () {
 }
 
 static function GetPlaying ():boolean {
-	if(musicSpeaker[0].isPlaying)
+	if(cutsceneSpeaker.isPlaying)
 	{
 		return true;
 	}
@@ -74,7 +81,11 @@ static function GetPlaying ():boolean {
 }
 
 static function GetLocation ():float {
-	if(musicSpeaker[0].isPlaying)
+	if(cutsceneSpeaker.isPlaying)
+	{
+		return cutsceneSpeaker.time;
+	}
+	else if(musicSpeaker[0].isPlaying)
 	{
 		return musicSpeaker[0].time;
 	}
@@ -89,7 +100,11 @@ static function GetLocation ():float {
 }
 
 static function GetLength ():float {
-	if(musicSpeaker[0].isPlaying)
+	if(cutsceneSpeaker.isPlaying)
+	{
+		return cutsceneSpeaker.clip.length;
+	}
+	else if(musicSpeaker[0].isPlaying)
 	{
 		return musicSpeaker[0].clip.length;
 	}
@@ -123,7 +138,8 @@ static function PlaySongIntro (intro:AudioClip, song:AudioClip, pause:float) {
 	StopSong();
 	if(intro != null)
 	{
-		effectSpeaker.PlayOneShot(intro);
+		effectSpeaker.clip = intro;
+		effectSpeaker.Play();
 	}
 	yield WaitForSeconds(pause);
 	musicSpeaker[0].clip = song;
@@ -190,6 +206,35 @@ static function PlaySound (sound:AudioClip, volume:float) {
 	{
 		effectSpeaker.PlayOneShot(sound,volume);
 	}	
+}
+
+static function PlayCutscene (sound:AudioClip) {
+	cutsceneSpeaker.clip = sound;
+	cutsceneSpeaker.volume = 1;
+	cutsceneSpeaker.Play();
+}
+
+static function PlayCutscene (sound:AudioClip, volume:float) {
+	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
+	{
+		cutsceneSpeaker.clip = sound;
+		cutsceneSpeaker.volume = volume;
+		cutsceneSpeaker.Play();
+	}	
+}
+/*
+static function FastForwardCutscene (speed:float) {
+	cutsceneSpeaker.pitch = speed;
+}
+*/
+static function EndCutscene () {
+	while(cutsceneSpeaker.volume != 0)
+	{
+		cutsceneSpeaker.volume = Mathf.MoveTowards(cutsceneSpeaker.volume,0,Time.deltaTime * .7);
+		yield;
+	}
+	cutsceneSpeaker.Stop();
+	cutsceneSpeaker.volume = 1;
 }
 
 static function SoundVolumeChange (volume:float) {

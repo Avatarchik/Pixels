@@ -45,7 +45,7 @@ function Start () {
 	blocker.transform.position = Vector3(-23,12,-3.5);
 	if(songs.length > 0)
 	{
-		AudioManager.PlaySoundTransition(songs[0]);
+		AudioManager.PlayCutscene(songs[0]);
 	}
 	StartCoroutine(Tutorial());
 }
@@ -78,17 +78,27 @@ function Update () {
 }
 
 function Tutorial () {
-	yield WaitForSeconds(3.9);
+	while(AudioManager.GetLocation() < 3.5)
+	{
+		yield;
+	}
 	if(logo!=null)
 	{
 		Destroy(logo);
 	}
-	yield WaitForSeconds(2);
+	while(AudioManager.GetLocation() < 5.5)
+	{
+		yield;
+	}
 		LaunchText(introText);
-		yield WaitForSeconds(21.5);
+		yield WaitForSeconds(1);
+		while(AudioManager.GetPlaying())
+		{
+			yield;
+		}
 		if(songs.length > 1)
 		{
-			AudioManager.PlaySoundTransition(songs[1]);
+			AudioManager.PlayCutscene(songs[1]);
 		}
 	//while(!currentText.GetComponent(TextManager).finished) {yield;}
 		currentButtonLocation = Vector2(-.25,-7.57);
@@ -99,7 +109,7 @@ function Tutorial () {
 		AudioManager.StopSong();
 		if(songs.length > 2)
 		{
-			AudioManager.PlaySoundTransition(songs[2]);
+			AudioManager.PlayCutscene(songs[2]);
 		}
 		button1.transform.position.z = hidden;
 		finger.transform.position.y = 100;
@@ -130,7 +140,7 @@ function Tutorial () {
 		AudioManager.StopSong();
 		if(songs.length > 3)
 		{
-			AudioManager.PlaySoundTransition(songs[3]);
+			AudioManager.PlayCutscene(songs[3]);
 		}
 		button3.transform.position.z = hidden;
 		finger.transform.position.y = 100;
@@ -156,7 +166,7 @@ function Tutorial () {
 	while(tutorialStage != 5) {yield;}
 		if(songs.length > 4)
 		{
-			AudioManager.PlaySoundTransition(songs[4]);
+			AudioManager.PlayCutscene(songs[4]);
 		}
 		button3.transform.position.z = hidden;
 		finger.transform.position.y = 100;
