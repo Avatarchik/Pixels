@@ -154,13 +154,10 @@ function Shake (object:GameObject, numberShakes:int, distance:Vector3){
 }
 
 function PlaySong () {
-	if(Master.initialLoad)
+	AudioManager.PlayCutscene(intro);
+	while(AudioManager.GetLocation() < 3.15)
 	{
-		AudioManager.PlaySongIntro(intro,titleMusic,3.4);			
+		yield;
 	}
-	else
-	{
-		yield WaitForSeconds(.25);
-		AudioManager.PlaySongIntro(intro,titleMusic,3.4);
-	}
+	AudioManager.PlaySong(titleMusic);
 }

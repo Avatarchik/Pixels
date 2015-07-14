@@ -30,6 +30,7 @@ function Start () {
 	sign.sprite = signSprites[0];
 	AnnouncementOff();
 	score = Master.lastScore;
+	score = 80;
 	currentDisplayedScore = 0;
 	smallFont = 400;
 	largeFont = 606;
@@ -39,6 +40,7 @@ function Start () {
 	unlockLevels = Master.unlockLevels;
 	waitTime = .4;
 	skipWaitTime = .02;	
+	AudioManager.PlaySound(drum,.4);
 	if(score >= 15)
 	{
 		AudioManager.PlaySound(goodApplause,.4);	
@@ -152,12 +154,12 @@ function CountScore() {
 							break;
 					}
 					yield WaitForSeconds(.3);
-					AnnouncementStep1(.6);
-					yield WaitForSeconds(1.5);
-					AnnouncementStep2();
-					yield WaitForSeconds(.7);
-					AudioManager.PlaySound(unlockApplause[i-1],.4);	
 					AudioManager.PlaySound(unlockSounds[i-1],1);
+					AnnouncementStep1(1.2);
+					yield WaitForSeconds(2.2);
+					AnnouncementStep2();
+					yield WaitForSeconds(1.2);
+					AudioManager.PlaySound(unlockApplause[i-1],.4);	
 					AnnouncementStep3(i-1);
 					yield WaitForSeconds(4);
 					AnnouncementOff();

@@ -28,7 +28,6 @@ function ChangeHue (thisObject:Transform) {
 	}
 	if(doToChildren)
 	{
-		Debug.Log("hey1");
 		for(var i:int = 1; i < thisObject.GetComponentsInChildren(Transform).length; i++)
 		{
 			ChangeHue(thisObject.GetComponentsInChildren(Transform)[i]);

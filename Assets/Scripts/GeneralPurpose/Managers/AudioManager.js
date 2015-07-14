@@ -74,6 +74,10 @@ static function GetPlaying ():boolean {
 	{
 		return true;
 	}
+	else if(musicSpeaker[0].isPlaying)
+	{
+		return true;
+	}
 	else
 	{
 		return false;

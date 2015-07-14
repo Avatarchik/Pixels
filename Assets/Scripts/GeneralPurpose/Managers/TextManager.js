@@ -38,6 +38,7 @@ function Start () {
 	
 	if(song!=null)
 	{
+		AudioManager.StopSong();
 		AudioManager.PlayCutscene(song);
 	}
 	
