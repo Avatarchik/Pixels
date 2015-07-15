@@ -32,6 +32,8 @@ var light2:SpriteRenderer;
 var greenLightSprites:Sprite[];
 var greenLight:SpriteRenderer;
 
+var clicked:boolean;
+
 
 function Start () {
 	currentSpaceman = 0;
@@ -39,6 +41,7 @@ function Start () {
 	light2.color.a = 0;
 	// Basic world variable initialization.
 	importantFinger = -1;
+	clicked = false;
 	
 	// Level specific variable initialization.
 	launched = false;
@@ -129,6 +132,7 @@ function Update () {
 	// Get important finger.
 	if(importantFinger == -1)
 	{
+		clicked = false;
 		for(var i:int = 0; i < Finger.identity.length; i++)
 		{
 			if(Finger.GetExists(i) && Finger.GetInGame(i))
@@ -139,9 +143,10 @@ function Update () {
 		}
 	}
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && !Master.paused)
+	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked)
 	{
-		
+		Clicked();
+		clicked = true;
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{

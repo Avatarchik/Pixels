@@ -135,7 +135,7 @@ function Update () {
 		}
 	}
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger) && !Master.paused)
+	if(Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger) && !Master.paused && !clicked)
 	{
 		if(Mathf.Abs(jumpCounter-Mathf.PI) < .1)
 		{

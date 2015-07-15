@@ -30,7 +30,6 @@ function Start () {
 	sign.sprite = signSprites[0];
 	AnnouncementOff();
 	score = Master.lastScore;
-	score = 80;
 	currentDisplayedScore = 0;
 	smallFont = 400;
 	largeFont = 606;

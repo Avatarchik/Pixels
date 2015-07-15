@@ -391,10 +391,9 @@ function LaunchLevel (wait:float) {
 	BroadcastArray(gameCovers,"DisplayChange","Controls");
 	
 	// Show instruction text and wait.
-	yield WaitForSeconds(timeBeforeLevelLoad/3);
 											if(quitting){return;}
 	Instantiate(instructions);
-	yield WaitForSeconds(wait + 2*timeBeforeLevelLoad/3);
+	yield WaitForSeconds(wait + 3*timeBeforeLevelLoad/3);
 											if(quitting){return;}
 	UI.BroadcastMessage("TimerStart", gameNumber,SendMessageOptions.DontRequireReceiver);
 	StartCoroutine(MoveAway());

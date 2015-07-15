@@ -165,7 +165,7 @@ function Demo() {
 			{
 				counter -= Time.deltaTime;
 			}
-			if((Finger.GetPosition(0).x > -13 && Finger.GetPosition(0).y > 6.5) || (Finger.GetPosition(0).x > -6 && Finger.GetPosition(0).y > 13.5))
+			if((Finger.GetPosition(0).x < -13 && Finger.GetPosition(0).y < 6.5) || (Finger.GetPosition(0).x > -6 && Finger.GetPosition(0).y < 13.5))
 			{
 				counter += Time.deltaTime;
 			}

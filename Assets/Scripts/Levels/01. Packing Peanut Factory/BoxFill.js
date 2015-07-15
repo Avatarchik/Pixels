@@ -106,7 +106,7 @@ function Update () {
 		}
 		else if(peanutsFree[i] == 2)
 		{
-			peanuts[i].transform.position = Vector3.MoveTowards(peanuts[i].transform.position,Vector3(peanuts[i].transform.parent.transform.position.x,peanuts[i].transform.parent.transform.position.y, peanuts[i].transform.position.z), Time.deltaTime*10);
+			peanuts[i].transform.position = Vector3.MoveTowards(peanuts[i].transform.position,Vector3(peanuts[i].transform.parent.transform.position.x,peanuts[i].transform.parent.transform.position.y, peanuts[i].transform.position.z), Time.deltaTime*15);
 		}
 	}
 	for(var y:int = 0; y < boxes.Length; y++)
