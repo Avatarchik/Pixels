@@ -32,7 +32,6 @@ function ShakeMedium (time:float) {
 }
 
 function InstructionShake (time:float) {
-	Debug.Log("hey");
 	origin = transform.position;
 	difference = .15;
 	while(time > 0)

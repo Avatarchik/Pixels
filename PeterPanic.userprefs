@@ -1,9 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/ResultsScreen.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/UI/UITimer.js">
     <Files>
-      <File FileName="Assets/Scripts/MicroGameLauncher/UI/Instruction.js" Line="39" Column="34" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/ResultsScreen.js" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/MicroGameLauncher/UI/UITimer.js" Line="58" Column="71" />
+      <File FileName="Assets/Scripts/Levels/05. GameDev/DoomShoot.js" Line="31" Column="1" />
+      <File FileName="Assets/Scripts/MicroGameLauncher/MicroGameManager.js" Line="20" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

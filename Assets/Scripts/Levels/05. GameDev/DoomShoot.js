@@ -29,6 +29,7 @@ function Start () {
 		difficulty = GameManager.difficulty;
 	}
 	length = 2 + .1/speed;
+	length = 10;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;

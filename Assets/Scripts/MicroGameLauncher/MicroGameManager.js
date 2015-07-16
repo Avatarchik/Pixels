@@ -2,6 +2,7 @@
 
 public enum AnimationType{SingleImage,RotatingImage,ChangingImage};
 
+var clockSounds:boolean;
 var firstTimeNotifyType:AnimationType;
 var images:Sprite[];
 var firstTimeRenderer:SpriteRenderer;
@@ -14,9 +15,9 @@ var flashSpeed:float;
 
 var instruction:String;
 var controls:Sprite;
-var length:float;
 
 function Start () {
+	UITimer.soundsOn = clockSounds;
 	marker = 0;
 	firstTimeStep = 0;
 	if(Application.loadedLevelName == "MicroGameLauncher")

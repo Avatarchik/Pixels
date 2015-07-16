@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 0365a784221c94f68b6234deb4f4c81a
-timeCreated: 1433653076
+guid: 5188f3e837bc24b2d8d3672253baefab
+timeCreated: 1436995854
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: SceneBack
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -28,10 +27,10 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 512
+  maxTextureSize: 2048
   textureSettings:
     filterMode: 0
-    aniso: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -50,7 +49,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: MuseumSprites
+  spritePackingTag: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 
