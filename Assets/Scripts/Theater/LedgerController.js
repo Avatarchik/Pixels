@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum LedgerState{Closed,FirstOpened,Transition,Menu,Worlds,Leaving};
+public enum LedgerState{Closed,FirstOpened,Transition,Menu,Worlds,Leaving,EnteringHardMode};
 
 class StatPieces {
 	var menu:GameObject;
@@ -26,6 +26,8 @@ var encore1Button:GameObject;
 var encore2Button:GameObject;
 var encore3Button:GameObject;
 var encore4Button:GameObject;
+var hardModeButtonVertical:GameObject;
+var hardModeButtonHorizontal:GameObject;
 
 @HideInInspector private var openingButtonOriginalSprite:Sprite;
 @HideInInspector private var repriseButtonOriginalSprite:Sprite;
@@ -35,6 +37,7 @@ var encore4Button:GameObject;
 @HideInInspector private var encore2ButtonOriginalSprite:Sprite;
 @HideInInspector private var encore3ButtonOriginalSprite:Sprite;
 @HideInInspector private var encore4ButtonOriginalSprite:Sprite;
+@HideInInspector private var hardModeOriginalSprite:Sprite;
 
 var lockedSprite:Sprite;
 var worldSprites:Sprite[];
@@ -52,6 +55,8 @@ var pieces:StatPieces;
 static var videoPlaying:boolean;
 static var songPlaying:boolean;
 
+var transition:GameObject;
+
 @HideInInspector var onScreen:float;
 @HideInInspector var offScreen:float;
 @HideInInspector var loadedText:GameObject;
@@ -66,6 +71,7 @@ function Start () {
 	encore2ButtonOriginalSprite = encore2Button.transform.GetChild(0).GetComponent(SpriteRenderer).sprite;
 	encore3ButtonOriginalSprite = encore3Button.transform.GetChild(0).GetComponent(SpriteRenderer).sprite;
 	encore4ButtonOriginalSprite = encore4Button.transform.GetChild(0).GetComponent(SpriteRenderer).sprite;
+	hardModeOriginalSprite = hardModeButtonVertical.transform.GetChild(0).GetComponent(SpriteRenderer).sprite;
 			
 	theaterController = GameObject.FindGameObjectWithTag("Theater").GetComponent(TheaterController);
 	worldNames = ["PackingPeanutFactory","Museum","HighSchool","Neverland"];
@@ -146,6 +152,8 @@ function UpdateDisplay(worldName:String){
 	EnableButton(encore2Button,encore2ButtonOriginalSprite);
 	EnableButton(encore3Button,encore3ButtonOriginalSprite);
 	EnableButton(encore4Button,encore4ButtonOriginalSprite);
+	EnableHardMode(hardModeButtonVertical,hardModeOriginalSprite);
+	EnableHardMode(hardModeButtonHorizontal,hardModeOriginalSprite);
 	if(PlayerPrefs.GetInt(worldName+"PlayedOnce") != 1)
 	{
 		DisableButton(entracteButton);
@@ -170,13 +178,15 @@ function UpdateDisplay(worldName:String){
 	{	
 		DisableButton(encore2Button);
 	}
-	if(PlayerPrefs.GetInt(worldName+"End3Played") < 2)
+	if(PlayerPrefs.GetInt(worldName+"End3Played") < 1)
 	{
 		DisableButton(encore3Button);
 	}
-	if(PlayerPrefs.GetInt(worldName+"End4Played") < 3)
+	if(PlayerPrefs.GetInt(worldName+"End4Played") < 1)
 	{
 		DisableButton(encore4Button);
+		DisableHardMode(hardModeButtonVertical);
+		DisableHardMode(hardModeButtonHorizontal);
 	}
 }
 
@@ -190,6 +200,18 @@ function EnableButton(button:GameObject, sprite:Sprite) {
 	button.GetComponent(ButtonRectangle).subText.GetComponent(SpriteRenderer).sprite = sprite;
 	button.GetComponent(ButtonRectangle).enabled = true;
 	button.GetComponent(SpriteRenderer).color = Color(.324,.6,.78,1);
+}
+
+function EnableHardMode(button:GameObject, sprite:Sprite) {
+	button.GetComponent(ButtonSquare).subText.GetComponent(SpriteRenderer).sprite = sprite;
+	button.GetComponent(ButtonSquare).enabled = true;
+}
+
+function DisableHardMode(button:GameObject) {
+	button.GetComponent(ButtonRectangle).subText.GetComponent(SpriteRenderer).sprite = lockedSprite;
+	button.GetComponent(ButtonSquare).subText.GetComponent(SpriteRenderer).color.a = .6;
+	button.GetComponent(ButtonSquare).enabled = false;
+	button.GetComponent(SpriteRenderer).color = Color(.4,.4,.4,1);
 }
 
 function VideoButtonPress (which:String) {
@@ -325,5 +347,23 @@ function CloseCover () {
 		cover.transform.localPosition.x = Mathf.MoveTowards(cover.transform.localPosition.x,0,Time.deltaTime * 1.3);
 		cover.transform.localPosition.x = Mathf.Lerp(cover.transform.localPosition.x,0,Time.deltaTime * 1.3);
 		yield;
+	}
+}
+
+function StartHardMode () {
+	if(currentState != LedgerState.EnteringHardMode) 
+	{
+		currentState = LedgerState.EnteringHardMode;
+		Master.hardMode = true;
+		Master.currentWorld = world;
+		if(transition != null)
+		{
+			AudioManager.PlaySoundTransition(controller.currentWorld.audio.transitionIn);
+			Instantiate(transition, Vector3(0,0,-9.5), Quaternion.identity);
+		}
+		yield WaitForSeconds(.7);
+		AudioManager.StopSong();
+		yield WaitForSeconds(1);
+		Application.LoadLevel("MicroGameLauncher");
 	}
 }

@@ -166,5 +166,6 @@ function Update () {
 }
 
 function PlayAudio () {
-	AudioManager.PlaySongIntro(null,controller.currentWorld.audio.music,0);
+	AudioManager.PlaySongIntro(null,controller.worlds[1].audio.music,0);
+	//AudioManager.PlaySongIntro(null,controller.currentWorld.audio.music,0);
 }

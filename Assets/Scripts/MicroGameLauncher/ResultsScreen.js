@@ -37,6 +37,10 @@ function Start () {
 	skip = false;
 	numberOfUnlocks = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks");
 	unlockLevels = Master.unlockLevels;
+	if(Master.hardMode)
+	{
+		unlockLevels = [0,0,0,0,0,0];
+	}
 	waitTime = .4;
 	skipWaitTime = .02;	
 	AudioManager.PlaySound(drum,.4);
@@ -90,7 +94,12 @@ function CountScore() {
 			yield WaitForSeconds(waitTime);
 		}
 		currentDisplayedScore ++;
-		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+1);
+		var currencyValue:int = 1;
+		if(Master.hardMode)
+		{
+			currencyValue *= 2;
+		}
+		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+currencyValue);
 		for(var thisText:TextMesh in text)
 		{
 			thisText.fontSize = smallFont;

@@ -31,6 +31,13 @@ function Clicked () {
 		{
 			LedgerController.songPlaying = !LedgerController.songPlaying;
 		}
-		GameObject.FindGameObjectWithTag("LedgerController").SendMessage("VideoButtonPress",type,SendMessageOptions.DontRequireReceiver);
+		if(type == "HARDMODE")
+		{
+			GameObject.FindGameObjectWithTag("LedgerController").SendMessage("StartHardMode",SendMessageOptions.DontRequireReceiver);
+		}
+		else
+		{
+			GameObject.FindGameObjectWithTag("LedgerController").SendMessage("VideoButtonPress",type,SendMessageOptions.DontRequireReceiver);
+		}
 	}
 }

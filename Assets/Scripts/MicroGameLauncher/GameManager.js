@@ -71,6 +71,17 @@ function Start () {
 	currentGames = Master.currentWorld.basic.games;
 	bossGame = Master.currentWorld.basic.bossGame;
 	UI = Instantiate(Master.currentWorld.basic.UI);
+	if(Master.hardMode)
+	{
+		var hue:float = 0;
+		var saturation:float = 1.3;
+		var tint:Color = Color(1,.4,.4,1);
+		GetComponent(ChangeHue).ChangeHue(UI.transform,hue,saturation,tint);
+		for(var cover:GameObject in gameCovers)
+		{
+			GetComponent(ChangeHue).ChangeHue(cover.transform,hue,saturation,tint);
+		}
+	}
 	
 	// Start the pre-game animation.
 	StartCoroutine(BeforeGames());
@@ -125,6 +136,15 @@ function BeforeGames () {
 		firstTimeValues[gameNum] = false;
 	}
 	
+	// Hard mode settings
+	if(Master.hardMode)
+	{
+		smallAmount = 5;
+		largeAmount = 10;
+		speed = 5;
+		difficulty = 2;
+	}
+	
 	// Pause variables.
 	pausable = false;
 	paused = false;
@@ -132,21 +152,24 @@ function BeforeGames () {
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
-	yield WaitForSeconds (.15);
+	yield WaitForSeconds (.55);
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
+	if(!Master.hardMode)
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"FirstOpeningPlayed",1);
-		loadedText = Instantiate(Master.currentWorld.text.firstOpening);
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
+		{
+			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"FirstOpeningPlayed",1);
+			loadedText = Instantiate(Master.currentWorld.text.firstOpening);
+		}
+		else
+		{
+			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"RegularOpeningPlayed",1);
+			loadedText = Instantiate(Master.currentWorld.text.regularOpening);
+		}
+		// Wait for the text to finish.
+		while(!loadedText.GetComponent(TextManager).finished && !Master.hardMode){yield;}
 	}
-	else
-	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"RegularOpeningPlayed",1);
-		loadedText = Instantiate(Master.currentWorld.text.regularOpening);
-	}
-	// Wait for the text to finish.
-	while(!loadedText.GetComponent(TextManager).finished){yield;}
-	AudioManager.PlaySong(Master.currentWorld.audio.music[speed-1]);
+	PlayCurrentMusic();
 	GetRandomGame();
 	yield WaitForSeconds(1);
 	pausable = true;
@@ -222,10 +245,13 @@ function GameOver () {
 	yield WaitForSeconds(.5);
 	pausable = false;
 	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
-	loadedText = Instantiate(FindEnding());
-	yield WaitForSeconds(.2);
-	Destroy(currentlyLoaded);
-	while(!loadedText.GetComponent(TextManager).finished){yield;}
+	if(!Master.hardMode)
+	{
+		loadedText = Instantiate(FindEnding());
+		yield WaitForSeconds(.2);
+		Destroy(currentlyLoaded);
+		while(!loadedText.GetComponent(TextManager).finished){yield;}
+	}
 	Master.lastScore = gameNumber;
 //	yield WaitForSeconds(.2);
 	currentResults = Instantiate(results,Vector3(results.transform.position.x,20,results.transform.position.z), Quaternion.identity);
@@ -250,11 +276,23 @@ function GameOver () {
 		yield WaitForSeconds(.7);
 		AudioManager.StopSong();
 		yield WaitForSeconds(1.3);
-		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
+		if(Master.hardMode)
 		{
-			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
+			if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard") <= gameNumber)
+			{
+				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",gameNumber);
+			}
+			Master.hardMode = false;
+			Application.LoadLevel("Theater");
 		}
-		Application.LoadLevel("WorldSelect");
+		else
+		{
+			if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
+			{
+				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
+			}
+			Application.LoadLevel("WorldSelect");
+		}
 	}
 }
 
@@ -372,7 +410,7 @@ function LaunchLevel (wait:float) {
 		if(Master.currentWorld.audio.music.length >= speed)
 		{
 			AudioManager.StopSong();
-			AudioManager.PlaySong(Master.currentWorld.audio.music[speed-1]);
+			PlayCurrentMusic();
 		}
 	}
 	notified = false;
@@ -476,12 +514,19 @@ function Notify(text:String) {
 function DifficultSpeedCheck() {
 	if(speedProgress >= largeAmount)
 	{
-		speed ++;
-		AudioManager.PlaySound(Master.currentWorld.audio.speedUp);
-		difficulty = 1;
+		if(!Master.hardMode)
+		{
+			speed = Mathf.MoveTowards(speed,6,1);
+			AudioManager.PlaySound(Master.currentWorld.audio.speedUp);
+			Notify("Speed\nUp!");
+			notified = true;
+			difficulty = 1;
+		}
+		else
+		{
+			difficulty = 2;
+		}
 		speedProgress = 0;
-		Notify("Speed\nUp!");
-		notified = true;
 	}
 	else if(difficultyProgress >= smallAmount) 
 	{
@@ -499,5 +544,16 @@ function BroadcastArray(array:GameObject[],message:String,input:String){
 	for(var object:GameObject in array)
 	{
 		object.BroadcastMessage(message,input,SendMessageOptions.DontRequireReceiver);
+	}
+}
+
+function PlayCurrentMusic () {
+	if(Master.currentWorld.audio.music.length > speed-1)
+	{
+		AudioManager.PlaySong(Master.currentWorld.audio.music[speed-1]);
+	}
+	else
+	{
+		AudioManager.PlaySong(Master.currentWorld.audio.music[Master.currentWorld.audio.music.length-1]);
 	}
 }

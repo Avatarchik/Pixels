@@ -30,6 +30,7 @@ var varNames:String[];
 static var counter:float;
 static var demo:boolean;
 static var unlockAll:boolean;
+static var hardMode:boolean;
 
 var worlds:World[];
 static var currentWorld:World;
@@ -48,6 +49,7 @@ function Awake () {
 	initialWorldSpeed = 1;
 	speedIncrease = 1;
 	initialLoad = true;
+	hardMode = false;
 	
 	// Set iOS device settings, including framerate and permitted orientations, and find Top and Bottom objects.
 	if(CheckDeviceType("iPad"))
@@ -165,7 +167,7 @@ function Demo() {
 			{
 				counter -= Time.deltaTime;
 			}
-			if((Finger.GetPosition(0).x < -13 && Finger.GetPosition(0).y < 6.5) || (Finger.GetPosition(0).x > -6 && Finger.GetPosition(0).y < 13.5))
+			if((Finger.GetPosition(0).x < -13 && Finger.GetPosition(0).y < -6.5) || (Finger.GetPosition(0).x > -6 && Finger.GetPosition(0).y < -13.5))
 			{
 				counter += Time.deltaTime;
 			}
@@ -184,9 +186,10 @@ function Demo() {
 		}
 		else if (counter > demoTime * 2)
 		{
-			UnlockAllOptions();
 			unlockEverything = true;
 			unlockAll = true;
+			Initialize();
+			UnlockAllOptions();
 			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
