@@ -131,6 +131,7 @@ function Update () {
 		case MapStatus.Confirmation:
 			showTicket();
 			FindClosest();
+			fade.material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
 			transform.position.x = Mathf.Lerp(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*5);
 			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.8);
 			break;
@@ -166,20 +167,30 @@ function Update () {
 
 function showTicket() {
 	var childText:Component[];
+	var childImages:Component[];
 	childText = ticket.GetComponentsInChildren(TextMesh);
+	childImages = ticket.GetComponentsInChildren(Renderer);
+	ticket.GetComponentInChildren(HardModeToggle).UpdateVisuals(false);
 	for(var text:TextMesh in childText)
 	{
-		if(text.transform.name == "Title1" || text.transform.name == "Shadow1")
+		if(text.transform.name == "Title")
 		{
 			text.text = Camera.main.GetComponent(Master).currentWorld.basic.topLine;
-		}	
-		else if(text.transform.name == "Title2" || text.transform.name == "Shadow2")
-		{
-			text.text = Camera.main.GetComponent(Master).currentWorld.basic.bottomLine;
 		}	
 		else if(text.transform.name == "HighScore")
 		{
 			text.text = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore").ToString();
+		}
+	}
+	for(var images:Renderer in childImages)
+	{
+		if(images.transform.name == "Image")
+		{
+			images.material.mainTexture = Master.currentWorld.basic.playbillNormal;
+		}
+		else if(images.transform.name == "ImageEvil")
+		{
+			images.material.mainTexture = Master.currentWorld.basic.playbillEvil;
 		}
 	}
 	while(Vector3.Distance(ticket.transform.position, showNot) > .1 && currentState == MapStatus.Confirmation)
@@ -189,6 +200,8 @@ function showTicket() {
 	}
 }
 function hideTicket() {
+	Master.hardMode = false;
+	ticket.GetComponentInChildren(HardModeToggle).UpdateVisuals(false);
 	while(Vector3.Distance(ticket.transform.position, hideNot) > .5 && currentState == MapStatus.Clear)
 	{
 		ticket.transform.position = Vector3.Lerp(ticket.transform.position,hideNot, Time.deltaTime);

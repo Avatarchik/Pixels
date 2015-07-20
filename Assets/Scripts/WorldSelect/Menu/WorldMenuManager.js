@@ -10,6 +10,9 @@ var transition:GameObject;
 var transitionColors:Color[];
 var destination:float;
 
+var exitColor:Color;
+var normalColor:Color;
+
 
 function Start () {
 	if(!PlayerPrefs.HasKey("Sound"))
@@ -121,6 +124,14 @@ function UpdateNamesUp () {
 		if(option[i] != null && option[i] != "")
 		{	
 			button[i] = Instantiate(buttonPrefab, transform.position + Vector3(0,3.8 - i * 2.9,-.01), Quaternion.identity);
+			if(option[i] == "Title Screen" || option[i] == "Back")
+			{
+				button[i].GetComponentInChildren(SpriteRenderer).color = exitColor;
+			}
+			else
+			{
+				button[i].GetComponentInChildren(SpriteRenderer).color = normalColor;
+			}
 			if(Application.loadedLevelName != "TitleScreen")
 			{
 				button[i].transform.localScale = Vector3(5.625,5.625,5.625);
@@ -160,7 +171,14 @@ function UpdateNamesDown () {
 		if(option[i] != null && option[i] != "")
 		{	
 			button[i] = Instantiate(buttonPrefab, transform.position + Vector3(0,3.8 - i * 2.9,0), Quaternion.identity);
-			
+			if(option[i] == "Title Screen")
+			{
+				button[i].GetComponentInChildren(SpriteRenderer).color = exitColor;
+			}
+			else
+			{
+				button[i].GetComponentInChildren(SpriteRenderer).color = normalColor;
+			}
 			button[i].GetComponent(WorldMenuButton).SetText(option[i]);
 			button[i].transform.parent = transform;
 			if(option[3] == "")
@@ -173,6 +191,7 @@ function UpdateNamesDown () {
 			}
 		}
 	}
+	
 	transform.position.y = -25;
 	while(transform.position.y < destination &&  WorldMapManager.currentState == MapStatus.Menu)
 	{

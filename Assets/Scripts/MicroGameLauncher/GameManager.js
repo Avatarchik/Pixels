@@ -143,6 +143,7 @@ function BeforeGames () {
 		largeAmount = 10;
 		speed = 5;
 		difficulty = 2;
+		bossDifficulty = speed;
 	}
 	
 	// Pause variables.
@@ -150,7 +151,7 @@ function BeforeGames () {
 	paused = false;
 	fade = Camera.main.GetComponentInChildren(Renderer);
 	UI.BroadcastMessage("GameNumberChange", gameNumber,SendMessageOptions.DontRequireReceiver);
-	UI.BroadcastMessage("SpeedChange", gameNumber,SendMessageOptions.DontRequireReceiver);
+	UI.BroadcastMessage("SpeedChange", Mathf.Floor(speed),SendMessageOptions.DontRequireReceiver);
 	UI.BroadcastMessage("LifeChange", lives,SendMessageOptions.DontRequireReceiver);
 	yield WaitForSeconds (.55);
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
@@ -264,9 +265,9 @@ function GameOver () {
 		sinMultiplier = Mathf.Lerp(sinMultiplier,0,Time.deltaTime * 3.5);
 		yield;
 	}
+	fade.material.color.a = 0;
 	if(replay)
 	{
-		fade.material.color.a = 0;
 		BeforeGames();
 	}
 	else
@@ -524,20 +525,20 @@ function DifficultSpeedCheck() {
 		}
 		else
 		{
+			speed = Mathf.MoveTowards(speed,8,.5);
+			AudioManager.PlaySound(Master.currentWorld.audio.speedUp);
+			Notify("Speed\nUp!");
+			notified = true;
 			difficulty = 2;
 		}
 		speedProgress = 0;
 	}
 	else if(difficultyProgress >= smallAmount) 
 	{
-		difficulty ++;
-		if(difficulty > 3)
-		{
-			difficulty = 3;
-		}
+		difficulty = Mathf.MoveTowards(difficulty,3,1);
 		difficultyProgress = 0;
 	}
-	UI.BroadcastMessage("SpeedChange", speed,SendMessageOptions.DontRequireReceiver);
+	UI.BroadcastMessage("SpeedChange", Mathf.Floor(speed),SendMessageOptions.DontRequireReceiver);
 }
 
 function BroadcastArray(array:GameObject[],message:String,input:String){

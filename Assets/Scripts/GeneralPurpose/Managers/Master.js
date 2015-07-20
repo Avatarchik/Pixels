@@ -384,10 +384,11 @@ function UnlockAllOptions () {
 
 class BasicVariables {
 	var world:WorldSelect;
+	var playbillNormal:Texture;
+	var playbillEvil:Texture;
 	var worldNameFull:String;
 	var worldNameVar:String;
 	var topLine:String;
-	var bottomLine:String;
 	var games:GameObject[];
 	var bossGame:GameObject;
 	var covers:GameObject[];
