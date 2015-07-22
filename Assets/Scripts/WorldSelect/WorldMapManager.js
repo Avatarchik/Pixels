@@ -24,10 +24,6 @@ var ticket:GameObject;
 private var worldTransition:GameObject;
 static var selectedLocation:float;
 
-// Banner
-var banner:GameObject;
-@HideInInspector var bannerText:TextMesh;
-
 // Menu
 private var fade:Renderer;
 
@@ -39,7 +35,6 @@ function Start () {
 	selectedLocation = transform.position.x;
 	AudioManager.PlaySongIntro(null,worldMusic,1);
 
-	bannerText = banner.GetComponentInChildren(TextMesh);
 	worlds = new Transform[transform.childCount];
 	for(var i:int = 0; i < worlds.length; i++)
 	{
@@ -144,25 +139,6 @@ function Update () {
 		default:
 			break;
 	}
-	if(closestWorld != null && Mathf.Abs(worlds[closestWorld].transform.position.x - 0) < 3)
-	{
-		if(worlds[closestWorld].GetComponent(ChangeMapState).bottomLine != null && worlds[closestWorld].GetComponent(ChangeMapState).bottomLine != "")
-		{
-			bannerText.text = worlds[closestWorld].GetComponent(ChangeMapState).topLine + "\n" + worlds[closestWorld].GetComponent(ChangeMapState).bottomLine;
-		}
-		else
-		{
-			bannerText.text = worlds[closestWorld].GetComponent(ChangeMapState).topLine;
-		}
-		if(PlayerPrefs.GetInt(worlds[closestWorld].GetComponent(ChangeMapState).worldNameVar) == 1)
-		{
-			showBanner();
-		}
-	}
-	else
-	{
-		hideBanner();	
-	}
 }
 
 function showTicket() {
@@ -179,7 +155,14 @@ function showTicket() {
 		}	
 		else if(text.transform.name == "HighScore")
 		{
-			text.text = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore").ToString();
+			if(Master.hardMode)
+			{
+				text.text = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard").ToString();
+			}
+			else
+			{
+				text.text = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore").ToString();
+			}
 		}
 	}
 	for(var images:Renderer in childImages)
@@ -201,19 +184,12 @@ function showTicket() {
 }
 function hideTicket() {
 	Master.hardMode = false;
-	ticket.GetComponentInChildren(HardModeToggle).UpdateVisuals(false);
+	ticket.GetComponentInChildren(HardModeToggle).UpdateVisuals(true);
 	while(Vector3.Distance(ticket.transform.position, hideNot) > .5 && currentState == MapStatus.Clear)
 	{
 		ticket.transform.position = Vector3.Lerp(ticket.transform.position,hideNot, Time.deltaTime);
 		yield;
 	}
-}
-
-function showBanner() {
-	banner.transform.position = Vector3.Lerp(banner.transform.position,showNot - Vector3(0,8,.5), Time.deltaTime * 2);
-}
-function hideBanner() {
-	banner.transform.position = Vector3.Lerp(banner.transform.position,-hideNot, Time.deltaTime * 2);
 }
 
 function FindClosest() {

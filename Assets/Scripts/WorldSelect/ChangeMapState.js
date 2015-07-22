@@ -14,8 +14,42 @@ var worldNameVar:String;
 var topLine:String;
 var bottomLine:String;
 
+var distance:float;
+
+@HideInInspector var showCounter:float;
+var button:SpriteRenderer;
+var buttonIcon:SpriteRenderer;
+
 function Start () {
+	showCounter = 0;
 	StartCoroutine(UpdateWorldAvailability());
+}
+
+function CheckHover () {
+	while(true)
+	{
+		if(Mathf.Abs(Camera.main.transform.position.x - transform.position.x) < distance)
+		{
+			showCounter += Time.deltaTime;
+		}
+		else
+		{
+			showCounter = 0;
+		}
+		if(showCounter > 2)
+		{
+			var goalColor:float = Mathf.Abs(Mathf.Sin(showCounter))/2 + .5;;
+			
+			button.color.a = Mathf.MoveTowards(button.color.a, goalColor, Time.deltaTime*2);
+			buttonIcon.color.a = Mathf.MoveTowards(button.color.a, goalColor, Time.deltaTime*2);
+		}
+		else
+		{
+			button.color.a = 0;
+			buttonIcon.color.a = 0;
+		}
+		yield;
+	}
 }
 
 function Clicked () {
@@ -66,6 +100,10 @@ function Clicked () {
 }
 
 function UpdateWorldAvailability () {
+	if(PlayerPrefs.GetInt(worldNameVar) == 1)
+	{
+		CheckHover();
+	}
 	while(true)
 	{
 		if(thisWorldDisplay.Length == 2)

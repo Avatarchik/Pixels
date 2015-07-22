@@ -2,7 +2,7 @@
 
 static var initialLoad:boolean;
 
-public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland};
+public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev};
 
 static var initialWorldSpeed:int;
 static var speedIncrease:int;
@@ -361,6 +361,10 @@ function UnlockAllOptions () {
 		if(!PlayerPrefs.HasKey(worldName)+"HighScore")
 		{
 			PlayerPrefs.SetInt(worldName+"HighScore", 50);
+		}
+		if(!PlayerPrefs.HasKey(worldName)+"HighScoreHard")
+		{
+			PlayerPrefs.SetInt(worldName+"HighScoreHard", 50);
 		}
 		///////////////////////////////////////////////////////////////////// World visit variables.
 		if(!PlayerPrefs.HasKey(worldName)+"PlayedOnce")
