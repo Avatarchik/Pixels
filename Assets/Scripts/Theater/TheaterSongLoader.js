@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 var type:String;
 var offSprite:Sprite;

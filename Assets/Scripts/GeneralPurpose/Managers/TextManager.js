@@ -22,6 +22,8 @@ static var rightSpriteNumber:int;
 @HideInInspector var current:int;
 @HideInInspector var doneLine:boolean;
 
+@HideInInspector var newColor:Color;
+
 function Start () {
 	// Initialize variable values.
 	spriteObjects = new GameObject[2];
@@ -88,6 +90,15 @@ function KillObject(object:GameObject)
 	Destroy(object);
 }
 function Update () {
+	if(lineMarker > 0)
+	{
+		newColor = lines[lineMarker].backgroundColor;
+	}
+	
+	background.color.r = Mathf.MoveTowards(background.color.r,newColor.r,Time.deltaTime * .6);
+	background.color.g = Mathf.MoveTowards(background.color.g,newColor.g,Time.deltaTime * .6);
+	background.color.b = Mathf.MoveTowards(background.color.b,newColor.b,Time.deltaTime * .6);
+	background.color.a = Mathf.MoveTowards(background.color.a,newColor.a,Time.deltaTime * .6);
 }
 
 // Recording function for mouth movement.
@@ -122,7 +133,7 @@ function Record () {
 function SetSprite (object:GameObject,spriteSetNumber:int) {
 	if(object != null)
 	{
-		object.SendMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
+		object.BroadcastMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
 	}
 }
 function ChangeMouthValue(mouthArray:MouthState[],spriteValue:int):MouthState[] {
@@ -214,10 +225,26 @@ function UpdateSprites(number:int) {
 			{
 				KillObject(spriteObjects[0]);
 				spriteObjects[0] = Instantiate(lines[number].leftSprite);
+				if(lines[number].flipLeft)
+				{
+					if(spriteObjects[0].transform.tag == "Player")
+					{
+						spriteObjects[0].GetComponent(AnimationManager).flipped = -1;
+					}
+					spriteObjects[0].transform.localScale.x *= -1;
+				}
 			}
 			else if(number == 0)
 			{
 				spriteObjects[0] = Instantiate(lines[number].leftSprite);
+				if(lines[number].flipLeft)
+				{
+					if(spriteObjects[0].transform.tag == "Player")
+					{
+						spriteObjects[0].GetComponent(AnimationManager).flipped = -1;
+					}
+					spriteObjects[0].transform.localScale.x *= -1;
+				}
 			}
 			
 		}
@@ -227,32 +254,66 @@ function UpdateSprites(number:int) {
 			{
 				KillObject(spriteObjects[1]);
 				spriteObjects[1] = Instantiate(lines[number].rightSprite);
+				if(lines[number].flipRight)
+				{
+					if(spriteObjects[1].transform.tag == "Player")
+					{
+						spriteObjects[1].GetComponent(AnimationManager).flipped = -1;
+					}
+					spriteObjects[1].transform.localScale.x *= -1;
+				}
 			}
 			else if(number == 0)
 			{
 				spriteObjects[1] = Instantiate(lines[number].rightSprite);
+				if(lines[number].flipRight)
+				{
+					if(spriteObjects[1].transform.tag == "Player")
+					{
+						spriteObjects[1].GetComponent(AnimationManager).flipped = -1;
+					}
+					spriteObjects[1].transform.localScale.x *= -1;
+				}
 			}
 		}
-		if(lines.length >= number && spriteObjects[0].transform.tag == "Player")
+		if(spriteObjects[0] != null && lines.length >= number && spriteObjects[0].transform.tag == "Player")
 		{
 			spriteObjects[0].GetComponent(PlayerManager).currentState = lines[number].playerState;
 		}
-		if(lines.length >= number && spriteObjects[1].transform.tag == "Player")
+		if(spriteObjects[1] != null && lines.length >= number && spriteObjects[1].transform.tag == "Player")
 		{
 			spriteObjects[1].GetComponent(PlayerManager).currentState = lines[number].playerState;
 		}
 		if(lines[number].currentSpeaker)
 		{
-			spriteObjects[0].transform.position = Vector3(-4.5,0,transform.position.z+1);
-			spriteObjects[1].transform.position = Vector3(4.5,1,transform.position.z+1.5);
+			if(spriteObjects[0] != null)
+			{
+				spriteObjects[0].transform.position = Vector3(-4.5,0,transform.position.z+1);
+			}
+			if(spriteObjects[1] != null)
+			{
+				spriteObjects[1].transform.position = Vector3(4.5,1,transform.position.z+1.5);
+			}
 		}
 		else
 		{
-			spriteObjects[0].transform.position = Vector3(-4.5,1,transform.position.z+1);
-			spriteObjects[1].transform.position = Vector3(4.5,0,transform.position.z+1.5);
+			if(spriteObjects[0] != null)
+			{
+				spriteObjects[0].transform.position = Vector3(-4.5,1,transform.position.z+1);
+			}
+			if(spriteObjects[1] != null)
+			{
+				spriteObjects[1].transform.position = Vector3(4.5,0,transform.position.z+1.5);
+			}
 		}
-		spriteObjects[0].transform.parent = transform;
-		spriteObjects[1].transform.parent = transform;
+		if(spriteObjects[0] != null)
+		{
+			spriteObjects[0].transform.parent = transform;
+		}
+		if(spriteObjects[1] != null)
+		{
+			spriteObjects[1].transform.parent = transform;
+		}
 	}
 	
 }
@@ -393,14 +454,8 @@ function ChangeColor(finished:boolean) {
 	}
 	else
 	{
-		while(background.color != lines[lineMarker].backgroundColor.r)
-		{
-			background.color.r = Mathf.MoveTowards(background.color.r,lines[lineMarker].backgroundColor.r,Time.deltaTime * 2);
-			background.color.g = Mathf.MoveTowards(background.color.g,lines[lineMarker].backgroundColor.g,Time.deltaTime * 2);
-			background.color.b = Mathf.MoveTowards(background.color.b,lines[lineMarker].backgroundColor.b,Time.deltaTime * 2);
-			background.color.a = Mathf.MoveTowards(background.color.a,lines[lineMarker].backgroundColor.a,Time.deltaTime * 2);
-			yield;
-		}	
+		
+		//newColor = lines[lineMarker].backgroundColor;
 	}
 }
 
@@ -413,7 +468,9 @@ function Clicked () {
 class Line {
 	var dialogue:String;
 	var leftSprite:GameObject;
+	var flipLeft:boolean;
 	var rightSprite:GameObject;
+	var flipRight:boolean;
 	var backgroundColor:Color;
 	var playerState:PlayerState;
 	var currentSpeaker:boolean;

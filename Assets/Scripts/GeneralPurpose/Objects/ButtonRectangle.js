@@ -79,7 +79,7 @@ function Update () {
 			}
 		}
 	}
-	else if(!Finger.GetExists(importantFinger))
+	else if(!Finger.GetExists(importantFinger) && Application.loadedLevelName != "LyricsTest")
 	{
 		button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x * boundMultiplier, transform.lossyScale.y * boundMultiplier/2, 2));
 		// Touch button with importantFinger.

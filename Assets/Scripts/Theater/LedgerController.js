@@ -269,8 +269,9 @@ function RunVideo (text:GameObject) {
 	}
 	AudioManager.StopAll();
 	theaterController.PlayAudio();
-	videoPlaying = false;
 	border.color.a = 0;
+	yield WaitForEndOfFrame;
+	videoPlaying = false;
 	while(blackout.color.a != 0)
 	{
 		blackout.color.a = Mathf.MoveTowards(blackout.color.a,0,Time.deltaTime);
@@ -351,7 +352,7 @@ function CloseCover () {
 }
 
 function StartHardMode () {
-	if(currentState != LedgerState.EnteringHardMode) 
+	if(currentState != LedgerState.EnteringHardMode && !videoPlaying) 
 	{
 		currentState = LedgerState.EnteringHardMode;
 		Master.hardMode = true;
