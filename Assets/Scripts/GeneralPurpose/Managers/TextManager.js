@@ -81,7 +81,6 @@ function Start () {
 		MouthShape(false);
 	}
 	UpdateSprites(lineMarker);
-	ChangeColor(false);
 	StartCoroutine(UpdateSet());
 }
 
@@ -90,15 +89,22 @@ function KillObject(object:GameObject)
 	Destroy(object);
 }
 function Update () {
-	if(lineMarker > 0)
+	var speed:float = .6;
+	if(lineMarker >= 0)
 	{
 		newColor = lines[lineMarker].backgroundColor;
 	}
+	if(finished)
+	{
+		speed = 1.5;
+		newColor = Color.clear;
+	}
 	
-	background.color.r = Mathf.MoveTowards(background.color.r,newColor.r,Time.deltaTime * .6);
-	background.color.g = Mathf.MoveTowards(background.color.g,newColor.g,Time.deltaTime * .6);
-	background.color.b = Mathf.MoveTowards(background.color.b,newColor.b,Time.deltaTime * .6);
-	background.color.a = Mathf.MoveTowards(background.color.a,newColor.a,Time.deltaTime * .6);
+Debug.Log(newColor);
+	background.color.r = Mathf.MoveTowards(background.color.r,newColor.r,Time.deltaTime * speed);
+	background.color.g = Mathf.MoveTowards(background.color.g,newColor.g,Time.deltaTime * speed);
+	background.color.b = Mathf.MoveTowards(background.color.b,newColor.b,Time.deltaTime * speed);
+	background.color.a = Mathf.MoveTowards(background.color.a,newColor.a,Time.deltaTime * speed);
 }
 
 // Recording function for mouth movement.
@@ -324,14 +330,12 @@ function UpdateSprites(number:int) {
 function NextLine () {
 	if(current < currentDialogue.length-1)
 	{
-		ChangeColor(false);
 		current++;
 		numberOfLetters = 0;
 		IncreaseLetters();
 	}
 	else if(lineMarker < lines.Length-1)
 	{
-		ChangeColor(false);
 		current = 0;
 		numberOfLetters = 0;
 		lineMarker++;
@@ -341,7 +345,6 @@ function NextLine () {
 	}
 	else if(lineMarker == lines.Length-1)
 	{
-		ChangeColor(true);
 		finished = true;
 	}
 }
@@ -447,21 +450,8 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 	}
 }
 
-function ChangeColor(finished:boolean) {
-	if(finished)
-	{
-		
-	}
-	else
-	{
-		
-		//newColor = lines[lineMarker].backgroundColor;
-	}
-}
-
 function Clicked () {
 	AudioManager.EndCutscene();
-	ChangeColor(true);
 	finished = true;
 }
 
