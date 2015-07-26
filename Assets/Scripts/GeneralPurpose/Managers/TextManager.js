@@ -6,12 +6,14 @@ var lines:Line[];
 @HideInInspector var lineLength:int;
 @HideInInspector  var numberOfLines:int;
 @HideInInspector var spriteObjects:GameObject[];
+@HideInInspector var currentBackground:GameObject;
 @HideInInspector var finished:boolean;
 
 var song:AudioClip;
 var background:SpriteRenderer;
 @HideInInspector var currentBackgroundColor:Color;
 var record:boolean = false;
+var options:Options;
 
 static var leftSpriteNumber:int;
 static var rightSpriteNumber:int;
@@ -24,13 +26,15 @@ static var rightSpriteNumber:int;
 
 @HideInInspector var newColor:Color;
 
+function Awake () {
+	finished = false;
+}
 function Start () {
 	// Initialize variable values.
-	spriteObjects = new GameObject[2];
+	spriteObjects = new GameObject[3];
 	lineMarker = 0;
 	numberOfLetters = 0;
 	current = 0;
-	finished = false;
 	doneLine = false;
 	PlayerManager.speed = 1000000;
 	lineLength = 16;
@@ -70,17 +74,32 @@ function Start () {
 	{
 		for(i = 0; i < lines.length; i++)
 		{
-			lines[i].leftMouth = new MouthState[0];
-			lines[i].rightMouth = new MouthState[0];
+			if(options.left)
+			{
+				lines[i].leftSide.mouth = new MouthState[0];
+			}
+			if(options.center)
+			{
+				lines[i].center.mouth = new MouthState[0];
+			}
+			if(options.right)
+			{
+				lines[i].rightSide.mouth = new MouthState[0];
+			}
 		}
 		Record();
 	}
 	else
 	{
-		MouthShape(true);
-		MouthShape(false);
+		MouthShape(0);
+		MouthShape(1);
+		MouthShape(2);
 	}
-	UpdateSprites(lineMarker);
+
+	UpdateSprites(0,lines[lineMarker].leftSide,lines[Mathf.Max(0,lineMarker-1)].leftSide);
+	UpdateSprites(1,lines[lineMarker].rightSide,lines[Mathf.Max(0,lineMarker-1)].rightSide);
+	UpdateSprites(2,lines[lineMarker].center,lines[Mathf.Max(0,lineMarker-1)].center);
+	UpdateBackground(lines[lineMarker].background,lines[Mathf.Max(0,lineMarker-1)].background);
 	StartCoroutine(UpdateSet());
 }
 
@@ -100,7 +119,6 @@ function Update () {
 		newColor = Color.clear;
 	}
 	
-Debug.Log(newColor);
 	background.color.r = Mathf.MoveTowards(background.color.r,newColor.r,Time.deltaTime * speed);
 	background.color.g = Mathf.MoveTowards(background.color.g,newColor.g,Time.deltaTime * speed);
 	background.color.b = Mathf.MoveTowards(background.color.b,newColor.b,Time.deltaTime * speed);
@@ -113,33 +131,75 @@ function Record () {
 	{
 		if(Input.GetKeyDown("space"))
 		{
-			SetSprite(spriteObjects[0],1);
-			SetSprite(spriteObjects[1],1);
-			lines[lineMarker].leftMouth = ChangeMouthValue(lines[lineMarker].leftMouth,1);
-			lines[lineMarker].rightMouth = ChangeMouthValue(lines[lineMarker].rightMouth,1);
+			SetSprite(spriteObjects[0],1, true);
+			SetSprite(spriteObjects[1],1, false);
+			SetSprite(spriteObjects[2],1, false);
+			
+			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,1);
+			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
+			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
 		}
 		else if(Input.GetKeyUp("space"))
 		{
-			SetSprite(spriteObjects[0],0);
-			SetSprite(spriteObjects[1],0);
-			lines[lineMarker].leftMouth = ChangeMouthValue(lines[lineMarker].leftMouth,0);
-			lines[lineMarker].rightMouth = ChangeMouthValue(lines[lineMarker].rightMouth,0);
+			SetSprite(spriteObjects[0],0, true);
+			SetSprite(spriteObjects[1],0, false);
+			SetSprite(spriteObjects[2],0, false);
+			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,0);
+			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
+			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,0);
 		}
+		if(Input.GetKeyDown("left"))
+		{
+			SetSprite(spriteObjects[0],1, true);
+			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,1);
+		}
+		else if(Input.GetKeyUp("left"))
+		{
+			SetSprite(spriteObjects[0],0, true);
+			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,0);
+		}
+		if(Input.GetKeyDown("up"))
+		{
+			SetSprite(spriteObjects[2],1, true);
+			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
+		}
+		else if(Input.GetKeyUp("up"))
+		{
+			SetSprite(spriteObjects[2],0, true);
+			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,0);
+		}
+		if(Input.GetKeyDown("right"))
+		{
+			SetSprite(spriteObjects[1],1, true);
+			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
+		}
+		else if(Input.GetKeyUp("right"))
+		{
+			SetSprite(spriteObjects[1],0, true);
+			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
+		}
+		
 		if((Input.GetKeyDown("x") && Input.GetKey("space")) || Input.GetKeyDown("c"))
 		{
-			SetSprite(spriteObjects[0],2);
-			SetSprite(spriteObjects[1],2);
-			lines[lineMarker].leftMouth = ChangeMouthValue(lines[lineMarker].leftMouth,2);
-			lines[lineMarker].rightMouth = ChangeMouthValue(lines[lineMarker].rightMouth,2);
+			SetSprite(spriteObjects[0],2, true);
+			SetSprite(spriteObjects[1],2, false);
+			SetSprite(spriteObjects[2],2, false);
+			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,2);
+			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,2);
+			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,2);
 		}
 		yield;
 	}
 }
 
-function SetSprite (object:GameObject,spriteSetNumber:int) {
+function SetSprite (object:GameObject,spriteSetNumber:int,pass:boolean) {
 	if(object != null)
 	{
 		object.BroadcastMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
+	}
+	if(pass && currentBackground != null)
+	{
+		currentBackground.BroadcastMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
 	}
 }
 function ChangeMouthValue(mouthArray:MouthState[],spriteValue:int):MouthState[] {
@@ -156,7 +216,7 @@ function ChangeMouthValue(mouthArray:MouthState[],spriteValue:int):MouthState[] 
 }
 
 // Changes the sprites mouths if there is mouth change information.
-function MouthShape(left:boolean) {
+function MouthShape(position:int) {
 	var movementMarker:int = 0;
 	var currentLine:int = 0;
 	while(true)
@@ -166,27 +226,39 @@ function MouthShape(left:boolean) {
 			movementMarker = 0;
 			currentLine = lineMarker;
 		}
-		if(left && lines[currentLine].leftMouth.length > movementMarker)
+		if(position == 0 && lines[currentLine].leftSide.mouth.length > movementMarker)
 		{
-			while(AudioManager.GetLocation() < lines[currentLine].leftMouth[movementMarker].time)
+			while(AudioManager.GetLocation() < lines[currentLine].leftSide.mouth[movementMarker].time)
 			{
 				yield;
 			}
-			if(lines[currentLine].leftMouth.length > movementMarker && spriteObjects[0] != null)
+			if(lines[currentLine].leftSide.mouth.length > movementMarker)
 			{
-				SetSprite(spriteObjects[0],lines[currentLine].leftMouth[movementMarker].sprite);
+				SetSprite(spriteObjects[0],lines[currentLine].leftSide.mouth[movementMarker].sprite,lines[currentLine].leftSide.passToBackground);
 			}
 			movementMarker++;
 		}
-		else if (!left && lines[currentLine].rightMouth.length > movementMarker)
+		else if (position == 1 && lines[currentLine].rightSide.mouth.length > movementMarker)
 		{
-			while(AudioManager.GetLocation() < lines[currentLine].rightMouth[movementMarker].time)
+			while(AudioManager.GetLocation() < lines[currentLine].rightSide.mouth[movementMarker].time)
 			{
 				yield;
 			}
-			if(lines[currentLine].rightMouth.length > movementMarker && spriteObjects[1] != null)
+			if(lines[currentLine].rightSide.mouth.length > movementMarker)
 			{
-				SetSprite(spriteObjects[1],lines[currentLine].rightMouth[movementMarker].sprite);
+				SetSprite(spriteObjects[1],lines[currentLine].rightSide.mouth[movementMarker].sprite,lines[currentLine].rightSide.passToBackground);
+			}
+			movementMarker ++;
+		}
+		else if (position == 2 && lines[currentLine].center.mouth.length > movementMarker)
+		{
+			while(AudioManager.GetLocation() < lines[currentLine].center.mouth[movementMarker].time)
+			{
+				yield;
+			}
+			if(lines[currentLine].center.mouth.length > movementMarker)
+			{
+				SetSprite(spriteObjects[2],lines[currentLine].center.mouth[movementMarker].sprite,lines[currentLine].center.passToBackground);
 			}
 			movementMarker ++;
 		}
@@ -222,106 +294,88 @@ function UpdateSet () {
 	yield;
 }
 
-function UpdateSprites(number:int) {
-	if(lines.Length >= lineMarker && spriteObjects.Length == 2 && !finished)
+function UpdateSprites(spritePosition:int, data:SideInfo,previousData:SideInfo) {
+	if(lines.Length >= lineMarker && spriteObjects.Length == 3 && !finished)
 	{
-		if(lines[number].leftSprite!=null)
+		if(data.sprite != null)
 		{
-			if(number >= 1 && lines[number-1].leftSprite != lines[number].leftSprite)
+			if(lineMarker >= 1 && previousData.sprite != data.sprite)
 			{
-				KillObject(spriteObjects[0]);
-				spriteObjects[0] = Instantiate(lines[number].leftSprite);
-				if(lines[number].flipLeft)
-				{
-					if(spriteObjects[0].transform.tag == "Player")
-					{
-						spriteObjects[0].GetComponent(AnimationManager).flipped = -1;
-					}
-					spriteObjects[0].transform.localScale.x *= -1;
-				}
+				KillObject(spriteObjects[spritePosition]);
+				spriteObjects[spritePosition] = Instantiate(data.sprite);
 			}
-			else if(number == 0)
+			else if(lineMarker == 0)
 			{
-				spriteObjects[0] = Instantiate(lines[number].leftSprite);
-				if(lines[number].flipLeft)
+				spriteObjects[spritePosition] = Instantiate(data.sprite);
+			}
+			if(data.flip)
+			{
+				if(spriteObjects[spritePosition].transform.tag == "Player")
 				{
-					if(spriteObjects[0].transform.tag == "Player")
-					{
-						spriteObjects[0].GetComponent(AnimationManager).flipped = -1;
-					}
-					spriteObjects[0].transform.localScale.x *= -1;
+					spriteObjects[spritePosition].GetComponent(AnimationManager).flipped = -1;
 				}
+				spriteObjects[spritePosition].transform.localScale.x = Mathf.Abs(spriteObjects[spritePosition].transform.localScale.x) * -1;
+			}
+			else
+			{
+				spriteObjects[spritePosition].transform.localScale.x = Mathf.Abs(spriteObjects[spritePosition].transform.localScale.x);
 			}
 			
 		}
-		if(lines[number].rightSprite!=null)
+		if(spriteObjects[spritePosition] != null && lines.length >= lineMarker && spriteObjects[spritePosition].transform.tag == "Player")
 		{
-			if(number >= 1 && lines[number-1].rightSprite != lines[number].rightSprite)
-			{
-				KillObject(spriteObjects[1]);
-				spriteObjects[1] = Instantiate(lines[number].rightSprite);
-				if(lines[number].flipRight)
-				{
-					if(spriteObjects[1].transform.tag == "Player")
-					{
-						spriteObjects[1].GetComponent(AnimationManager).flipped = -1;
-					}
-					spriteObjects[1].transform.localScale.x *= -1;
-				}
-			}
-			else if(number == 0)
-			{
-				spriteObjects[1] = Instantiate(lines[number].rightSprite);
-				if(lines[number].flipRight)
-				{
-					if(spriteObjects[1].transform.tag == "Player")
-					{
-						spriteObjects[1].GetComponent(AnimationManager).flipped = -1;
-					}
-					spriteObjects[1].transform.localScale.x *= -1;
-				}
-			}
+			spriteObjects[spritePosition].GetComponent(PlayerManager).currentState = data.state;
 		}
-		if(spriteObjects[0] != null && lines.length >= number && spriteObjects[0].transform.tag == "Player")
+		var xPosition:float;
+		var zPosition:float;
+		switch(spritePosition)
 		{
-			spriteObjects[0].GetComponent(PlayerManager).currentState = lines[number].playerState;
+			case 0:
+				xPosition = -5; 
+				zPosition = transform.position.z+1;
+				break;
+			case 1:
+				xPosition = 5;
+				zPosition = transform.position.z+1.5;
+				break;
+			case 2:
+				xPosition = 0;
+				zPosition = transform.position.z+1.25;
+				break;
+			break;
 		}
-		if(spriteObjects[1] != null && lines.length >= number && spriteObjects[1].transform.tag == "Player")
+		var yPosition:float = 0;
+		if(data.isSpeaking)
 		{
-			spriteObjects[1].GetComponent(PlayerManager).currentState = lines[number].playerState;
+			yPosition+=1;
 		}
-		if(lines[number].currentSpeaker)
+		if(spriteObjects[spritePosition] != null)
 		{
-			if(spriteObjects[0] != null)
-			{
-				spriteObjects[0].transform.position = Vector3(-4.5,0,transform.position.z+1);
-			}
-			if(spriteObjects[1] != null)
-			{
-				spriteObjects[1].transform.position = Vector3(4.5,1,transform.position.z+1.5);
-			}
+			spriteObjects[spritePosition].transform.position = Vector3(xPosition,yPosition,zPosition);
 		}
-		else
+		if(spriteObjects[spritePosition] != null)
 		{
-			if(spriteObjects[0] != null)
-			{
-				spriteObjects[0].transform.position = Vector3(-4.5,1,transform.position.z+1);
-			}
-			if(spriteObjects[1] != null)
-			{
-				spriteObjects[1].transform.position = Vector3(4.5,0,transform.position.z+1.5);
-			}
-		}
-		if(spriteObjects[0] != null)
-		{
-			spriteObjects[0].transform.parent = transform;
-		}
-		if(spriteObjects[1] != null)
-		{
-			spriteObjects[1].transform.parent = transform;
+			spriteObjects[spritePosition].transform.parent = transform;
 		}
 	}
-	
+}
+
+function UpdateBackground (data:Background, previousData:Background) {
+	if(data.object != previousData.object)
+	{
+		KillObject(currentBackground);
+	}
+	if(data.object != null && (data.object != previousData.object || lineMarker == 0))
+	{
+		currentBackground = Instantiate(data.object,Vector3.zero,Quaternion.identity);
+		currentBackground.transform.localScale += Vector3(data.scaleMultiplier.x,data.scaleMultiplier.y,data.scaleMultiplier.z);
+		currentBackground.transform.parent = transform;
+		currentBackground.transform.localPosition = data.position + Vector3(7.4,0,2.1);
+	}
+	if(currentBackground!= null)
+	{
+		currentBackground.BroadcastMessage(data.specialDirection,SendMessageOptions.DontRequireReceiver);
+	}
 }
 
 // This function causes the lines of dialogue to progress, first from one "screen" to the next and then
@@ -340,7 +394,10 @@ function NextLine () {
 		numberOfLetters = 0;
 		lineMarker++;
 		currentDialogue = BoxCut(lines[lineMarker].dialogue,numberOfLines);
-		UpdateSprites(lineMarker);
+		UpdateSprites(0,lines[lineMarker].leftSide,lines[lineMarker-1].leftSide);
+		UpdateSprites(1,lines[lineMarker].rightSide,lines[lineMarker-1].rightSide);
+		UpdateSprites(2,lines[lineMarker].center,lines[lineMarker-1].center);
+		UpdateBackground(lines[lineMarker].background,lines[lineMarker-1].background);
 		IncreaseLetters();
 	}
 	else if(lineMarker == lines.Length-1)
@@ -457,19 +514,36 @@ function Clicked () {
 
 class Line {
 	var dialogue:String;
-	var leftSprite:GameObject;
-	var flipLeft:boolean;
-	var rightSprite:GameObject;
-	var flipRight:boolean;
+	var leftSide:SideInfo;
+	var center:SideInfo;
+	var rightSide:SideInfo;
+	var background:Background;
 	var backgroundColor:Color;
-	var playerState:PlayerState;
-	var currentSpeaker:boolean;
 	var targetTime:float;
-	var leftMouth:MouthState[];
-	var rightMouth:MouthState[];
 }
 
+class SideInfo {
+	var sprite:GameObject;
+	var flip:boolean;
+	var mouth:MouthState[];
+	var state:PlayerState;
+	var isSpeaking:boolean;
+	var passToBackground:boolean;
+}
+
+class Background {
+	var object:GameObject;
+	var position:Vector3;
+	var scaleMultiplier:Vector3 = Vector3(0,0,0);
+	var specialDirection:String;
+}
 class MouthState {
 	var time:float;
 	var sprite:int;
+}
+
+class Options {
+	var left:boolean;
+	var center:boolean;
+	var right:boolean;
 }

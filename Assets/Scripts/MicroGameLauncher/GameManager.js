@@ -168,7 +168,7 @@ function BeforeGames () {
 			loadedText = Instantiate(Master.currentWorld.text.regularOpening);
 		}
 		// Wait for the text to finish.
-		while(!loadedText.GetComponent(TextManager).finished && !Master.hardMode){yield;}
+		while(!loadedText.GetComponent(TextManager).finished){yield;}
 	}
 	PlayCurrentMusic();
 	GetRandomGame();

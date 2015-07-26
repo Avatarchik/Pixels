@@ -88,6 +88,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\SkipCounterIncrease.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\TimeScaleChange.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\BoxFill.js" />
+     <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\Cutscenes\PeanutBurst.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\ItemCatch.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\MonsterFeed.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\MouldPour.js" />

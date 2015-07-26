@@ -208,7 +208,7 @@ function EnableHardMode(button:GameObject, sprite:Sprite) {
 }
 
 function DisableHardMode(button:GameObject) {
-	button.GetComponent(ButtonRectangle).subText.GetComponent(SpriteRenderer).sprite = lockedSprite;
+	button.GetComponent(ButtonSquare).subText.GetComponent(SpriteRenderer).sprite = lockedSprite;
 	button.GetComponent(ButtonSquare).subText.GetComponent(SpriteRenderer).color.a = .6;
 	button.GetComponent(ButtonSquare).enabled = false;
 	button.GetComponent(SpriteRenderer).color = Color(.4,.4,.4,1);

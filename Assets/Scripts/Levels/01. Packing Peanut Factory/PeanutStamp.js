@@ -33,6 +33,8 @@ var stamper:GameObject;
 @HideInInspector var clicked:boolean;
 @HideInInspector var importantFinger:int;
 
+@HideInInspector var itemTime:float;
+
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
 	{
@@ -48,17 +50,22 @@ function Start () {
 	platforms = new GameObject[2 + (difficulty * 2)];
 	object = new GameObject[platforms.Length];
 	objectValues = new int[platforms.Length];
+	var addedTime:float = 0;
 	for(var i:int = 0; i < platforms.Length; i++)
 	{
 		var newValue:int = Random.Range(0,difficulty);
 		var randomCount:int = 0;
 		if(i > 1)
 		{
-			while(newValue == objectValues[i-1]  && newValue == objectValues[i-2] && randomCount < 9)
+			while(newValue == objectValues[i-1]  && newValue == objectValues[i-2] && randomCount < 15)
 			{
 				newValue = Random.Range(0,difficulty);
 				randomCount++;
 			}
+		}
+		if(newValue == 1)
+		{
+			addedTime += .4;
 		}
 		platforms[i] = Instantiate(platformPrefab, transform.position - Vector3(10 + ((i * 12) + speed * 2),3.4,2), Quaternion.identity);
 		object[i] = Instantiate(objectPrefab[newValue], transform.position - Vector3(10 + ((i * 12) + speed * 2),.4,1.8), Quaternion.identity);
@@ -72,7 +79,12 @@ function Start () {
 	oreCount = 0;
 	skipTimer = 0;
 	goal = platforms.Length;
-	length = 4 + 2/speed + (3 * (difficulty - 1));
+	itemTime = 1.35;
+	for(var x:int = 0; x < speed; x++)
+	{
+		itemTime = Mathf.MoveTowards(itemTime,.2,.2);
+	}	
+	length = itemTime * (object.Length + 1) + addedTime;
 	for(i = 0; i < platforms.Length; i++)
 	{
 		if(objectValues[i] == 2)
@@ -141,12 +153,7 @@ function Update () {
 	{
 		skipTimer += Time.deltaTime;
 	}
-	var skipTimerMod:float = speed * .15;
-	if(skipTimerMod > .45)
-	{
-		skipTimerMod = .45;
-	}
-	if(skipTimer > 1.35 - skipTimerMod)
+	if(skipTimer > itemTime + .4)
 	{
 		Stamp(false);
 	}
@@ -244,6 +251,7 @@ function Stamp(skip:boolean) {
 }
 
 function Finish(completionStatus:boolean) {
+	Debug.Log(completionStatus);
 	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 	finished = true;
 }

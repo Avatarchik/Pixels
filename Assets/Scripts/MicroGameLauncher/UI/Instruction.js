@@ -25,7 +25,6 @@ function Start () {
 	}
 	if(Application.loadedLevelName != "MicroTester")
 	{
-		Debug.Log(Camera.main.GetComponent(Master).currentWorld.basic.colors[0]);
 		children[5].transform.GetComponent(Renderer).material.SetColor("_Color",Color(Camera.main.GetComponent(Master).currentWorld.basic.colors[0].r,Camera.main.GetComponent(Master).currentWorld.basic.colors[0].g,Camera.main.GetComponent(Master).currentWorld.basic.colors[0].b,1));
 		children[6].transform.GetComponent(Renderer).material.SetColor("_Color",Color(Camera.main.GetComponent(Master).currentWorld.basic.colors[1].r,Camera.main.GetComponent(Master).currentWorld.basic.colors[1].g,Camera.main.GetComponent(Master).currentWorld.basic.colors[1].b,1));
 	}

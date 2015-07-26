@@ -81,6 +81,7 @@ function Start () {
 }
 
 function Update () {
+	/*
 	if(Input.GetKeyDown("left"))
 	{
 		currentState = PlayerState.WalkingLeft;
@@ -113,6 +114,7 @@ function Update () {
 	{
 		currentState = PlayerState.StandingFront;
 	}
+	*/
 }
 
 function ChangePart(part:String, change:int) {

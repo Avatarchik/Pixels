@@ -17,6 +17,14 @@ function Update () {
 		Time.timeScale = 1;
 		AudioListener.volume = 1;
 	}
+	if(Input.GetKeyDown("f"))
+	{
+		speed = true;
+	}
+	if(Input.GetKeyUp("f"))
+	{
+		speed = false;
+	}
 }
 
 function Clicked () {
