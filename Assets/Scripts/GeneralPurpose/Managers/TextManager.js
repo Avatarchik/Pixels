@@ -296,7 +296,7 @@ function UpdateSet () {
 
 function UpdateSprites(spritePosition:int, data:SideInfo,previousData:SideInfo) {
 	if(lines.Length >= lineMarker && spriteObjects.Length == 3 && !finished)
-	{
+	{	
 		if(data.sprite != null)
 		{
 			if(lineMarker >= 1 && previousData.sprite != data.sprite)
@@ -321,6 +321,10 @@ function UpdateSprites(spritePosition:int, data:SideInfo,previousData:SideInfo) 
 				spriteObjects[spritePosition].transform.localScale.x = Mathf.Abs(spriteObjects[spritePosition].transform.localScale.x);
 			}
 			
+		}
+		else if(data.empty)
+		{
+			KillObject(spriteObjects[spritePosition]);
 		}
 		if(spriteObjects[spritePosition] != null && lines.length >= lineMarker && spriteObjects[spritePosition].transform.tag == "Player")
 		{
@@ -529,6 +533,7 @@ class SideInfo {
 	var state:PlayerState;
 	var isSpeaking:boolean;
 	var passToBackground:boolean;
+	var empty:boolean;
 }
 
 class Background {
