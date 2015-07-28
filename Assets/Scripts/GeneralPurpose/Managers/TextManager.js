@@ -14,6 +14,7 @@ var background:SpriteRenderer;
 @HideInInspector var currentBackgroundColor:Color;
 var record:boolean = false;
 var options:Options;
+@HideInInspector var backgroundChangeSpeed:float;
 
 static var leftSpriteNumber:int;
 static var rightSpriteNumber:int;
@@ -40,7 +41,8 @@ function Start () {
 	lineLength = 16;
 	numberOfLines = 3;
 	leftSpriteNumber = 0;
-	leftSpriteNumber = 0;
+	rightSpriteNumber = 0;
+	backgroundChangeSpeed = 0;
 	
 	if(song!=null)
 	{
@@ -69,6 +71,25 @@ function Start () {
 	else
 	{
 		Destroy(gameObject);
+	}
+	if(options.rebalance)
+	{
+		for(i = 0; i < lines.length; i++)
+		{
+			lines[i].targetTime += options.difference;
+			for(var y:int = 0; y < lines[i].leftSide.mouth.length; y++)
+			{
+				lines[i].leftSide.mouth[y].time += options.difference;
+			}
+			for(y = 0; y < lines[i].rightSide.mouth.length; y++)
+			{
+				lines[i].rightSide.mouth[y].time += options.difference;
+			}
+			for(y = 0; y < lines[i].center.mouth.length; y++)
+			{
+				lines[i].center.mouth[y].time += options.difference;
+			}
+		}
 	}
 	if(record)
 	{
@@ -119,10 +140,10 @@ function Update () {
 		newColor = Color.clear;
 	}
 	
-	background.color.r = Mathf.MoveTowards(background.color.r,newColor.r,Time.deltaTime * speed);
-	background.color.g = Mathf.MoveTowards(background.color.g,newColor.g,Time.deltaTime * speed);
-	background.color.b = Mathf.MoveTowards(background.color.b,newColor.b,Time.deltaTime * speed);
-	background.color.a = Mathf.MoveTowards(background.color.a,newColor.a,Time.deltaTime * speed);
+	background.color.r = Mathf.MoveTowards(background.color.r,newColor.r,Time.deltaTime * speed * (1 + backgroundChangeSpeed));
+	background.color.g = Mathf.MoveTowards(background.color.g,newColor.g,Time.deltaTime * speed * (1 + backgroundChangeSpeed));
+	background.color.b = Mathf.MoveTowards(background.color.b,newColor.b,Time.deltaTime * speed * (1 + backgroundChangeSpeed));
+	background.color.a = Mathf.MoveTowards(background.color.a,newColor.a,Time.deltaTime * speed * (1 + backgroundChangeSpeed));
 }
 
 // Recording function for mouth movement.
@@ -285,7 +306,7 @@ function UpdateSet () {
 			GetComponent(TextMesh).text = "";
 			transform.position.x = Mathf.MoveTowards(transform.position.x,30,Time.deltaTime*60);
 		}
-		if(transform.position.x == 30 && !record)
+		if(transform.position.x == 30 && !record && !options.rebalance)
 		{
 			Destroy(gameObject);
 		}
@@ -365,6 +386,7 @@ function UpdateSprites(spritePosition:int, data:SideInfo,previousData:SideInfo) 
 }
 
 function UpdateBackground (data:Background, previousData:Background) {
+	backgroundChangeSpeed = data.backgroundChangeMultiplier;
 	if(data.object != previousData.object)
 	{
 		KillObject(currentBackground);
@@ -452,7 +474,7 @@ function Format (text:String,lineLength:int):String {
 	return Format(text,lineLength,0);
 }
 function Format (text:String,lineLength:int,marker:int):String {
-	if(text.Length > marker + lineLength && !record)
+	if(text.Length > marker + lineLength && !record && !options.rebalance)
 	{
 		var success:boolean = false;
 		for(var i:int = marker+lineLength; i > marker; i--)
@@ -475,7 +497,7 @@ function Format (text:String,lineLength:int,marker:int):String {
 			marker += lineLength;
 		}
 	}
-	if(text.Length > marker + lineLength + 1 && !record)
+	if(text.Length > marker + lineLength + 1 && !record && !options.rebalance)
 	{
 		text = Format(text,lineLength,marker);
 	}
@@ -541,6 +563,7 @@ class Background {
 	var position:Vector3;
 	var scaleMultiplier:Vector3 = Vector3(0,0,0);
 	var specialDirection:String;
+	var backgroundChangeMultiplier:float;
 }
 class MouthState {
 	var time:float;
@@ -551,4 +574,6 @@ class Options {
 	var left:boolean;
 	var center:boolean;
 	var right:boolean;
+	var rebalance:boolean;
+	var difference:float;
 }

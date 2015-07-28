@@ -69,13 +69,14 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\CurrencyCount.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\ParticleSystemBurst.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\SpriteChoice.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\MoveToCorner.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectLoop.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectMovementManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectShake.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\PieceGetting.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\SpriteChoice.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\SpriteRotate.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
@@ -88,7 +89,6 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\SkipCounterIncrease.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\TimeScaleChange.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\BoxFill.js" />
-     <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\Cutscenes\PeanutBurst.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\ItemCatch.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\MonsterFeed.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\MouldPour.js" />
