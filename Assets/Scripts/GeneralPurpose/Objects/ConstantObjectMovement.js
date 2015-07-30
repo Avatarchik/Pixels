@@ -49,7 +49,18 @@ function Update () {
 					transform.position += Time.deltaTime * speed;
 					break;
 				case TypeOfMovement.Float:
-					transform.localPosition = origin + Vector3(Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.x,Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.y, Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.z);
+					if(speed.x !=0)
+					{
+						transform.localPosition.x = origin.x + Vector3(Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.x,Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.y, Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.z).x;
+					}
+					if(speed.y !=0)
+					{
+						transform.localPosition.y = origin.y + Vector3(Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.x,Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.y, Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.z).y;
+					}
+					if(speed.z !=0)
+					{
+						transform.localPosition.z = origin.z + Vector3(Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.x,Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.y, Mathf.Sin((floatOffset + Time.time) * floatFrequency) * speed.z).z;
+					}
 					break;
 				default:
 					break;

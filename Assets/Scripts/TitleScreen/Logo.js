@@ -3,9 +3,14 @@
 var plain:Sprite;
 var logo:Sprite;
 
+var lightsOut:Sprite;
+
 var origin:Vector3;
 
+@HideInInspector var normal:boolean;
+
 function Start () {
+	normal = true;
 	GetComponent(SpriteRenderer).sprite = plain;
 	origin = transform.localPosition;
 	transform.localPosition.y += 1;
@@ -25,6 +30,7 @@ function Appear () {
 	}
 	StartCoroutine(Shake(10, Vector2(0.01,.01)));
 	GetComponent(SpriteRenderer).sprite = logo;
+	Lights();
 	yield;
 }
 
@@ -40,4 +46,45 @@ function Shake (numberShakes:int, distance:Vector2){
 		yield;
 	}
 	yield;
+}
+
+function Lights () {
+	while(true)
+	{
+		yield WaitForSeconds(Random.Range(8, 13.5));
+		var numberOfTimes:int = Random.Range(3,8);
+		for(var i:int = 0; i < numberOfTimes; i++)
+		{
+			if(normal)
+			{
+				normal = false;
+				GetComponent(SpriteRenderer).sprite = lightsOut;
+			}
+			else
+			{
+				normal = true;
+				GetComponent(SpriteRenderer).sprite = logo;
+			}
+			yield WaitForSeconds(Random.Range(.02,.08));
+		}
+		GetComponent(SpriteRenderer).sprite = lightsOut;
+		yield WaitForSeconds(Random.Range(1,3.2));
+		numberOfTimes = Random.Range(3,8);
+		for(i = 0; i < numberOfTimes; i++)
+		{
+			if(normal)
+			{
+				normal = false;
+				GetComponent(SpriteRenderer).sprite = lightsOut;
+			}
+			else
+			{
+				normal = true;
+				GetComponent(SpriteRenderer).sprite = logo;
+			}
+			yield WaitForSeconds(Random.Range(.02,.08));
+		}
+		GetComponent(SpriteRenderer).sprite = logo;
+		yield;
+	}
 }

@@ -162,6 +162,7 @@
      <Compile Include="Assets\Scripts\TitleScreen\Logo.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Scrim.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ShowColorSelection.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Spotlight.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StageHand.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StartGame.js" />
      <Compile Include="Assets\Scripts\TitleScreen\TitleManager.js" />
