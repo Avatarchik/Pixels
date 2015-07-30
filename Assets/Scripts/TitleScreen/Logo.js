@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 var plain:Sprite;
 var logo:Sprite;
@@ -6,6 +6,8 @@ var logo:Sprite;
 var lightsOut:Sprite;
 
 var origin:Vector3;
+
+var particles:ParticleSystem;
 
 @HideInInspector var normal:boolean;
 
@@ -51,8 +53,12 @@ function Shake (numberShakes:int, distance:Vector2){
 function Lights () {
 	while(true)
 	{
-		yield WaitForSeconds(Random.Range(17, 24.5));
+		yield WaitForSeconds(Random.Range(14, 21.5));
 		var numberOfTimes:int = Random.Range(3,8);
+		if(TitleManager.currentState == TitleStatus.Home)
+		{
+			particles.Emit(15);
+		}
 		for(var i:int = 0; i < numberOfTimes; i++)
 		{
 			if(normal)
@@ -66,6 +72,10 @@ function Lights () {
 				GetComponent(SpriteRenderer).sprite = logo;
 			}
 			yield WaitForSeconds(Random.Range(.02,.08));
+		}
+		if(TitleManager.currentState == TitleStatus.Home)
+		{
+			particles.Emit(5);
 		}
 		GetComponent(SpriteRenderer).sprite = lightsOut;
 		yield WaitForSeconds(Random.Range(1,3.2));
