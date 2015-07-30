@@ -159,11 +159,11 @@ function Update () {
 		importantFinger = -1;
 	}
 	
-	if(target > player.transform.position.x)
+	if(target > player.transform.position.x && Mathf.Abs(target - player.transform.position.x) > .1)
 	{
 		player.currentState = PlayerState.WalkingRight;
 	}
-	else if(target < player.transform.position.x)
+	else if(target < player.transform.position.x && Mathf.Abs(target - player.transform.position.x) > .1)
 	{
 		player.currentState = PlayerState.WalkingLeft;
 	}

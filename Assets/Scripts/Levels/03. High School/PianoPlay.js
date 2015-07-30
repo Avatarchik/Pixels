@@ -213,6 +213,7 @@ function Update () {
 			{
 				correctKeysPressed ++;
 				lights[key].GetComponent(SpriteRenderer).color = Color.green;
+				keys[key].GetComponent(SpriteRenderer).color = Color.green;
 			}
 			else if(correctKeyTimer < 0)
 			{
@@ -234,6 +235,11 @@ function Update () {
 			if(isGoal)
 			{
 				lights[key].GetComponent(SpriteRenderer).color = Color.red;
+				keys[key].GetComponent(SpriteRenderer).color = Color(1,.6,.6,1);
+			}
+			else
+			{
+				keys[key].GetComponent(SpriteRenderer).color = Color.white;
 			}
 		}
 	}

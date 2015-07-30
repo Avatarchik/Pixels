@@ -51,7 +51,7 @@ function Shake (numberShakes:int, distance:Vector2){
 function Lights () {
 	while(true)
 	{
-		yield WaitForSeconds(Random.Range(8, 13.5));
+		yield WaitForSeconds(Random.Range(17, 24.5));
 		var numberOfTimes:int = Random.Range(3,8);
 		for(var i:int = 0; i < numberOfTimes; i++)
 		{

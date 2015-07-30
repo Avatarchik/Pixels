@@ -102,7 +102,7 @@ function FlatMovement () {
 function FlyInMovement () {
 	while(true)
 	{
-		yield WaitForSeconds(Random.Range(5,10));
+		yield WaitForSeconds(Random.Range(8,13));
 		var pullAmount:float = 1;
 		while(flyIn.transform.localPosition.y != flyInTop)
 		{

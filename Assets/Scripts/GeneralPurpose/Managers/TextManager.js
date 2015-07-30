@@ -57,7 +57,6 @@ function Start () {
 		transform.position.x = Mathf.MoveTowards(transform.position.x,-7.74,Time.deltaTime*60);
 		yield;
 	}
-	
 	// Destroy if empty; otherwise, start the dialogue routine.
 	if(lines.Length!=0)
 	{
@@ -72,10 +71,27 @@ function Start () {
 	{
 		Destroy(gameObject);
 	}
+	if(options.pushLines)
+	{
+		var newArray:Line[];
+		newArray = new Line[lines.length+1];
+	}
 	if(options.rebalance)
 	{
 		for(i = 0; i < lines.length; i++)
 		{
+			if(options.pushLines)
+			{
+				if(i > options.whichLine)
+				{
+					newArray[i] = lines[i-1];
+				}
+				else
+				{
+					Debug.Log(i);
+					newArray[i] = lines[i];
+				}
+			}
 			lines[i].targetTime += options.difference;
 			for(var y:int = 0; y < lines[i].leftSide.mouth.length; y++)
 			{
@@ -89,6 +105,11 @@ function Start () {
 			{
 				lines[i].center.mouth[y].time += options.difference;
 			}
+		}
+		if(options.pushLines)
+		{
+			newArray[newArray.Length-1] = lines[lines.Length-1];
+			lines = newArray;
 		}
 	}
 	if(record)
@@ -576,4 +597,6 @@ class Options {
 	var right:boolean;
 	var rebalance:boolean;
 	var difference:float;
+	var pushLines:boolean;
+	var whichLine:int;
 }

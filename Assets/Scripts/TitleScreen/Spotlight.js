@@ -3,7 +3,7 @@
 var goal:float;
 
 function Start () {
-	goal = 1;
+	goal = .3;
 	Turn();
 }
 
@@ -15,13 +15,13 @@ function Turn () {
 	while(true)
 	{
 		yield WaitForSeconds(Random.Range(5,13.4));
-		if(GetComponent(SpriteRenderer).color.a < .5)
+		if(GetComponent(SpriteRenderer).color.a < .65)
 		{
 			goal = 1;
 		}
 		else
 		{
-			goal = 0;
+			goal = .3;
 		}
 		yield;
 	}
