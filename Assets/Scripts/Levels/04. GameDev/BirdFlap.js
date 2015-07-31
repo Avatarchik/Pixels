@@ -79,7 +79,7 @@ function Start () {
 	{
 		pipes[i] = Instantiate(pipePrefab,Vector3(pipeStartLocation + (i*distanceBetweenPipes),Random.Range(minPipeHeight,maxPipeHeight),transform.position.z),Quaternion.identity);
 		pipes[i].transform.parent = transform;
-		if(difficulty == 3)
+		if(difficulty == 3 && i != 0)
 		{
 			if(Random.Range(0,2) == 1)
 			{

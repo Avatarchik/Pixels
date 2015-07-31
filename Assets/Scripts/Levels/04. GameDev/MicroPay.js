@@ -24,6 +24,8 @@ var allow:boolean;
 @HideInInspector var amountNeeded:int;
 @HideInInspector var clicked:boolean;
 
+@HideInInspector var waitTime:float;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -35,6 +37,7 @@ function Start () {
 	inDisplay.transform.position.x += 100;
 	neededDisplay.transform.position.x += 100;
 	button.transform.position.x += 100;
+	waitTime = .8;
 	
 	allow = false;
 	clicked = false;
@@ -55,7 +58,7 @@ function Start () {
 	{
 		speedMod = Mathf.MoveTowards(speedMod,.12,.03);
 	}
-	length = (5 + difficulty * 5) * speedMod + 1.3;
+	length = (5 + difficulty * 5) * speedMod + waitTime;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
@@ -127,7 +130,7 @@ function Update () {
 }
 
 function Play () {
-	yield WaitForSeconds(1.3);
+	yield WaitForSeconds(waitTime);
 	cover.color.a = 1;
 	creditsDisplay.transform.position.x -= 100;
 	inDisplay.transform.position.x -= 100;

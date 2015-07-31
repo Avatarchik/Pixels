@@ -265,6 +265,7 @@ function Update () {
 			}
 			else
 			{
+				Reload(.3);
 				successNumber --;
 			}
 		}
