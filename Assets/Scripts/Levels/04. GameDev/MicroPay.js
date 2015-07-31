@@ -11,11 +11,33 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var dollarEmitter:ParticleSystem;
+var cover:SpriteRenderer;
+var creditsDisplay:GameObject;
+var inDisplay:TextMesh;
+var neededDisplay:TextMesh;
+var button:GameObject;
+
+var allow:boolean;
+
+@HideInInspector var amountIn:int;
+@HideInInspector var amountNeeded:int;
+@HideInInspector var clicked:boolean;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	amountIn = 0;
+	cover.color.a = 0;
+	creditsDisplay.transform.position.x += 100;
+	inDisplay.transform.position.x += 100;
+	neededDisplay.transform.position.x += 100;
+	button.transform.position.x += 100;
+	
+	allow = false;
+	clicked = false;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -28,24 +50,38 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 3 + 5/speed;
+	var speedMod:float = .3;
+	for(var i:int = 0; i < speed; i ++)
+	{
+		speedMod = Mathf.MoveTowards(speedMod,.12,.03);
+	}
+	length = (5 + difficulty * 5) * speedMod + 1.3;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	amountNeeded = 3 + difficulty * 2;
+	
 	// If the color of the UI should change.
 	if(colorChange)
 	{
 		StartCoroutine(ColorChange());
 	}
+	
 	// If The game doesn't just run in Update.
 	Play();
 }
 
 function Update () {
+	inDisplay.text = amountIn.ToString();
+	neededDisplay.text = amountNeeded.ToString();
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(true,0);
+		Finish(false,0);
+	}
+	if(amountIn >= amountNeeded && !finished)
+	{
+		Finish(true,.2);
 	}
 	// Get important finger.
 	if(importantFinger == -1)
@@ -59,19 +95,45 @@ function Update () {
 			}
 		}
 	}
-	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && !Master.paused)
+	if(Input.GetKeyDown("space") && allow && !finished)
 	{
-		
+		dollarEmitter.Emit(10);
+		amountIn ++;
+	}
+	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
+	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && !finished)
+	{
+		clicked = true;
+		if(allow)
+		{
+			dollarEmitter.Emit(10);
+			amountIn ++;
+		}
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
+		clicked = false;
 		importantFinger = -1;
+	}
+	if(allow)
+	{
+		
+		
+	}
+	else
+	{
+	
 	}
 }
 
 function Play () {
-
+	yield WaitForSeconds(1.3);
+	cover.color.a = 1;
+	creditsDisplay.transform.position.x -= 100;
+	inDisplay.transform.position.x -= 100;
+	neededDisplay.transform.position.x -= 100;
+	button.transform.position.x -= 100;
+	allow = true;
 }
 
 function Finish(completionStatus:boolean,waitTime:float) {

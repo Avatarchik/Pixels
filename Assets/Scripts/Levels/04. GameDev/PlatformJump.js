@@ -94,7 +94,7 @@ function Start () {
 	for(var i:int = 0; i < numberOfBlocks; i++)
 	{
 		var location:float = firstBlock + (i*distanceBetweenBlocks);
-		markers[i] = Instantiate(markerPrefab,Vector3(location,0,0),Quaternion.identity);
+		markers[i] = Instantiate(markerPrefab,Vector3(location,0,transform.position.z),Quaternion.identity);
 		markers[i].transform.parent = transform;
 		markers[i].transform.name = "Space: " + i;
 		var randomNumber:int = Random.Range(0,difficulty+1);
@@ -109,10 +109,10 @@ function Start () {
 		switch(randomNumber)
 		{
 			case 0:
-				floors[i] = Instantiate(groundPrefab,Vector3(location,groundHeight,0),Quaternion.identity);
+				floors[i] = Instantiate(groundPrefab,Vector3(location,groundHeight,transform.position.z),Quaternion.identity);
 				if(Random.value > .5)
 				{
-					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),0),Quaternion.identity);
+					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),transform.position.z),Quaternion.identity);
 				}
 				else
 				{
@@ -125,20 +125,20 @@ function Start () {
 				floors[i] = Instantiate(groundPrefab,Vector3(location,groundHeight,0),Quaternion.identity);
 				if(Random.value > .5)
 				{
-					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),0),Quaternion.identity);
+					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),transform.position.z),Quaternion.identity);
 				}
 				else
 				{
 					clouds[i] = null;
 				}
-				enemies[i] = Instantiate(badGuyPrefab,Vector3(location,enemyHeight,0),Quaternion.identity);
+				enemies[i] = Instantiate(badGuyPrefab,Vector3(location,enemyHeight,transform.position.z),Quaternion.identity);
 				platforms[i] = null;
 				break;
 			case 2:
 				floors[i] = null;
 				if(Random.value > .5)
 				{
-					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),0),Quaternion.identity);
+					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),transform.position.z),Quaternion.identity);
 				}
 				else
 				{
@@ -151,20 +151,20 @@ function Start () {
 				floors[i] = null;
 				if(Random.value > .5)
 				{
-					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),0),Quaternion.identity);
+					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),transform.position.z),Quaternion.identity);
 				}
 				else
 				{
 					clouds[i] = null;
 				}
 				enemies[i] = null;
-				platforms[i] = Instantiate(brickPrefab,Vector3(location,platformHeight,0),Quaternion.identity);
+				platforms[i] = Instantiate(brickPrefab,Vector3(location,platformHeight,transform.position.z),Quaternion.identity);
 				break;
 			case 4:
 				floors[i] = null;
 				if(Random.value > .5)
 				{
-					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),0),Quaternion.identity);
+					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),transform.position.z),Quaternion.identity);
 				}
 				else
 				{

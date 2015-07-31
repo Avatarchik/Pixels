@@ -17,13 +17,10 @@ function Start () {
 }
 
 function Appear () {
-	if(Master.initialLoad)
+
+	while(AudioManager.GetLocation() < 2.4)
 	{
-		yield WaitForSeconds(3);
-	}
-	else
-	{
-		yield WaitForSeconds(4.1);
+		yield;
 	}
 	GetComponent(SpriteRenderer).sprite = sprite1;
 	yield WaitForSeconds(.15);
