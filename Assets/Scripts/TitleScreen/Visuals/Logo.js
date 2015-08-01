@@ -3,20 +3,38 @@
 var plain:Sprite;
 var logo:Sprite;
 
+var panic:GameObject;
+
 var lightsOut:Sprite;
 
-var origin:Vector3;
+@HideInInspector var origin:Vector3;
 
 var particles:ParticleSystem;
+
+var initialCover:GameObject;
 
 @HideInInspector var normal:boolean;
 
 function Start () {
+	panic.GetComponent(SpriteRenderer).color.a = 0;
+	panic.transform.localScale = Vector3(1.5,1.5,1.5);
 	normal = true;
 	GetComponent(SpriteRenderer).sprite = plain;
 	origin = transform.localPosition;
 	transform.localPosition.y += 1;
+	Show();
 	StartCoroutine(Appear());
+}
+
+function Show () {
+	GetComponent(SpriteRenderer).color = Color(0,0,0,1);
+	while(GetComponent(SpriteRenderer).color != Color(1,1,1,1))
+	{
+		GetComponent(SpriteRenderer).color.r = Mathf.MoveTowards(GetComponent(SpriteRenderer).color.r,1,Time.deltaTime*.5);
+		GetComponent(SpriteRenderer).color.g = Mathf.MoveTowards(GetComponent(SpriteRenderer).color.g,1,Time.deltaTime*.5);
+		GetComponent(SpriteRenderer).color.b = Mathf.MoveTowards(GetComponent(SpriteRenderer).color.b,1,Time.deltaTime*.5);
+		yield;
+	}
 }
 
 function Appear () {
@@ -30,10 +48,22 @@ function Appear () {
 	{
 		yield;
 	}
+	ShrinkPanic();
+	Destroy(initialCover);
 	StartCoroutine(Shake(10, Vector2(0.01,.01)));
 	GetComponent(SpriteRenderer).sprite = logo;
+	panic.GetComponent(SpriteRenderer).color.a = 1;
 	Lights();
 	yield;
+}
+
+function ShrinkPanic () {
+	while(panic.transform.localScale != Vector3(1,1,1))
+	{
+		panic.transform.localScale = Vector3.MoveTowards(panic.transform.localScale,Vector3(1,1,1),Time.deltaTime * 13);
+		yield;
+	}
+	Destroy(panic);
 }
 
 function Shake (numberShakes:int, distance:Vector2){

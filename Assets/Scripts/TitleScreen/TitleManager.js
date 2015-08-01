@@ -81,7 +81,7 @@ function FlatMovement () {
 				goal = -1;
 			}
 			yield WaitForSeconds(Random.Range(4,8.0));
-			currentFlat = Instantiate(flats[Random.Range(0,flats.Length)], Vector3(transform.position.x + -16.7 * goal,transform.position.y - 4.95 + (.15 * Random.Range(-3,6)),3),Quaternion.identity);
+			currentFlat = Instantiate(flats[Random.Range(0,flats.Length)], Vector3(transform.position.x + -16.7 * goal,transform.position.y - 4.95 + (.15 * Random.Range(-3,6)),4.2),Quaternion.identity);
 			currentFlat.transform.parent = transform;
 			yield;
 		}
@@ -100,8 +100,22 @@ function FlatMovement () {
 }
 
 function FlyInMovement () {
+	flyIn.transform.localPosition.y = flyInTop;
+	while(AudioManager.GetLocation() < 2.2)
+	{
+		yield;
+	}
 	while(true)
 	{
+		var newFlyIn:int = Random.Range(0,flyIns1Sprites.length);
+		flyIn1.GetComponent(SpriteRenderer).sprite = flyIns1Sprites[newFlyIn];
+		flyIn2.GetComponent(SpriteRenderer).sprite = flyIns2Sprites[newFlyIn];
+		while(flyIn.transform.position.y != flyInBottom)
+		{
+			flyIn.transform.localPosition.y = Mathf.MoveTowards(flyIn.transform.localPosition.y,flyInBottom,Time.deltaTime*20);
+			yield;
+		}
+		StartCoroutine(Shake(flyIn,10, Vector3(0.1,.1,0)));
 		yield WaitForSeconds(Random.Range(8,13));
 		var pullAmount:float = 1;
 		while(flyIn.transform.localPosition.y != flyInTop)
@@ -123,16 +137,6 @@ function FlyInMovement () {
 			yield;
 		}
 		yield WaitForSeconds(1);
-		var newFlyIn:int = Random.Range(0,flyIns1Sprites.length);
-		flyIn1.GetComponent(SpriteRenderer).sprite = flyIns1Sprites[newFlyIn];
-		flyIn2.GetComponent(SpriteRenderer).sprite = flyIns2Sprites[newFlyIn];
-		while(flyIn.transform.position.y != flyInBottom)
-		{
-			flyIn.transform.localPosition.y = Mathf.MoveTowards(flyIn.transform.localPosition.y,flyInBottom,Time.deltaTime*20);
-			yield;
-		}
-		StartCoroutine(Shake(flyIn,10, Vector3(0.1,.1,0)));
-		yield;
 	}
 	yield;
 }

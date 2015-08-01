@@ -31,7 +31,7 @@ function Update () {
 }
 
 function StageSpots () {
-	while(AudioManager.GetLocation() < 3.15)
+	while(AudioManager.GetLocation() < 2.2)
 	{
 		yield;
 	}

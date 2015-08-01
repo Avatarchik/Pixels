@@ -3,8 +3,8 @@
 var goal:float;
 
 function Start () {
-	goal = 0;
-	GetComponent(SpriteRenderer).color.a = 0;
+	goal = 1;
+	GetComponent(SpriteRenderer).color.a = 1;
 	Turn();
 }
 
@@ -15,6 +15,8 @@ function Update () {
 function Turn () { 
 	while(AudioManager.GetLocation() < 2.2)
 	{
+		transform.position.x = 0;
+		transform.position.y = 6;
 		yield;
 	}
 	goal = .6;

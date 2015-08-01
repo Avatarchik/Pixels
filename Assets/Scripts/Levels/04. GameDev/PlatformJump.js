@@ -122,7 +122,7 @@ function Start () {
 				platforms[i] = null;
 				break;
 			case 1:
-				floors[i] = Instantiate(groundPrefab,Vector3(location,groundHeight,0),Quaternion.identity);
+				floors[i] = Instantiate(groundPrefab,Vector3(location,groundHeight,transform.position.z),Quaternion.identity);
 				if(Random.value > .5)
 				{
 					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),transform.position.z),Quaternion.identity);
