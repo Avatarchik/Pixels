@@ -181,6 +181,7 @@ function Demo() {
 		{
 			
 			PlayerPrefs.DeleteAll();
+			AudioManager.StopAll();
 			Application.LoadLevel("GameStart");
 			Destroy(gameObject);
 		}
@@ -190,6 +191,7 @@ function Demo() {
 			unlockAll = true;
 			Initialize();
 			UnlockAllOptions();
+			AudioManager.StopAll();
 			Application.LoadLevel(Application.loadedLevel);
 		}
 	}

@@ -69,8 +69,8 @@ function Start () {
 	pipes = new GameObject[5+difficulty];
 	pipeMovement = new boolean[pipes.length];
 	pipeMovementRandomizer = new float[pipes.length];
-	pipeSpeed = 6.5 + 3.5 * speed;
-	momentumChange = 23 + 7 * speed;
+	pipeSpeed = 14.5 + 2.5 * speed;
+	momentumChange = 40 + 4.5 * speed;
 	length = (((pipes.length-1) + pipeStartLocation*2 + (pipes.length-1) * distanceBetweenPipes)/pipeSpeed);
 	timer = length;
 	UITimer.currentTarget = length;
@@ -126,7 +126,7 @@ function Update () {
 			}
 			if(pipeMovement[pipe])
 			{
-				pipes[pipe].transform.position.y = Mathf.Sin((Time.time + pipeMovementRandomizer[pipe]) * (.5 + .5*speed)) * 4;
+				pipes[pipe].transform.position.y = Mathf.Sin((Time.time + pipeMovementRandomizer[pipe]) * (2.2)) * 4;
 			}
 		}
 		bird.transform.position.y += momentum * Time.deltaTime;

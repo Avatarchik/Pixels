@@ -56,7 +56,7 @@ function Start () {
 	var speedMod:float = .3;
 	for(var i:int = 0; i < speed; i ++)
 	{
-		speedMod = Mathf.MoveTowards(speedMod,.12,.03);
+		speedMod = Mathf.MoveTowards(speedMod,.08,.05);
 	}
 	length = (5 + difficulty * 5) * speedMod + waitTime;
 	timer = length;

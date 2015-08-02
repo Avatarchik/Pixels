@@ -84,8 +84,8 @@ function Start () {
 		balls[i].transform.parent = transform;
 		balls[i].transform.localScale = Vector3(1,1,1);
 		momentum[i].x = Random.Range(-16.0 - speed*2,16.0 + speed*2);
-		momentum[i].y = Random.Range(14 + speed * 6,18 + speed * 6);
-		momentum *= speed;
+		momentum[i].y = Random.Range(20 + speed * 4.5,24 + speed * 4.5);
+		momentum *= Mathf.Max(speed,2);
 	}
 	
 	// If the color of the UI should change.

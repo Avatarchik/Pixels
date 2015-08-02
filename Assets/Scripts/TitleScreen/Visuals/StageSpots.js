@@ -7,6 +7,8 @@
 @HideInInspector var numberToSubtract:float;
 @HideInInspector var currentBrightness:float;
 
+var particles:ParticleSystem;
+
 function Start () {
 	sprite = GetComponent(SpriteRenderer);
 	sprite.color.a = 0;
@@ -18,6 +20,7 @@ function Start () {
 }
 
 function Update () {
+	particles.startColor.a = currentBrightness - .6;
 	if(on)
 	{
 		goal = Mathf.Abs(Mathf.Sin(Time.time * .3))/2 + .5;

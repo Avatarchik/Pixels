@@ -18,6 +18,8 @@ var badGuyPrefab:GameObject;
 var markerPrefab:GameObject;
 var player:GameObject;
 
+@HideInInspector var deathMovement:float;
+
 @HideInInspector var distanceBetweenBlocks:float;
 @HideInInspector var groundHeight:float;
 @HideInInspector var enemyHeight:float;
@@ -60,6 +62,7 @@ function Start () {
 	nearestBlock = 0;
 	bottom = groundHeight + 4.376;
 	velocity = 0;
+	deathMovement = 30;
 	canJump = true;
 	badEnd = false;
 	floors = new GameObject[numberOfBlocks];
@@ -91,6 +94,7 @@ function Start () {
 		StartCoroutine(ColorChange());
 	}
 	var previousRandomNumber:int = 0;
+	var previousPreviousRandomNumber:int = 0;
 	for(var i:int = 0; i < numberOfBlocks; i++)
 	{
 		var location:float = firstBlock + (i*distanceBetweenBlocks);
@@ -101,6 +105,10 @@ function Start () {
 		if(i>5 && previousRandomNumber == 3 && Random.Range(0,1) == 0 && difficulty == 3)
 		{
 			randomNumber = 4;
+		}
+		else if(i > 5 && difficulty == 1 && previousRandomNumber == 0 && previousPreviousRandomNumber == 0)
+		{
+			randomNumber = 1;
 		}
 		else if(i < 4 || previousRandomNumber != 0)
 		{
@@ -192,18 +200,25 @@ function Start () {
 		{
 			platforms[i].transform.parent = markers[i].transform;
 		}
-		
+		previousPreviousRandomNumber = previousRandomNumber;
 		previousRandomNumber = randomNumber;
 	}
-	movementSpeed = 8.5 + (speed * 1.5);
+	//movementSpeed = 8.5 + (speed * 1.5);
+	movementSpeed = 12 + speed * 1;
+	
+	//movementSpeed = 16 at 5
+	//movement = 13 at 1
 	// If The game doesn't just run in Update.
 	Play();
 }
 
 function Update () {
 	for(var space:int = 0; space < markers.length; space ++)
-	{
-		markers[space].transform.position.x -= movementSpeed * Time.deltaTime;
+	{	
+		if(!finished)
+		{
+			markers[space].transform.position.x -= movementSpeed * Time.deltaTime;
+		}
 		if(Mathf.Abs(markers[space].transform.position.x - player.transform.position.x + .5) < distanceBetweenBlocks/2)
 		{
 			nearestBlock = space;
@@ -245,7 +260,10 @@ function Update () {
 				enemies[nearestBlock] = null;
 				if(velocity < 0)
 				{
-					velocity = 15 + speed * 5;
+					velocity = 30 + speed * 2.5;
+					
+					//velocity = 40 at 5
+					//velocity = 30 at 1
 				}
 			}
 		}
@@ -255,25 +273,36 @@ function Update () {
 	
 	if(Input.GetKeyDown("space") && canJump && !finished)
 	{
-		//velocity = movementSpeed*6;
-		//velocity = 27.5 + movementSpeed * 2.75;
-		velocity = 52 + 3 * speed;
+		velocity = 59.5 + 1.5*speed;
+		// velocity = 67 at 5
+		// velocity = 61 at 1
 	}
 	if(finished && !badEnd)
 	{
-		player.transform.position.x -= movementSpeed * Time.deltaTime;
+		velocity = 0;
+		player.GetComponent(PlayerManager).currentState = PlayerState.SpecialHandsOut;
+		player.transform.position.y += deathMovement * Time.deltaTime;
+		player.transform.Rotate(0,0,50*Time.deltaTime);
+		deathMovement -= Time.deltaTime * 80;
 	}
-	if(player.transform.position.y + (velocity * Time.deltaTime) < bottom)
+	if(player.transform.position.y + (velocity * Time.deltaTime) < bottom && !finished)
 	{
 		player.transform.position.y = bottom;
 		velocity = 0;
-		canJump = true;
 	}
 	else
 	{
 		canJump = false;
 		player.transform.position.y += velocity * Time.deltaTime;
 	}
+	if(Mathf.Abs(player.transform.position.y - bottom) < .6)
+	{
+		canJump = true;
+	}
+	else
+	{
+		canJump = false;
+	}	
 	if(player.transform.position.y < groundHeight + 3.5)
 	{
 		Finish(false,1);
@@ -300,7 +329,7 @@ function Update () {
 	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && canJump && !finished)
 	{	
 		clicked = true;
-		velocity = 52 + 3 * speed;
+		velocity = 59.5 + 1.5*speed;
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{

@@ -13,6 +13,7 @@ var colorForChange:Color;
 
 var normalMonsterSprites:Sprite[];
 var dyingMonsterSprites:Sprite[];
+var attackingMonsterSprite:Sprite;
 
 var monster:SpriteRenderer;
 var player:GameObject;
@@ -20,6 +21,9 @@ var player:GameObject;
 var defendButton:SpriteRenderer;
 var fightButton:SpriteRenderer;
 var healthBar:GameObject;
+
+var enemyHP:TextMesh;
+var attacking:TextMesh;
 
 @HideInInspector var healthBarMin:float;
 @HideInInspector var healthBarMax:float;
@@ -45,11 +49,16 @@ var fightOff:Sprite;
 var defendOn:Sprite;
 var defendOff:Sprite;
 
+var origin:Vector3;
+
+@HideInInspector var monsterPosition:int;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	origin = monster.transform.position;
 	healthBarMin = 0;
 	healthBarMax = 13.6;
 	playerDefending = false;
@@ -58,6 +67,7 @@ function Start () {
 	canDefend = false;
 	canFight = true;
 	enemyDead = false;
+	monsterPosition = 1;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -71,6 +81,7 @@ function Start () {
 		difficulty = GameManager.difficulty;
 	}
 	length = 3 + 5/speed;
+	length = 20;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
@@ -80,11 +91,17 @@ function Start () {
 	}
 	
 	//IMPORTANT THINGS
-	playerHealthChange = 25;
-	cooldownTime = .3;
+	playerHealthChange = 10 + 15 * difficulty;
+	cooldownTime = .5;
 	playerCooldown = cooldownTime;
-	waitTime = 1;
-	enemyHealth = 5;
+	waitTime = 1.5;
+	enemyHealth = 10;
+	
+	for(i = 0; i < speed; i++)
+	{
+		waitTime = Mathf.MoveTowards(waitTime,.8,.2);
+		cooldownTime = Mathf.MoveTowards(cooldownTime,.3,.05);
+	}
 	
 	// If the color of the UI should change.
 	if(colorChange)
@@ -98,29 +115,48 @@ function Start () {
 }
 
 function Update () {
+	enemyHP.text = "HP: " + enemyHealth.ToString();
 	healthBar.transform.localScale.x = Mathf.Lerp(healthBarMin,healthBarMax,playerHealth/100);
 	playerCooldown -= Time.deltaTime;
 	timer -= Time.deltaTime;
 	
+	if(enemyHealth <= 0)
+	{
+		enemyDead = true;
+		Finish(true,2);
+	}
+	if(playerHealth <= 0)
+	{
+		Finish(false,1);
+		player.transform.position.x += Time.deltaTime * 5;
+		player.transform.position.y -= Time.deltaTime * 5;
+		monster.transform.position.x += Time.deltaTime * 2;
+	}
 	if(playerCooldown < 0)
 	{
 		fightButton.sprite = fightOn;
+		fightButton.color.a = 1;
 		canFight = true;
 	}
 	else
 	{
 		fightButton.sprite = fightOff;
+		fightButton.color.a = 0;
 		canFight = false;
 	}
 	
 	if(enemyAttacking)
 	{
+		attacking.transform.position.x = 1.8;
+		defendButton.color.a = 1;
 		canDefend = true;
 		defendButton.sprite = defendOn;
 	}
 	else
 	{
+		attacking.transform.position.x = 1000;
 		defendButton.sprite = defendOff;
+		defendButton.color.a = 0;
 		canDefend = false;
 	}
 	
@@ -129,12 +165,12 @@ function Update () {
 		Finish(true,0);
 	}
 	
-	if(Input.GetKeyDown("left") && playerCooldown < 0)
+	if(Input.GetKeyDown("left") && playerCooldown < 0 && canDefend)
 	{
 		playerCooldown = cooldownTime;
 		Defend();
 	}
-	if(Input.GetKeyDown("right") && playerCooldown < 0)
+	if(Input.GetKeyDown("right") && playerCooldown < 0 && canFight)
 	{
 		playerCooldown = cooldownTime;
 		Fight();
@@ -144,7 +180,7 @@ function Update () {
 	{
 		for(var i:int = 0; i < Finger.identity.length; i++)
 		{
-			if(Finger.GetExists(i) && Finger.GetInGame(i) && playerCooldown < 0 && !clicked)
+			if(Finger.GetExists(i) && Finger.GetInGame(i) && playerCooldown < 0 && !clicked && !finished)
 			{
 				playerCooldown = cooldownTime;
 				clicked = true;
@@ -179,26 +215,37 @@ function Play () {
 function EnemyAttacks () {
 	while(!finished)
 	{
+		monster.transform.position.x = -3.37;
 		yield WaitForSeconds(Random.Range(waitTime-.2,waitTime+.2));
 		enemyAttacking = true;
 		var counter:float = 0;
-		while(counter < waitTime/2)
+		while(counter < waitTime/2 && !finished)
 		{
 			counter += Time.deltaTime;
 			yield;
 		}
-		if(!playerDefending)
+		if(!playerDefending && !finished)
 		{
 			playerHealth -= playerHealthChange;
 		}
+		if(!finished)
+		{
+			monster.transform.position.x += 3;
+		}
 		enemyAttacking = false;
+		yield WaitForSeconds(.3);
+		monster.transform.position.x = -3.37;
 	yield;
 	}
 }
 
 function Defend () {
 		playerDefending = true;
-		yield WaitForSeconds(cooldownTime*2);
+		player.transform.position.x += 2;
+		player.transform.position.y -= 2;
+		yield WaitForSeconds(cooldownTime*1.1);
+		player.transform.position.x -= 2;
+		player.transform.position.y += 2;
 		playerDefending = false;
 }
 
@@ -218,11 +265,21 @@ function EnemyMovement () {
 		}
 		else if(!enemyDead && enemyAttacking)
 		{
-		
+			monster.sprite = attackingMonsterSprite;
 		}
 		else if(enemyDead)
 		{
-		
+			Shake(monster.gameObject,300);
+			monster.sprite = dyingMonsterSprites[0];
+			yield WaitForSeconds(.5);
+			monster.sprite = dyingMonsterSprites[1];
+			yield WaitForSeconds(.5);
+			monster.sprite = dyingMonsterSprites[2];
+			yield WaitForSeconds(.5);
+			monster.sprite = dyingMonsterSprites[3];
+			yield WaitForSeconds(.5);
+			monster.sprite = dyingMonsterSprites[4];
+			yield WaitForSeconds(10);
 		}
 		yield;
 	}
@@ -240,6 +297,7 @@ function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
 		finished = true;
+		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)
 		{
@@ -258,10 +316,9 @@ function ColorChange () {
 }
 
 function Shake (object:GameObject, times:int) {
-	var origin:Vector3 = object.transform.position;
 	var counter:int = 0;
 	var difference:Vector2 = Vector2(.25,.25);
-	while(counter < times)
+	while(counter < times && !enemyAttacking)
 	{
 		object.transform.position.x = origin.x + difference.x;
 		object.transform.position.y = origin.y + difference.y;
@@ -273,5 +330,8 @@ function Shake (object:GameObject, times:int) {
 		counter ++;
 		yield WaitForSeconds(.03);
 	}
-	object.transform.position = origin;
+	if(!enemyAttacking)
+	{
+		object.transform.position = origin;
+	}
 }
