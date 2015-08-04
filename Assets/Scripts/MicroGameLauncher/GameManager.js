@@ -16,6 +16,7 @@ private var curNotify:GameObject;
 @HideInInspector var timeBeforeLevelLoad:float;
 
 // Game variables.
+@HideInInspector var settings:String;
 static var speed:float;
 static var speedProgress:int;
 static var difficultyProgress:int;
@@ -48,8 +49,8 @@ static var movingBack:boolean;
 static var replay:boolean;
 
 // Game change variables.
-@HideInInspector var smallAmount:int;
-@HideInInspector var largeAmount:int;
+@HideInInspector var difficultyChangeAmount:int;
+@HideInInspector var speedChangeAmount:int;
 
 // First Time Variables
 static var gameNames:String[];
@@ -96,20 +97,28 @@ function Update () {
 //////////////////////////////////////////////////////////////////////////
 
 function BeforeGames () {
-	// Set game change variables.
-	lives = Master.lives;
-	smallAmount = 3;
-	largeAmount = 10;
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0)
-	{
-		smallAmount = 3;
-		largeAmount = 5;
-	}
 	
 	// Microgame variables.
 	shuffled = false;
 	shuffleCount = 0;
-	speed = 1;
+	speed = 2;
+	
+	// Set game change variables.
+	lives = Master.lives;
+	difficultyChangeAmount = 3;
+	speedChangeAmount = 10;
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0)
+	{
+		settings = "First Time";
+	}
+	else
+	{
+		settings = "Return Visit";
+	}
+	if(Master.hardMode)
+	{
+		settings = "Hard Mode";
+	}
 	
 	// Between game variables.
 	timeBeforeSuccessNotification = .45;
@@ -118,8 +127,6 @@ function BeforeGames () {
 	timeBeforeLevelLoad = 1;
 	speedProgress = 0;
 	difficultyProgress = 0;
-	difficulty = 1;
-	bossDifficulty = 0;
 	gameNumber = 1;
 	notified = false;
 	movingBack = false;
@@ -136,15 +143,35 @@ function BeforeGames () {
 		firstTimeValues[gameNum] = false;
 	}
 	
-	// Hard mode settings
-	if(Master.hardMode)
+	
+	switch(settings)
 	{
-		smallAmount = 5;
-		largeAmount = 10;
-		speed = 5;
-		difficulty = 2;
-		bossDifficulty = speed;
+		case "First Time":
+			difficultyChangeAmount = 3;
+			speedChangeAmount = 5;
+			speed = 1;
+			difficulty = 1;
+			bossDifficulty = 0;
+			break;
+		case "Return Visit":
+			difficultyChangeAmount = 3;
+			speedChangeAmount = 10;
+			speed = 2;
+			difficulty = 1;
+			bossDifficulty = 0;
+			break;
+		case "Hard Mode":
+			difficultyChangeAmount = 5;
+			speedChangeAmount = 10;
+			speed = 5;
+			difficulty = 2;
+			bossDifficulty = 2;
+			break;
+		default:
+			break;
 	}
+	// Hard mode settings
+	
 	
 	// Pause variables.
 	pausable = false;
@@ -266,6 +293,20 @@ function GameOver () {
 		yield;
 	}
 	fade.material.color.a = 0;
+	if(Master.hardMode)
+	{
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard") <= gameNumber)
+		{
+			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",gameNumber);
+		}
+	}
+	else
+	{
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
+		{
+			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
+		}
+	}
 	if(replay)
 	{
 		BeforeGames();
@@ -277,23 +318,8 @@ function GameOver () {
 		yield WaitForSeconds(.7);
 		AudioManager.StopSong();
 		yield WaitForSeconds(1.3);
-		if(Master.hardMode)
-		{
-			if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard") <= gameNumber)
-			{
-				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",gameNumber);
-			}
-			Master.hardMode = false;
-			Application.LoadLevel("Theater");
-		}
-		else
-		{
-			if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
-			{
-				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
-			}
-			Application.LoadLevel("WorldSelect");
-		}
+		Application.LoadLevel("WorldSelect");
+		Master.hardMode = false;
 	}
 }
 
@@ -513,27 +539,24 @@ function Notify(text:String) {
 }
 
 function DifficultSpeedCheck() {
-	if(speedProgress >= largeAmount)
+	if(speedProgress >= speedChangeAmount)
 	{
 		if(!Master.hardMode)
 		{
 			speed = Mathf.MoveTowards(speed,6,1);
-			AudioManager.PlaySound(Master.currentWorld.audio.speedUp);
-			Notify("Speed\nUp!");
-			notified = true;
 			difficulty = 1;
 		}
 		else
 		{
 			speed = Mathf.MoveTowards(speed,8,.5);
-			AudioManager.PlaySound(Master.currentWorld.audio.speedUp);
-			Notify("Speed\nUp!");
-			notified = true;
 			difficulty = 2;
 		}
+		AudioManager.PlaySound(Master.currentWorld.audio.speedUp);
+		Notify("Speed\nUp!");
+		notified = true;
 		speedProgress = 0;
 	}
-	else if(difficultyProgress >= smallAmount) 
+	else if(difficultyProgress >= difficultyChangeAmount) 
 	{
 		difficulty = Mathf.MoveTowards(difficulty,3,1);
 		difficultyProgress = 0;

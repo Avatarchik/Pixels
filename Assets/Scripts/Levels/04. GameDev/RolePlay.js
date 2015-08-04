@@ -77,8 +77,8 @@ function Start () {
 	}
 	else
 	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
+		speed = GameManager.bossDifficulty + 2;
+		difficulty = GameManager.bossDifficulty;
 	}
 	length = 3 + 5/speed;
 	length = 20;

@@ -1,4 +1,4 @@
-﻿#pragma strict
+﻿ #pragma strict
 
 var colorChange:boolean;
 var colorForChange:Color;
@@ -18,12 +18,29 @@ var colorForChange:Color;
 @HideInInspector var leftLaneHeights:float[];
 @HideInInspector var centerLaneHeights:float[];
 @HideInInspector var rightLaneHeights:float[];
+@HideInInspector var maxEnemies:float;
+
+@HideInInspector var maxDistance:float;
 
 var normalEnemy:GameObject;
 var hardEnemy:GameObject;
 
 var normalEnemySprites:Sprite[];
 var hardEnemySprites:Sprite[];
+
+var health:TextMesh;
+var ammo:TextMesh;
+var blocker:SpriteRenderer;
+var deadColor:Color;
+
+var front:GameObject;
+
+@HideInInspector var healthLeft:int;
+@HideInInspector var ammoLeft:float;
+
+@HideInInspector var ammoChangeAmount:float;
+@HideInInspector var healthChangeAmount:float;
+@HideInInspector var enemySpeed:float;
 
 @HideInInspector var leftEnemy:GameObject;
 @HideInInspector var centerEnemy:GameObject;
@@ -36,9 +53,12 @@ var hardEnemySprites:Sprite[];
 @HideInInspector var pauseTime:float;
 @HideInInspector var movementWaitTime:float;
 
+@HideInInspector var clicked:boolean[];
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
+	blocker.color.a = 0;
 	
 	// Level specific variable initialization.
 	leftLaneLocation = -6;
@@ -47,6 +67,11 @@ function Start () {
 	leftLaneHeights = new float[5];
 	centerLaneHeights = new float[5];
 	rightLaneHeights = new float[5];
+	healthLeft = 100;
+	ammoLeft = 100;
+	maxDistance = 4;
+	clicked = new boolean[5];
+	clicked = [false,false,false,false,false];
 	
 	leftLaneHeights = [-.5,-.85,-1.25,-1.65,-2];
 	centerLaneHeights = [2,1.0,0,-1,-2];
@@ -68,13 +93,19 @@ function Start () {
 		difficulty = GameManager.difficulty;
 	}
 	length = 2 + .1/speed;
-	length = 10;
+	length = 10 + 2 * difficulty;
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
 	
-	pauseTime = .3;
+	pauseTime = 1.4;
 	movementWaitTime = .3;
+	maxEnemies = length / (pauseTime *1.2);
+	var ammoMultiplier = .5 + .1 * difficulty;
+	ammoChangeAmount = (100/maxEnemies) * ammoMultiplier;
+	enemySpeed = .8 + .5 * speed;
+	
+	healthChangeAmount = 12 + 18 * difficulty;
 	
 	// If the color of the UI should change.
 	if(colorChange)
@@ -86,31 +117,76 @@ function Start () {
 }
 
 function Update () {
+	if(leftEnemy == null && centerEnemy == null && rightEnemy == null && maxEnemies < 0)
+	{
+		Finish(true,.5);
+	}
+	ammo.text = Mathf.Floor(ammoLeft).ToString() + "%";
+	health.text = healthLeft.ToString() + "%";
+	
+	if(healthLeft > 0)
+	{
+		blocker.color.a = Mathf.MoveTowards(blocker.color.a,0,Time.deltaTime * 10);
+	}
+	else
+	{
+		blocker.color = Color.Lerp(blocker.color,deadColor,Time.deltaTime * 2.5);
+	}
+	
+	if(Input.GetKeyDown("left"))
+	{
+		if(leftEnemy != null)
+		{
+			Destroy(leftEnemy);
+		}
+		RemoveAmmo();
+	}
+	if(Input.GetKeyDown("up"))
+	{
+		if(centerEnemy != null)
+		{
+			Destroy(centerEnemy);
+		}
+		RemoveAmmo();
+	}
+	if(Input.GetKeyDown("right"))
+	{
+		if(rightEnemy != null)
+		{
+			Destroy(rightEnemy);
+		}
+		RemoveAmmo();
+	}
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
 		Finish(true,0);
 	}
 	// Get important finger.
-	if(importantFinger == -1)
+	for(var i:int = 0; i < Finger.identity.length; i++)
 	{
-		for(var i:int = 0; i < Finger.identity.length; i++)
+		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && ammoLeft > 0)
 		{
-			if(Finger.GetExists(i) && Finger.GetInGame(i))
+			clicked[i] = true;
+			RemoveAmmo();
+			if(leftEnemy != null && Vector2.Distance(Finger.GetPosition(i), leftEnemy.transform.position) < maxDistance)
 			{
-				importantFinger = i;
-				break;
+				Destroy(leftEnemy);
 			}
+			if(centerEnemy != null && Vector2.Distance(Finger.GetPosition(i), centerEnemy.transform.position) < maxDistance)
+			{
+				Destroy(centerEnemy);
+			}
+			if(rightEnemy != null && Vector2.Distance(Finger.GetPosition(i), rightEnemy.transform.position) < maxDistance)
+			{
+				Destroy(rightEnemy);
+			}
+			break;
 		}
-	}
-	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && !Master.paused)
-	{
-		
-	}
-	else if(!Finger.GetExists(importantFinger))
-	{
-		importantFinger = -1;
+		else if(!Finger.GetExists(i) || !Finger.GetInGame(i))
+		{
+			clicked[i] = false;
+		}
 	}
 }
 
@@ -146,7 +222,7 @@ function Play () {
 			default:
 				break;
 		}
-		yield WaitForSeconds(Random.Range(pauseTime*.6,pauseTime*1.4));
+		yield WaitForSeconds(Random.Range(pauseTime*.4,pauseTime*1.6));
 	}
 }
 
@@ -159,9 +235,9 @@ function Lane (lane:int) {
 		switch(lane)
 		{
 			case 0:
-				if(leftEnemy == null)
+				if(leftEnemy == null && maxEnemies > 0)
 				{
-					yield WaitForSeconds(Random.Range(pauseTime * .6, pauseTime * 1.4));
+					yield WaitForSeconds(Random.Range(pauseTime * .4, pauseTime * 1.6));
 					if(difficulty == 3 && Random.Range(0,2) == 1)
 					{
 						toCreate = hardEnemy;
@@ -174,12 +250,17 @@ function Lane (lane:int) {
 					}
 					leftEnemyPosition = 0;
 					leftEnemy = Instantiate(toCreate,Vector3(leftLaneLocation,leftLaneHeights[0],transform.position.z + 1),Quaternion.identity);
+					maxEnemies --;
 					leftEnemy.transform.parent = transform;
 					counter = 0;
 				}
-				else
+				else if(leftEnemy != null)
 				{
-					counter += Time.deltaTime;
+					counter += Time.deltaTime * enemySpeed;
+					if(toCreate == hardEnemy)
+					{
+						counter += Time.deltaTime * .5;
+					}
 					if(counter > movementWaitTime)
 					{
 						if(leftEnemyPosition < 4)
@@ -198,9 +279,9 @@ function Lane (lane:int) {
 				}
 				break;
 			case 1:
-				if(centerEnemy == null)
+				if(centerEnemy == null && maxEnemies > 0)
 				{
-					yield WaitForSeconds(Random.Range(pauseTime * .6, pauseTime * 1.4));
+					yield WaitForSeconds(Random.Range(pauseTime * .4, pauseTime * 1.6));
 					if(difficulty == 3 && Random.Range(0,2) == 1)
 					{
 						toCreate = hardEnemy;
@@ -213,12 +294,17 @@ function Lane (lane:int) {
 					}
 					centerEnemyPosition = 0;
 					centerEnemy = Instantiate(toCreate,Vector3(centerLaneLocation,centerLaneHeights[0],transform.position.z+1),Quaternion.identity);
+					maxEnemies --;
 					centerEnemy.transform.parent = transform;
 					counter = 0;
 				}
-				else
+				else if(centerEnemy != null)
 				{
-					counter += Time.deltaTime;
+					counter += Time.deltaTime * enemySpeed;
+					if(toCreate == hardEnemy)
+					{
+						counter += Time.deltaTime * .5;
+					}
 					if(counter > movementWaitTime)
 					{
 						if(centerEnemyPosition < 4)
@@ -237,9 +323,9 @@ function Lane (lane:int) {
 				}
 				break;
 			case 2:
-				if(rightEnemy == null)
+				if(rightEnemy == null && maxEnemies > 0)
 				{
-					yield WaitForSeconds(Random.Range(pauseTime * .6, pauseTime * 1.4));
+					yield WaitForSeconds(Random.Range(pauseTime * .4, pauseTime * 1.6));
 					if(difficulty == 3 && Random.Range(0,2) == 1)
 					{
 						toCreate = hardEnemy;
@@ -252,12 +338,17 @@ function Lane (lane:int) {
 					}
 					rightEnemyPosition = 0;
 					rightEnemy = Instantiate(toCreate,Vector3(rightLaneLocation,rightLaneHeights[0],transform.position.z+1),Quaternion.identity);
+					maxEnemies --;
 					rightEnemy.transform.parent = transform;
 					counter = 0;
 				}
-				else
+				else if(rightEnemy != null)
 				{
-					counter += Time.deltaTime;
+					counter += Time.deltaTime * enemySpeed;
+					if(toCreate == hardEnemy)
+					{
+						counter += Time.deltaTime * .5;
+					}
 					if(counter > movementWaitTime)
 					{
 						if(rightEnemyPosition < 4)
@@ -283,13 +374,29 @@ function Lane (lane:int) {
 }
 
 function HurtPlayer () {
-	Debug.Log("hey: " + Time.time);
+	healthLeft = Mathf.MoveTowards(healthLeft,0,healthChangeAmount);
+	Shake(front,10);
+	Shake(health.gameObject,10);
+	Shake(ammo.gameObject,10);
+	if(healthLeft == 0)
+	{
+		Finish(false,1);
+	}
+}
+
+function RemoveAmmo () {
+	if(!finished && healthLeft > 0 && ammoLeft > 0)
+	{
+		blocker.color.a = 1;
+		ammoLeft = Mathf.MoveTowards(ammoLeft,0,ammoChangeAmount);
+	}
 }
 
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
 		finished = true;
+		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)
 		{
@@ -305,4 +412,23 @@ function ColorChange () {
 	}
 	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", colorForChange,SendMessageOptions.DontRequireReceiver);
 	yield;
+}
+
+function Shake (object:GameObject, times:int) {
+	var counter:int = 0;
+	var difference:Vector2 = Vector2(.15,.15);
+	var origin:Vector3 = object.transform.position;
+	while(counter < times)
+	{
+		object.transform.position.x = origin.x + difference.x;
+		object.transform.position.y = origin.y + difference.y;
+		difference.x = difference.x * -1;
+		if(Random.Range(0,2) == 0)
+		{
+			difference.y = difference.y * -1;
+		}
+		counter ++;
+		yield WaitForSeconds(.03);
+	}
+	object.transform.position = origin;
 }

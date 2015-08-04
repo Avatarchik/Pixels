@@ -73,9 +73,9 @@ function Start () {
 	}
 	numberOfTrees = 5+difficulty;
 	var treeLength:float = 2 - (speed*.2);
-	if(treeLength < 1.3)
+	if(treeLength < .9)
 	{
-		treeLength = 1.3;
+		treeLength = .9;
 	}
 	length = numberOfTrees * treeLength;
 	timer = length;

@@ -209,10 +209,10 @@ function Start () {
 		}
 	}
 	UpdateCounters();
-	length = 11 - (speed * 1);
-	if(length < 7)
+	length = 9.5 - (speed * 1);
+	if(length < 6.5)
 	{
-		length = 7 - (speed *.1);
+		length = 6.5 - (speed *.1);
 	}
 	timer = length;
 	UITimer.currentTarget = length;

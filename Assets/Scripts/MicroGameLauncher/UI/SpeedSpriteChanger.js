@@ -3,5 +3,8 @@
 var speedSprites:GameObject[];
 
 function SpeedChange (speed:int) {
-	speedSprites[speed-1].SetActive(true);
+	for(var i:int = 0; i < speed; i++)
+	{
+		speedSprites[i].SetActive(true);
+	}	
 }

@@ -180,7 +180,7 @@ function Update () {
 			sharks[spot].transform.localScale.x = 1;
 		}
 		sharks[spot].transform.position.x += speeds[spot] * Time.deltaTime;
-		if(Vector3.Distance(sharks[spot].transform.position,player.transform.position) < deathDistance)
+		if(Mathf.Abs((sharks[spot].transform.position.y-.4)-player.transform.position.y) < deathDistance * .7 && Mathf.Abs(sharks[spot].transform.position.x-player.transform.position.x) < deathDistance)
 		{
 			player.transform.parent = sharks[spot].transform;
 			Finish(false,0);
@@ -199,7 +199,7 @@ function Update () {
 		player.transform.position.y = Mathf.MoveTowards(player.transform.position.y,playerDest,Time.deltaTime* (10 +speed * 2));
 	}
 	
-	if(player.transform.position.y > 8)
+	if(player.transform.position.y > 7.5)
 	{
 		player.transform.position.y = Mathf.MoveTowards(player.transform.position.y,20,Time.deltaTime* (10 +speed * 2));
 		Finish(true,0);

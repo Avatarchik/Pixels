@@ -96,7 +96,7 @@ function Start () {
 	{
 		lasers[i].GetComponent(SpriteRenderer).sprite = laserSprites[0];
 	}
-	laserSpeed = .2 + (.25/speed);
+	laserSpeed = .1 + (.2/speed);
 	length = laserSpeed * 24;
 	timer = length;
 	UITimer.currentTarget = length;

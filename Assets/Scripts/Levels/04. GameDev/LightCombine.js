@@ -274,7 +274,14 @@ function Update () {
 	{
 		successNumber = 0;
 	}
-	arrows.sprite = arrowSprites[successNumber];
+	if(reloading)
+	{
+		arrows.sprite = arrowSprites[arrowSprites.Length-1];
+	}
+	else
+	{
+		arrows.sprite = arrowSprites[successNumber];
+	}
 	if(successNumber == 2 && !reloading)
 	{
 		reloading = true;

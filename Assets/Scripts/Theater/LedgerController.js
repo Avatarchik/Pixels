@@ -316,7 +316,7 @@ function RemoveCover () {
 }
 
 function ReplaceCover (newState:LedgerState) {
-	var waitSpeed:float = .025;
+	var waitSpeed:float = .01;
 	pageFlip.sprite = pageFlipSprites[0]; yield WaitForSeconds(waitSpeed);
 	pageFlip.sprite = pageFlipSprites[1]; yield WaitForSeconds(waitSpeed);
 	pageFlip.sprite = pageFlipSprites[2]; yield WaitForSeconds(waitSpeed);
@@ -330,7 +330,7 @@ function ReplaceCover (newState:LedgerState) {
 	SwitchLocations(currentState);
 	ChooseWorld();
 	UpdateDisplay(world.basic.worldNameVar);
-	yield WaitForSeconds(.05);
+	yield WaitForSeconds(.03);
 	pageFlip.sprite = pageFlipSprites[7]; yield WaitForSeconds(waitSpeed);
 	pageFlip.sprite = pageFlipSprites[6]; yield WaitForSeconds(waitSpeed);
 	pageFlip.sprite = pageFlipSprites[5]; yield WaitForSeconds(waitSpeed);

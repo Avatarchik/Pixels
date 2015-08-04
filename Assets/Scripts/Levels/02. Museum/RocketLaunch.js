@@ -124,19 +124,19 @@ function Update () {
 				break;
 			}
 		}
-		if(Mathf.Abs(slider1.transform.position.x - leftLimit) < 1)
+		if(Mathf.Abs(slider1.transform.position.x - leftLimit) < 2)
 		{
 			slider1.transform.position.x = Mathf.MoveTowards(slider1.transform.position.x,leftLimit,Time.deltaTime*4);
 		}
-		else if(Mathf.Abs(slider1.transform.position.x - centerLimit) < 1)
+		else if(Mathf.Abs(slider1.transform.position.x - centerLimit) < 2)
 		{
 			slider1.transform.position.x = Mathf.MoveTowards(slider1.transform.position.x,centerLimit,Time.deltaTime*4);
 		}
-		if(Mathf.Abs(slider2.transform.position.x - rightLimit) < 1)
+		if(Mathf.Abs(slider2.transform.position.x - rightLimit) < 2)
 		{
 			slider2.transform.position.x = Mathf.MoveTowards(slider2.transform.position.x,rightLimit,Time.deltaTime*4);
 		}
-		else if(Mathf.Abs(slider2.transform.position.x - centerLimit) < 1)
+		else if(Mathf.Abs(slider2.transform.position.x - centerLimit) < 2)
 		{
 			slider2.transform.position.x = Mathf.MoveTowards(slider2.transform.position.x,centerLimit,Time.deltaTime*4);
 		}
@@ -283,7 +283,7 @@ function Launch (rocket:GameObject, rocketNumber:int) {
 		if(!exploded[rocketNumber])
 		{
 			rocket.transform.position.x = origin + (Random.Range(-.01,.01) * rocketSpeed);
-			rocketSpeed += Time.deltaTime * (.9 + (speed*.9));
+			rocketSpeed += Time.deltaTime * (1 + (speed*1.5));
 			rocket.transform.position.y += Time.deltaTime * rocketSpeed;
 		}
 		else

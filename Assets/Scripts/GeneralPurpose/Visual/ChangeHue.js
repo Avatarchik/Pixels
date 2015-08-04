@@ -6,7 +6,11 @@ var saturation:float;
 var doToChildren:boolean;
 var onStart:boolean;
 
+@HideInInspector var ignoreList:String[];
+
 function Start () {
+	ignoreList = new String[10];
+	ignoreList = ["Vertical","Horizontal","01","02","03","04","05","06","07","08"];
 	if(onStart)
 	{
 		Instant();
@@ -23,7 +27,15 @@ function ChangeHue (thisObject:Transform,newHue:float,newSat:float) {
 	ChangeHue(thisObject,newHue,newSat,Color.white);
 }
 function ChangeHue (thisObject:Transform,newHue:float,newSat:float,tint:Color) {
-	if(thisObject.GetComponent(SpriteRenderer)!= null && thisObject.GetComponent(SpriteRenderer).material != hueMaterial)
+	var allowed:boolean = true;
+	for(var text:String in ignoreList)
+	{
+		if(text == thisObject.transform.name)
+		{
+			allowed = false;
+		}
+	}
+	if(thisObject.GetComponent(SpriteRenderer)!= null && thisObject.GetComponent(SpriteRenderer).material != hueMaterial && allowed)
 	{
 		thisObject.GetComponent(SpriteRenderer).material = hueMaterial;
 		thisObject.GetComponent(SpriteRenderer).material.SetFloat("_Hue",newHue);

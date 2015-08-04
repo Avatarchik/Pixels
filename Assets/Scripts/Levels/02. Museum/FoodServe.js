@@ -31,9 +31,7 @@ var overfillSprite:Sprite;
 @HideInInspector var plateSpeed:float[];
 @HideInInspector var plateFoodType:int[];
 
-@HideInInspector var clicked:boolean;
-
-@HideInInspector var importantFinger:int;
+@HideInInspector var clicked:boolean[];
 
 @HideInInspector var distance:float;
 
@@ -54,7 +52,8 @@ function Start () {
 	clickWait = .1;
 	firstNotify = false;
 	distance = 5;
-	clicked = false;
+	clicked = new boolean[5];
+	clicked = [false,false,false,false,false];
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;
@@ -145,41 +144,29 @@ function Update () {
 			people[i].transform.position.x += peopleSpeed[i] * Time.deltaTime;
 		}
 	}
-	if(importantFinger == -1)
+	for(i = 0; i < Finger.identity.length; i++)
 	{
-		clicked = false;
-		for(i = 0; i < Finger.identity.length; i++)
+		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && !finished)
 		{
-			if(Finger.GetExists(i) && Finger.GetInGame(i))
+			clicked[i] = true;
+			var nearestNum:float = 1000;
+			var rightPlate:int = -1;
+			for(var plate:int = 0; plate < plates.length; plate++)
 			{
-				importantFinger = i;
-				break;
+				if(Mathf.Abs(Finger.GetPosition(i).x - plates[plate].transform.position.x) < nearestNum)
+				{
+					nearestNum = Mathf.Abs(Finger.GetPosition(i).x - plates[plate].transform.position.x);
+					rightPlate = plate;
+				}
 			}
-		}
-	}
-	if(importantFinger != i && Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger) && !Master.paused)
-	{
-		
-		var nearestNum:float = 1000;
-		var rightPlate:int = -1;
-		for(i = 0; i < plates.length; i++)
-		{
-			if(Mathf.Abs(Finger.GetPosition(importantFinger).x - plates[i].transform.position.x) < nearestNum)
-			{
-				nearestNum = Mathf.Abs(Finger.GetPosition(importantFinger).x - plates[i].transform.position.x);
-				rightPlate = i;
-			}
-		}
-		if(Mathf.Abs(Finger.GetPosition(importantFinger).x) < 9 && !clicked && clickWait < 0)
-		{
-			clicked = true;
 			clickWait = .1;
 			ClickPlate(rightPlate);
+			break;
 		}
-	}
-	else if(!Finger.GetExists(importantFinger))
-	{
-		importantFinger = -1;
+		else if(!Finger.GetExists(i) || !Finger.GetInGame(i))
+		{
+			clicked[i] = false;
+		}
 	}
 }
 

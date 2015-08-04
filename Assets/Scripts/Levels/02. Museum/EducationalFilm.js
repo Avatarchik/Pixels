@@ -52,17 +52,17 @@ function Start () {
 		difficulty = GameManager.difficulty;
 	}
 	var tempSpeed:float = .43;
-	if(speed <= 4)
+	if(speed <= 6)
 	{
-		tempSpeed -= (speed * .03);
+		tempSpeed -= (speed * .035);
 	}
 	else
 	{
-		tempSpeed -= (4 * .03);
+		tempSpeed -= (6 * .035);
 	}
 	tempSpeed -= difficulty * .03;
 	
-	length = difficulty * 8 * tempSpeed;
+	length = .3 + difficulty * 8 * tempSpeed;
 	timer = length;
 	
 	lengthOfCountdown = length/2;

@@ -94,7 +94,7 @@ function Update () {
 
 function Play (arm:SpriteRenderer,number:int) {
 	demonArmProgress[number] = 0;
-	demonArmSpeed[number] = Random.Range(.7,1.2) + Random.Range(.2,1.6) * speed;
+	demonArmSpeed[number] = Random.Range(.7,1.2) + Random.Range(.2,1.6) * (.7 + (.3 * speed));
 	while(true && !finished)
 	{
 		if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && Mathf.Abs(Finger.GetPosition(importantFinger).x-arm.transform.position.x) < touchDistance)
