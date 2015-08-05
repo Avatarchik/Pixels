@@ -35,7 +35,7 @@ function Start () {
 function Update () {
 	// Makes sure selection number is in range of selectable pieces.
 	CheckValue();
-	if(TheaterController.currentState == TheaterStatus.HomeLedger || TheaterController.currentState == TheaterStatus.Home)
+	if(TheaterController.currentState == TheaterStatus.Home)
 	{
 		selectablePieces = theaterPieces;
 		selectableSprites = theaterPiecesSprites;
@@ -49,7 +49,7 @@ function Update () {
 		selectableHighlights = FOHHighlights;
 		selectableLocations = FOHLocations;
 	}
-	if(TheaterController.currentState == TheaterStatus.Home || TheaterController.currentState == TheaterStatus.Front)
+	if(!TheaterController.customizing)
 	{
 		selectableHighlights = null;
 	}

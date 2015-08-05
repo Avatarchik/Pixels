@@ -7,7 +7,7 @@ function Start () {
 }
 
 function Update () {
-	if(TheaterController.currentState == TheaterStatus.Home || TheaterController.currentState == TheaterStatus.HomeLedger) 
+	if(TheaterController.currentState == TheaterStatus.Home) 
 	{
 		if(frontOfHousePlayer)
 		{

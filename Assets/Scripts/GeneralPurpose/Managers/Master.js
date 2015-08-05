@@ -33,9 +33,11 @@ static var unlockAll:boolean;
 static var hardMode:boolean;
 
 var worlds:World[];
+var options:WorldOptions;
 static var currentWorld:World;
 
 function Awake () {
+	Options();
 	vertical = false;
 	demo = false;
 	unlockAll = false;
@@ -437,4 +439,39 @@ class World {
 	var text:TextVariables;
 	var audio:AudioVariables;
 	var unlocks:UnlockVariables;
+}
+
+class WorldOptions {
+	var switchWorlds:boolean;
+	var switchSpot1:int;
+	var switchSpot2:int;
+	var insertWorld:boolean;
+	var insertSpot:int;
+}
+
+function Options () {
+	if(options.switchWorlds)
+	{
+		var newWorld:World;
+		newWorld = worlds[options.switchSpot1];
+		worlds[options.switchSpot1] = worlds[options.switchSpot2];
+		worlds[options.switchSpot2] = newWorld;
+	}
+	if(options.insertWorld)
+	{
+		var newArray:World[];
+		newArray = new World[worlds.length + 1];
+		for(var i:int = 0; i < newArray.length; i++)
+		{
+			if(i > options.insertSpot)
+			{
+				newArray[i] = worlds[i-1];
+			}
+			else
+			{
+				newArray[i] = worlds[i];
+			}
+		}
+		worlds = newArray;
+	}
 }
