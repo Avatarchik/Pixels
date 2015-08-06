@@ -3,6 +3,8 @@
 var colorChange:boolean;
 var colorForChange:Color;
 
+var worldIntros:AudioClip[];
+
 @HideInInspector var importantFinger:int;
 
 @HideInInspector var speed:int;
@@ -34,6 +36,10 @@ var player:PlayerManager;
 @HideInInspector var virusWaitTime:float;
 
 function Start () {
+	if(Random.Range(0,10.0) < 1.5)
+	{
+		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+	}
 	// Basic world variable initialization.
 	importantFinger = -1;
 	

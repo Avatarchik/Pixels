@@ -3,6 +3,8 @@
 var colorChange:boolean;
 var colorForChange:Color;
 
+var worldIntros:AudioClip[];
+
 @HideInInspector var importantFinger:int;
 
 @HideInInspector var speed:int;
@@ -36,6 +38,10 @@ var clicked:boolean;
 
 
 function Start () {
+	if(Random.Range(0,10.0) < 1.5)
+	{
+		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+	}
 	currentSpaceman = 0;
 	light1.color.a = 0;
 	light2.color.a = 0;

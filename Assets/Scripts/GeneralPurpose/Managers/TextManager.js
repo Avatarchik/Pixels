@@ -50,7 +50,6 @@ function Start () {
 		AudioManager.PlayCutscene(song);
 	}
 	
-	
 	// Get the text box into place.
 	while(transform.position.x < -7.74)
 	{
@@ -105,6 +104,10 @@ function Start () {
 			{
 				lines[i].center.mouth[y].time += options.difference;
 			}
+			for(y = 0; y < lines[i].background.mouth.length; y++)
+			{
+				lines[i].background.mouth[y].time += options.difference;
+			}
 		}
 		if(options.pushLines)
 		{
@@ -128,14 +131,19 @@ function Start () {
 			{
 				lines[i].rightSide.mouth = new MouthState[0];
 			}
+			if(options.background)
+			{
+				lines[i].background.mouth = new MouthState[0];
+			}
 		}
 		Record();
 	}
 	else
 	{
-		MouthShape(0);
-		MouthShape(1);
-		MouthShape(2);
+		MouthShape(0,false	);
+		MouthShape(1,false);
+		MouthShape(2,false);
+		MouthShape(0,true);
 	}
 
 	UpdateSprites(0,lines[lineMarker].leftSide,lines[Mathf.Max(0,lineMarker-1)].leftSide);
@@ -173,59 +181,98 @@ function Record () {
 	{
 		if(Input.GetKeyDown("space"))
 		{
-			SetSprite(spriteObjects[0],1, true);
-			SetSprite(spriteObjects[1],1, false);
-			SetSprite(spriteObjects[2],1, false);
-			
-			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,1);
-			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
-			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
+			SetSprite(spriteObjects[0],1);
+			SetSprite(spriteObjects[1],1);
+			SetSprite(spriteObjects[2],1);
+			if(options.left)
+			{
+				lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,1);
+			}
+			if(options.right)
+			{
+				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
+			}
+			if(options.center)
+			{
+				lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
+			}
 		}
 		else if(Input.GetKeyUp("space"))
 		{
-			SetSprite(spriteObjects[0],0, true);
-			SetSprite(spriteObjects[1],0, false);
-			SetSprite(spriteObjects[2],0, false);
-			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,0);
-			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
-			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,0);
+			SetSprite(spriteObjects[0],0);
+			SetSprite(spriteObjects[1],0);
+			SetSprite(spriteObjects[2],0);
+			if(options.left)
+			{
+				lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,0);
+			}
+			if(options.right)
+			{
+				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
+			}
+			if(options.center)
+			{
+				lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,0);
+			}
 		}
-		if(Input.GetKeyDown("left"))
+		if(Input.GetKeyDown("left") && options.left)
 		{
-			SetSprite(spriteObjects[0],1, true);
+			SetSprite(spriteObjects[0],1);
 			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,1);
 		}
-		else if(Input.GetKeyUp("left"))
+		else if(Input.GetKeyUp("left") && options.left)
 		{
-			SetSprite(spriteObjects[0],0, true);
+			SetSprite(spriteObjects[0],0);
 			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,0);
 		}
-		if(Input.GetKeyDown("up"))
+		if(Input.GetKeyDown("up") && options.center)
 		{
-			SetSprite(spriteObjects[2],1, true);
+			SetSprite(spriteObjects[2],1);
 			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
 		}
-		else if(Input.GetKeyUp("up"))
+		else if(Input.GetKeyUp("up") && options.center)
 		{
-			SetSprite(spriteObjects[2],0, true);
+			SetSprite(spriteObjects[2],0);
 			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,0);
 		}
-		if(Input.GetKeyDown("right"))
+		if(Input.GetKeyDown("right") && options.right)
 		{
-			SetSprite(spriteObjects[1],1, true);
+			SetSprite(spriteObjects[1],1);
 			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
 		}
-		else if(Input.GetKeyUp("right"))
+		else if(Input.GetKeyUp("right") && options.right)
 		{
-			SetSprite(spriteObjects[1],0, true);
+			SetSprite(spriteObjects[1],0);
 			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
+		}
+		if(Input.GetKeyDown(KeyCode.Tab) && options.background)
+		{
+			SetSprite(currentBackground,1);
+			lines[lineMarker].background.mouth = ChangeMouthValue(lines[lineMarker].background.mouth,1);
+		}
+		else if(Input.GetKeyUp(KeyCode.Tab) && options.background)
+		{
+			SetSprite(currentBackground,0);
+			lines[lineMarker].background.mouth = ChangeMouthValue(lines[lineMarker].background.mouth,0);
 		}
 		
 		if((Input.GetKeyDown("x") && Input.GetKey("space")) || Input.GetKeyDown("c"))
 		{
-			SetSprite(spriteObjects[0],2, true);
-			SetSprite(spriteObjects[1],2, false);
-			SetSprite(spriteObjects[2],2, false);
+			SetSprite(spriteObjects[0],2);
+			SetSprite(spriteObjects[1],2);
+			SetSprite(spriteObjects[2],2);
+			if(options.left)
+			{
+				lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,2);
+			}
+			if(options.right)
+			{
+				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,2);
+			}
+			if(options.center)
+			{
+				lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,2);
+			}
 			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,2);
 			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,2);
 			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,2);
@@ -234,14 +281,10 @@ function Record () {
 	}
 }
 
-function SetSprite (object:GameObject,spriteSetNumber:int,pass:boolean) {
+function SetSprite (object:GameObject,spriteSetNumber:int) {
 	if(object != null)
 	{
 		object.BroadcastMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
-	}
-	if(pass && currentBackground != null)
-	{
-		currentBackground.BroadcastMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
 	}
 }
 function ChangeMouthValue(mouthArray:MouthState[],spriteValue:int):MouthState[] {
@@ -258,7 +301,7 @@ function ChangeMouthValue(mouthArray:MouthState[],spriteValue:int):MouthState[] 
 }
 
 // Changes the sprites mouths if there is mouth change information.
-function MouthShape(position:int) {
+function MouthShape(position:int,isBackground:boolean) {
 	var movementMarker:int = 0;
 	var currentLine:int = 0;
 	while(true)
@@ -268,43 +311,60 @@ function MouthShape(position:int) {
 			movementMarker = 0;
 			currentLine = lineMarker;
 		}
-		if(position == 0 && lines[currentLine].leftSide.mouth.length > movementMarker)
+		if(isBackground)
 		{
-			while(AudioManager.GetLocation() < lines[currentLine].leftSide.mouth[movementMarker].time)
+			if(lines[currentLine].background.mouth.length > movementMarker)
 			{
-				yield;
+				while(AudioManager.GetLocation() < lines[currentLine].background.mouth[movementMarker].time)
+				{
+					yield;
+				}
+				if(lines[currentLine].background.mouth.length > movementMarker)
+				{
+					SetSprite(currentBackground,lines[currentLine].background.mouth[movementMarker].sprite);
+				}
+				movementMarker++;
 			}
-			if(lines[currentLine].leftSide.mouth.length > movementMarker)
-			{
-				SetSprite(spriteObjects[0],lines[currentLine].leftSide.mouth[movementMarker].sprite,lines[currentLine].leftSide.passToBackground);
-			}
-			movementMarker++;
 		}
-		else if (position == 1 && lines[currentLine].rightSide.mouth.length > movementMarker)
+		else
 		{
-			while(AudioManager.GetLocation() < lines[currentLine].rightSide.mouth[movementMarker].time)
+			if(position == 0 && lines[currentLine].leftSide.mouth.length > movementMarker)
 			{
-				yield;
+				while(AudioManager.GetLocation() < lines[currentLine].leftSide.mouth[movementMarker].time)
+				{
+					yield;
+				}
+				if(lines[currentLine].leftSide.mouth.length > movementMarker)
+				{
+					SetSprite(spriteObjects[0],lines[currentLine].leftSide.mouth[movementMarker].sprite);
+				}
+				movementMarker++;
 			}
-			if(lines[currentLine].rightSide.mouth.length > movementMarker)
+			else if (position == 1 && lines[currentLine].rightSide.mouth.length > movementMarker)
 			{
-				SetSprite(spriteObjects[1],lines[currentLine].rightSide.mouth[movementMarker].sprite,lines[currentLine].rightSide.passToBackground);
+				while(AudioManager.GetLocation() < lines[currentLine].rightSide.mouth[movementMarker].time)
+				{
+					yield;
+				}
+				if(lines[currentLine].rightSide.mouth.length > movementMarker)
+				{
+					SetSprite(spriteObjects[1],lines[currentLine].rightSide.mouth[movementMarker].sprite);
+				}
+				movementMarker ++;
 			}
-			movementMarker ++;
+			else if (position == 2 && lines[currentLine].center.mouth.length > movementMarker)
+			{
+				while(AudioManager.GetLocation() < lines[currentLine].center.mouth[movementMarker].time)
+				{
+					yield;
+				}
+				if(lines[currentLine].center.mouth.length > movementMarker)
+				{
+					SetSprite(spriteObjects[2],lines[currentLine].center.mouth[movementMarker].sprite);
+				}
+				movementMarker ++;
+			}
 		}
-		else if (position == 2 && lines[currentLine].center.mouth.length > movementMarker)
-		{
-			while(AudioManager.GetLocation() < lines[currentLine].center.mouth[movementMarker].time)
-			{
-				yield;
-			}
-			if(lines[currentLine].center.mouth.length > movementMarker)
-			{
-				SetSprite(spriteObjects[2],lines[currentLine].center.mouth[movementMarker].sprite,lines[currentLine].center.passToBackground);
-			}
-			movementMarker ++;
-		}
-		
 		yield;
 	}
 }
@@ -575,7 +635,6 @@ class SideInfo {
 	var mouth:MouthState[];
 	var state:PlayerState;
 	var isSpeaking:boolean;
-	var passToBackground:boolean;
 	var empty:boolean;
 }
 
@@ -585,6 +644,7 @@ class Background {
 	var scaleMultiplier:Vector3 = Vector3(0,0,0);
 	var specialDirection:String;
 	var backgroundChangeMultiplier:float;
+	var mouth:MouthState[];
 }
 class MouthState {
 	var time:float;
@@ -595,6 +655,7 @@ class Options {
 	var left:boolean;
 	var center:boolean;
 	var right:boolean;
+	var background:boolean;
 	var rebalance:boolean;
 	var difference:float;
 	var pushLines:boolean;
