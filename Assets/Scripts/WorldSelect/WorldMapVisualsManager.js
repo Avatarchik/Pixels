@@ -6,7 +6,13 @@ var worldMap:GameObject;
 var player:GameObject;
 @HideInInspector var playerManager:PlayerManager;
 
-var playerDifference:float;
+var layer00:GameObject;
+var layer01:GameObject;
+var layer02:GameObject;
+var layer03:GameObject;
+var layer04:GameObject;
+var layer05:GameObject;
+
 static var wind:float;
 
 function Start () {
@@ -20,17 +26,24 @@ function Update () {
 	wind -= Time.deltaTime * 10;
 	if(wind < -30)
 	{
-		wind = Random.Range(40,120);
+		wind = Random.Range(80,120);
 	}
-	transform.position = worldMap.transform.position;
+	transform.position.y = worldMap.transform.position.y;
+	layer00.transform.position.x = worldMap.transform.position.x * 1.6;
+	layer01.transform.position.x = worldMap.transform.position.x * 1.0;
+	layer02.transform.position.x = worldMap.transform.position.x * 0.8;
+	layer03.transform.position.x = worldMap.transform.position.x * 0.6;
+	layer04.transform.position.x = worldMap.transform.position.x * 0.4;
+	layer05.transform.position.x = worldMap.transform.position.x * 0.2;
+	
 	player.transform.position.x = Mathf.MoveTowards(player.transform.position.x,0,Time.deltaTime * (5 + Mathf.Abs(player.transform.position.x * .4)));
 	//playerManager.speed = .1;	
 
-	if(player.transform.position.x > 0)
+	if(player.transform.position.x > .1)
 	{
 		playerManager.currentState = PlayerState.WalkingLeft;
 	}
-	else if(player.transform.position.x < 0)
+	else if(player.transform.position.x < -.1)
 	{
 		playerManager.currentState = PlayerState.WalkingRight;
 	}
