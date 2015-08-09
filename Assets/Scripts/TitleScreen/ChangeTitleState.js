@@ -5,11 +5,14 @@ var player:GameObject;
 @HideInInspector var manager:PlayerManager;
 
 function Clicked () {
-	if(player != null)
+	if(TitleManager.currentState != TitleStatus.Intro)
 	{
-		manager = player.GetComponent(PlayerManager);
-		manager.Save();
+		if(player != null)
+		{
+			manager = player.GetComponent(PlayerManager);
+			manager.Save();
+		}
+		TitleManager.currentState = TitleStatus.CustomizeNoColor;
+		TitleManager.currentState = newState;
 	}
-	TitleManager.currentState = TitleStatus.CustomizeNoColor;
-	TitleManager.currentState = newState;
 }

@@ -22,6 +22,15 @@ function Start () {
 	GetComponent(SpriteRenderer).sprite = plain;
 	origin = transform.localPosition;
 	transform.localPosition.y += 1;
+	HoldForIntro();
+}
+
+function HoldForIntro () {
+	yield WaitForEndOfFrame;
+	while(TitleManager.currentState == TitleStatus.Intro)
+	{
+		yield;
+	}
 	Show();
 	StartCoroutine(Appear());
 }

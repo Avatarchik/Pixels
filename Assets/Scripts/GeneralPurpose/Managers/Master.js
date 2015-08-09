@@ -83,16 +83,13 @@ function Awake () {
 	
 	DontDestroyOnLoad(gameObject);
 	Initialize();
+	if(PlayerPrefs.GetInt("TutorialFinished") != 0)
+	{
+		skipOpening = true;
+	}
 	if(Application.loadedLevelName == "GameStart")
 	{
-		if(PlayerPrefs.GetInt("TutorialFinished") == 0 && !skipOpening)
-		{
-			Application.LoadLevel("TutorialTitleScreen");
-		}
-		else
-		{
-			Application.LoadLevel("TitleScreen");
-		}
+		Application.LoadLevel("TitleScreen");
 	}
 }
 

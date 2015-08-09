@@ -13,10 +13,10 @@ function Update () {
 }
 
 function Turn () { 
-	while(AudioManager.GetLocation() < 2.2)
+	while(AudioManager.GetLocation() < 2.2 || TitleManager.currentState == TitleStatus.Intro)
 	{
 		transform.position.x = 0;
-		transform.position.y = 6;
+		transform.position.y = 12.5;
 		yield;
 	}
 	goal = .6;

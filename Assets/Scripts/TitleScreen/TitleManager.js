@@ -1,8 +1,10 @@
 ﻿#pragma strict
 
-public enum TitleStatus{Home,CustomizeNoColor,CustomizeColor,Options};
+public enum TitleStatus{Home,CustomizeNoColor,CustomizeColor,Options,Intro};
 
 static var currentState:TitleStatus;
+
+static var playingOpening:boolean;
 
 // Audio
 var intro:AudioClip;
@@ -26,46 +28,77 @@ var flats:GameObject[];
 @HideInInspector var currentFlat:GameObject;
 
 function Start () {
+	flyIn.transform.localPosition.y = flyInTop;
+	if(Camera.main.GetComponent(Master).skipOpening)
+	{
+		Regular();
+	}
+	else
+	{
+		Intro();
+	}
+	
+}
+
+function Intro () {
+	currentState = TitleStatus.Intro;
+	while(true)
+	{
+		if(Input.GetKeyDown("space"))
+		{
+			Regular();
+			break;
+		}
+		yield;
+	}
+}
+
+function Regular () {
 	PlaySong();
 	currentState = TitleStatus.Home;
 	StartCoroutine(FlatMovement());
 	StartCoroutine(FlyInMovement());
-}	
+	RegularUpdate();
+}
 
-function Update () {
-	var speed:float = Time.deltaTime * 5;
-	switch(currentState)
+function RegularUpdate () {
+	while(true)
 	{
-		case TitleStatus.Home:
-			AudioManager.humCharacter = Person.None;
-			transform.position = Vector2.Lerp(transform.position, Vector2(0,0),speed);
-			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
-			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
-			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
-			break;
-		case TitleStatus.CustomizeNoColor:
-			AudioManager.humCharacter = Person.Peter;
-			transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
-			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14.08),speed);
-			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
-			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
-			break;
-		case TitleStatus.CustomizeColor:
-			AudioManager.humCharacter = Person.Peter;
-			transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
-			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14.08),speed);
-			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-14.15),speed);
-			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(12.4,-1),speed);
-			break;
-		case TitleStatus.Options:
-			AudioManager.humCharacter = Person.None;
-			transform.position = Vector2.Lerp(transform.position, Vector2(-30,0),speed);
-			returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
-			colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
-			colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
-			break;
-		default:
-			break;
+		var speed:float = Time.deltaTime * 5;
+		switch(currentState)
+		{
+			case TitleStatus.Home:
+				AudioManager.humCharacter = Person.None;
+				transform.position = Vector2.Lerp(transform.position, Vector2(0,0),speed);
+				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
+				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
+				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
+				break;
+			case TitleStatus.CustomizeNoColor:
+				AudioManager.humCharacter = Person.Peter;
+				transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
+				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14.08),speed);
+				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
+				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
+				break;
+			case TitleStatus.CustomizeColor:
+				AudioManager.humCharacter = Person.Peter;
+				transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
+				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14.08),speed);
+				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-14.15),speed);
+				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(12.4,-1),speed);
+				break;
+			case TitleStatus.Options:
+				AudioManager.humCharacter = Person.None;
+				transform.position = Vector2.Lerp(transform.position, Vector2(-30,0),speed);
+				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
+				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
+				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
+				break;
+			default:
+				break;
+		}
+		yield;
 	}
 }
 
@@ -100,7 +133,6 @@ function FlatMovement () {
 }
 
 function FlyInMovement () {
-	flyIn.transform.localPosition.y = flyInTop;
 	while(AudioManager.GetLocation() < 2.2)
 	{
 		yield;
