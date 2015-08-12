@@ -13,6 +13,10 @@ function Start () {
 
 function Update () {
 	// If there's an audiosource, check for a match between this character and currently humming character, and play sound.
+	if(hum.time != AudioManager.GetLocation())
+	{
+		hum.time = AudioManager.GetLocation();
+	}
 	if(hum != null)
 	{
 		if(AudioManager.humming && !hum.isPlaying)

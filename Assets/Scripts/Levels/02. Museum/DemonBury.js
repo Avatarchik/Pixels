@@ -174,7 +174,14 @@ function Update () {
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(false);
+		if(candles3Counter <= candles3.Length)
+		{
+			Finish(false);
+		}
+		else
+		{
+			Finish(true);
+		}
 	}
 }
 

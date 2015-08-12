@@ -9,27 +9,47 @@ static var flash:boolean;
 function Start () {
 	flash = false;
 	sprite = GetComponent(SpriteRenderer);
-}
-
-function Update () {
-	if(TheaterPieceChange.automatic)
+	if(Application.loadedLevelName == "WorldSelect")
 	{
-		if(flash)
-		{
-			sprite.color.a = 1;
-			flash = false;
-		}
-		sprite.color.a = Mathf.MoveTowards(sprite.color.a,0,Time.deltaTime * 5);
+		WorldUpdate();
 	}
 	else
 	{
-		if(TheaterController.customizing)
+		TheaterUpdate();
+	}
+}
+
+function TheaterUpdate () {
+	while(true)
+	{
+		if(TheaterPieceChange.automatic)
 		{
-			sprite.color.a = Mathf.Abs(Mathf.Sin(Time.time)/speed) + amount;
+			if(flash)
+			{
+				sprite.color.a = 1;
+				flash = false;
+			}
+			sprite.color.a = Mathf.MoveTowards(sprite.color.a,0,Time.deltaTime * 5);
 		}
 		else
 		{
-			sprite.color.a = 0;
+			if(TheaterController.customizing)
+			{
+				sprite.color.a = Mathf.Abs(Mathf.Sin(Time.time)/speed) + amount;
+			}
+			else
+			{
+				sprite.color.a = 0;
+			}
 		}
+		yield;
+	}
+}
+
+function WorldUpdate () {
+	while(true)
+	{
+		sprite.color.a = Mathf.Abs(Mathf.Sin(Time.time)/speed) + amount;
+		yield;
 	}
 }

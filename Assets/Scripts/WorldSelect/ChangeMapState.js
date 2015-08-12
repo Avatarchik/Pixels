@@ -20,6 +20,8 @@ var distance:float;
 var button:SpriteRenderer;
 var buttonIcon:SpriteRenderer;
 
+var warningNote:GameObject;
+
 function Start () {
 	showCounter = 0;
 	StartCoroutine(UpdateWorldAvailability());
@@ -75,21 +77,29 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
-			if(PlayerPrefs.GetInt(worldNameVar) == 1 && WorldMapManager.allowClick)
+			if(WorldMapManager.allowClick)
 			{
-				controller = Camera.main.GetComponent(Master);
-				controller.currentWorld.basic.world = thisWorld;
-				SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
-				for(var level:World in controller.worlds)
+				if(PlayerPrefs.GetInt(worldNameVar) == 1)
 				{
-					if(level.basic.worldNameVar == worldNameVar)
+					controller = Camera.main.GetComponent(Master);
+					controller.currentWorld.basic.world = thisWorld;
+					SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
+					for(var level:World in controller.worlds)
 					{
-						Master.currentWorld = level;
+						if(level.basic.worldNameVar == worldNameVar)
+						{
+							Master.currentWorld = level;
+						}
+					}
+					if(WorldMapManager.currentState == MapStatus.Clear)
+					{
+						WorldMapManager.currentState = MapStatus.Confirmation;
 					}
 				}
-				if(WorldMapManager.currentState == MapStatus.Clear)
+				else if(WorldMapManager.currentState == MapStatus.Clear)
 				{
-					WorldMapManager.currentState = MapStatus.Confirmation;
+					WorldMapManager.currentNotification = Instantiate(warningNote);
+					WorldMapManager.currentState = MapStatus.Notification;
 				}
 			}
 			WorldMapManager.selectedLocation = transform.localPosition.x;

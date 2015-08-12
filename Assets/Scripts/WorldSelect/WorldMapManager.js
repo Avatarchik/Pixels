@@ -3,7 +3,10 @@
 public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning};
 
 static var currentState:MapStatus;
+static var returnState:MapStatus;
 static var mapMove:boolean;
+
+static var currentNotification:GameObject;
 
 // Audio
 var worldMusic:AudioClip;
@@ -53,6 +56,7 @@ function Start () {
 	leftCameraLimit = -125;
 	rightCameraLimit = 28;
 	currentState = MapStatus.Clear;
+	returnState = currentState;
 	importantFinger = -1;
 	mapMove = false;
 	if(mapMoveSpeed == 0 || mapMoveSpeed == null)
@@ -66,6 +70,7 @@ function Update () {
 	switch(currentState)
 	{
 		case MapStatus.Clear:
+			returnState = currentState;
 			hideTicket();
 			fade.material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
 			// Get Finger
@@ -124,6 +129,7 @@ function Update () {
 			
 			break;
 		case MapStatus.Confirmation:
+			returnState = currentState;
 			showTicket();
 			FindClosest();
 			fade.material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
@@ -135,6 +141,17 @@ function Update () {
 			break;
 		case MapStatus.Returning:
 			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, 0, Time.deltaTime);
+			break;
+		case MapStatus.Notification:
+			mapMove = false;
+			transform.position.x = Mathf.Lerp(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*5);
+			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.8);
+			allowClick = false;
+			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, .4, Time.deltaTime);
+			if(currentNotification.GetComponent(TextManager).finished)
+			{
+				currentState = returnState;
+			}
 			break;
 		default:
 			break;

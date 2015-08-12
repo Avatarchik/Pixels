@@ -10,6 +10,10 @@ static var playingOpening:boolean;
 var intro:AudioClip;
 var titleMusic:AudioClip;
 
+// Opening
+@HideInInspector var loadedText:GameObject;
+var openingText:GameObject;
+
 // Menu Pieces
 var colors1:GameObject;
 var colors2:GameObject;
@@ -41,16 +45,20 @@ function Start () {
 }
 
 function Intro () {
+	AudioManager.Loop(false);
 	currentState = TitleStatus.Intro;
-	while(true)
+	loadedText = Instantiate(openingText);
+	loadedText.transform.position.z += 10;
+	while(!loadedText.GetComponent(TextManager).finished)
 	{
-		if(Input.GetKeyDown("space"))
-		{
-			Regular();
-			break;
-		}
 		yield;
 	}
+	while(AudioManager.GetLocation() < 23 && AudioManager.GetPlaying())
+	{
+		Debug.Log("hey");
+		yield;
+	}
+	Regular();
 }
 
 function Regular () {
@@ -142,7 +150,7 @@ function FlyInMovement () {
 		var newFlyIn:int = Random.Range(0,flyIns1Sprites.length);
 		flyIn1.GetComponent(SpriteRenderer).sprite = flyIns1Sprites[newFlyIn];
 		flyIn2.GetComponent(SpriteRenderer).sprite = flyIns2Sprites[newFlyIn];
-		while(flyIn.transform.position.y != flyInBottom)
+		while(flyIn.transform.localPosition.y != flyInBottom)
 		{
 			flyIn.transform.localPosition.y = Mathf.MoveTowards(flyIn.transform.localPosition.y,flyInBottom,Time.deltaTime*20);
 			yield;
@@ -195,5 +203,6 @@ function PlaySong () {
 	{
 		yield;
 	}
+	AudioManager.Loop(true);
 	AudioManager.PlaySong(titleMusic);
 }

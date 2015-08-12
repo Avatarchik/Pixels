@@ -18,7 +18,7 @@ function Start () {
 
 function Appear () {
 
-	while(AudioManager.GetLocation() < 2.4)
+	while(AudioManager.GetLocation() < 2.4  || TitleManager.currentState == TitleStatus.Intro)
 	{
 		yield;
 	}

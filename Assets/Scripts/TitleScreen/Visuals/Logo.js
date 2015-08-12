@@ -29,6 +29,7 @@ function HoldForIntro () {
 	yield WaitForEndOfFrame;
 	while(TitleManager.currentState == TitleStatus.Intro)
 	{
+		initialCover.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(initialCover.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime*.1);
 		yield;
 	}
 	Show();
@@ -49,10 +50,10 @@ function Show () {
 function Appear () {
 	while(transform.localPosition != origin)
 	{
-		transform.localPosition = Vector3.MoveTowards(transform.localPosition, origin, Time.time * Time.deltaTime * 3);
+		transform.localPosition = Vector3.MoveTowards(transform.localPosition, origin,Time.deltaTime * 1.4);
 		yield;
 	}
-	StartCoroutine(Shake(10, Vector2(0,.03)));
+	StartCoroutine(Shake(8, Vector2(0,.02)));
 	while(AudioManager.GetLocation() < 2.2)
 	{
 		yield;

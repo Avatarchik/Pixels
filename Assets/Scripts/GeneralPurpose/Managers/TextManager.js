@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 var automatic:boolean;
+var notification:boolean = false;
 var lines:Line[];
 
 @HideInInspector var lineLength:int;
@@ -39,6 +40,10 @@ function Start () {
 	doneLine = false;
 	PlayerManager.speed = 1000000;
 	lineLength = 16;
+	if(notification)
+	{
+		lineLength = 19;
+	}
 	numberOfLines = 3;
 	leftSpriteNumber = 0;
 	rightSpriteNumber = 0;
@@ -47,7 +52,14 @@ function Start () {
 	if(song!=null)
 	{
 		AudioManager.StopSong();
-		AudioManager.PlayCutscene(song);
+		if(Application.loadedLevelName == "TitleScreen")
+		{
+			AudioManager.PlaySong(song);
+		}
+		else
+		{
+			AudioManager.PlayCutscene(song);
+		}
 	}
 	
 	// Get the text box into place.
@@ -87,7 +99,6 @@ function Start () {
 				}
 				else
 				{
-					Debug.Log(i);
 					newArray[i] = lines[i];
 				}
 			}
@@ -524,7 +535,10 @@ function IncreaseLetters () {
 	{
 		//numberOfLetters = currentDialogue[current].ToString().Length;
 		numberOfLetters ++;
-		yield;
+		if(automatic)
+		{
+			yield;
+		}
 	}
 	if(automatic)
 	{		
@@ -615,7 +629,14 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 }
 
 function Clicked () {
-	AudioManager.EndCutscene();
+	if(Application.loadedLevelName == "TitleScreen")
+	{
+		AudioManager.StopSong();
+	}
+	else
+	{
+		AudioManager.EndCutscene();
+	}
 	finished = true;
 }
 

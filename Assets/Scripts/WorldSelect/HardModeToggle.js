@@ -5,6 +5,8 @@ var downSprite:Sprite;
 var subText:GameObject;
 var subTextOrigin:float;
 
+var warningNote:GameObject;
+
 function Start () {
 	subTextOrigin = subText.transform.localPosition.y;
 }
@@ -17,12 +19,10 @@ function UpdateVisuals (reset:boolean) {
 	}
 	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") != 1)
 	{
-		GetComponent(ButtonSquare).enabled = false;
 		GetComponent(SpriteRenderer).color = Color(.7,.7,.7,1);
 	}
 	else
 	{
-		GetComponent(ButtonSquare).enabled = true;
 		GetComponent(SpriteRenderer).color = Color(1,.35,.35,1);
 	}
 }
@@ -42,5 +42,11 @@ function Clicked () {
 			GetComponent(SpriteRenderer).sprite = downSprite;
 			subText.transform.localPosition.y = subTextOrigin - .02;
 		}
+	}
+	else
+	{
+		Debug.Log("hey");
+		WorldMapManager.currentNotification = Instantiate(warningNote);
+		WorldMapManager.currentState = MapStatus.Notification;
 	}
 }

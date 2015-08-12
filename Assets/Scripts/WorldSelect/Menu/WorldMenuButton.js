@@ -17,7 +17,7 @@ function Start () {
 	
 }
 
-function Clicked() {
+function Unclicked() {
 	GetComponentInParent(WorldMenuManager).MenuEffect(currentText);
 }
 

@@ -34,7 +34,7 @@ function Update () {
 }
 
 function StageSpots () {
-	while(AudioManager.GetLocation() < 2.2)
+	while(AudioManager.GetLocation() < 2.2 || TitleManager.currentState == TitleStatus.Intro)
 	{
 		yield;
 	}

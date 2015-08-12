@@ -12,10 +12,18 @@ function Start () {
 }	
 
 function Intro () {
+	if(GetComponent(ButtonRectangle) != null)
+	{
+		GetComponent(ButtonRectangle).enabled = false;
+	}
 	GetComponent(SpriteRenderer).color.a = initialAmount;
 	while(TitleManager.currentState == TitleStatus.Intro)
 	{
 		yield;
+	}
+	if(GetComponent(ButtonRectangle) != null)
+	{
+		GetComponent(ButtonRectangle).enabled = true;
 	}
 	while(GetComponent(SpriteRenderer).color.a != endIntroAmount)
 	{
