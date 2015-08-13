@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum AnimationType{SingleImage,RotatingImage,ChangingImage};
+public enum AnimationType{SingleImage,RotatingImage,ChangingImage,Choice};
 
 var clockSounds:boolean;
 var firstTimeNotifyType:AnimationType;
@@ -15,6 +15,8 @@ var flashSpeed:float;
 
 var instruction:String;
 var controls:Sprite;
+
+static var choice:int;
 
 function Start () {
 	UITimer.soundsOn = clockSounds;
@@ -105,6 +107,8 @@ function FirstTimeNotify () {
 			case AnimationType.ChangingImage:
 				firstTimeRenderer.sprite = images[firstTimeStep];
 				break;
+			case AnimationType.Choice:
+				firstTimeRenderer.sprite = images[choice];
 			default:
 				break;
 		}

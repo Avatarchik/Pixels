@@ -79,10 +79,12 @@ function ShrinkPanic () {
 function Shake (numberShakes:int, distance:Vector2){
 	var count:int = 0;
 	var origin:Vector2 = transform.localPosition;
-	transform.localPosition = transform.localPosition + distance;
+	transform.localPosition.x = transform.localPosition.x + distance.x;
+	transform.localPosition.y = transform.localPosition.y + distance.y;
 	while(count < numberShakes)
 	{
-		transform.localPosition = -transform.localPosition * .85;
+		transform.localPosition.x = -transform.localPosition.x * .85;
+		transform.localPosition.y = -transform.localPosition.y * .85;
 		yield WaitForSeconds(.004);
 		count ++;
 		yield;

@@ -113,6 +113,7 @@ function Start () {
 	}
 	StartCoroutine(ColorChange());
 	Play();
+	FirstTime();
 }
 
 function Update () {
@@ -294,4 +295,42 @@ function SmokeEmit (which:int) {
 	smokeParts[which-2].emissionRate = 30;
 	yield WaitForSeconds(1.5);
 	smokeParts[which-2].emissionRate = 0;
+}
+
+function FirstTime () {
+	var waitTime:float = .2;
+	while(true)
+	{	if(treeRingValues[currentTree] == 2)
+		{
+			MicroGameManager.choice = 0;
+			yield WaitForSeconds(waitTime);
+			MicroGameManager.choice = 1;
+			yield WaitForSeconds(waitTime);
+			MicroGameManager.choice = 2;
+			yield WaitForSeconds(waitTime);
+		}
+		if(treeRingValues[currentTree] == 3)
+		{
+			MicroGameManager.choice = 3;
+			yield WaitForSeconds(waitTime);
+			MicroGameManager.choice = 4;
+			yield WaitForSeconds(waitTime);
+			MicroGameManager.choice = 5;
+			yield WaitForSeconds(waitTime);
+		}
+		if(treeRingValues[currentTree] == 4)
+		{
+			MicroGameManager.choice = 6;
+			yield WaitForSeconds(waitTime);
+			MicroGameManager.choice = 7;
+			yield WaitForSeconds(waitTime);
+			MicroGameManager.choice = 8;
+			yield WaitForSeconds(waitTime);
+		}
+		if(finished)
+		{
+			MicroGameManager.choice = 10;
+		}
+		yield;
+	}
 }

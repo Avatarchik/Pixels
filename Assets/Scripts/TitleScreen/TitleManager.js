@@ -53,7 +53,7 @@ function Intro () {
 	{
 		yield;
 	}
-	while(AudioManager.GetLocation() < 23 && AudioManager.GetPlaying())
+	while(AudioManager.GetLocation() < 22.35 && AudioManager.GetPlaying())
 	{
 		Debug.Log("hey");
 		yield;
