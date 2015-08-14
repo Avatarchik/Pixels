@@ -118,10 +118,10 @@
      <Compile Include="Assets\Scripts\Levels\04. GameDev\MicroPay.js" />
      <Compile Include="Assets\Scripts\Levels\04. GameDev\PlatformJump.js" />
      <Compile Include="Assets\Scripts\Levels\04. GameDev\RolePlay.js" />
+     <Compile Include="Assets\Scripts\Levels\05. Neverland\BalloonPop.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\CastleBuild.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\CoasterLoad.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\KidFind.js" />
-     <Compile Include="Assets\Scripts\Levels\05. Neverland\KnockCan.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\QueueLine.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\RideShoot.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\TeacupSpin.js" />

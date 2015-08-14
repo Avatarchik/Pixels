@@ -68,7 +68,7 @@ function Unclicked () {
 				}
 				break;
 			case TheaterStatus.CustomizeNoColor:
-				if(TheaterController.currentState == newState)
+				if(TheaterController.currentState == TheaterStatus.CustomizeNoColor || TheaterController.currentState == TheaterStatus.CustomizeColor)
 				{
 					TheaterController.currentState = TheaterStatus.Home;
 				}
