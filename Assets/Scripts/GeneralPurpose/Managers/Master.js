@@ -2,7 +2,7 @@
 
 static var initialLoad:boolean;
 
-public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev};
+public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade};
 
 static var initialWorldSpeed:int;
 static var speedIncrease:int;

@@ -29,6 +29,10 @@ function Load () {
 	{
 		Application.LoadLevel("Theater");
 	}
+	else if(controller.currentWorld.basic.world == WorldSelect.Arcade)
+	{
+		Application.LoadLevel("Arcade");
+	}
 	else
 	{
 		Application.LoadLevel("MicroGameLauncher");
