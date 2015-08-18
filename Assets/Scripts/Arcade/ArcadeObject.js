@@ -3,12 +3,12 @@
 @HideInInspector var centered:boolean;
 @HideInInspector var unlocked:boolean;
 
-var name:String;
+var gameName:String;
 
 function Start () {
 	centered = false;
 	unlocked = false;
-	if(PlayerPrefs.GetInt("Arcade"+name) == 0)
+	if(PlayerPrefs.GetInt("Arcade"+gameName) == 0)
 	{
 		unlocked = false;
 	}	
