@@ -46,18 +46,20 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Experimental\AnimationTester.js" />
-     <Compile Include="Assets\Scripts\Experimental\BennettTest.js" />
-     <Compile Include="Assets\Scripts\Experimental\Info\GSpeed.js" />
-     <Compile Include="Assets\Scripts\Experimental\Info\Lives.js" />
-     <Compile Include="Assets\Scripts\Experimental\Info\SpdProg.js" />
-     <Compile Include="Assets\Scripts\Experimental\Info\SpeedChange.js" />
-     <Compile Include="Assets\Scripts\Experimental\Info\Success.js" />
-     <Compile Include="Assets\Scripts\Experimental\MicroTester.js" />
-     <Compile Include="Assets\Scripts\Experimental\TestGame.js" />
-     <Compile Include="Assets\Scripts\Experimental\TestMaster.js" />
-     <Compile Include="Assets\Scripts\Experimental\TextTester.js" />
-     <Compile Include="Assets\Scripts\Experimental\WorldMapManagerBackup.js" />
+     <Compile Include="Assets\Scripts\Arcade\ArcadeManager.js" />
+     <Compile Include="Assets\Scripts\Arcade\ArcadeObject.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\AnimationTester.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\BennettTest.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\Info\GSpeed.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\Info\Lives.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\Info\SpdProg.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\Info\SpeedChange.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\Info\Success.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\MicroTester.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\TestGame.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\TestMaster.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\TextTester.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\WorldMapManagerBackup.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\AnimationManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\AudioManager.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\Finger.js" />
@@ -161,6 +163,10 @@
      <Compile Include="Assets\Scripts\TitleScreen\StageHand.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StartGame.js" />
      <Compile Include="Assets\Scripts\TitleScreen\TitleManager.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Tutorial\Enlarge.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Tutorial\IntroManager.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Tutorial\SkipButton.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Tutorial\TutorialObject.js" />
      <Compile Include="Assets\Scripts\TitleScreen\UndoCustomizationChanges.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\HideDuringIntro.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\Logo.js" />
@@ -168,10 +174,6 @@
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\Scrim.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\Spotlight.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\StageSpots.js" />
-     <Compile Include="Assets\Scripts\Tutorial\Enlarge.js" />
-     <Compile Include="Assets\Scripts\Tutorial\IntroManager.js" />
-     <Compile Include="Assets\Scripts\Tutorial\SkipButton.js" />
-     <Compile Include="Assets\Scripts\Tutorial\TutorialObject.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Alert.js" />
      <Compile Include="Assets\Scripts\WorldSelect\ChangeMapState.js" />
      <Compile Include="Assets\Scripts\WorldSelect\CheckAvailability.js" />

@@ -33,7 +33,7 @@ var flats:GameObject[];
 
 function Start () {
 	flyIn.transform.localPosition.y = flyInTop;
-	if(Camera.main.GetComponent(Master).skipOpening)
+	if(Camera.main.GetComponent(Master).launchOptions.skipOpening)
 	{
 		Regular();
 	}

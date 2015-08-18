@@ -14,7 +14,7 @@ var song:AudioClip;
 var background:SpriteRenderer;
 @HideInInspector var currentBackgroundColor:Color;
 var record:boolean = false;
-var options:Options;
+var options:LaunchOptions;
 @HideInInspector var backgroundChangeSpeed:float;
 
 static var leftSpriteNumber:int;
@@ -672,7 +672,7 @@ class MouthState {
 	var sprite:int;
 }
 
-class Options {
+class LaunchOptions {
 	var left:boolean;
 	var center:boolean;
 	var right:boolean;

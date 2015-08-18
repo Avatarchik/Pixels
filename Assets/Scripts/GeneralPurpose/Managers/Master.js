@@ -4,13 +4,14 @@ static var initialLoad:boolean;
 
 public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade};
 
-static var initialWorldSpeed:int;
 static var speedIncrease:int;
 static var lives:int;
 static var paused:boolean;
-
 static var lastScore:int;
-
+static var counter:float;
+static var demo:boolean;
+static var unlockAll:boolean;
+static var hardMode:boolean;
 static var unlockLevels:int[];
 
 private var topBar:GameObject;
@@ -19,36 +20,25 @@ static var device:String;
 static var vertical:boolean;
 
 var appVersion:float;
-var eraseOnNewVersion:boolean;
-var quickProgress:boolean;
-var unlockEverything:boolean;
-var skipOpening:boolean;
-var eraseOnLoad:boolean;
-var demoMode:boolean;
-var demoTime:float;
 var varNames:String[];
-static var counter:float;
-static var demo:boolean;
-static var unlockAll:boolean;
-static var hardMode:boolean;
-
+var launchOptions:Options;
+var arcadeGames:ArcadeGame[];
 var worlds:World[];
-var options:WorldOptions;
+var worldOptions:WorldOptions;
 static var currentWorld:World;
 
 function Awake () {
-	Options();
+	WorldOptions();
 	vertical = false;
 	demo = false;
 	unlockAll = false;
-	if(unlockEverything){unlockAll=true;}
+	if(launchOptions.unlockEverything){unlockAll=true;}
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new int[6];
 	currentWorld = worlds[0];
 	lives = 3;
 	paused = false;
-	initialWorldSpeed = 1;
 	speedIncrease = 1;
 	initialLoad = true;
 	hardMode = false;
@@ -85,7 +75,7 @@ function Awake () {
 	Initialize();
 	if(PlayerPrefs.GetInt("TutorialFinished") != 0)
 	{
-		skipOpening = true;
+		launchOptions.skipOpening = true;
 	}
 	if(Application.loadedLevelName == "GameStart")
 	{
@@ -94,7 +84,7 @@ function Awake () {
 }
 
 function Start () {
-	if(demoMode)
+	if(launchOptions.demoMode)
 	{
 		demo = true;
 		StartCoroutine(Demo());
@@ -157,7 +147,7 @@ function CheckDeviceType(search:String):boolean {
 }
 
 function Demo() {
-	counter = demoTime;
+	counter = launchOptions.demoTime;
 	while(true)
 	{
 		if(Finger.GetExists(0) == true)
@@ -173,7 +163,7 @@ function Demo() {
 		}
 		else
 		{
-			counter = demoTime;
+			counter = launchOptions.demoTime;
 		}
 		yield;
 		if(counter < 0)
@@ -184,9 +174,9 @@ function Demo() {
 			Application.LoadLevel("GameStart");
 			Destroy(gameObject);
 		}
-		else if (counter > demoTime * 2)
+		else if (counter > launchOptions.demoTime * 2)
 		{
-			unlockEverything = true;
+			launchOptions.unlockEverything = true;
 			unlockAll = true;
 			Initialize();
 			UnlockAllOptions();
@@ -199,7 +189,7 @@ function Demo() {
 
 function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
-	if(quickProgress)
+	if(launchOptions.quickProgress)
 	{
 		unlockLevels = [0,5,10,15,20,100];
 	}
@@ -207,13 +197,15 @@ function Initialize () {
 	{
 		unlockLevels = [0,15,30,45,70,100];
 	}
-	if(eraseOnLoad || (eraseOnNewVersion && PlayerPrefs.GetFloat("ion") != appVersion))
+	if(launchOptions.eraseOnLoad || (launchOptions.eraseOnNewVersion && PlayerPrefs.GetFloat("ion") != appVersion))
 	{
 		PlayerPrefs.DeleteAll();
 		PlayerPrefs.SetFloat("AppVersion",appVersion);
 	}
+	CheckArcadeUnlocks();
 	if(unlockAll)
 	{
+		UnlockArcadeGames(true);
 		UnlockAllOptions();
 	}
 	for(var i:int = 0; i < worlds.length; i++)
@@ -446,21 +438,31 @@ class WorldOptions {
 	var insertSpot:int;
 }
 
-function Options () {
-	if(options.switchWorlds)
+class Options {
+	var eraseOnNewVersion:boolean;
+	var quickProgress:boolean;
+	var unlockEverything:boolean;
+	var skipOpening:boolean;
+	var eraseOnLoad:boolean;
+	var demoMode:boolean;
+	var demoTime:float;
+}
+
+function WorldOptions () {
+	if(worldOptions.switchWorlds)
 	{
 		var newWorld:World;
-		newWorld = worlds[options.switchSpot1];
-		worlds[options.switchSpot1] = worlds[options.switchSpot2];
-		worlds[options.switchSpot2] = newWorld;
+		newWorld = worlds[worldOptions.switchSpot1];
+		worlds[worldOptions.switchSpot1] = worlds[worldOptions.switchSpot2];
+		worlds[worldOptions.switchSpot2] = newWorld;
 	}
-	if(options.insertWorld)
+	if(worldOptions.insertWorld)
 	{
 		var newArray:World[];
 		newArray = new World[worlds.length + 1];
 		for(var i:int = 0; i < newArray.length; i++)
 		{
-			if(i > options.insertSpot)
+			if(i > worldOptions.insertSpot)
 			{
 				newArray[i] = worlds[i-1];
 			}
@@ -470,5 +472,73 @@ function Options () {
 			}
 		}
 		worlds = newArray;
+	}
+}
+
+class ArcadeGame {
+	var name:String;
+	var game:GameObject;
+	var cabinet:Sprite;
+	@HideInInspector var highScore:float;
+	@HideInInspector var unlocked:boolean;
+}
+
+function CheckArcadeUnlocks () {
+	for(var thisGame:ArcadeGame in arcadeGames)
+	{
+		if(!PlayerPrefs.HasKey("Arcade"+thisGame.name))
+		{
+			PlayerPrefs.SetInt("Arcade"+thisGame.name,0);
+		}	
+		else
+		{
+			if(PlayerPrefs.GetInt("Arcade"+thisGame.name) == 0)
+			{
+				thisGame.unlocked = false;
+			}
+			else
+			{
+				thisGame.unlocked = true;
+			}
+		}
+		if(!PlayerPrefs.HasKey("Arcade"+thisGame.name+"Score"))
+		{
+			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
+		}	
+		thisGame.highScore = PlayerPrefs.GetFloat("Arcade"+thisGame.name+"Score");
+	}
+}
+
+function UnlockArcadeGames (all:boolean) {
+	UnlockArcadeGames("N/A",all);
+}
+function UnlockArcadeGames (gameName:String) {
+	UnlockArcadeGames(gameName,false);
+}
+function UnlockArcadeGames (gameName:String,all:boolean) {
+	if(all)
+	{
+		for(var thisGame:ArcadeGame in arcadeGames)
+		{
+			PlayerPrefs.SetInt("Arcade"+thisGame.name,1);
+			thisGame.unlocked = true;
+			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",4);
+			thisGame.highScore = PlayerPrefs.GetFloat("Arcade"+thisGame.name+"Score");
+		}
+	}
+	else
+	{
+		var specificGame:ArcadeGame;
+		for(var thisGame:ArcadeGame in arcadeGames)
+		{
+			if(thisGame.name == gameName)
+			{
+				specificGame = thisGame;
+			}
+		}
+		PlayerPrefs.SetInt("Arcade"+specificGame.name,1);
+		specificGame.unlocked = true;
+		PlayerPrefs.SetFloat("Arcade"+specificGame.name+"Score",0);
+		specificGame.highScore = PlayerPrefs.GetFloat("Arcade"+specificGame.name+"Score");
 	}
 }
