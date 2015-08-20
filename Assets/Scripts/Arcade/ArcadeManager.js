@@ -19,7 +19,7 @@ function Start () {
 	currentSelection = 0;
 	master = Camera.main.GetComponent(Master);
 	games = master.arcadeGames;
-	distance = 7;
+	distance = 22;
 	speed = 10;
 	displays = new GameObject[games.length];
 	displayPosition = new int[games.length];
@@ -33,11 +33,37 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log(currentSelection);
 	for(var i:int = 0; i < displays.length; i++)
 	{
+		if(Mathf.Abs(displays[i].transform.position.x - (distance * displayPosition[i])) > distance * (displayPosition.Length/2))
+		{
+			displays[i].transform.position.x = distance * displayPosition[i];
+		}
 		displays[i].transform.position.x = Mathf.MoveTowards(displays[i].transform.position.x,distance * displayPosition[i],Time.deltaTime * speed);
 		displays[i].transform.position.x = Mathf.Lerp(displays[i].transform.position.x,distance * displayPosition[i],Time.deltaTime * speed);
 	}
+	if(Input.GetKeyDown("left"))
+	{
+		Scroll(-1);
+	}
+	if(Input.GetKeyDown("right"))
+	{
+		Scroll(1);
+	}
+}
+
+function Scroll (distance:int) {
+	currentSelection += distance;
+	if(currentSelection >= games.length)
+	{
+		currentSelection = 0;
+	}
+	else if(currentSelection < 0)
+	{
+		currentSelection = games.length-1;
+	}
+	FindPositions();
 }
 
 function FindPositions () {
