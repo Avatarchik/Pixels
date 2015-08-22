@@ -46,8 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Arcade\ArcadeManager.js" />
-     <Compile Include="Assets\Scripts\Arcade\ArcadeObject.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\AnimationTester.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\BennettTest.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\Info\GSpeed.js" />
@@ -113,6 +111,10 @@
      <Compile Include="Assets\Scripts\Levels\03. GameDev\MicroPay.js" />
      <Compile Include="Assets\Scripts\Levels\03. GameDev\PlatformJump.js" />
      <Compile Include="Assets\Scripts\Levels\03. GameDev\RolePlay.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeButton.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeManager.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeObject.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\RotateCabinets.js" />
      <Compile Include="Assets\Scripts\Levels\04. High School\AsteroidStop.js" />
      <Compile Include="Assets\Scripts\Levels\04. High School\BloodStream.js" />
      <Compile Include="Assets\Scripts\Levels\04. High School\HellEscape.js" />

@@ -38,7 +38,7 @@ var clicked:boolean;
 
 
 function Start () {
-	if(Random.Range(0,10.0) < 1.5)
+	if(Random.Range(0,10.0) < 2.5)
 	{
 		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
 	}

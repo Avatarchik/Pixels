@@ -202,7 +202,7 @@ static function PlaySoundTransition (sound:AudioClip) {
 }
 
 static function PlaySound (sound:AudioClip) {
-	effectSpeaker.PlayOneShot(sound);
+	effectSpeaker.PlayOneShot(sound,1);
 }
 
 static function PlaySound (sound:AudioClip, volume:float) {

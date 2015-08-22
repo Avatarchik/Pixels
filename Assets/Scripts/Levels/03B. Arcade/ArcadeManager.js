@@ -1,12 +1,13 @@
 ﻿#pragma strict
 
-public enum ArcadeState {Selecting,Playing,Results,Leaderboard}
+public enum ArcadeState {Selecting,Playing,Results,Leaderboard,Notification}
 
 var mainScreen:GameObject;
 var cabinetPrefab:GameObject;
+var buttons:GameObject;
 @HideInInspector var distance:float;
 @HideInInspector var speed:float;
-@HideInInspector var currentState:ArcadeState;
+static var currentState:ArcadeState;
 @HideInInspector var games:ArcadeGame[];
 @HideInInspector var master:Master;
 @HideInInspector var currentSelection:int;
@@ -19,21 +20,28 @@ function Start () {
 	currentSelection = 0;
 	master = Camera.main.GetComponent(Master);
 	games = master.arcadeGames;
-	distance = 22;
+	distance = 21;
 	speed = 10;
-	displays = new GameObject[games.length];
-	displayPosition = new int[games.length];
-	displays[0] = Instantiate(mainScreen);
-	for(var i:int = 1; i < displays.length; i++)
+	displays = new GameObject[games.length+1];
+	displayPosition = new int[games.length+1];
+	displays[games.length] = Instantiate(mainScreen);
+	for(var i:int = 0; i < displays.length-1; i++)
 	{
 		displays[i] = Instantiate(cabinetPrefab);
+		for(var child:SpriteRenderer in displays[i].GetComponentsInChildren(SpriteRenderer))
+		{
+			if(child.transform.name == "Face")
+			{
+				child.sprite = games[i].cabinet;
+			}
+		}
 	}
+	currentSelection = games.length;
 	FindPositions();
 	currentState = ArcadeState.Selecting;
 }
 
 function Update () {
-	Debug.Log(currentSelection);
 	for(var i:int = 0; i < displays.length; i++)
 	{
 		if(Mathf.Abs(displays[i].transform.position.x - (distance * displayPosition[i])) > distance * (displayPosition.Length/2))
@@ -54,16 +62,36 @@ function Update () {
 }
 
 function Scroll (distance:int) {
-	currentSelection += distance;
-	if(currentSelection >= games.length)
+	if(currentState == ArcadeState.Selecting)
 	{
-		currentSelection = 0;
+		currentSelection += distance;
+		if(currentSelection >= displays.length)
+		{
+			currentSelection = 0;
+		}
+		else if(currentSelection < 0)
+		{
+			currentSelection = displays.length-1;
+		}
+		var isMainScreen:boolean = false;
+		if(currentSelection == games.length)
+		{
+			isMainScreen = true;
+		}
+		for(var button:ArcadeButton in buttons.GetComponentsInChildren(ArcadeButton))
+		{
+			if(isMainScreen)
+			{
+				button.Switch(false,(games[0].paidUnlockCost>0),games[0].paidUnlockCost,games[0].playCost,games[0].unlocked);
+			}
+			else
+			{
+				button.Switch(true,(games[currentSelection].paidUnlockCost>0),games[currentSelection].paidUnlockCost,games[currentSelection].playCost,games[currentSelection].unlocked);
+			}
+		}
+		
+		FindPositions();
 	}
-	else if(currentSelection < 0)
-	{
-		currentSelection = games.length-1;
-	}
-	FindPositions();
 }
 
 function FindPositions () {

@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-var currency:int;
+@HideInInspector var currency:int;
 
 var coinSprites:Sprite[];
 

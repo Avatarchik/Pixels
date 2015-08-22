@@ -11,6 +11,7 @@ var controller:Master;
 @HideInInspector var textSpeed:float;
 
 function Start () {
+	AudioManager.Loop(true);
 	baseSpeed = 90;
 	textSpeed = baseSpeed / 15;
 	DontDestroyOnLoad(gameObject);

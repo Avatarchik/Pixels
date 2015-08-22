@@ -73,9 +73,9 @@ function Awake () {
 	
 	DontDestroyOnLoad(gameObject);
 	Initialize();
-	if(PlayerPrefs.GetInt("TutorialFinished") != 0)
+	if(launchOptions.skipOpening)
 	{
-		launchOptions.skipOpening = true;
+		PlayerPrefs.SetInt("TutorialFinished",2);
 	}
 	if(Application.loadedLevelName == "GameStart")
 	{
@@ -479,6 +479,8 @@ class ArcadeGame {
 	var name:String;
 	var game:GameObject;
 	var cabinet:Sprite;
+	var paidUnlockCost:int;
+	var playCost:int;
 	@HideInInspector var highScore:float;
 	@HideInInspector var unlocked:boolean;
 }

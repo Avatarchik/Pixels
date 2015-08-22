@@ -33,7 +33,7 @@ var flats:GameObject[];
 
 function Start () {
 	flyIn.transform.localPosition.y = flyInTop;
-	if(Camera.main.GetComponent(Master).launchOptions.skipOpening)
+	if(PlayerPrefs.GetInt("TutorialFinished") != 0)
 	{
 		Regular();
 	}
@@ -55,9 +55,9 @@ function Intro () {
 	}
 	while(AudioManager.GetLocation() < 22.35 && AudioManager.GetPlaying())
 	{
-		Debug.Log("hey");
 		yield;
 	}
+	PlayerPrefs.SetInt("TutorialFinished",1);
 	Regular();
 }
 
