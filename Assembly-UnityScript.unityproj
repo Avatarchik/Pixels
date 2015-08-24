@@ -123,12 +123,12 @@
      <Compile Include="Assets\Scripts\Levels\04. High School\SpaceBreathe.js" />
      <Compile Include="Assets\Scripts\Levels\04. High School\VolcanoEscape.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\BalloonPop.js" />
+     <Compile Include="Assets\Scripts\Levels\05. Neverland\CEOCapture.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\CastleBuild.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\CoasterLoad.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\KidFind.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\QueueLine.js" />
      <Compile Include="Assets\Scripts\Levels\05. Neverland\RideShoot.js" />
-     <Compile Include="Assets\Scripts\Levels\05. Neverland\TeacupSpin.js" />
      <Compile Include="Assets\Scripts\Levels\MicroGame Template.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\MicroGameManager.js" />
