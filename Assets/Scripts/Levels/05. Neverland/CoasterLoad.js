@@ -11,11 +11,23 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var car:GameObject;
+@HideInInspector var successLocation:float;
+@HideInInspector var failureLocation:float;
+
+var distanceMarker:SpriteRenderer;
+var distanceSprites:Sprite[];
+
+var distanceText:TextMesh;
+var speedText:TextMesh;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	successLocation = 0;
+	failureLocation = 15;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")

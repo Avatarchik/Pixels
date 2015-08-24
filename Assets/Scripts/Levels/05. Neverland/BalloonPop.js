@@ -11,11 +11,30 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var frontSprites:Sprite[];
+var balloonSprites:Sprite[];
+var headPrefab:GameObject;
+var difficulty1Spots:Vector3[];
+var difficulty2Spots:Vector3[];
+var difficulty3Spots:Vector3[];
+var difficulty1People:Sprite[];
+var difficulty2People:Sprite[];
+var difficulty3People:Sprite[];
+var shotSprites:Sprite[];
+
+var front:SpriteRenderer;
+var shots:SpriteRenderer;
+
+@HideInInspector var shotsLeft:int;
+
+@HideInInspector var CEOLocations:int[];
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	CEOLocations = new int[3];
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")

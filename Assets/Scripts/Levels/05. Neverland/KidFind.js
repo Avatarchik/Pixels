@@ -11,6 +11,12 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var lightning:GameObject;
+var lightningSprites:Sprite[];
+
+var ghostPrefab:GameObject;
+var CEOPrefab:GameObject;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;

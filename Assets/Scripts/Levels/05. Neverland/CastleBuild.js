@@ -11,11 +11,28 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var shuttle:GameObject;
+@HideInInspector var shuttleLeftLimit:float;
+@HideInInspector var shuttleRightLimit:float;
+
+var castlePieces:Sprite[];
+var castleLocations:SpriteRenderer[];
+
+var castlePrefab:GameObject;
+
+@HideInInspector var currentPiece:int;
+
+@HideInInspector var distanceAllowed:float;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	shuttleLeftLimit = -7.5;
+	shuttleRightLimit = 7.5;
+	currentPiece = 0;
+	distanceAllowed = 1;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
