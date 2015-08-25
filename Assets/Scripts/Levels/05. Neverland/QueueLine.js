@@ -11,6 +11,10 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+var player:GameObject;
+
+var people:GameObject[];
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
