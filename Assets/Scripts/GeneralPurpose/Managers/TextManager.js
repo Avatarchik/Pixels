@@ -14,7 +14,7 @@ var song:AudioClip;
 var background:SpriteRenderer;
 @HideInInspector var currentBackgroundColor:Color;
 var record:boolean = false;
-var options:LaunchOptions;
+var options:RecordOptions;
 @HideInInspector var backgroundChangeSpeed:float;
 
 static var leftSpriteNumber:int;
@@ -146,6 +146,10 @@ function Start () {
 			{
 				lines[i].background.mouth = new MouthState[0];
 			}
+			if(options.timing)
+			{
+				lines[i].targetTime = 1000;
+			}
 		}
 		Record();
 	}
@@ -206,6 +210,11 @@ function Record () {
 			if(options.center)
 			{
 				lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
+			}
+			if(options.timing)
+			{
+				lines[lineMarker].targetTime = AudioManager.GetLocation();
+				CountDown(lines[lineMarker].targetTime);
 			}
 		}
 		else if(Input.GetKeyUp("space"))
@@ -672,10 +681,11 @@ class MouthState {
 	var sprite:int;
 }
 
-class LaunchOptions {
+class RecordOptions {
 	var left:boolean;
 	var center:boolean;
 	var right:boolean;
+	var timing:boolean;
 	var background:boolean;
 	var rebalance:boolean;
 	var difference:float;

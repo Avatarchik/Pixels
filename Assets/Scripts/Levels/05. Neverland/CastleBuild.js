@@ -91,10 +91,15 @@ function Play () {
 
 }
 
+function Finish(completionStatus:boolean) {
+	Finish(completionStatus,0);
+}
+
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
 		finished = true;
+		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)
 		{

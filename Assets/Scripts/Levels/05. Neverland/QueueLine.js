@@ -15,6 +15,10 @@ var player:GameObject;
 
 var people:GameObject[];
 
+@HideInInspector var touchedSomeone:boolean;
+
+@HideInInspector var peopleTouched:boolean[];
+
 @HideInInspector var movementSpeed:float;
 @HideInInspector var newSpeed:float;
 @HideInInspector var distanceTouch:float;
@@ -25,8 +29,13 @@ function Start () {
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
-	distanceTouch = 2;
+	distanceTouch = .5;
 	playerDistance = 4;
+	peopleTouched = new boolean[people.length];
+	for(var i:int = 0; i < people.length; i++)
+	{
+		peopleTouched[i] = false;
+	}	
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -43,7 +52,7 @@ function Start () {
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
-	movementSpeed = 3;
+	movementSpeed = 2 + 1 * speed;
 	
 	// If the color of the UI should change.
 	if(colorChange)
@@ -68,7 +77,7 @@ function SpeedStuff() {
 function Update () {
 	movementSpeed = Mathf.MoveTowards(movementSpeed,newSpeed,Time.deltaTime * 2);
 	timer -= Time.deltaTime;
-	if(timer < 0 && !finished)
+	if((timer < 0 || player.transform.position.x > 6.2) && !finished)
 	{
 		Finish(true,0);
 	}
@@ -84,20 +93,20 @@ function Update () {
 			}
 		}
 	}
-	player.GetComponent(PlayerManager).currentState = PlayerState.StandingFront;
+	player.GetComponent(PlayerManager).currentState = PlayerState.StandingRight;
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && !Master.paused)
+	if(Finger.GetExists(importantFinger) && !Master.paused && !touchedSomeone)
 	{
 		if(Mathf.Abs(Finger.GetPosition(importantFinger).x-player.transform.position.x) < playerDistance)
 		{
-			player.transform.position.x = Mathf.MoveTowards(player.transform.position.x, Finger.GetPosition(importantFinger).x, Time.deltaTime * 5);
+			player.transform.position.x = Mathf.MoveTowards(player.transform.position.x, Finger.GetPosition(importantFinger).x, Time.deltaTime * 15);
 			if(Finger.GetPosition(importantFinger).x > player.transform.position.x && Mathf.Abs(Finger.GetPosition(importantFinger).x - player.transform.position.x) > 0)
 			{
 				player.GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;
 			}
 			else if(Finger.GetPosition(importantFinger).x < player.transform.position.x && Mathf.Abs(Finger.GetPosition(importantFinger).x - player.transform.position.x) > 0)
 			{
-				player.GetComponent(PlayerManager).currentState = PlayerState.WalkingLeft;
+				player.GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;
 			}
 		}
 	}
@@ -105,14 +114,39 @@ function Update () {
 	{
 		importantFinger = -1;
 	}
+	for(i = 0; i < people.length; i ++)
+	{
+		if(Mathf.Abs(player.transform.position.x - people[i].transform.position.x) < distanceTouch)
+		{
+			peopleTouched[i] = true;
+			touchedSomeone = true;
+			Finish(false,1);
+			KnockOver(i);
+		}
+		if(peopleTouched[i])
+		{
+			if(i < 4)
+			{
+				people[i].transform.position.x -= Time.deltaTime * 3;
+				people[i].transform.position.y = Mathf.MoveTowards(people[i].transform.position.y, -3.5, Time.deltaTime * 3);
+				people[i].transform.rotation.eulerAngles.z = Mathf.MoveTowards(people[i].transform.rotation.eulerAngles.z,90,Time.deltaTime * 180);
+			}
+			else
+			{
+				people[i].transform.position.x += Time.deltaTime * 3;
+				people[i].transform.position.y = Mathf.MoveTowards(people[i].transform.position.y, -3.5, Time.deltaTime * 3);
+				people[i].transform.rotation.eulerAngles.z = Mathf.MoveTowards(people[i].transform.rotation.eulerAngles.z,-90,Time.deltaTime * 180);
+			}
+		}
+	}
 }
 
 function Play () {
-	yield WaitForSeconds(.5);
+	yield WaitForSeconds(.7);
 	if(difficulty == 3)
 	{	
 		var counter:float = Random.Range(0,1.5);
-		while(true)
+		while(true && !touchedSomeone)
 		{
 			if(counter > 0)
 			{
@@ -120,18 +154,18 @@ function Play () {
 				{
 					people[i].transform.position.x += Time.deltaTime * movementSpeed;
 				}
-				counter -= Time.deltaTime;
 			}
-			else if (counter < -1)
+			else if (counter < -.5)
 			{
 				counter = Random.Range(.5,2.5);
 			}
+			counter -= Time.deltaTime;
 			yield;
 		}
 	}
 	else
 	{
-		while(true)
+		while(true && !touchedSomeone)
 		{
 			for(i = 0; i < people.length; i++)
 			{
@@ -142,14 +176,43 @@ function Play () {
 	}
 }
 
+function Finish(completionStatus:boolean) {
+	Finish(completionStatus,0);
+}
+
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
 		finished = true;
+		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)
 		{
 			GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+		}
+	}
+}
+
+function KnockOver(person:int) {
+	var counter:int = person;
+	if(person < 4)
+	{
+		while(counter >= 0)
+		{
+			peopleTouched[counter] = true;
+			yield WaitForSeconds(.2);
+			counter --;
+			yield;
+		}
+	}
+	else
+	{
+		while(counter < people.Length)
+		{
+			peopleTouched[counter] = true;
+			yield WaitForSeconds(.2);
+			counter ++;
+			yield;
 		}
 	}
 }
