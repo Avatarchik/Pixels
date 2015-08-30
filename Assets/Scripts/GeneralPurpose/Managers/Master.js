@@ -336,6 +336,7 @@ function Initialize () {
 }
 
 function UnlockAllOptions () {
+	PlayerPrefs.DeleteAll();
 	for(var aWorld:World in worlds)
 	{
 		var worldName:String;

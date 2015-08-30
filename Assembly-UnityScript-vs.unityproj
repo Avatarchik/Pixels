@@ -112,6 +112,7 @@
      <Compile Include="Assets\Scripts\Levels\03. GameDev\PlatformJump.js" />
      <Compile Include="Assets\Scripts\Levels\03. GameDev\RolePlay.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeButton.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeGlow.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeManager.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeObject.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\RotateCabinets.js" />

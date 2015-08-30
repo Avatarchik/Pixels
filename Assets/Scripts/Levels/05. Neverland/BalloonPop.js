@@ -22,6 +22,11 @@ var difficulty2People:Sprite[];
 var difficulty3People:Sprite[];
 var shotSprites:Sprite[];
 
+@HideInInspector var faceSpots:Vector3[];
+@HideInInspector var faceSprites:Sprite[];
+@HideInInspector var balloons:boolean[];
+@HideInInspector var balloonObjects:GameObject[];
+
 var front:SpriteRenderer;
 var shots:SpriteRenderer;
 
@@ -29,12 +34,15 @@ var shots:SpriteRenderer;
 
 @HideInInspector var CEOLocations:int[];
 
+@HideInInspector var gameFaces:GameObject[];
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
 	CEOLocations = new int[3];
+	CEOLocations = [-1,-1,-1];
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -51,6 +59,69 @@ function Start () {
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	front.sprite = frontSprites[difficulty-1];
+	switch(difficulty)
+	{
+		case 1:
+			faceSpots = difficulty1Spots;
+			faceSprites = difficulty1People;
+			break;
+		case 2:
+			faceSpots = difficulty2Spots;
+			faceSprites = difficulty2People;
+			break;
+		case 3:
+			faceSpots = difficulty3Spots;
+			faceSprites = difficulty3People;
+			break;
+		default:
+			break;
+	}
+	PickCeoLocations();
+	balloons = new boolean[faceSpots.length];
+	gameFaces = new GameObject[faceSpots.length];
+	balloonObjects = new GameObject[faceSpots.length];
+	for(var i:int = 0; i < balloons.length; i++)
+	{
+		balloons[i] = false;
+	}
+	switch(difficulty)
+	{
+		case 1:
+			break;
+		case 2:
+			balloons[CEOLocations[0]] = true;
+			AddBalloons(5);
+			break;
+		case 3:
+			balloons[CEOLocations[0]] = true;
+			balloons[CEOLocations[0]] = true;
+			balloons[CEOLocations[0]] = true;
+			AddBalloons(10);
+			break;
+		default:
+			break;
+	}
+	for(i = 0; i < faceSpots.length; i++)
+	{
+		gameFaces[i] = Instantiate(headPrefab,faceSpots[i],Quaternion.identity);
+		if(i == CEOLocations[0] || i == CEOLocations[1] || i == CEOLocations[2])
+		{
+			gameFaces[i].GetComponent(SpriteRenderer).sprite = faceSprites[0];
+		}
+		else
+		{
+			gameFaces[i].GetComponent(SpriteRenderer).sprite = faceSprites[Random.Range(1,faceSprites.length)];
+		}
+		if(balloons[i])
+		{
+			balloonObjects[i] = Instantiate(headPrefab,faceSpots[i] - Vector3(0,0,.1),Quaternion.identity);
+			balloonObjects[i].GetComponent(SpriteRenderer).sprite = balloonSprites[difficulty-1];
+			balloonObjects[i]. transform.parent = transform;
+		}
+		gameFaces[i].transform.parent = transform;
+	}
+	
 	// If the color of the UI should change.
 	if(colorChange)
 	{
@@ -86,6 +157,32 @@ function Update () {
 	else if(!Finger.GetExists(importantFinger))
 	{
 		importantFinger = -1;
+	}
+}
+
+function PickCeoLocations () {
+	var retries:int = 0;
+	var spot1:int = -1;
+	var spot2:int = -2;
+	var spot3:int = -3;
+	while((CEOLocations[0] == CEOLocations[1] || CEOLocations[0] == CEOLocations[2] || CEOLocations[1] == CEOLocations[2]) && retries < 100)
+	{
+		spot1 = Random.Range(0,faceSpots.Length);
+		spot2 = Random.Range(0,faceSpots.Length);
+		spot3 = Random.Range(0,faceSpots.Length);
+		retries ++;
+	}
+	CEOLocations[0] = spot1;
+	CEOLocations[1] = spot2;
+	CEOLocations[2] = spot3;
+}
+
+function AddBalloons (howMany:int) {
+	var numberAdded:int = 0;
+	while(numberAdded < howMany)
+	{
+		balloons[Random.Range(0,balloons.length)] = true;
+		numberAdded++;
 	}
 }
 

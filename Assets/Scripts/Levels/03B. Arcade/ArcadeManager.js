@@ -25,6 +25,7 @@ function Start () {
 	displays = new GameObject[games.length+1];
 	displayPosition = new int[games.length+1];
 	displays[games.length] = Instantiate(mainScreen);
+	displays[games.length].transform.position.z += 10;
 	for(var i:int = 0; i < displays.length-1; i++)
 	{
 		displays[i] = Instantiate(cabinetPrefab);
@@ -35,6 +36,7 @@ function Start () {
 				child.sprite = games[i].cabinet;
 			}
 		}
+		displays[i].transform.position.z += 10;
 	}
 	currentSelection = games.length;
 	FindPositions();
