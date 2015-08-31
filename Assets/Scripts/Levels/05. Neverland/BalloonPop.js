@@ -22,6 +22,8 @@ var difficulty2People:Sprite[];
 var difficulty3People:Sprite[];
 var shotSprites:Sprite[];
 
+@HideInInspector var clicked:boolean;
+
 @HideInInspector var faceSpots:Vector3[];
 @HideInInspector var faceSprites:Sprite[];
 @HideInInspector var balloons:boolean[];
@@ -29,8 +31,13 @@ var shotSprites:Sprite[];
 
 var front:SpriteRenderer;
 var shots:SpriteRenderer;
+var doneness:SpriteRenderer;
+var doneSprites:Sprite[];
 
 @HideInInspector var shotsLeft:int;
+@HideInInspector var shotDistance:float;
+
+@HideInInspector var shot:boolean[];
 
 @HideInInspector var CEOLocations:int[];
 
@@ -43,6 +50,8 @@ function Start () {
 	// Level specific variable initialization.
 	CEOLocations = new int[3];
 	CEOLocations = [-1,-1,-1];
+	clicked = false;
+	shotDistance = 3;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -81,9 +90,11 @@ function Start () {
 	balloons = new boolean[faceSpots.length];
 	gameFaces = new GameObject[faceSpots.length];
 	balloonObjects = new GameObject[faceSpots.length];
+	shot = new boolean[faceSpots.length];
 	for(var i:int = 0; i < balloons.length; i++)
 	{
 		balloons[i] = false;
+		shot[i] = false;
 	}
 	switch(difficulty)
 	{
@@ -122,6 +133,8 @@ function Start () {
 		gameFaces[i].transform.parent = transform;
 	}
 	
+	shotsLeft = 9;
+	
 	// If the color of the UI should change.
 	if(colorChange)
 	{
@@ -132,6 +145,7 @@ function Start () {
 }
 
 function Update () {
+	shots.sprite = shotSprites[shotsLeft];
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
@@ -152,11 +166,61 @@ function Update () {
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
-		
+		if(!clicked && shotsLeft > 0)
+		{
+			shotsLeft--;
+			clicked = true;
+			var nearest:int = -1;
+			for(var location:int = 0; location < faceSpots.length; location++)
+			{
+				if(Vector3.Distance(Finger.GetPosition(importantFinger),faceSpots[location]) < shotDistance)
+				{
+					if(nearest == -1)
+					{
+						nearest = location;
+					}
+					else if(Vector3.Distance(Finger.GetPosition(importantFinger),faceSpots[location]) < Vector3.Distance(Finger.GetPosition(importantFinger),faceSpots[nearest]))
+					{ 
+						nearest = location;
+					}
+				}	
+			}
+			if(nearest != -1)
+			{
+				if(balloons[nearest])
+				{
+					Destroy(balloonObjects[nearest]);
+				}
+				else if(!shot[nearest])
+				{
+					shot[nearest] = true;
+					Destroy(gameFaces[nearest]);
+				}
+			}
+		}
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
+		clicked = false;
 		importantFinger = -1;
+	}
+	var ceoShot:int = 0;
+	for(i = 0; i < faceSpots.length; i++)
+	{
+		var isCorrect:boolean = false;
+		if(i == CEOLocations[0] || i == CEOLocations[1] || i == CEOLocations[2])
+		{
+			isCorrect = true;
+		}
+		if(!shot[i] && isCorrect)
+		{
+			ceoShot ++;
+		}
+	}
+	doneness.sprite = doneSprites[3-ceoShot];
+	if(ceoShot <= 0)
+	{
+		Finish(true,1);
 	}
 }
 
