@@ -1,5 +1,9 @@
 ﻿#pragma strict
 
+public enum RecordType{None,Left,Center,Right,MusicTiming,Background,Speakers,Phonemes,ClearMouths};
+public enum Phoneme{type1,type2,type3,type4,type5};
+public enum LookDirection{Left,Right};
+
 var automatic:boolean;
 var notification:boolean = false;
 var lines:Line[];
@@ -13,7 +17,6 @@ var lines:Line[];
 var song:AudioClip;
 var background:SpriteRenderer;
 @HideInInspector var currentBackgroundColor:Color;
-var record:boolean = false;
 var options:RecordOptions;
 @HideInInspector var backgroundChangeSpeed:float;
 
@@ -126,36 +129,42 @@ function Start () {
 			lines = newArray;
 		}
 	}
-	if(record)
+	if(options.recordingType != RecordType.None)
 	{
 		for(i = 0; i < lines.length; i++)
 		{
-			if(options.left)
+			if(options.recordingType == RecordType.Left)
 			{
 				lines[i].leftSide.mouth = new MouthState[0];
 			}
-			if(options.center)
+			if(options.recordingType == RecordType.Center)
 			{
 				lines[i].center.mouth = new MouthState[0];
 			}
-			if(options.right)
+			if(options.recordingType == RecordType.Right)
 			{
 				lines[i].rightSide.mouth = new MouthState[0];
 			}
-			if(options.background)
+			if(options.recordingType == RecordType.Background)
 			{
 				lines[i].background.mouth = new MouthState[0];
 			}
-			if(options.timing)
+			if(options.recordingType == RecordType.MusicTiming)
 			{
 				lines[i].targetTime = 1000;
+			}
+			if(options.recordingType == RecordType.Speakers)
+			{
+				lines[lineMarker].leftSide.isSpeaking = false;
+				lines[lineMarker].center.isSpeaking = false;
+				lines[lineMarker].rightSide.isSpeaking = false;
 			}
 		}
 		Record();
 	}
 	else
 	{
-		MouthShape(0,false	);
+		MouthShape(0,false);
 		MouthShape(1,false);
 		MouthShape(2,false);
 		MouthShape(0,true);
@@ -196,115 +205,145 @@ function Record () {
 	{
 		if(Input.GetKeyDown("space"))
 		{
-			SetSprite(spriteObjects[0],1);
-			SetSprite(spriteObjects[1],1);
-			SetSprite(spriteObjects[2],1);
-			if(options.left)
+			if(options.recordingType == RecordType.Left)
 			{
+				SetSprite(spriteObjects[0],1,Phoneme.type1);
 				lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,1);
-			}
-			if(options.right)
+			}if(options.recordingType == RecordType.Center)
 			{
-				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
-			}
-			if(options.center)
-			{
+				SetSprite(spriteObjects[2],1,Phoneme.type1);
 				lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
 			}
-			if(options.timing)
+			if(options.recordingType == RecordType.Right)
+			{
+				SetSprite(spriteObjects[1],1,Phoneme.type1);
+				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
+			}
+			if(options.recordingType == RecordType.MusicTiming)
 			{
 				lines[lineMarker].targetTime = AudioManager.GetLocation();
 				CountDown(lines[lineMarker].targetTime);
 			}
+			if(options.recordingType == RecordType.Background)
+			{
+				SetSprite(currentBackground,1,Phoneme.type1);
+				lines[lineMarker].background.mouth = ChangeMouthValue(lines[lineMarker].background.mouth,1);
+			}
 		}
 		else if(Input.GetKeyUp("space"))
 		{
-			SetSprite(spriteObjects[0],0);
-			SetSprite(spriteObjects[1],0);
-			SetSprite(spriteObjects[2],0);
-			if(options.left)
+			if(options.recordingType == RecordType.Left)
 			{
+				SetSprite(spriteObjects[0],0,Phoneme.type1);
 				lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,0);
 			}
-			if(options.right)
+			if(options.recordingType == RecordType.Center)
 			{
-				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
-			}
-			if(options.center)
-			{
+				SetSprite(spriteObjects[2],0,Phoneme.type1);
 				lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,0);
 			}
-		}
-		if(Input.GetKeyDown("left") && options.left)
-		{
-			SetSprite(spriteObjects[0],1);
-			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,1);
-		}
-		else if(Input.GetKeyUp("left") && options.left)
-		{
-			SetSprite(spriteObjects[0],0);
-			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,0);
-		}
-		if(Input.GetKeyDown("up") && options.center)
-		{
-			SetSprite(spriteObjects[2],1);
-			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,1);
-		}
-		else if(Input.GetKeyUp("up") && options.center)
-		{
-			SetSprite(spriteObjects[2],0);
-			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,0);
-		}
-		if(Input.GetKeyDown("right") && options.right)
-		{
-			SetSprite(spriteObjects[1],1);
-			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,1);
-		}
-		else if(Input.GetKeyUp("right") && options.right)
-		{
-			SetSprite(spriteObjects[1],0);
-			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
-		}
-		if(Input.GetKeyDown(KeyCode.Tab) && options.background)
-		{
-			SetSprite(currentBackground,1);
-			lines[lineMarker].background.mouth = ChangeMouthValue(lines[lineMarker].background.mouth,1);
-		}
-		else if(Input.GetKeyUp(KeyCode.Tab) && options.background)
-		{
-			SetSprite(currentBackground,0);
-			lines[lineMarker].background.mouth = ChangeMouthValue(lines[lineMarker].background.mouth,0);
-		}
-		
-		if((Input.GetKeyDown("x") && Input.GetKey("space")) || Input.GetKeyDown("c"))
-		{
-			SetSprite(spriteObjects[0],2);
-			SetSprite(spriteObjects[1],2);
-			SetSprite(spriteObjects[2],2);
-			if(options.left)
+			if(options.recordingType == RecordType.Right)
 			{
+				SetSprite(spriteObjects[1],0,Phoneme.type1);
+				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,0);
+			}
+			if(options.recordingType == RecordType.Background)
+			{
+				SetSprite(currentBackground,0,Phoneme.type1);
+				lines[lineMarker].background.mouth = ChangeMouthValue(lines[lineMarker].background.mouth,1);
+			}
+		}
+		if((Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKey("space")))
+		{
+			if(options.recordingType == RecordType.Left)
+			{
+				SetSprite(spriteObjects[0],2,Phoneme.type1);
 				lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,2);
 			}
-			if(options.right)
+			if(options.recordingType == RecordType.Center)
 			{
-				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,2);
-			}
-			if(options.center)
-			{
+				SetSprite(spriteObjects[1],2,Phoneme.type1);
 				lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,2);
 			}
-			lines[lineMarker].leftSide.mouth = ChangeMouthValue(lines[lineMarker].leftSide.mouth,2);
-			lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,2);
-			lines[lineMarker].center.mouth = ChangeMouthValue(lines[lineMarker].center.mouth,2);
+			if(options.recordingType == RecordType.Right)
+			{
+				SetSprite(spriteObjects[2],2,Phoneme.type1);
+				lines[lineMarker].rightSide.mouth = ChangeMouthValue(lines[lineMarker].rightSide.mouth,2);
+			}
+			if(options.recordingType == RecordType.Background)
+			{
+				SetSprite(currentBackground,2,Phoneme.type1);
+				lines[lineMarker].background.mouth = ChangeMouthValue(lines[lineMarker].background.mouth,2);
+			}
+		}
+		if(Input.GetKeyDown("left"))
+		{
+			if(options.recordingType == RecordType.Left)
+			{
+				lines[lineMarker].leftSide.flip = false;
+			}
+			if(options.recordingType == RecordType.Center)
+			{
+				lines[lineMarker].center.flip = false;
+			}
+			if(options.recordingType == RecordType.Right)
+			{
+				lines[lineMarker].rightSide.flip = false;
+			}
+			if(options.recordingType == RecordType.Speakers)
+			{
+				lines[lineMarker].leftSide.isSpeaking = true;
+			}
+			if(options.recordingType == RecordType.ClearMouths)
+			{
+				Debug.Log("hey");
+				lines[lineMarker].leftSide.mouth = new MouthState[0];
+			}
+		}
+		if(Input.GetKeyDown("right"))
+		{
+			if(options.recordingType == RecordType.Left)
+			{
+				lines[lineMarker].leftSide.flip = true;
+			}
+			if(options.recordingType == RecordType.Center)
+			{
+				lines[lineMarker].center.flip = true;
+			}
+			if(options.recordingType == RecordType.Right)
+			{
+				lines[lineMarker].rightSide.flip = true;
+			}
+			if(options.recordingType == RecordType.ClearMouths)
+			{
+				lines[lineMarker].rightSide.mouth = new MouthState[0];
+			}
+		}
+		if(Input.GetKey(KeyCode.Tab))
+		{
+			if(options.recordingType == RecordType.Left)
+			{
+				lines[lineMarker].leftSide.frown = true;
+			}
+			if(options.recordingType == RecordType.Center)
+			{
+				lines[lineMarker].center.frown = true;
+			}
+			if(options.recordingType == RecordType.Right)
+			{
+				lines[lineMarker].rightSide.frown = true;
+			}
 		}
 		yield;
 	}
 }
 
-function SetSprite (object:GameObject,spriteSetNumber:int) {
+function SetSprite (object:GameObject,spriteSetNumber:int,phoneme:Phoneme) {
 	if(object != null)
 	{
 		object.BroadcastMessage("SetSongSprite",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
+		object.BroadcastMessage("PhonemeState",phoneme,SendMessageOptions.DontRequireReceiver);
+		object.BroadcastMessage("MouthState",spriteSetNumber,SendMessageOptions.DontRequireReceiver);
 	}
 }
 function ChangeMouthValue(mouthArray:MouthState[],spriteValue:int):MouthState[] {
@@ -341,7 +380,7 @@ function MouthShape(position:int,isBackground:boolean) {
 				}
 				if(lines[currentLine].background.mouth.length > movementMarker)
 				{
-					SetSprite(currentBackground,lines[currentLine].background.mouth[movementMarker].sprite);
+					SetSprite(currentBackground,lines[currentLine].background.mouth[movementMarker].sprite,lines[currentLine].background.mouth[movementMarker].phoneme);
 				}
 				movementMarker++;
 			}
@@ -356,31 +395,31 @@ function MouthShape(position:int,isBackground:boolean) {
 				}
 				if(lines[currentLine].leftSide.mouth.length > movementMarker)
 				{
-					SetSprite(spriteObjects[0],lines[currentLine].leftSide.mouth[movementMarker].sprite);
+					SetSprite(spriteObjects[0],lines[currentLine].leftSide.mouth[movementMarker].sprite,lines[currentLine].leftSide.mouth[movementMarker].phoneme);
 				}
 				movementMarker++;
 			}
 			else if (position == 1 && lines[currentLine].rightSide.mouth.length > movementMarker)
 			{
-				while(AudioManager.GetLocation() < lines[currentLine].rightSide.mouth[movementMarker].time)
+				while(AudioManager.GetLocation() + 0.015 < lines[currentLine].rightSide.mouth[movementMarker].time)
 				{
 					yield;
 				}
 				if(lines[currentLine].rightSide.mouth.length > movementMarker)
 				{
-					SetSprite(spriteObjects[1],lines[currentLine].rightSide.mouth[movementMarker].sprite);
+					SetSprite(spriteObjects[1],lines[currentLine].rightSide.mouth[movementMarker].sprite,lines[currentLine].rightSide.mouth[movementMarker].phoneme);
 				}
 				movementMarker ++;
 			}
 			else if (position == 2 && lines[currentLine].center.mouth.length > movementMarker)
 			{
-				while(AudioManager.GetLocation() < lines[currentLine].center.mouth[movementMarker].time)
+				while(AudioManager.GetLocation() + 0.015 < lines[currentLine].center.mouth[movementMarker].time)
 				{
 					yield;
 				}
 				if(lines[currentLine].center.mouth.length > movementMarker)
 				{
-					SetSprite(spriteObjects[2],lines[currentLine].center.mouth[movementMarker].sprite);
+					SetSprite(spriteObjects[2],lines[currentLine].center.mouth[movementMarker].sprite,lines[currentLine].center.mouth[movementMarker].phoneme);
 				}
 				movementMarker ++;
 			}
@@ -407,7 +446,7 @@ function UpdateSet () {
 			GetComponent(TextMesh).text = "";
 			transform.position.x = Mathf.MoveTowards(transform.position.x,30,Time.deltaTime*60);
 		}
-		if(transform.position.x == 30 && !record && !options.rebalance)
+		if(transform.position.x == 30 && options.recordingType == RecordType.None && !options.rebalance)
 		{
 			Destroy(gameObject);
 		}
@@ -429,6 +468,11 @@ function UpdateSprites(spritePosition:int, data:SideInfo,previousData:SideInfo) 
 			else if(lineMarker == 0)
 			{
 				spriteObjects[spritePosition] = Instantiate(data.sprite);
+			}
+			if(spriteObjects[spritePosition].transform.tag == "Player")
+			{
+				spriteObjects[spritePosition].BroadcastMessage("Frown",data.frown,SendMessageOptions.DontRequireReceiver);
+				spriteObjects[spritePosition].BroadcastMessage("Cutscene",SendMessageOptions.DontRequireReceiver);
 			}
 			if(data.flip)
 			{
@@ -578,7 +622,7 @@ function Format (text:String,lineLength:int):String {
 	return Format(text,lineLength,0);
 }
 function Format (text:String,lineLength:int,marker:int):String {
-	if(text.Length > marker + lineLength && !record && !options.rebalance)
+	if(text.Length > marker + lineLength && options.recordingType == RecordType.None && !options.rebalance)
 	{
 		var success:boolean = false;
 		for(var i:int = marker+lineLength; i > marker; i--)
@@ -601,7 +645,7 @@ function Format (text:String,lineLength:int,marker:int):String {
 			marker += lineLength;
 		}
 	}
-	if(text.Length > marker + lineLength + 1 && !record && !options.rebalance)
+	if(text.Length > marker + lineLength + 1 && options.recordingType == RecordType.None && !options.rebalance)
 	{
 		text = Format(text,lineLength,marker);
 	}
@@ -662,6 +706,7 @@ class Line {
 class SideInfo {
 	var sprite:GameObject;
 	var flip:boolean;
+	var frown:boolean;
 	var mouth:MouthState[];
 	var state:PlayerState;
 	var isSpeaking:boolean;
@@ -679,14 +724,11 @@ class Background {
 class MouthState {
 	var time:float;
 	var sprite:int;
+	var phoneme:Phoneme;
 }
 
 class RecordOptions {
-	var left:boolean;
-	var center:boolean;
-	var right:boolean;
-	var timing:boolean;
-	var background:boolean;
+	var recordingType:RecordType;
 	var rebalance:boolean;
 	var difference:float;
 	var pushLines:boolean;

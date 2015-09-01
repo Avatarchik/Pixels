@@ -1,36 +1,6 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Microgames/01. Packing Peanut Factory/BoxFill.js">
-    <Files>
-      <File FileName="Assets/Scripts/Microgames/01. Packing Peanut Factory/BoxFill.js" Line="102" Column="31" />
-      <File FileName="Assets/Scripts/Microgames/02. Museum/FoodServe.js" Line="170" Column="3" />
-    </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-UnityScript" expanded="True">
-            <Node name="Scripts" expanded="True">
-              <Node name="Experimental" expanded="True" />
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
-                <Node name="Objects" expanded="True" />
-              </Node>
-              <Node name="MicroGameLauncher" expanded="True">
-                <Node name="UI" expanded="True" />
-              </Node>
-              <Node name="Microgames" expanded="True">
-                <Node name="01. Packing Peanut Factory" expanded="True">
-                  <Node name="BoxFill.js" selected="True" />
-                </Node>
-                <Node name="02. Museum" expanded="True" />
-                <Node name="03. High School" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
