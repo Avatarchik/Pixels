@@ -52,7 +52,7 @@ function Update () {
 function Move() {
 	while(true)
 	{
-		if(transform.name == "Mouth")
+		if(transform.name == "Mouth" && cutscene)
 		{
 			GetComponent(SpriteRenderer).sprite = rotatingSprites[0];
 		}

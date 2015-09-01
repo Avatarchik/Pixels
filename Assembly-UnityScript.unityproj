@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ButtonSquare.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ConstantObjectMovement.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\CurrencyCount.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\CharacterSpriteController.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\ParticleSystemBurst.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\Spinning.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\SpriteChoice.js" />
