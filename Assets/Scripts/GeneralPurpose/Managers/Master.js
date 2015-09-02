@@ -195,7 +195,7 @@ function Initialize () {
 	}
 	else
 	{
-		unlockLevels = [0,15,30,45,70,100];
+		unlockLevels = [0,15,25,35,70,100];
 	}
 	if(launchOptions.eraseOnLoad || (launchOptions.eraseOnNewVersion && PlayerPrefs.GetFloat("ion") != appVersion))
 	{

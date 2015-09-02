@@ -22,6 +22,10 @@ var difficulty2People:Sprite[];
 var difficulty3People:Sprite[];
 var shotSprites:Sprite[];
 
+var CEO:SpriteRenderer;
+
+@HideInInspector var success:boolean;
+
 @HideInInspector var clicked:boolean;
 
 @HideInInspector var faceSpots:Vector3[];
@@ -51,7 +55,8 @@ function Start () {
 	CEOLocations = new int[3];
 	CEOLocations = [-1,-1,-1];
 	clicked = false;
-	shotDistance = 3;
+	shotDistance = 9;
+	success = false;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -64,6 +69,9 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
+	var speedAdjust:float;
+	speedAdjust = speed*.44;
+	length = (3 + 3*difficulty) - Mathf.Min(3,speedAdjust);
 	length = 3 + 5/speed;
 	timer = length;
 	UITimer.currentTarget = length;
@@ -126,7 +134,7 @@ function Start () {
 		}
 		if(balloons[i])
 		{
-			balloonObjects[i] = Instantiate(headPrefab,faceSpots[i] - Vector3(0,0,.1),Quaternion.identity);
+			balloonObjects[i] = Instantiate(headPrefab,faceSpots[i] - Vector3(0,0,4.9),Quaternion.identity);
 			balloonObjects[i].GetComponent(SpriteRenderer).sprite = balloonSprites[difficulty-1];
 			balloonObjects[i]. transform.parent = transform;
 		}
@@ -145,11 +153,17 @@ function Start () {
 }
 
 function Update () {
+	front.GetComponent(SpriteRenderer).color = Color.Lerp(front.GetComponent(SpriteRenderer).color,Color.white,Time.deltaTime * 4);
+	if(success)
+	{
+		CEO.color.a = 1;
+		CEO.transform.position.x = Mathf.MoveTowards(CEO.transform.position.x, 7.5,Time.deltaTime * 11);
+	}
 	shots.sprite = shotSprites[shotsLeft];
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
-		Finish(true,0);
+		Finish(false,0);
 	}
 	// Get important finger.
 	if(importantFinger == -1)
@@ -166,6 +180,10 @@ function Update () {
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
+		if(!clicked && shotsLeft == 0)
+		{
+			front.GetComponent(SpriteRenderer).color = Color.red;
+		}
 		if(!clicked && shotsLeft > 0)
 		{
 			shotsLeft--;
@@ -189,12 +207,17 @@ function Update () {
 			{
 				if(balloons[nearest])
 				{
+					balloons[nearest] = false;
 					Destroy(balloonObjects[nearest]);
 				}
-				else if(!shot[nearest])
+				else if(!shot[nearest] && !finished)
 				{
+					if(nearest == CEOLocations[0] || nearest == CEOLocations[1] || nearest == CEOLocations[2])
+					{
+						front.GetComponent(SpriteRenderer).color = Color(.8,1,.8,1);
+					}
 					shot[nearest] = true;
-					Destroy(gameFaces[nearest]);
+					//Destroy(gameFaces[nearest]);
 				}
 			}
 		}
@@ -216,10 +239,16 @@ function Update () {
 		{
 			ceoShot ++;
 		}
+		if(shot[i] || success)
+		{
+			gameFaces[i].transform.rotation.eulerAngles.x = Mathf.MoveTowards(gameFaces[i].transform.rotation.eulerAngles.x,90,Time.deltaTime * (200 + (100*difficulty)));
+			gameFaces[i].transform.position.y -= Time.deltaTime*4.5;
+		}
 	}
 	doneness.sprite = doneSprites[3-ceoShot];
 	if(ceoShot <= 0)
 	{
+		success = true;
 		Finish(true,1);
 	}
 }

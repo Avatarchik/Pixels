@@ -1,13 +1,6 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Player/MouthMovement.js">
-    <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/TextManager.js" Line="326" Column="21" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Objects/Cutscene/SpriteChoice.js" Line="41" Column="65" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Objects/Cutscene/CharacterSpriteController.js" Line="34" Column="36" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Player/MouthMovement.js" Line="82" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
