@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 public enum TitleStatus{Home,CustomizeNoColor,CustomizeColor,Options,Intro};
 
@@ -6,6 +6,7 @@ static var currentState:TitleStatus;
 
 static var playingOpening:boolean;
 
+static var started:boolean;
 // Audio
 var intro:AudioClip;
 var titleMusic:AudioClip;
@@ -28,25 +29,41 @@ var flyIn2:GameObject;
 @HideInInspector var flyInTop:float = 22;
 @HideInInspector var flyInBottom:float = 11.85;
 
+var startSign:SpriteRenderer;
 var flats:GameObject[];
 @HideInInspector var currentFlat:GameObject;
 
 function Start () {
+	started = false;
 	flyIn.transform.localPosition.y = flyInTop;
+	StartScreen();
+}
+
+function StartScreen () {
 	if(PlayerPrefs.GetInt("TutorialFinished") != 0)
 	{
+		started = true;
+		startSign.color.a = 0;
 		Regular();
 	}
 	else
 	{
+		currentState = TitleStatus.Intro;
+		while(true)
+		{
+			if(Finger.GetExists(0) || Input.GetKey("space"))
+			{
+				break;
+			}
+			yield;
+		}
 		Intro();
 	}
-	
 }
 
 function Intro () {
+	started = true;
 	AudioManager.Loop(false);
-	currentState = TitleStatus.Intro;
 	loadedText = Instantiate(openingText);
 	loadedText.transform.position.z += 10;
 	while(!loadedText.GetComponent(TextManager).finished)

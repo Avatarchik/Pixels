@@ -91,7 +91,7 @@ function Clicked () {
 							Master.currentWorld = level;
 						}
 					}
-					if(WorldMapManager.currentState == MapStatus.Clear)
+					if(WorldMapManager.currentState == MapStatus.Clear || (WorldMapManager.currentState == MapStatus.Intro && !WorldMapManager.introducing))
 					{
 						WorldMapManager.currentState = MapStatus.Confirmation;
 					}

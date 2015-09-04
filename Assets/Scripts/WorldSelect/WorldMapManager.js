@@ -1,6 +1,6 @@
 ﻿	#pragma strict
 
-public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning};
+public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro};
 
 static var currentState:MapStatus;
 static var returnState:MapStatus;
@@ -30,13 +30,29 @@ static var selectedLocation:float;
 // Menu
 private var fade:Renderer;
 
+// Intro
+var intro2:GameObject;
+@HideInInspector var startLocation:float;
+@HideInInspector var location1:float;
+@HideInInspector var location2:float;
+@HideInInspector var step:float;
+static var introducing:boolean;
+@HideInInspector var loadedText:GameObject;
+
 // Locations
 private var showNot:Vector3;
 private var hideNot:Vector3;
 
 function Start () {
+	//Intro
+	introducing = false;
+	startLocation = -150;
+	location1 = 18;
+	location2 = 0;
+	step = -1;
+	
 	selectedLocation = transform.position.x;
-	AudioManager.PlaySongIntro(null,worldMusic,1);
+	
 
 	worlds = new Transform[transform.childCount];
 	for(var i:int = 0; i < worlds.length; i++)
@@ -63,12 +79,50 @@ function Start () {
 	{
 		mapMoveSpeed = .035;
 	}
+	if(PlayerPrefs.GetInt("TutorialFinished") < 2)
+	{
+		introducing = true;
+		currentState = MapStatus.Intro;
+		Intro();
+	}
+	else
+	{
+		AudioManager.PlaySongIntro(null,worldMusic,1);
+	}
+}
+
+function Intro() {
+	transform.position.x = startLocation;
+	yield WaitForSeconds(.5);
+	step ++;
+	loadedText = Instantiate(intro2);
+	while(!loadedText.GetComponent(TextManager).finished)
+	{
+		yield;
+	}
+	PlayerPrefs.SetInt("TutorialFinished",2);
+	step++;
+	introducing = false;
 }
 
 function Update () {
 	// Move map if no pop-ups are on-screen.
 	switch(currentState)
 	{
+		case MapStatus.Intro:
+			if(step==0)
+			{
+				allowClick = false;
+				transform.position.x = Mathf.Lerp(transform.position.x,location1,Time.deltaTime*.14);
+				transform.position.x = Mathf.MoveTowards(transform.position.x,location1,Time.deltaTime*12);
+			}
+			else if(step == 1)
+			{
+				allowClick = true;
+				transform.position.x = Mathf.Lerp(transform.position.x,location2,Time.deltaTime*1);
+				transform.position.x = Mathf.MoveTowards(transform.position.x,location2,Time.deltaTime*15);
+			}
+			break;
 		case MapStatus.Clear:
 			returnState = currentState;
 			hideTicket();
