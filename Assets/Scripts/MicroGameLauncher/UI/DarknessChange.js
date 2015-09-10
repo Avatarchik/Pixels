@@ -15,10 +15,11 @@ function ChangeBackgroundColor (newColor:Color) {
 	if(special)
 	{
 		objectColor = newColor;
-		objectColor.a = .3;
+		
 	}
 	else
 	{
 		objectColor = newColor;
+		objectColor.a = 1;
 	}
 }
