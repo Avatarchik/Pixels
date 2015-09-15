@@ -117,6 +117,13 @@
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeGlow.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeManager.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeObject.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\GD-BirdFlap.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\GD-PlatformJump.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\HS-BloodStream.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\HS-VolcanoEscape.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\MUS-FoodServe.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\PPF-ItemCatch.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\PPF-PeanutCannon.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\RotateCabinets.js" />
      <Compile Include="Assets\Scripts\Levels\04. High School\AsteroidStop.js" />
      <Compile Include="Assets\Scripts\Levels\04. High School\BloodStream.js" />

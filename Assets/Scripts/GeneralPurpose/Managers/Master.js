@@ -485,7 +485,7 @@ class ArcadeGame {
 	var cabinet:Sprite;
 	var paidUnlockCost:int;
 	var playCost:int;
-	var audioCues:AudioClip;
+	var audioCues:AudioClip[];
 	@HideInInspector var highScore:float;
 	@HideInInspector var unlocked:boolean;
 }
