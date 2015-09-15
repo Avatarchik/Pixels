@@ -79,7 +79,7 @@ function Start () {
 }
 
 function Update () {
-	if(currentPiece < castleLocations.Length)
+	if(currentPiece < castleLocations.Length && gameObject.GetComponent(MicroGameManager).firstTime)
 	{
 		firstTime.transform.position.x = castleLocations[currentPiece].transform.position.x;
 	}

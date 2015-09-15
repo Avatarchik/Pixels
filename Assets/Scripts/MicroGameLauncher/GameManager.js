@@ -229,7 +229,7 @@ function BetweenGame () {
 	}
 	else
 	{
-		Instantiate(Master.currentWorld.basic.successObject, Vector3(0,0,-5),Quaternion.identity);
+		Instantiate(Master.currentWorld.basic.successObject, Vector3(0,0,-2.9),Quaternion.identity);
 		UI.BroadcastMessage("NotifySuccess", true,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Success");
 		AudioManager.PlaySound(Master.currentWorld.audio.success,.5);

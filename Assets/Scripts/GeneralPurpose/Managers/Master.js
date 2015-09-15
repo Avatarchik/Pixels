@@ -28,6 +28,7 @@ var worldOptions:WorldOptions;
 static var currentWorld:World;
 
 function Awake () {
+	Time.timeScale = 1;
 	WorldOptions();
 	vertical = false;
 	demo = false;

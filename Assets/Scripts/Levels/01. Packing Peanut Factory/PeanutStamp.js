@@ -253,7 +253,11 @@ function Stamp(skip:boolean) {
 }
 
 function Finish(completionStatus:boolean) {
-	if(!completionStatus)
+	if(completionStatus)
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
+	}
+	else
 	{
 		SendTutorial();
 	}
@@ -277,7 +281,7 @@ function SendTutorial () {
 	{
 		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
 	}
-	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 3 || gameObject.GetComponent(MicroGameManager).firstTime) && Application.loadedLevelName == "MicroGameLauncher" && Master.currentWorld.basic.worldNameVar == "PackingPeanutFactory" && PlayerPrefs.GetInt("Theater") == 0 && !Master.hardMode)
+	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 1) && Application.loadedLevelName == "MicroGameLauncher" && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") == 0 && !Master.hardMode)
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
 	}
