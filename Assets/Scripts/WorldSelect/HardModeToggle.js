@@ -17,7 +17,7 @@ function UpdateVisuals (reset:boolean) {
 		GetComponent(SpriteRenderer).sprite = upSprite;
 		subText.transform.localPosition.y = subTextOrigin;
 	}
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") != 1)
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") != 1)
 	{
 		GetComponent(SpriteRenderer).color = Color(.7,.7,.7,1);
 	}

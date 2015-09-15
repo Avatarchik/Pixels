@@ -69,7 +69,7 @@ function Start () {
 	fade = Camera.main.GetComponentInChildren(Renderer);
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
-	leftCameraLimit = -125;
+	leftCameraLimit = -140;
 	rightCameraLimit = 28;
 	currentState = MapStatus.Clear;
 	returnState = currentState;
@@ -183,6 +183,7 @@ function Update () {
 			
 			break;
 		case MapStatus.Confirmation:
+
 			returnState = currentState;
 			showTicket();
 			FindClosest();
@@ -202,7 +203,7 @@ function Update () {
 			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.8);
 			allowClick = false;
 			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, .4, Time.deltaTime);
-			if(currentNotification.GetComponent(TextManager).finished)
+			if(currentNotification == null || currentNotification.GetComponent(TextManager).finished)
 			{
 				currentState = returnState;
 			}

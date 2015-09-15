@@ -18,7 +18,10 @@ var controls:Sprite;
 
 static var choice:int;
 
+var firstTime:boolean;
+
 function Start () {
+	firstTime = false;
 	UITimer.soundsOn = clockSounds;
 	marker = 0;
 	firstTimeStep = 0;
@@ -34,6 +37,7 @@ function Start () {
 				}
 				else
 				{
+					firstTime = true;
 					if(glow)
 					{
 						StartCoroutine(Glow());

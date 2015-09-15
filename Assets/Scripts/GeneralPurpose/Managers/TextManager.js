@@ -583,6 +583,12 @@ function UpdateSet () {
 		{
 			GetComponent(TextMesh).text = "";
 			transform.position.x = Mathf.MoveTowards(transform.position.x,30,Time.deltaTime*60);
+			if(!automatic)
+			{
+				//yield WaitForEndOfFrame;
+			//	yield WaitForEndOfFrame;
+				Destroy(gameObject);
+			}	
 		}
 		if(transform.position.x == 30 && options.recordingType == RecordType.None && !options.rebalance)
 		{

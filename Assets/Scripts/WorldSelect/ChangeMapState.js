@@ -81,28 +81,30 @@ function Clicked () {
 			{
 				if(PlayerPrefs.GetInt(worldNameVar) == 1)
 				{
-					controller = Camera.main.GetComponent(Master);
-					controller.currentWorld.basic.world = thisWorld;
-					SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
-					for(var level:World in controller.worlds)
-					{
-						if(level.basic.worldNameVar == worldNameVar)
-						{
-							Master.currentWorld = level;
-						}
-					}
 					if(WorldMapManager.currentState == MapStatus.Clear || (WorldMapManager.currentState == MapStatus.Intro && !WorldMapManager.introducing))
 					{
+						WorldMapManager.selectedLocation = transform.localPosition.x;
+						controller = Camera.main.GetComponent(Master);
+						controller.currentWorld.basic.world = thisWorld;
+						SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
+						for(var level:World in controller.worlds)
+						{
+							if(level.basic.worldNameVar == worldNameVar)
+							{
+								Master.currentWorld = level;
+							}
+						}
 						WorldMapManager.currentState = MapStatus.Confirmation;
 					}
 				}
 				else if(WorldMapManager.currentState == MapStatus.Clear)
 				{
+					WorldMapManager.selectedLocation = transform.localPosition.x;
 					WorldMapManager.currentNotification = Instantiate(warningNote);
 					WorldMapManager.currentState = MapStatus.Notification;
 				}
 			}
-			WorldMapManager.selectedLocation = transform.localPosition.x;
+			
 			break;
 		default:
 			break;

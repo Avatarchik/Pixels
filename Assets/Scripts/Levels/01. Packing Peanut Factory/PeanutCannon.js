@@ -23,6 +23,8 @@ var cannonStep3:Sprite;
 @HideInInspector var previous:int;
 @HideInInspector var importantFinger:int;
 
+var tutorialNotification:GameObject;
+
 function Start () {
 	importantFinger = -1;
 	player = Instantiate(playerPrefab, Vector3(0,-6.5,0), Quaternion.identity);
@@ -271,6 +273,10 @@ function SetDestination () {
 }
 
 function Finish(completionStatus:boolean) {
+	if(!completionStatus)
+	{
+		SendTutorial();
+	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
@@ -280,4 +286,19 @@ function Finish(completionStatus:boolean) {
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
 	finished = true;
+}
+
+function SendTutorial () {
+	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
+	}
+	else
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
+	}
+	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 3 || gameObject.GetComponent(MicroGameManager).firstTime) && Application.loadedLevelName == "MicroGameLauncher" && Master.currentWorld.basic.worldNameVar == "PackingPeanutFactory" && PlayerPrefs.GetInt("Theater") == 0 && !Master.hardMode)
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
+	}
 }

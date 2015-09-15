@@ -148,6 +148,7 @@
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SpeedObject.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SpeedSpriteChanger.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SuccessNotificationSpriteChanger.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SuccessNotifier.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\UIPause.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\UIPauseNotifier.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\UITimer.js" />

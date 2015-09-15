@@ -34,6 +34,7 @@ var instructions:GameObject;
 var heartPrefab:GameObject;
 static var instructionText:String;
 static var instructionType:Sprite;
+@HideInInspector var loadedNotification:GameObject;
 
 // Variables for Use
 @HideInInspector var currentGames:GameObject[];
@@ -47,6 +48,8 @@ static var gameToLoad:int;
 static var movingBack:boolean;
 @HideInInspector var quitting:boolean;
 static var replay:boolean;
+@HideInInspector var tutorialize:boolean;
+@HideInInspector var tutorializeObject:GameObject;
 
 // Game change variables.
 @HideInInspector var difficultyChangeAmount:int;
@@ -132,6 +135,7 @@ function BeforeGames () {
 	movingBack = false;
 	quitting = false;
 	replay = false;
+	tutorialize = false;
 	BroadcastArray(gameCovers,"DisplayChange","Clear");
 	
 	// "First time" variables.
@@ -225,12 +229,13 @@ function BetweenGame () {
 	}
 	else
 	{
+		Instantiate(Master.currentWorld.basic.successObject, Vector3(0,0,-5),Quaternion.identity);
 		UI.BroadcastMessage("NotifySuccess", true,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Success");
 		AudioManager.PlaySound(Master.currentWorld.audio.success,.5);
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
-											if(quitting){return;}
+	if(quitting){return;}
 	if(lives <= 0 || (PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1]))
 	{
 		StartCoroutine(GameOver());
@@ -457,6 +462,10 @@ function LaunchLevel (wait:float) {
 	
 	// Show instruction text and wait.
 											if(quitting){return;}
+	if(tutorialize)
+	{
+		TutorialNotification(tutorializeObject);
+	}
 	Instantiate(instructions);
 	yield WaitForSeconds(wait + 3*timeBeforeLevelLoad/3);
 											if(quitting){return;}
@@ -513,23 +522,27 @@ function Clicked () {
 
 function GetRandomGame() {
 	while(!shuffled && shuffleCount < 10)
+	{
+		gameToLoad = Random.Range(0, currentGames.Length);
+		for(var y:int = 0; y < numberAvoid; y++)
 		{
-			gameToLoad = Random.Range(0, currentGames.Length);
-			for(var y:int = 0; y < numberAvoid; y++)
+			if(gameToLoad == previousGames[y])
 			{
-				if(gameToLoad == previousGames[y])
-				{
-					shuffled = false;
-					break;
-				}
-				else
-				{
-					shuffled = true;
-				}
+				shuffled = false;
+				break;
 			}
-			shuffleCount++;
+			else
+			{
+				shuffled = true;
+			}
 		}
-		shuffleCount = 0;
+		shuffleCount++;
+	}
+	shuffleCount = 0;
+	if(tutorialize)
+	{
+		gameToLoad = previousGames[0];
+	}
 }
 
 function Notify(text:String) {
@@ -580,4 +593,24 @@ function PlayCurrentMusic () {
 	{
 		AudioManager.PlaySong(Master.currentWorld.audio.music[Master.currentWorld.audio.music.length-1]);
 	}
+}
+
+function TurnOnNotification (newNotification:GameObject) {
+	tutorializeObject = newNotification;
+	tutorialize = true;
+}
+
+function TutorialNotification (newNotification:GameObject) {
+	paused = true;
+	fade.material.color.a = .5;
+	Time.timeScale = 0;
+	loadedNotification = Instantiate(newNotification);
+	while(loadedNotification != null)
+	{
+		yield;
+	}
+	fade.material.color.a = 0;
+	Time.timeScale = 1;
+	paused = false;
+	tutorialize = false;
 }

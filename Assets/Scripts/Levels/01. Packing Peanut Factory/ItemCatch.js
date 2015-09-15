@@ -5,18 +5,20 @@ var crate:GameObject;
 var objectsOnScreen:GameObject[];
 var objectsOnScreenTarget:boolean[];
 
-var speed:int;
-var difficulty:int;
-var finished:boolean;
-var length:float;
-var timer:float;
-var newPosition:float;
+@HideInInspector var speed:int;
+@HideInInspector var difficulty:int;
+@HideInInspector var finished:boolean;
+@HideInInspector var length:float;
+@HideInInspector var timer:float;
+@HideInInspector var newPosition:float;
 
-var button:ButtonSquare;
+@HideInInspector var button:ButtonSquare;
 
 @HideInInspector var importantFinger:int;
 
 @HideInInspector var clicked:boolean;
+
+var tutorialNotification:GameObject;
 
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
@@ -150,6 +152,10 @@ function AddBoolean (original:boolean[],addition:boolean):boolean[] {
 }
 
 function Finish(completionStatus:boolean) {
+	if(!completionStatus)
+	{
+		SendTutorial();
+	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
@@ -159,4 +165,19 @@ function Finish(completionStatus:boolean) {
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
 	finished = true;
+}
+
+function SendTutorial () {
+	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
+	}
+	else
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
+	}
+	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 3 || gameObject.GetComponent(MicroGameManager).firstTime) && Application.loadedLevelName == "MicroGameLauncher" && Master.currentWorld.basic.worldNameVar == "PackingPeanutFactory" && PlayerPrefs.GetInt("Theater") == 0 && !Master.hardMode)
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
+	}
 }

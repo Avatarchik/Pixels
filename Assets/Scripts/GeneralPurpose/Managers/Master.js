@@ -36,7 +36,7 @@ function Awake () {
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new int[6];
-	currentWorld = worlds[0];
+	currentWorld = worlds[1];
 	lives = 3;
 	paused = false;
 	speedIncrease = 1;
@@ -168,7 +168,7 @@ function Demo() {
 		yield;
 		if(counter < 0)
 		{
-			
+			yield WaitForSeconds(.5);
 			PlayerPrefs.DeleteAll();
 			AudioManager.StopAll();
 			Application.LoadLevel("GameStart");
@@ -337,6 +337,7 @@ function Initialize () {
 
 function UnlockAllOptions () {
 	PlayerPrefs.DeleteAll();
+	PlayerPrefs.SetInt("TutorialFinished",2);
 	for(var aWorld:World in worlds)
 	{
 		var worldName:String;
@@ -392,6 +393,7 @@ class BasicVariables {
 	var covers:GameObject[];
 	var colors:Color[];
 	var UI:GameObject;
+	var successObject:GameObject;
 }
 
 class TextVariables {
@@ -482,6 +484,7 @@ class ArcadeGame {
 	var cabinet:Sprite;
 	var paidUnlockCost:int;
 	var playCost:int;
+	var audioCues:AudioClip;
 	@HideInInspector var highScore:float;
 	@HideInInspector var unlocked:boolean;
 }

@@ -1,4 +1,4 @@
-﻿#pragma strict
+﻿	#pragma strict
 
 @HideInInspector var speed:int;
 @HideInInspector var difficulty:int;
@@ -34,6 +34,8 @@ var stamper:GameObject;
 @HideInInspector var importantFinger:int;
 
 @HideInInspector var itemTime:float;
+
+var tutorialNotification:GameObject;
 
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
@@ -251,7 +253,32 @@ function Stamp(skip:boolean) {
 }
 
 function Finish(completionStatus:boolean) {
-	Debug.Log(completionStatus);
-	GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
+	if(!completionStatus)
+	{
+		SendTutorial();
+	}
+	if(Application.loadedLevelName == "MicroTester")
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
+	}
+	else 
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
+	}
 	finished = true;
+}
+
+function SendTutorial () {
+	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
+	}
+	else
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
+	}
+	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 3 || gameObject.GetComponent(MicroGameManager).firstTime) && Application.loadedLevelName == "MicroGameLauncher" && Master.currentWorld.basic.worldNameVar == "PackingPeanutFactory" && PlayerPrefs.GetInt("Theater") == 0 && !Master.hardMode)
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
+	}
 }

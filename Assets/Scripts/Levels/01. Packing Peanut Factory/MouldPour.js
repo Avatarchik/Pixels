@@ -29,6 +29,8 @@ var pouredSprites:Sprite[];
 
 @HideInInspector var allowance:int;
 
+var tutorialNotification:GameObject;
+
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
 	{
@@ -250,6 +252,10 @@ function Clicked() {
 }
 
 function Finish(completionStatus:boolean) {
+	if(!completionStatus)
+	{
+		SendTutorial();
+	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
@@ -259,4 +265,19 @@ function Finish(completionStatus:boolean) {
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
 	finished = true;
+}
+
+function SendTutorial () {
+	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
+	}
+	else
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
+	}
+	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 3 || gameObject.GetComponent(MicroGameManager).firstTime) && Application.loadedLevelName == "MicroGameLauncher" && Master.currentWorld.basic.worldNameVar == "PackingPeanutFactory" && PlayerPrefs.GetInt("Theater") == 0 && !Master.hardMode)
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
+	}
 }

@@ -11,16 +11,16 @@ var aim:GameObject;
 var aimAmount:GameObject;
 @HideInInspector var aimAmountComplete:float;
 var pointer:GameObject[];
-var pointerBottom:float;
-var pointerTop:float;
-var pointerAmount:float;
+@HideInInspector var pointerBottom:float;
+@HideInInspector var pointerTop:float;
+@HideInInspector var pointerAmount:float;
 
-var currentLevel:float;
-var goal:float;
-var goalLeniency:float[];
-var monsterTimer:float;
-var monsterOrigin:float;
-var monsterShake:float;
+@HideInInspector var currentLevel:float;
+@HideInInspector var goal:float;
+@HideInInspector var goalLeniency:float[];
+@HideInInspector var monsterTimer:float;
+@HideInInspector var monsterOrigin:float;
+@HideInInspector var monsterShake:float;
 
 var peanutEmitter:GameObject;
 
@@ -28,12 +28,14 @@ var monsterSprites:Sprite[];
 var aimSprites:Sprite[];
 
 var warningSprites:Sprite[];
-var warningHolder:int;
+@HideInInspector var warningHolder:int;
 var warningRenderer:SpriteRenderer;
-var warningCounter:float;
+@HideInInspector var warningCounter:float;
 
 @HideInInspector var importantFinger:int;
 @HideInInspector var clicked:boolean;
+
+var tutorialNotification:GameObject;
 
 function Start () {
 	warningHolder = 0;
@@ -193,6 +195,10 @@ function MonsterShake() {
 	yield;
 }
 function Finish(completionStatus:boolean) {
+	if(!completionStatus)
+	{
+		SendTutorial();
+	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
@@ -202,4 +208,19 @@ function Finish(completionStatus:boolean) {
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
 	finished = true;
+}
+
+function SendTutorial () {
+	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
+	}
+	else
+	{
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
+	}
+	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 3 || gameObject.GetComponent(MicroGameManager).firstTime) && Application.loadedLevelName == "MicroGameLauncher" && Master.currentWorld.basic.worldNameVar == "PackingPeanutFactory" && PlayerPrefs.GetInt("Theater") == 0 && !Master.hardMode)
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
+	}
 }
