@@ -21,7 +21,6 @@ function Update () {
 			Destroy(gameObject);
 		}
 	}
-	transform.position.x = Mathf.MoveTowards(transform.position.x,destination,Time.deltaTime * speed);
 }
 function Sway () {
 	while(!TitleManager.started)

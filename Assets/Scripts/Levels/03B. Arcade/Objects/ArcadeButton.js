@@ -17,20 +17,23 @@ var unlockColor:Color;
 var subIcon:SpriteRenderer;
 var costText:TextMesh;
 
+var speed:float;
+
 static var shown:boolean;
 
 function Start () {
 	shown = false;
+	speed = 50;
 }
 
 function Update () {
 	if(shown)
 	{
-		transform.position = Vector3.MoveTowards(transform.position,show,Time.deltaTime * 30);
+		transform.position = Vector3.MoveTowards(transform.position,show,Time.deltaTime * speed);
 	}
 	else
 	{
-		transform.position = Vector3.MoveTowards(transform.position,hide,Time.deltaTime * 30);
+		transform.position = Vector3.MoveTowards(transform.position,hide,Time.deltaTime * speed);
 	}
 }
 

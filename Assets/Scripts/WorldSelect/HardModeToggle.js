@@ -17,13 +17,22 @@ function UpdateVisuals (reset:boolean) {
 		GetComponent(SpriteRenderer).sprite = upSprite;
 		subText.transform.localPosition.y = subTextOrigin;
 	}
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") != 1)
+	if(Master.currentWorld.basic.worldNameVar == "Arcade" || Master.currentWorld.basic.worldNameVar == "Theater")
 	{
-		GetComponent(SpriteRenderer).color = Color(.7,.7,.7,1);
+		subText.GetComponent(SpriteRenderer).color = Color(0,0,0,0);
+		GetComponent(SpriteRenderer).color = Color(0,0,0,0);
 	}
 	else
 	{
-		GetComponent(SpriteRenderer).color = Color(1,.35,.35,1);
+		subText.GetComponent(SpriteRenderer).color = Color(1,1,1,1);
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") != 1)
+		{
+			GetComponent(SpriteRenderer).color = Color(.7,.7,.7,1);
+		}
+		else
+		{
+			GetComponent(SpriteRenderer).color = Color(1,.35,.35,1);
+		}
 	}
 }
 

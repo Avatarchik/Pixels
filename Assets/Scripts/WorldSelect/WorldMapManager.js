@@ -1,4 +1,4 @@
-﻿	#pragma strict
+	#pragma strict
 
 public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro};
 
@@ -48,7 +48,7 @@ function Start () {
 	introducing = false;
 	startLocation = -150;
 	location1 = 18;
-	location2 = 0;
+	location2 = -3;
 	step = -1;
 	
 	selectedLocation = transform.position.x;
@@ -70,7 +70,7 @@ function Start () {
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
 	leftCameraLimit = -160;
-	rightCameraLimit = 28;
+	rightCameraLimit = 55;
 	currentState = MapStatus.Clear;
 	returnState = currentState;
 	importantFinger = -1;

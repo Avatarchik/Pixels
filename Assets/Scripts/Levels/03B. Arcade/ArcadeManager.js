@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum ArcadeState {Selecting,Playing,Results,Leaderboard,Notification}
+public enum ArcadeState {Selecting,Playing,Results,Leaderboard,Notification,Leaving}
 
 var mainScreen:GameObject;
 var cabinetPrefab:GameObject;
@@ -20,7 +20,7 @@ function Start () {
 	currentSelection = 0;
 	master = Camera.main.GetComponent(Master);
 	games = master.arcadeGames;
-	distance = 21;
+	distance = 23;
 	speed = 10;
 	displays = new GameObject[games.length+1];
 	displayPosition = new int[games.length+1];
