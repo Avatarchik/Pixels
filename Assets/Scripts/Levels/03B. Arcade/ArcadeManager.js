@@ -1,20 +1,26 @@
-﻿#pragma strict
+#pragma strict
 
 public enum ArcadeState {Selecting,Playing,Results,Leaderboard,Notification,Leaving}
 
 var mainScreen:GameObject;
 var cabinetPrefab:GameObject;
 var buttons:GameObject;
+var resultsScreen:GameObject;
 @HideInInspector var distance:float;
 @HideInInspector var speed:float;
 static var currentState:ArcadeState;
 @HideInInspector var games:ArcadeGame[];
 @HideInInspector var master:Master;
 @HideInInspector var currentSelection:int;
+@HideInInspector var currentNotification:GameObject;
+@HideInInspector var currentGame:GameObject;
 
 @HideInInspector var displays:GameObject[];
 @HideInInspector var displayPosition:int[];
+@HideInInspector var faces:SpriteRenderer[];
 
+@HideInInspector var normalScale:Vector3;
+@HideInInspector var doubleScale:Vector3;
 
 function Start () {
 	currentSelection = 0;
@@ -22,8 +28,11 @@ function Start () {
 	games = master.arcadeGames;
 	distance = 23;
 	speed = 10;
+	normalScale = Vector3(14.06,14.06,14.06);
+	doubleScale = Vector3(28.12,28.12,28.12);
 	displays = new GameObject[games.length+1];
 	displayPosition = new int[games.length+1];
+	faces = new SpriteRenderer[games.length+1];
 	displays[games.length] = Instantiate(mainScreen);
 	displays[games.length].transform.position.z += 10;
 	for(var i:int = 0; i < displays.length-1; i++)
@@ -34,6 +43,7 @@ function Start () {
 			if(child.transform.name == "Face")
 			{
 				child.sprite = games[i].cabinet;
+				faces[i] = child;
 			}
 		}
 		displays[i].transform.position.z += 10;
@@ -44,6 +54,7 @@ function Start () {
 }
 
 function Update () {
+	
 	for(var i:int = 0; i < displays.length; i++)
 	{
 		if(Mathf.Abs(displays[i].transform.position.x - (distance * displayPosition[i])) > distance * (displayPosition.Length/2))
@@ -52,6 +63,28 @@ function Update () {
 		}
 		displays[i].transform.position.x = Mathf.MoveTowards(displays[i].transform.position.x,distance * displayPosition[i],Time.deltaTime * speed);
 		displays[i].transform.position.x = Mathf.Lerp(displays[i].transform.position.x,distance * displayPosition[i],Time.deltaTime * speed);
+	}
+	switch(currentState)
+	{
+		case ArcadeState.Selecting:
+			break;
+		case ArcadeState.Playing:
+			
+			displays[currentSelection].transform.localScale = Vector3.MoveTowards(displays[currentSelection].transform.localScale,doubleScale,Time.deltaTime*50);
+			faces[currentSelection].color = Color.Lerp(faces[currentSelection].color,Color.black,Time.deltaTime * 4);
+			break;
+		case ArcadeState.Results:
+			displays[currentSelection].transform.localScale = Vector3.MoveTowards(displays[currentSelection].transform.localScale,normalScale,Time.deltaTime*50);
+			faces[currentSelection].color = Color.Lerp(faces[currentSelection].color,Color.white,Time.deltaTime * 4);
+			break;
+		case ArcadeState.Leaderboard:
+			break;
+		case ArcadeState.Notification:
+			break;
+		case ArcadeState.Leaving:
+			break;
+		default:
+			break;
 	}
 	if(Input.GetKeyDown("left"))
 	{
@@ -124,4 +157,29 @@ function FindPositions () {
 			}
 		}
 	}
+}
+
+function StartGame () {
+	currentState = ArcadeState.Playing;
+	yield WaitForSeconds(1);
+	currentGame = Instantiate(games[currentSelection].game);
+	Debug.Log(currentGame);
+}
+
+function FinishGame (score:float) {
+	Destroy(currentGame);
+	yield WaitForSeconds(1);
+	currentState = ArcadeState.Selecting;
+}
+
+function LaunchNotification (notification:GameObject) {
+	var oldState:ArcadeState;
+	oldState = currentState;
+	currentNotification = Instantiate(notification);
+	currentState = ArcadeState.Notification;
+	while(currentNotification != null)
+	{
+		yield;
+	}
+	currentState = oldState;
 }

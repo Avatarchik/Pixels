@@ -21,16 +21,8 @@ var objectsOnScreenTarget:boolean[];
 var tutorialNotification:GameObject;
 
 function Start () {
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		speed = MicroTester.timeMultiplier;
-		difficulty = MicroTester.difficulty;
-	}
-	else
-	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
-	}
+	speed = 1;
+	difficulty = 1;
 	finished = false;
 	length = 3 + 5/speed;
 	UITimer.currentTarget = length;

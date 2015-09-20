@@ -6,6 +6,7 @@
 @HideInInspector var unlocked:boolean;
 var hide:Vector3;
 var show:Vector3;
+var gameplay:Vector3;
 
 var playSprite:Sprite;
 var buySprite:Sprite;
@@ -19,21 +20,33 @@ var costText:TextMesh;
 
 var speed:float;
 
+var moneyPlayNotification:GameObject;
+
+@HideInInspector var manager:ArcadeManager;
+
 static var shown:boolean;
 
 function Start () {
 	shown = false;
 	speed = 50;
+	manager = GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager);
 }
 
 function Update () {
-	if(shown)
+	if(manager.currentState == ArcadeState.Playing || manager.currentState == ArcadeState.Results)
 	{
-		transform.position = Vector3.MoveTowards(transform.position,show,Time.deltaTime * speed);
+		transform.position = Vector3.MoveTowards(transform.position,gameplay,Time.deltaTime * speed);
 	}
 	else
 	{
-		transform.position = Vector3.MoveTowards(transform.position,hide,Time.deltaTime * speed);
+		if(shown)
+		{
+			transform.position = Vector3.MoveTowards(transform.position,show,Time.deltaTime * speed);
+		}
+		else
+		{
+			transform.position = Vector3.MoveTowards(transform.position,hide,Time.deltaTime * speed);
+		}
 	}
 }
 
@@ -44,11 +57,12 @@ function Clicked () {
 		{
 			if(PlayerPrefs.GetInt("CurrencyNumber") > playCost)
 			{
-				PlayerPrefs.SetInt("CurrentNumber",PlayerPrefs.GetInt("CurrencyNumber") - playCost);
+				PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - playCost);
+				manager.StartGame();
 			}
 			else
 			{
-				
+				manager.LaunchNotification(moneyPlayNotification);
 			}
 		}
 		else

@@ -1,9 +1,24 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js">
     <Files>
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js" Line="23" Column="15" />
+      <File FileName="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js" Line="208" Column="28" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="Scripts" expanded="True">
+              <Node name="Levels" expanded="True">
+                <Node name="03B. Arcade" expanded="True">
+                  <Node name="HighScoreScreen.js" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
