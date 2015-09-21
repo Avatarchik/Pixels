@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\ParticleSystemBurst.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\Spinning.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\SpriteChoice.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\DestroyObjectOnClick.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\MoveToCorner.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectLoop.js" />

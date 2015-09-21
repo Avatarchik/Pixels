@@ -67,7 +67,15 @@ function Clicked () {
 		}
 		else
 		{
-		
+			if(PlayerPrefs.GetInt("CurrencyNumber") > paidUnlockCost)
+			{
+				PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
+				Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);
+			}
+			else
+			{
+				manager.LaunchNotification(moneyPlayNotification);
+			}
 		}
 	}
 	else

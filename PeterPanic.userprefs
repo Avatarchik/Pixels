@@ -1,20 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js">
-    <Files>
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/Games/PPF-ItemCatch.js" Line="151" Column="19" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js" Line="52" Column="5" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
+              <Node name="GeneralPurpose" expanded="True">
+                <Node name="Managers" expanded="True" />
+                <Node name="Objects" expanded="True">
+                  <Node name="DestroyObjectOnClick.js" selected="True" />
+                </Node>
+              </Node>
               <Node name="Levels" expanded="True">
                 <Node name="03B. Arcade" expanded="True">
                   <Node name="Games" expanded="True" />
-                  <Node name="ArcadeManager.js" selected="True" />
+                  <Node name="Objects" expanded="True" />
                 </Node>
               </Node>
             </Node>

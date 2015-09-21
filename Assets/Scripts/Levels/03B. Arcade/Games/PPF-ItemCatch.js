@@ -30,7 +30,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(speed + "   " + waitTime + "   " + score);
 	if(finished)
 	{
 	
@@ -159,7 +158,6 @@ function AddBoolean (original:boolean[],addition:boolean):boolean[] {
 }
 
 function Finish() {
-	Debug.Log(score);
 	for(var i:int = 0; i < objectsOnScreen.length; i++)
 	{
 		Destroy(objectsOnScreen[i]);

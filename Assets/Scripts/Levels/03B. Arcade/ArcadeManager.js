@@ -50,7 +50,6 @@ function Start () {
 				faces[i] = child;
 			}
 		}
-		//displays[i].transform.position.z += 10;
 	}
 	currentSelection = games.length;
 	FindPositions();
@@ -71,6 +70,11 @@ function Update () {
 	switch(currentState)
 	{
 		case ArcadeState.Selecting:
+			for(i = 0; i < displays.length-1; i++)
+			{
+				displays[i].transform.localScale = Vector3.MoveTowards(displays[i].transform.localScale,normalScale,Time.deltaTime*50);
+				faces[i].color = Color.Lerp(faces[i].color,Color.white,Time.deltaTime * 4);
+			}
 			break;
 		case ArcadeState.Playing:
 			
@@ -111,6 +115,10 @@ function Scroll (distance:int) {
 		else if(currentSelection < 0)
 		{
 			currentSelection = displays.length-1;
+		}
+		if(currentSelection < displays.length - 1)
+		{
+			lastGameVariable = games[currentSelection].name;
 		}
 		var isMainScreen:boolean = false;
 		if(currentSelection == games.length)
@@ -165,7 +173,6 @@ function FindPositions () {
 
 function StartGame () {
 	currentState = ArcadeState.Playing;
-	lastGameVariable = games[currentSelection].name;
 	yield WaitForSeconds(1);
 	currentGame = Instantiate(games[currentSelection].game);
 }
@@ -173,6 +180,10 @@ function StartGame () {
 function FinishGame (score:float) {
 	Destroy(currentGame);
 	lastScore = score;
+	Results();
+}
+
+function Results () {
 	currentResults = Instantiate(resultsScreen);
 	while(currentResults != null)
 	{
