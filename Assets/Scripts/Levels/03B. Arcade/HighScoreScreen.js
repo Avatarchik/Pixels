@@ -25,6 +25,7 @@ var defaultUserScores:float[];
 @HideInInspector var normalSize:float;
 
 function Start () {
+	latestScore = ArcadeManager.lastScore;
 	if(latestScore == 0)
 	{
 		latestScore = 5.5;
@@ -58,7 +59,7 @@ function Start () {
 	}
 	
 	allUsers[allUsers.length-1].name = "Peter";
-	allUsers[allUsers.length-1].score = 35.00;
+	allUsers[allUsers.length-1].score = latestScore;
 	allUsers[allUsers.length-1].peter = true;
 	
 	OrderList();
@@ -238,10 +239,6 @@ function UpdateDisplay () {
 		}
 	}	
 }	
-
-function Global () {
-	
-}
 
 class User {
 	var globalRank:int;

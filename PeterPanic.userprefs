@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js">
     <Files>
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js" Line="208" Column="28" />
+      <File FileName="Assets/Scripts/Levels/03B. Arcade/Games/PPF-ItemCatch.js" Line="151" Column="19" />
+      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js" Line="52" Column="5" />
+      <File FileName="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,7 +13,8 @@
             <Node name="Scripts" expanded="True">
               <Node name="Levels" expanded="True">
                 <Node name="03B. Arcade" expanded="True">
-                  <Node name="HighScoreScreen.js" selected="True" />
+                  <Node name="Games" expanded="True" />
+                  <Node name="ArcadeManager.js" selected="True" />
                 </Node>
               </Node>
             </Node>

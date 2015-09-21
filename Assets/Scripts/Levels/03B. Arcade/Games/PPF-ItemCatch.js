@@ -5,39 +5,51 @@ var crate:GameObject;
 var objectsOnScreen:GameObject[];
 var objectsOnScreenTarget:boolean[];
 
-@HideInInspector var speed:int;
+@HideInInspector var speed:float;
 @HideInInspector var difficulty:int;
 @HideInInspector var finished:boolean;
-@HideInInspector var length:float;
-@HideInInspector var timer:float;
 @HideInInspector var newPosition:float;
-
-@HideInInspector var button:ButtonSquare;
 
 @HideInInspector var importantFinger:int;
 
-@HideInInspector var clicked:boolean;
-
 var tutorialNotification:GameObject;
 
+@HideInInspector var score:float;
+@HideInInspector var waitTime:float;
+
 function Start () {
+	waitTime = 3;
 	speed = 1;
 	difficulty = 1;
 	finished = false;
-	length = 3 + 5/speed;
-	UITimer.currentTarget = length;
-	UITimer.counter = 0;
-	timer = length;
 	newPosition = 0;
-	button = GetComponent(ButtonSquare);
+	
+	score = 0;
+	
 	StartCoroutine(Deployment());
 }
 
 function Update () {
+	Debug.Log(speed + "   " + waitTime + "   " + score);
+	if(finished)
+	{
+	
+	}
+	else
+	{
+		score += Time.deltaTime;
+		if(waitTime > .3)
+		{
+			speed += Time.deltaTime * .04;
+		}
+		else
+		{
+			speed += Time.deltaTime * .075;
+		}
+	}
 	// Get important finger.
 	if(importantFinger == -1)
 	{
-		clicked = false;
 		for(var i:int = 0; i < Finger.identity.length; i++)
 		{
 			if(Finger.GetExists(i) && Finger.GetInGame(i))
@@ -54,26 +66,19 @@ function Update () {
 		{
 			newPosition = Finger.GetPosition(importantFinger).x;
 		}
-		clicked = true;
 	}
 	else if(!Finger.GetExists(importantFinger))
 	{
 		importantFinger = -1;
 	}
-	
-	timer -= Time.deltaTime;
-	if(timer < 0 && !finished)
-	{
-		Finish(true);
-	}
 	for(i = 0; i < objectsOnScreen.length; i++)
 	{
-		if(objectsOnScreen[i] != null)
+		if(objectsOnScreen[i] != null && !finished)
 		{
 			objectsOnScreen[i].transform.parent = transform;
 			if(objectsOnScreen[i].transform.position.y <= -10 && !finished)
 			{
-				Finish(false);
+				Finish();
 			}
 			else if(objectsOnScreen[i].transform.position.y < -2.5 && objectsOnScreen[i].transform.position.y > -4 && !objectsOnScreenTarget[i])
 			{
@@ -89,6 +94,13 @@ function Update () {
 			}
 			else
 			{
+				if(i < objectsOnScreen.Length - 10)
+				{
+					if(objectsOnScreen[i] != null)
+					{
+						Destroy(objectsOnScreen[i]);
+					}
+				}
 				objectsOnScreen[i].transform.position = Vector3.MoveTowards(objectsOnScreen[i].transform.position, Vector3(crate.transform.position.x,crate.transform.position.y, objectsOnScreen[i].transform.position.z), Time.deltaTime * (10));
 				objectsOnScreen[i].transform.parent = crate.transform;
 			}
@@ -109,14 +121,17 @@ function Update () {
 
 // Create object.
 function Deployment () {
-	while(timer > 1)
+	while(true)
 	{
-		yield WaitForSeconds(length/(5*difficulty));
-		if(length > .4)
-		{
-			objectsOnScreen = AddObject(objectsOnScreen, Instantiate(fallingObject, Vector3(Random.Range(-8.5, 8.5),10,4.8), Quaternion.identity));
-		}
+		yield WaitForSeconds(waitTime);
+		objectsOnScreen = AddObject(objectsOnScreen, Instantiate(fallingObject, Vector3(Random.Range(-8.5, 8.5),10,4.8), Quaternion.identity));
 		objectsOnScreenTarget = AddBoolean(objectsOnScreenTarget, false);
+		waitTime *= .94;
+		if(waitTime < .3)
+		{
+			waitTime = .3;
+		}
+		yield;
 	}
 	yield;
 }
@@ -143,37 +158,12 @@ function AddBoolean (original:boolean[],addition:boolean):boolean[] {
 	return finalArray;
 }
 
-function Finish(completionStatus:boolean) {
+function Finish() {
+	Debug.Log(score);
 	for(var i:int = 0; i < objectsOnScreen.length; i++)
 	{
 		Destroy(objectsOnScreen[i]);
-	}
-	if(!completionStatus)
-	{
-		SendTutorial();
-	}
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
-	}
-	else 
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
-	}
+	}	
+	GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
 	finished = true;
-}
-
-function SendTutorial () {
-	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
-	{
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
-	}
-	else
-	{
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
-	}
-	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 1) && Application.loadedLevelName == "MicroGameLauncher" && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") == 0 && !Master.hardMode)
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
-	}
 }

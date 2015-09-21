@@ -14,6 +14,7 @@ static var currentState:ArcadeState;
 @HideInInspector var currentSelection:int;
 @HideInInspector var currentNotification:GameObject;
 @HideInInspector var currentGame:GameObject;
+@HideInInspector var currentResults:GameObject;
 
 @HideInInspector var displays:GameObject[];
 @HideInInspector var displayPosition:int[];
@@ -22,14 +23,17 @@ static var currentState:ArcadeState;
 @HideInInspector var normalScale:Vector3;
 @HideInInspector var doubleScale:Vector3;
 
+static var lastScore:float;
+static var lastGameVariable:String;
+
 function Start () {
 	currentSelection = 0;
 	master = Camera.main.GetComponent(Master);
 	games = master.arcadeGames;
 	distance = 23;
 	speed = 10;
-	normalScale = Vector3(14.06,14.06,14.06);
-	doubleScale = Vector3(28.12,28.12,28.12);
+	normalScale = Vector3(14.06,14.06,1);
+	doubleScale = Vector3(28.12,28.12,1);
 	displays = new GameObject[games.length+1];
 	displayPosition = new int[games.length+1];
 	faces = new SpriteRenderer[games.length+1];
@@ -46,7 +50,7 @@ function Start () {
 				faces[i] = child;
 			}
 		}
-		displays[i].transform.position.z += 10;
+		//displays[i].transform.position.z += 10;
 	}
 	currentSelection = games.length;
 	FindPositions();
@@ -161,14 +165,19 @@ function FindPositions () {
 
 function StartGame () {
 	currentState = ArcadeState.Playing;
+	lastGameVariable = games[currentSelection].name;
 	yield WaitForSeconds(1);
 	currentGame = Instantiate(games[currentSelection].game);
-	Debug.Log(currentGame);
 }
 
 function FinishGame (score:float) {
 	Destroy(currentGame);
-	yield WaitForSeconds(1);
+	lastScore = score;
+	currentResults = Instantiate(resultsScreen);
+	while(currentResults != null)
+	{
+		yield;
+	}
 	currentState = ArcadeState.Selecting;
 }
 
