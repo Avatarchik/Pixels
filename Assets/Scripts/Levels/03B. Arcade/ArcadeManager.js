@@ -15,6 +15,7 @@ static var currentState:ArcadeState;
 @HideInInspector var currentNotification:GameObject;
 @HideInInspector var currentGame:GameObject;
 @HideInInspector var currentResults:GameObject;
+@HideInInspector var left:boolean;
 
 @HideInInspector var displays:GameObject[];
 @HideInInspector var displayPosition:int[];
@@ -23,10 +24,19 @@ static var currentState:ArcadeState;
 @HideInInspector var normalScale:Vector3;
 @HideInInspector var doubleScale:Vector3;
 
+var frontMusic:AudioClip;
+var gameMusic:AudioClip;
+var shutDownSound:AudioClip;
+
+var helloSounds:AudioClip[];
+var goodbyeSounds:AudioClip[];
+var gameStartGeneralSounds:AudioClip[];
+
 static var lastScore:float;
 static var lastGameVariable:String;
 
 function Start () {
+	left = false;
 	currentSelection = 0;
 	master = Camera.main.GetComponent(Master);
 	games = master.arcadeGames;
@@ -54,6 +64,8 @@ function Start () {
 	currentSelection = games.length;
 	FindPositions();
 	currentState = ArcadeState.Selecting;
+	AudioManager.PlaySound(helloSounds[Random.Range(0,helloSounds.length)],1);
+	AudioManager.PlaySong(frontMusic);
 }
 
 function Update () {
@@ -90,6 +102,11 @@ function Update () {
 		case ArcadeState.Notification:
 			break;
 		case ArcadeState.Leaving:
+			if(!left)
+			{
+				left = true;
+				AudioManager.PlaySound(goodbyeSounds[Random.Range(0,goodbyeSounds.length)]);
+			}
 			break;
 		default:
 			break;
@@ -172,14 +189,18 @@ function FindPositions () {
 }
 
 function StartGame () {
+	AudioManager.PlaySound(gameStartGeneralSounds[Random.Range(0,gameStartGeneralSounds.length)]);
 	currentState = ArcadeState.Playing;
 	yield WaitForSeconds(1);
+	AudioManager.PlaySong(gameMusic);
 	currentGame = Instantiate(games[currentSelection].game);
 }
 
 function FinishGame (score:float) {
+	AudioManager.PlaySound(shutDownSound);
 	Destroy(currentGame);
 	lastScore = score;
+	AudioManager.PlaySong(frontMusic);
 	Results();
 }
 

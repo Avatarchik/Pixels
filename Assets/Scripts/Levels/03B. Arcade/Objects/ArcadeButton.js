@@ -24,6 +24,9 @@ var moneyPlayNotification:GameObject;
 
 @HideInInspector var manager:ArcadeManager;
 
+var lockedSounds:AudioClip[];
+var unlockSounds:AudioClip[];
+
 static var shown:boolean;
 
 function Start () {
@@ -67,14 +70,22 @@ function Clicked () {
 		}
 		else
 		{
-			if(PlayerPrefs.GetInt("CurrencyNumber") > paidUnlockCost)
+			if(paidUnlock)
 			{
-				PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
-				Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);
+				if(PlayerPrefs.GetInt("CurrencyNumber") > paidUnlockCost)
+				{
+					PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
+					Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);
+					AudioManager.PlaySound(unlockSounds[Random.Range(0,unlockSounds.length)]);
+				}
+				else
+				{
+					manager.LaunchNotification(moneyPlayNotification);
+				}
 			}
 			else
 			{
-				manager.LaunchNotification(moneyPlayNotification);
+				AudioManager.PlaySound(lockedSounds[Random.Range(0,lockedSounds.length)]);
 			}
 		}
 	}
