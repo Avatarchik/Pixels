@@ -26,6 +26,7 @@ static var currentState:ArcadeState;
 
 var frontMusic:AudioClip;
 var gameMusic:AudioClip;
+var startGameSound:AudioClip;
 var shutDownSound:AudioClip;
 
 var helloSounds:AudioClip[];
@@ -65,7 +66,7 @@ function Start () {
 	FindPositions();
 	currentState = ArcadeState.Selecting;
 	AudioManager.PlaySound(helloSounds[Random.Range(0,helloSounds.length)],1);
-	AudioManager.PlaySong(frontMusic);
+	AudioManager.PlaySong(frontMusic,.5);
 }
 
 function Update () {
@@ -191,6 +192,8 @@ function FindPositions () {
 function StartGame () {
 	AudioManager.PlaySound(gameStartGeneralSounds[Random.Range(0,gameStartGeneralSounds.length)]);
 	currentState = ArcadeState.Playing;
+	yield WaitForSeconds(1);
+	AudioManager.PlaySound(startGameSound);
 	yield WaitForSeconds(1);
 	AudioManager.PlaySong(gameMusic);
 	currentGame = Instantiate(games[currentSelection].game);

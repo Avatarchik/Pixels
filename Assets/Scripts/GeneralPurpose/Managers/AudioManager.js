@@ -123,7 +123,11 @@ static function GetLength ():float {
 }
 
 static function PlaySong (song:AudioClip) {
+	PlaySong(song,1);
+}
+static function PlaySong (song:AudioClip, volume:float) {
 	StopSong();
+	musicVolume = volume;
 	musicSpeaker[0].clip = song;
 	musicSpeaker[0].Play();
 	humming = true;
