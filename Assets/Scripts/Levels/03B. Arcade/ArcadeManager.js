@@ -213,12 +213,12 @@ function Results () {
 	currentState = ArcadeState.Selecting;
 }
 
-function LaunchNotification (notification:GameObject) {
+function LaunchNotification (notificationText:String,type:NotificationType) {
 	var oldState:ArcadeState;
 	oldState = currentState;
-	currentNotification = Instantiate(notification);
 	currentState = ArcadeState.Notification;
-	while(currentNotification != null)
+	Camera.main.GetComponent(Master).LaunchNotification(notificationText,type);
+	while(Master.notifying)
 	{
 		yield;
 	}

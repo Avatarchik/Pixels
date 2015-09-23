@@ -299,6 +299,6 @@ function SendTutorial () {
 	}
 	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 1) && Application.loadedLevelName == "MicroGameLauncher" && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") == 0 && !Master.hardMode)
 	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
+		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification("Drag Peter out of the way of the peanut cannons!");
 	}
 }

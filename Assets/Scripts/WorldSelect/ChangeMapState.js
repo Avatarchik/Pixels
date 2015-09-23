@@ -21,6 +21,7 @@ var button:SpriteRenderer;
 var buttonIcon:SpriteRenderer;
 
 var warningNote:GameObject;
+var warningText:String;
 
 function Start () {
 	showCounter = 0;
@@ -100,7 +101,7 @@ function Clicked () {
 				else if(WorldMapManager.currentState == MapStatus.Clear)
 				{
 					WorldMapManager.selectedLocation = transform.localPosition.x;
-					WorldMapManager.currentNotification = Instantiate(warningNote);
+					Camera.main.GetComponent(Master).LaunchNotification(warningText,NotificationType.lockedWorld);
 					WorldMapManager.currentState = MapStatus.Notification;
 				}
 			}

@@ -34,6 +34,7 @@ var instructions:GameObject;
 var heartPrefab:GameObject;
 static var instructionText:String;
 static var instructionType:Sprite;
+
 @HideInInspector var loadedNotification:GameObject;
 
 // Variables for Use
@@ -49,7 +50,7 @@ static var movingBack:boolean;
 @HideInInspector var quitting:boolean;
 static var replay:boolean;
 @HideInInspector var tutorialize:boolean;
-@HideInInspector var tutorializeObject:GameObject;
+@HideInInspector var tutorialText:String;
 
 // Game change variables.
 @HideInInspector var difficultyChangeAmount:int;
@@ -464,7 +465,7 @@ function LaunchLevel (wait:float) {
 											if(quitting){return;}
 	if(tutorialize)
 	{
-		TutorialNotification(tutorializeObject);
+		TutorialNotification(tutorialText);
 	}
 	Instantiate(instructions);
 	yield WaitForSeconds(wait + 3*timeBeforeLevelLoad/3);
@@ -595,17 +596,17 @@ function PlayCurrentMusic () {
 	}
 }
 
-function TurnOnNotification (newNotification:GameObject) {
-	tutorializeObject = newNotification;
+function TurnOnNotification (newNotification:String) {
+	tutorialText = newNotification;
 	tutorialize = true;
 }
 
-function TutorialNotification (newNotification:GameObject) {
+function TutorialNotification (notificationText:String) {
 	paused = true;
 	fade.material.color.a = .5;
 	Time.timeScale = 0;
-	loadedNotification = Instantiate(newNotification);
-	while(loadedNotification != null)
+	Camera.main.GetComponent(Master).LaunchNotification(notificationText,NotificationType.lockedWorld);
+	while(Master.notifying)
 	{
 		yield;
 	}

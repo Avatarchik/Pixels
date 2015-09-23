@@ -48,7 +48,7 @@ function Start () {
 	introducing = false;
 	startLocation = -150;
 	location1 = 18;
-	location2 = -3;
+	location2 = -2.66;
 	step = -1;
 	
 	selectedLocation = transform.position.x;
@@ -101,8 +101,7 @@ function Intro() {
 		yield;
 	}
 	PlayerPrefs.SetInt("TutorialFinished",2);
-	step++;
-	introducing = false;
+	currentState = MapStatus.Clear;
 }
 
 function Update () {
@@ -110,18 +109,9 @@ function Update () {
 	switch(currentState)
 	{
 		case MapStatus.Intro:
-			if(step==0)
-			{
 				allowClick = false;
 				transform.position.x = Mathf.Lerp(transform.position.x,location1,Time.deltaTime*.14);
 				transform.position.x = Mathf.MoveTowards(transform.position.x,location1,Time.deltaTime*12);
-			}
-			else if(step == 1)
-			{
-				allowClick = true;
-				transform.position.x = Mathf.Lerp(transform.position.x,location2,Time.deltaTime*1);
-				transform.position.x = Mathf.MoveTowards(transform.position.x,location2,Time.deltaTime*15);
-			}
 			break;
 		case MapStatus.Clear:
 			returnState = currentState;
@@ -171,15 +161,23 @@ function Update () {
 			}
 			
 			// Move camera according to finger velocity, but slow over time.
-			if(transform.position.x + (cameraVelocity * mapMoveSpeed) > leftCameraLimit && transform.position.x + (cameraVelocity * mapMoveSpeed) < rightCameraLimit)
+			if(PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
 			{
-				transform.position.x += cameraVelocity * mapMoveSpeed;
+				transform.position.x = Mathf.Lerp(transform.position.x,location2,Time.deltaTime*.5);
+				transform.position.x = Mathf.MoveTowards(transform.position.x,location2,Time.deltaTime*12);
 			}
 			else
 			{
-				cameraVelocity = 0;
+				if(transform.position.x + (cameraVelocity * mapMoveSpeed) > leftCameraLimit && transform.position.x + (cameraVelocity * mapMoveSpeed) < rightCameraLimit)
+				{
+					transform.position.x += cameraVelocity * mapMoveSpeed;
+				}
+				else
+				{
+					cameraVelocity = 0;
+				}
+				cameraVelocity = Mathf.Lerp(cameraVelocity,0,Time.deltaTime * 2.5);
 			}
-			cameraVelocity = Mathf.Lerp(cameraVelocity,0,Time.deltaTime * 2.5);
 			
 			break;
 		case MapStatus.Confirmation:
@@ -203,7 +201,7 @@ function Update () {
 			transform.position.x = Mathf.MoveTowards(transform.position.x, selectedLocation * transform.localScale.x * -1,Time.deltaTime*.8);
 			allowClick = false;
 			fade.GetComponent.<Renderer>().material.color.a = Mathf.MoveTowards(fade.GetComponent.<Renderer>().material.color.a, .4, Time.deltaTime);
-			if(currentNotification == null || currentNotification.GetComponent(TextManager).finished)
+			if(!Master.notifying)
 			{
 				currentState = returnState;
 			}
@@ -280,7 +278,10 @@ function FindClosest() {
 		{
 			PlayerPrefs.SetString("LastWorldVisited", worlds[closestWorld].name);
 		}
-		transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
-		transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);
+		if(PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") != 0)
+		{
+			transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
+			transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);
+		}
 	}
 }

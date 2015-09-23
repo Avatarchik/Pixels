@@ -14,8 +14,8 @@ static var unlockAll:boolean;
 static var hardMode:boolean;
 static var unlockLevels:int[];
 
-private var topBar:GameObject;
-private var bottomBar:GameObject;
+@HideInInspector var topBar:GameObject;
+@HideInInspector var bottomBar:GameObject;
 static var device:String;
 static var vertical:boolean;
 
@@ -27,12 +27,16 @@ var worlds:World[];
 var worldOptions:WorldOptions;
 static var currentWorld:World;
 
+var notification:GameObject;
+static var notifying:boolean;
+
 function Awake () {
 	Time.timeScale = 1;
 	WorldOptions();
 	vertical = false;
 	demo = false;
 	unlockAll = false;
+	notifying = false;
 	if(launchOptions.unlockEverything){unlockAll=true;}
 	
 	// Sets initial variables for worlds.
@@ -90,6 +94,7 @@ function Start () {
 		demo = true;
 		StartCoroutine(Demo());
 	}
+	PlayerPrefs.SetInt("PackingPeanutFactoryFirstOpeningPlayed",1);
 }
 
 function Update () {
@@ -182,7 +187,7 @@ function Demo() {
 			Initialize();
 			UnlockAllOptions();
 			AudioManager.StopAll();
-			Application.LoadLevel(Application.loadedLevel);
+			Application.LoadLevel("GameStart");
 		}
 	}
 	yield;
@@ -552,4 +557,16 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 		PlayerPrefs.SetFloat("Arcade"+specificGame.name+"Score",0);
 		specificGame.highScore = PlayerPrefs.GetFloat("Arcade"+specificGame.name+"Score");
 	}
+}
+
+function LaunchNotification (text:String,type:NotificationType) {
+	notifying = true;
+	var newNotification:GameObject;
+	newNotification = Instantiate(notification);
+	newNotification.GetComponent(NotificationManager).SetType(text,type);
+	while(newNotification!=null)
+	{
+		yield;
+	}
+	notifying = false;
 }

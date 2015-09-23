@@ -20,8 +20,6 @@ var costText:TextMesh;
 
 var speed:float;
 
-var moneyPlayNotification:GameObject;
-
 @HideInInspector var manager:ArcadeManager;
 
 var lockedSounds:AudioClip[];
@@ -65,7 +63,7 @@ function Clicked () {
 			}
 			else
 			{
-				manager.LaunchNotification(moneyPlayNotification);
+				Camera.main.GetComponent(Master).LaunchNotification("You don't have enough money to play this game!",NotificationType.notEnoughCoins);
 			}
 		}
 		else
@@ -80,7 +78,7 @@ function Clicked () {
 				}
 				else
 				{
-					manager.LaunchNotification(moneyPlayNotification);
+					Camera.main.GetComponent(Master).LaunchNotification("You don't have enough money to buy this game!",NotificationType.notEnoughCoins);
 				}
 			}
 			else

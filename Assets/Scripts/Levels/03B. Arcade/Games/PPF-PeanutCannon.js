@@ -273,10 +273,6 @@ function SetDestination () {
 }
 
 function Finish(completionStatus:boolean) {
-	if(!completionStatus)
-	{
-		SendTutorial();
-	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
@@ -286,19 +282,4 @@ function Finish(completionStatus:boolean) {
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
 	finished = true;
-}
-
-function SendTutorial () {
-	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
-	{
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
-	}
-	else
-	{
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
-	}
-	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 1) && Application.loadedLevelName == "MicroGameLauncher" && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") == 0 && !Master.hardMode)
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification(tutorialNotification);
-	}
 }
