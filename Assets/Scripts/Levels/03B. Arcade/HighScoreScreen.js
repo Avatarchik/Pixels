@@ -98,12 +98,14 @@ function RegularUpdate () {
 			global = true;
 			CreateDisplayList(allUsers);
 			UpdateDisplay();
+			UpdateColors();
 		}
 		if(Input.GetKeyUp("right"))
 		{
 			global = false;
 			CreateDisplayList(friendUsers);
 			UpdateDisplay();
+			UpdateColors();
 		}
 		if(Finger.GetExists(0) && Finger.GetInGame(0) && !clicked)
 		{
@@ -115,12 +117,14 @@ function RegularUpdate () {
 					global = false;
 					CreateDisplayList(friendUsers);
 					UpdateDisplay();
+					UpdateColors();
 				}
 				else
 				{
 					global = true;
 					CreateDisplayList(allUsers);
 					UpdateDisplay();
+					UpdateColors();
 				}
 			}
 		}
@@ -220,17 +224,20 @@ function ShowResults() {
 function UpdateColors () {
 	for(var i:int = 0; i < displayUsers.length; i++)
 	{
-		if(displayUsers[i].peter)
+		if(displayUsers[i]!= null)
 		{
-			locationNames[i].GetComponent(TextMesh).color = Color.yellow;
-			locationNumbers[i].GetComponent(TextMesh).color = Color.yellow;
-			locationScores[i].GetComponent(TextMesh).color = Color.yellow;
-		}
-		else
-		{
-			locationNames[i].GetComponent(TextMesh).color = Color.white;
-			locationNumbers[i].GetComponent(TextMesh).color = Color.white;
-			locationScores[i].GetComponent(TextMesh).color = Color.white;
+			if(displayUsers[i].peter)
+			{
+				locationNames[i].GetComponent(TextMesh).color = Color.yellow;
+				locationNumbers[i].GetComponent(TextMesh).color = Color.yellow;
+				locationScores[i].GetComponent(TextMesh).color = Color.yellow;
+			}
+			else
+			{
+				locationNames[i].GetComponent(TextMesh).color = Color.white;
+				locationNumbers[i].GetComponent(TextMesh).color = Color.white;
+				locationScores[i].GetComponent(TextMesh).color = Color.white;
+			}
 		}
 	}
 }

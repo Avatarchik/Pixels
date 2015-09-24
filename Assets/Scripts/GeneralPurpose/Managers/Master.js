@@ -94,7 +94,6 @@ function Start () {
 		demo = true;
 		StartCoroutine(Demo());
 	}
-	PlayerPrefs.SetInt("PackingPeanutFactoryFirstOpeningPlayed",1);
 }
 
 function Update () {
@@ -187,7 +186,7 @@ function Demo() {
 			Initialize();
 			UnlockAllOptions();
 			AudioManager.StopAll();
-			Application.LoadLevel("GameStart");
+			Application.LoadLevel("TitleScreen");
 		}
 	}
 	yield;

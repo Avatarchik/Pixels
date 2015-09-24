@@ -53,6 +53,7 @@ function Start () {
 	for(var i:int = 0; i < displays.length-1; i++)
 	{
 		displays[i] = Instantiate(cabinetPrefab);
+		displays[i].transform.position.z += 1;
 		for(var child:SpriteRenderer in displays[i].GetComponentsInChildren(SpriteRenderer))
 		{
 			if(child.transform.name == "Face")
@@ -65,8 +66,10 @@ function Start () {
 	currentSelection = games.length;
 	FindPositions();
 	currentState = ArcadeState.Selecting;
-	AudioManager.PlaySound(helloSounds[Random.Range(0,helloSounds.length)],1);
+	var tempVar:int = Random.Range(0,helloSounds.length);
+	AudioManager.PlaySound(helloSounds[tempVar],1);
 	AudioManager.PlaySong(frontMusic,.5);
+	TalkButton.talkWait = helloSounds[tempVar].length;
 }
 
 function Update () {
@@ -190,25 +193,37 @@ function FindPositions () {
 }
 
 function StartGame () {
-	AudioManager.PlaySound(gameStartGeneralSounds[Random.Range(0,gameStartGeneralSounds.length)]);
 	currentState = ArcadeState.Playing;
-	yield WaitForSeconds(1);
+	if(TalkButton.talkWait < 0 && Random.value > .6)
+	{
+		AudioManager.PlaySound(gameStartGeneralSounds[Random.Range(0,gameStartGeneralSounds.length)]);
+		yield WaitForSeconds(2.2);
+	}
+	else
+	{
+		yield WaitForSeconds(1);
+	}
 	AudioManager.PlaySound(startGameSound);
-	yield WaitForSeconds(1);
+	yield WaitForSeconds(.5);
+	AudioManager.StopSong();
+	yield WaitForSeconds(.9);
 	AudioManager.PlaySong(gameMusic);
 	currentGame = Instantiate(games[currentSelection].game);
 }
 
 function FinishGame (score:float) {
+	AudioManager.StopSong();
 	AudioManager.PlaySound(shutDownSound);
 	Destroy(currentGame);
 	lastScore = score;
-	AudioManager.PlaySong(frontMusic);
 	Results();
+	
 }
 
 function Results () {
 	currentResults = Instantiate(resultsScreen);
+	yield WaitForSeconds(.6);
+	AudioManager.PlaySong(frontMusic,.5);
 	while(currentResults != null)
 	{
 		yield;

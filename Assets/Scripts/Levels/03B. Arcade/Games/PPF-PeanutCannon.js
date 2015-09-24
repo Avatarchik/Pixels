@@ -11,13 +11,9 @@ var cannonStep1:Sprite;
 var cannonStep2:Sprite;
 var cannonStep3:Sprite;
 
-@HideInInspector var speed:int;
-@HideInInspector var difficulty:int;
-
 @HideInInspector var playerLocation:int;
 @HideInInspector var playerManager:PlayerManager;
 @HideInInspector var target:int;
-@HideInInspector var length:float;
 @HideInInspector var timer:float;
 @HideInInspector var finished:boolean;
 @HideInInspector var previous:int;
@@ -25,7 +21,15 @@ var cannonStep3:Sprite;
 
 var tutorialNotification:GameObject;
 
+var score:float;
+
+@HideInInspector var waitTime:float;
+
 function Start () {
+	cannon1.transform.position.x = -5.4231;
+	cannon2.transform.position.x = 0;
+	cannon3.transform.position.x = 5.4231;
+	Debug.Log(cannon1.transform.position.x);
 	importantFinger = -1;
 	player = Instantiate(playerPrefab, Vector3(0,-6.5,0), Quaternion.identity);
 	player.transform.localScale = Vector3(1.5,1.5,1.5);
@@ -36,36 +40,24 @@ function Start () {
 	playerLocation = 2;
 	target = 0;
 	previous = -1;
+	score = 0;
+	waitTime = 2;
 	
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		speed = MicroTester.timeMultiplier;
-		difficulty = MicroTester.difficulty;
-	}
-	else
-	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
-	}
-	
-	length = 3 + 3/speed;
-	if(difficulty == 3)
-	{
-		UITimer.currentTarget = length + .5;
-		timer = length + .5;
-	}
-	else
-	{
-		UITimer.currentTarget = length;
-		timer = length;
-	}
-	UITimer.counter = 0;
 	PlayerManager.speed = .05;
 	Play();
 }
 
 function Update () {
-	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * speed * 10);
+	if(finished)
+	{
+		player.transform.position.y -= Time.deltaTime * 40;
+	}
+	else
+	{
+		score += Time.deltaTime;
+		ArcadeTimer.currentTime = score;
+	}
+	player.transform.position.x = Mathf.Lerp(player.transform.position.x, target, Time.deltaTime * 10);
 	if(Mathf.Abs(player.transform.position.x - target) < .3)
 	{
 		playerManager.currentState = PlayerState.StandingBack;
@@ -82,12 +74,6 @@ function Update () {
 	{
 		playerManager.currentState = PlayerState.StandingBack;
 	}
-	timer -= Time.deltaTime;
-	if(timer < 0 && !finished)
-	{
-		Finish(true);
-	}
-	
 	if(importantFinger == -1)
 	{
 		for(var i:int = 0; i < Finger.identity.length; i++)
@@ -124,29 +110,18 @@ function Update () {
 }
 
 function Play() {
-	if(difficulty < 3)
+	while(true)
 	{
-		yield WaitForSeconds(length * .1);
 		Choice();
-		yield WaitForSeconds(length * .3);
-		Choice();
-		yield WaitForSeconds(length * .3);
-		Choice();
-	}
-	else
-	{
-		yield WaitForSeconds(length * .1);
-		Choice();
-		yield WaitForSeconds(length * .15);
-		Choice();
-		yield WaitForSeconds(length * .15);
-		Choice();
-		yield WaitForSeconds(length * .15);
-		Choice();
-		yield WaitForSeconds(length * .15);
-		Choice();
-		yield WaitForSeconds(length * .15);
-		Choice();
+		yield WaitForSeconds(waitTime);
+		if(waitTime > .65)
+		{
+			waitTime *= .965;
+		}
+		else
+		{
+			waitTime *= .985;
+		}
 	}
 }
 
@@ -172,7 +147,7 @@ function Choice() {
 		default:
 			break;
 	}
-	if(difficulty == 2)
+	if(Random.value > .7)
 	{
 		var other:int = choice;
 		randomStop = 0;
@@ -199,59 +174,68 @@ function Choice() {
 
 function fireCannon1() {
 	var newNut1:GameObject;
-	cannon1.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
+	cannon1.SendMessage("ShakeSmall", waitTime * .4, SendMessageOptions.DontRequireReceiver);
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep2;
-	yield WaitForSeconds(length * .1);
-	cannon1.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
+	yield WaitForSeconds(waitTime * .4);
+	cannon1.SendMessage("ShakeMedium", waitTime * .2, SendMessageOptions.DontRequireReceiver);
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep3;
-	yield WaitForSeconds(length * .1);
+	yield WaitForSeconds(waitTime * .25);
 	newNut1 = Instantiate(peanut,cannon1.transform.position - Vector3(0,1.8,0),Quaternion.identity);
 	newNut1.transform.parent = transform;
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep1;
-	yield WaitForSeconds(.05);
+	while(newNut1.transform.position.y > player.transform.position.y)
+	{
+		yield;
+	}
 	if(playerLocation == 1 && !finished)
 	{
 		finished = true;
-		Finish(false);
+		Finish();
 	}
 	
 }
 
 function fireCannon2() {
 	var newNut2:GameObject;
-	cannon2.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
+	cannon2.SendMessage("ShakeSmall", waitTime * .4, SendMessageOptions.DontRequireReceiver);
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep2;
-	yield WaitForSeconds(length * .1);
-	cannon2.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
+	yield WaitForSeconds(waitTime * .4);
+	cannon2.SendMessage("ShakeMedium", waitTime * .2, SendMessageOptions.DontRequireReceiver);
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep3;
-	yield WaitForSeconds(length * .1);
+	yield WaitForSeconds(waitTime * .25);
 	newNut2 = Instantiate(peanut,cannon2.transform.position - Vector3(0,1.8,0),Quaternion.identity);
 	newNut2.transform.parent = transform;
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep1;
-	yield WaitForSeconds(.05);
+	while(newNut2.transform.position.y > player.transform.position.y)
+	{
+		yield;
+	}
 	if(playerLocation == 2 && !finished)
 	{
 		finished = true;
-		Finish(false);
+		Finish();
 	}
 }
 
 function fireCannon3() {
 	var newNut3:GameObject;
-	cannon3.SendMessage("ShakeSmall", length * .1, SendMessageOptions.DontRequireReceiver);
+	cannon3.SendMessage("ShakeSmall", waitTime * .4, SendMessageOptions.DontRequireReceiver);
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep2;
-	yield WaitForSeconds(length * .1);
-	cannon3.SendMessage("ShakeMedium", length * .05, SendMessageOptions.DontRequireReceiver);
+	yield WaitForSeconds(waitTime * .4);
+	cannon3.SendMessage("ShakeMedium", waitTime * .2, SendMessageOptions.DontRequireReceiver);
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep3;
-	yield WaitForSeconds(length * .1);
+	yield WaitForSeconds(waitTime * .25);
 	newNut3 = Instantiate(peanut,cannon3.transform.position - Vector3(0,1.8,0),Quaternion.identity);
 	newNut3.transform.parent = transform;
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep1;
-	yield WaitForSeconds(.05);
+	while(newNut3.transform.position.y > player.transform.position.y)
+	{
+		yield;
+	}
 	if(playerLocation == 3 && !finished)
 	{
 		finished = true;
-		Finish(false);
+		Finish();
 	}
 }
 
@@ -272,14 +256,8 @@ function SetDestination () {
 	}
 }
 
-function Finish(completionStatus:boolean) {
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
-	}
-	else 
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
-	}
+function Finish() {
 	finished = true;
+	yield WaitForSeconds(.3);
+	GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
 }

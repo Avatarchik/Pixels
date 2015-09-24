@@ -1,10 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js">
-    <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/AudioManager.js" Line="130" Column="23" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeManager.js" Line="69" Column="37" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -15,11 +11,12 @@
               </Node>
               <Node name="Levels" expanded="True">
                 <Node name="03B. Arcade" expanded="True">
+                  <Node name="Games" expanded="True">
+                    <Node name="PPF-PeanutCannon.js" selected="True" />
+                  </Node>
                   <Node name="Objects" expanded="True" />
-                  <Node name="ArcadeManager.js" selected="True" />
                 </Node>
               </Node>
-              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>

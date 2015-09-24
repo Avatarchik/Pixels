@@ -1,10 +1,6 @@
 ﻿#pragma strict
 
-private var speed:int;
-private var difficulty:int;
 private var finished:boolean;
-private var length:float;
-private var timer:float;
 
 private var darknessObject;
 
@@ -42,7 +38,13 @@ var people:GameObject[];
 
 @HideInInspector var clickWait:float;
 
+@HideInInspector var score:float;
+
+@HideInInspector var gameSpeed:float;
+
 function Start () {
+	gameSpeed = .5;
+	score = 0;
 	failBackMove = false;
 	failBack.transform.position.y = 12;
 	if(Random.Range(0,10.0) < 2.5)
@@ -54,16 +56,6 @@ function Start () {
 	distance = 5;
 	clicked = new boolean[5];
 	clicked = [false,false,false,false,false];
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		speed = MicroTester.timeMultiplier;
-		difficulty = MicroTester.difficulty;
-	}
-	else
-	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
-	}
 	peopleSpeed = new float[people.length];
 	for(var i:int = 0; i < peopleSpeed.length; i++)
 	{
@@ -82,26 +74,25 @@ function Start () {
 		plateSpeed[i] = 1;
 		plateFoodType[i] = Random.Range(0,food1Sprites.Length);
 	}
-	length = 5 + 2 * difficulty;
-	timer = length;
-	UITimer.currentTarget = length;
-	UITimer.counter = 0;
-	StartCoroutine(ColorChange());
 	Play();
 }
 
 function Update () {
+	if(finished)
+	{
+		
+	}
+	else
+	{
+		gameSpeed += (.1 * Time.deltaTime)/gameSpeed;
+		score += Time.deltaTime;
+		ArcadeTimer.currentTime = score;
+	}
 	if(failBackMove)
 	{
 		failBack.transform.position.y = Mathf.MoveTowards(failBack.transform.position.y,0,Time.deltaTime * 10);
 	}
 	clickWait -= Time.deltaTime;
-	timer -= Time.deltaTime;
-	if(timer < 0 && !finished)
-	{
-		finished = true;
-		Finish(true);
-	}
 	for(var i:int = 0;i<plates.length;i++)
 	{
 		if(!finished)
@@ -191,14 +182,14 @@ function ClickPlate(thisPlate:int) {
 			finished = true;
 			failBackMove = true;
 			yield WaitForSeconds(1.2);
-			Finish(false);
+			Finish();
 		}
 	}
 	else
 	{
 		plateFoodType[thisPlate] = Random.Range(0,4);
 		plateFullness[thisPlate] = 3;
-		plateSpeed[thisPlate] = Random.Range(1.7,3.1) + (Random.Range(.4,.9) * speed);
+		plateSpeed[thisPlate] = Random.Range(1.7,3.1) + (Random.Range(.4,.9) * gameSpeed);
 	}
 }
 
@@ -214,38 +205,16 @@ function FoodServe(thisPlate:int) {
 		if(plateFullness[thisPlate]>0)
 		{
 			plateFullness[thisPlate]--;
-			if(plateFullness[thisPlate] < 2 && !firstNotify)
-			{
-				firstNotify = true;
-				transform.BroadcastMessage("NextNotify",SendMessageOptions.DontRequireReceiver);
-			}
 		}
 		else if(!finished)
 		{
-			Finish(false);
+			Finish();
 		}
 	}
 	yield;
 }		
 
-function Finish(completionStatus:boolean) {
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);
-	}
-	else 
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
-	}
-	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+function Finish() {
 	finished = true;
-}
-
-function ColorChange () {
-	while(timer > length-.5)
-	{
-		yield;
-	}
-	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", darknessAmount,SendMessageOptions.DontRequireReceiver);
-	yield;
+	GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
 }

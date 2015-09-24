@@ -8,6 +8,7 @@ function Start () {
 }
 
 function ShakeSmall (time:float) {
+	origin = transform.position;
 	difference = .07;
 	while(time > 0)
 	{

@@ -18,7 +18,7 @@ var tutorialNotification:GameObject;
 @HideInInspector var waitTime:float;
 
 function Start () {
-	waitTime = 3;
+	waitTime = 2.5;
 	speed = 1;
 	difficulty = 1;
 	finished = false;
@@ -36,7 +36,9 @@ function Update () {
 	}
 	else
 	{
+		
 		score += Time.deltaTime;
+		ArcadeTimer.currentTime = score;
 		if(waitTime > .3)
 		{
 			speed += Time.deltaTime * .04;
@@ -122,7 +124,7 @@ function Update () {
 function Deployment () {
 	while(true)
 	{
-		yield WaitForSeconds(waitTime);
+		
 		objectsOnScreen = AddObject(objectsOnScreen, Instantiate(fallingObject, Vector3(Random.Range(-8.5, 8.5),10,4.8), Quaternion.identity));
 		objectsOnScreenTarget = AddBoolean(objectsOnScreenTarget, false);
 		waitTime *= .94;
@@ -130,6 +132,7 @@ function Deployment () {
 		{
 			waitTime = .3;
 		}
+		yield WaitForSeconds(waitTime);
 		yield;
 	}
 	yield;

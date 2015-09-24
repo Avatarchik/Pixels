@@ -74,7 +74,12 @@ function Clicked () {
 				{
 					PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
 					Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);
-					AudioManager.PlaySound(unlockSounds[Random.Range(0,unlockSounds.length)]);
+					if(TalkButton.talkWait < 0)
+					{
+						var tempVar:float = Random.Range(0,unlockSounds.length);
+						AudioManager.PlaySound(unlockSounds[tempVar]);
+						TalkButton.talkWait = unlockSounds[tempVar].length;
+					}
 				}
 				else
 				{
@@ -83,7 +88,12 @@ function Clicked () {
 			}
 			else
 			{
-				AudioManager.PlaySound(lockedSounds[Random.Range(0,lockedSounds.length)]);
+				if(TalkButton.talkWait < 0)
+				{
+					tempVar = Random.Range(0,lockedSounds.length);
+					AudioManager.PlaySound(lockedSounds[tempVar]);
+					TalkButton.talkWait = lockedSounds[tempVar].length;
+				}
 			}
 		}
 	}
