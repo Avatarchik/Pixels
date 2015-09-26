@@ -7,7 +7,7 @@ var worldIntros:AudioClip[];
 
 @HideInInspector var importantFinger:int;
 
-@HideInInspector var speed:int;
+@HideInInspector var speed:float;
 @HideInInspector var difficulty:int;
 @HideInInspector var finished:boolean;
 @HideInInspector var length:float;
@@ -41,11 +41,9 @@ var player:GameObject;
 @HideInInspector var jumpCounter:float;
 @HideInInspector var clicked:boolean;
 
+@HideInInspector var score:float;
+
 function Start () {
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
-	}
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
@@ -53,27 +51,19 @@ function Start () {
 	lavaOffset = 0;
 	floorOffset = 0;
 	frontOffset = 0;
-	boulderEntrance = Vector3(14,-5.5,1);
+	boulderEntrance = Vector3(12,-5.5,1);
 	boulderCenter = 1;
 	jumpCounter = Mathf.PI;
 	playerOrigin = player.transform.position.y;
 	playerDistance = 2.5;
 	dead = false;
 	clicked = false;
+	score = 0;
 	
 	// Speed and difficulty information.
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		speed = MicroTester.timeMultiplier;
-		difficulty = MicroTester.difficulty;
-	}
-	else
-	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
-	}
+	speed = 1;
 	gameSpeed = 2 + speed*.6;
-	numberOfBoulders = 4 + difficulty;
+	numberOfBoulders = 100000;
 	boulders = new GameObject[numberOfBoulders];
 	boulderType = new int[numberOfBoulders];
 	waitTime = 1;
@@ -81,22 +71,24 @@ function Start () {
 	{
 		waitTime = Mathf.MoveTowards(waitTime,.5,.15);
 	}
-	length = 3 + numberOfBoulders * waitTime;
-	timer = length;
-	UITimer.currentTarget = length;
-	UITimer.counter = 0;
-	
-	// If the color of the UI should change.
-	if(colorChange)
-	{
-		StartCoroutine(ColorChange());
-	}
 	
 	// If The game doesn't just run in Update.
 	Play();
 }
 
 function Update () {
+	if(!finished)
+	{
+		score += Time.deltaTime;
+		ArcadeTimer.currentTime = score;
+		speed += Time.deltaTime * .2;
+		gameSpeed = 2 + speed*.6;
+		waitTime = 1;
+		for(var counter:int = 0; counter < speed;counter++)
+		{
+			waitTime = Mathf.MoveTowards(waitTime,.5,.15);
+		}
+	}
 	lavaOffset += gameSpeed * Time.deltaTime * .25;
 	floorOffset += gameSpeed * Time.deltaTime * .5;
 	frontOffset += gameSpeed * Time.deltaTime * .1;
@@ -104,12 +96,7 @@ function Update () {
 	lava.material.SetTextureOffset("_MainTex",Vector2(lavaOffset,0));
 	floor.material.SetTextureOffset("_MainTex",Vector2(floorOffset,0));
 	front.material.SetTextureOffset("_MainTex",Vector2(frontOffset,0));
-	timer -= Time.deltaTime;
-	if(timer < 0 && !finished)
-	{
-		Finish(true,0);
-	}
-	for(var num:int = 0; num < boulders.length; num++)
+	for(var num:int = Mathf.Max(0,bouldersSent - 10); num < bouldersSent + 10; num++)
 	{
 		if(boulders[num] != null)
 		{
@@ -121,8 +108,12 @@ function Update () {
 			}
 			if(Vector3.Distance(boulders[num].transform.position,player.transform.position) < playerDistance)
 			{
-				Finish(false,1);
+				Finish();
 				dead = true;
+			}
+			if(boulders[num].transform.position.x < -11)
+			{
+				Destroy(boulders[num]);
 			}
 		}
 	}
@@ -173,10 +164,7 @@ function Play () {
 		boulders[bouldersSent] = Instantiate(boulderPrefab,boulderEntrance,Quaternion.identity);
 		boulders[bouldersSent].transform.parent = transform;
 		boulders[bouldersSent].transform.localScale = Vector3(1,1,1);
-		if(difficulty > 2)
-		{
-			boulderType[bouldersSent] = Random.Range(0,2);
-		}
+		boulderType[bouldersSent] = Random.Range(0,3);
 		bouldersSent ++;
 		yield;
 	}
@@ -184,26 +172,12 @@ function Play () {
 	{
 		yield;
 	}
-	Finish(true,0);
 }
 
-function Finish(completionStatus:boolean,waitTime:float) {
+function Finish() {
 	if(!finished)
 	{
 		finished = true;
-		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
-		if(colorChange)
-		{
-			GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
-		}
+		GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
 	}
-}
-
-function ColorChange () {
-	while(timer > length-.5)
-	{
-		yield;
-	}
-	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", colorForChange,SendMessageOptions.DontRequireReceiver);
-	yield;
 }

@@ -7,7 +7,7 @@ var worldIntros:AudioClip[];
 
 @HideInInspector var importantFinger:int;
 
-@HideInInspector var speed:int;
+@HideInInspector var speed:float;
 @HideInInspector var difficulty:int;
 @HideInInspector var finished:boolean;
 @HideInInspector var length:float;
@@ -35,11 +35,10 @@ var player:PlayerManager;
 @HideInInspector var virusSpeed:float;
 @HideInInspector var virusWaitTime:float;
 
+@HideInInspector var score:float;
+
 function Start () {
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
-	}
+
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
@@ -56,32 +55,20 @@ function Start () {
 	virusZ = 5;
 	distanceFromPlayer = 2.5;
 	dead = false;
+	score = 0;
 	
 	// Speed and difficulty information.
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		speed = MicroTester.timeMultiplier;
-		difficulty = MicroTester.difficulty;
-	}
-	else
-	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
-	}
-	viruses = new GameObject[4+difficulty*2];
+	speed = 1;
+	viruses = new GameObject[100000];
 	virusStartPositions = new float[viruses.length];
 	virusSpeed = 4 + 1 * speed;
 	virusWaitTime = .7 - (.1*speed);
-	length = 2 + viruses.Length * virusWaitTime + (virusTop - virusBottom)/virusSpeed;
-	timer = length;
-	UITimer.currentTarget = length;
-	UITimer.counter = 0;
 	if(virusWaitTime < .3)
 	{
-		virusWaitTime = .3;
+		virusWaitTime = .2;
 	}
 	
-	for(var i:int = 0; i<viruses.length;i++)
+	for(var i:int = 0; i < 1;i++)
 	{
 		virusStartPositions[i] = Random.Range(-topLimit,topLimit);
 		viruses[i] = Instantiate(virusPrefab,Vector3(virusStartPositions[i],virusTop,virusZ),Quaternion.identity);
@@ -92,53 +79,64 @@ function Start () {
 		viruses[i].GetComponentInChildren(ParticleSystem).emissionRate = 0;
 	}
 	
-	
-	// If the color of the UI should change.
-	if(colorChange)
-	{
-		StartCoroutine(ColorChange());
-	}
 	// If The game doesn't just run in Update.
 	Play();
 }
 
 function Update () {
+	if(!finished)
+	{
+		score += Time.deltaTime;
+		ArcadeTimer.currentTime = score;
+		speed += Time.deltaTime * .1;
+		virusSpeed = 4 + 1 * speed;
+		virusWaitTime = .7 - (.1*speed);
+		if(virusWaitTime < .2)
+		{
+			virusWaitTime = .2;
+		}
+	}
 	for(var i:int = 0; i<viruses.length;i++)
 	{
 		if(i<currentVirus)
 		{
-			viruses[i].GetComponentInChildren(ParticleSystem).emissionRate = 50;
-			if(viruses[i].transform.position.y > virusBottom)
+			if(viruses[i]!=null)
 			{
-				viruses[i].transform.position = Vector3.MoveTowards(viruses[i].transform.position, Vector3(virusStartPositions[i]*bottomMultiplier,virusBottom,virusZ),Time.deltaTime*virusSpeed);
-				if(viruses[i].transform.position.y > 0)
+				if(viruses[i].transform.position.y > - 20)
 				{
-					viruses[i].GetComponent(SpriteRenderer).sprite = virusSprites[0];
-				}
-				else if(Mathf.Floor(Mathf.Abs((viruses[i].transform.position.y)/(virusBottom)) * 6) < 6)
-				{
-					viruses[i].GetComponent(SpriteRenderer).sprite = virusSprites[Mathf.Floor(Mathf.Abs((viruses[i].transform.position.y)/(virusBottom)) * 6)];
+					viruses[i].GetComponentInChildren(ParticleSystem).emissionRate = 50;
+					if(viruses[i].transform.position.y > virusBottom)
+					{
+						viruses[i].transform.position = Vector3.MoveTowards(viruses[i].transform.position, Vector3(virusStartPositions[i]*bottomMultiplier,virusBottom,virusZ),Time.deltaTime*virusSpeed);
+						if(viruses[i].transform.position.y > 0)
+						{
+							viruses[i].GetComponent(SpriteRenderer).sprite = virusSprites[0];
+						}
+						else if(Mathf.Floor(Mathf.Abs((viruses[i].transform.position.y)/(virusBottom)) * 6) < 6)
+						{
+							viruses[i].GetComponent(SpriteRenderer).sprite = virusSprites[Mathf.Floor(Mathf.Abs((viruses[i].transform.position.y)/(virusBottom)) * 6)];
+						}
+						else
+						{
+							viruses[i].GetComponent(SpriteRenderer).sprite = virusSprites[virusSprites.length-1];
+						}
+					}
+					else
+					{
+						if(Mathf.Abs(viruses[i].transform.position.y - virusBottom) < .5 && Mathf.Abs(viruses[i].transform.position.x - player.transform.position.x) < distanceFromPlayer)
+						{
+							dead = true;
+							Finish();
+						}
+						viruses[i].transform.position.y -= Time.deltaTime * virusSpeed * 3;
+					}
 				}
 				else
 				{
-					viruses[i].GetComponent(SpriteRenderer).sprite = virusSprites[virusSprites.length-1];
+					Destroy(viruses[i]);
 				}
-			}
-			else
-			{
-				if(Mathf.Abs(viruses[i].transform.position.y - virusBottom) < .5 && Mathf.Abs(viruses[i].transform.position.x - player.transform.position.x) < distanceFromPlayer)
-				{
-					dead = true;
-					Finish(false,1);
-				}
-				viruses[i].transform.position.y -= Time.deltaTime * virusSpeed * 3;
 			}
 		}
-	}
-	timer -= Time.deltaTime;
-	if(timer < 0 && !finished)
-	{
-		Finish(true,0);
 	}
 	// Get important finger.
 	if(importantFinger == -1)
@@ -194,31 +192,25 @@ function Update () {
 }
 
 function Play () {
-	while(true && currentVirus < viruses.Length)
+	while(true && currentVirus < viruses.Length - 1)
 	{
 		yield WaitForSeconds(virusWaitTime);
 		currentVirus ++;
+		virusStartPositions[currentVirus] = Random.Range(-topLimit,topLimit);
+		viruses[currentVirus] = Instantiate(virusPrefab,Vector3(virusStartPositions[currentVirus],virusTop,virusZ + (0.00001 * currentVirus)),Quaternion.identity);
+		viruses[currentVirus].transform.parent = transform;
+		viruses[currentVirus].transform.localScale = Vector3(1,1,1);
+		viruses[currentVirus].AddComponent(SpriteRenderer);
+		viruses[currentVirus].GetComponent(SpriteRenderer).sprite = null;
+		viruses[currentVirus].GetComponentInChildren(ParticleSystem).emissionRate = 0;
 	}
 }
 
-function Finish(completionStatus:boolean,waitTime:float) {
+function Finish() {
 	if(!finished)
 	{
 		finished = true;
-		yield WaitForSeconds(waitTime);
-		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
-		if(colorChange)
-		{
-			GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
-		}
+		yield WaitForSeconds(.35);
+		GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
 	}
-}
-
-function ColorChange () {
-	while(timer > length)
-	{
-		yield;
-	}
-	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", colorForChange,SendMessageOptions.DontRequireReceiver);
-	yield;
 }

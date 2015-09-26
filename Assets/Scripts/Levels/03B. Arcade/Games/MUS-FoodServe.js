@@ -7,7 +7,6 @@ private var darknessObject;
 var failBack:GameObject;
 var failBackMove:boolean;
 
-var worldIntros:AudioClip[];
 var darknessAmount:Color;
 
 var plates:GameObject[];
@@ -47,10 +46,6 @@ function Start () {
 	score = 0;
 	failBackMove = false;
 	failBack.transform.position.y = 12;
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
-	}
 	clickWait = .1;
 	firstNotify = false;
 	distance = 5;
@@ -215,6 +210,9 @@ function FoodServe(thisPlate:int) {
 }		
 
 function Finish() {
-	finished = true;
-	GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
+	if(!finished)
+	{
+		finished = true;
+		GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
+	}
 }

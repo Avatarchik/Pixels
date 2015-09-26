@@ -271,6 +271,11 @@ function Update () {
 	
 	velocity = Mathf.MoveTowards(velocity,-movementSpeed * 4,movementSpeed * 22 * Time.deltaTime);
 	
+	if(!Input.GetKey("space") && !Finger.GetExists(0) &&  velocity > 0)
+	{
+		velocity = Mathf.MoveTowards(velocity,0,movementSpeed * 22 * Time.deltaTime);
+	}
+	
 	if(Input.GetKeyDown("space") && canJump && !finished)
 	{
 		velocity = 59.5 + 1.5*speed;

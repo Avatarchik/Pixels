@@ -460,7 +460,7 @@ function Finish(completionStatus:boolean) {
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).GameComplete(completionStatus);
 	}
-	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
+	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(1,1,1,1),SendMessageOptions.DontRequireReceiver);
 	finished = true;
 }
 

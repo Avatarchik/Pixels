@@ -5,7 +5,7 @@ var colorForChange:Color;
 
 @HideInInspector var importantFinger:int;
 
-@HideInInspector var speed:int;
+@HideInInspector var speed:float;
 @HideInInspector var difficulty:int;
 @HideInInspector var finished:boolean;
 @HideInInspector var length:float;
@@ -46,11 +46,14 @@ var player:GameObject;
 
 @HideInInspector var movementSpeed:float;
 
+@HideInInspector var score:float;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
 	
 	// Level specific variable initialization.
+	score = 0;
 	distanceBetweenBlocks = 4.5;
 	groundHeight = -10;
 	enemyHeight = -6.2;
@@ -58,7 +61,7 @@ function Start () {
 	cloudHeightMinimum = 4;
 	cloudHeightMaximum = 7.6;
 	firstBlock = -9;
-	numberOfBlocks = 50;
+	numberOfBlocks = 700;
 	nearestBlock = 0;
 	bottom = groundHeight + 4.376;
 	velocity = 0;
@@ -72,27 +75,10 @@ function Start () {
 	markers = new GameObject[numberOfBlocks];
 	clicked = false;
 	
-	// Speed and difficulty information.
-	if(Application.loadedLevelName == "MicroTester")
-	{
-		speed = MicroTester.timeMultiplier;
-		difficulty = MicroTester.difficulty;
-	}
-	else
-	{
-		speed = GameManager.speed;
-		difficulty = GameManager.difficulty;
-	}
-	length = 10 + 5/speed;
-	length = 8;
-	timer = length;
-	UITimer.currentTarget = length;
-	UITimer.counter = 0;
-	// If the color of the UI should change.
-	if(colorChange)
-	{
-		StartCoroutine(ColorChange());
-	}
+	difficulty = 3;
+	
+	speed = 1;
+	
 	var previousRandomNumber:int = 0;
 	var previousPreviousRandomNumber:int = 0;
 	for(var i:int = 0; i < numberOfBlocks; i++)
@@ -213,6 +199,13 @@ function Start () {
 }
 
 function Update () {
+	if(!finished)
+	{
+		score += Time.deltaTime;
+		ArcadeTimer.currentTime = score;
+		speed += Time.deltaTime * .17;
+		movementSpeed = 12 + speed * 1;
+	}
 	for(var space:int = 0; space < markers.length; space ++)
 	{	
 		if(!finished)
@@ -230,8 +223,7 @@ function Update () {
 	}
 	else if(platforms[nearestBlock] != null)
 	{
-		Finish(false,1);
-		Debug.Log("Platform");
+		Finish();
 	}
 	else
 	{
@@ -249,10 +241,9 @@ function Update () {
 	{
 		if(Mathf.Abs(player.transform.position.x-enemies[nearestBlock].transform.position.x) < 1.5)
 		{
-			if(player.transform.position.y < enemies[nearestBlock].transform.position.y + 2)
+			if(player.transform.position.y < enemies[nearestBlock].transform.position.y + 1 && velocity > -5)
 			{
-				Finish(false,1);
-				Debug.Log("Enemy");
+				Finish();
 			}
 			else if( player.transform.position.y < enemies[nearestBlock].transform.position.y + 3.5)
 			{
@@ -270,6 +261,11 @@ function Update () {
 	}
 	
 	velocity = Mathf.MoveTowards(velocity,-movementSpeed * 4,movementSpeed * 22 * Time.deltaTime);
+	
+	if(!Input.GetKey("space") && !Finger.GetExists(0) &&  velocity > 0)
+	{
+		velocity = Mathf.MoveTowards(velocity,0,movementSpeed * 22 * Time.deltaTime);
+	}
 	
 	if(Input.GetKeyDown("space") && canJump && !finished)
 	{
@@ -305,14 +301,9 @@ function Update () {
 	}	
 	if(player.transform.position.y < groundHeight + 3.5)
 	{
-		Finish(false,1);
+		Finish();
 	}
-	//Debug.Log("bottom: " + bottom + " position: " + player.transform.position.y);
-	timer -= Time.deltaTime;
-	if(timer < 0 && !finished)
-	{
-		Finish(true,0);
-	}
+
 	// Get important finger.
 	if(importantFinger == -1)
 	{
@@ -342,25 +333,11 @@ function Play () {
 
 }
 
-function Finish(completionStatus:boolean,waitTime:float) {
+function Finish() {
 	if(!finished)
 	{
-		badEnd = completionStatus;
 		finished = true;
-		Debug.Log(completionStatus);
-		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
-		if(colorChange)
-		{
-			GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", Color(0,0,0,0),SendMessageOptions.DontRequireReceiver);
-		}
+		yield WaitForSeconds(.35);
+		GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
 	}
-}
-
-function ColorChange () {
-	while(timer > length-.5)
-	{
-		yield;
-	}
-	GameObject.FindGameObjectWithTag("WorldUI").BroadcastMessage("ChangeBackgroundColor", colorForChange,SendMessageOptions.DontRequireReceiver);
-	yield;
 }
