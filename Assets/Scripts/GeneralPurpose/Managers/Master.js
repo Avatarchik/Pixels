@@ -2,7 +2,7 @@
 
 static var initialLoad:boolean;
 
-public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade};
+public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix};
 
 static var speedIncrease:int;
 static var lives:int;
@@ -428,7 +428,7 @@ class AudioVariables {
 class UnlockVariables {
 	var unlocksLevel1:String[];
 	var unlocksLevel2:String[];
-	var unlocksLevel3:String[];
+	var unlocksLevel3:float;
 	var unlockNotificationTextLine1:String[];
 	var unlockNotificationTextLine2:String[];
 	var unlockIcons:Sprite[];

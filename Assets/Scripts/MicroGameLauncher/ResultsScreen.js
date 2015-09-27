@@ -153,10 +153,7 @@ function CountScore() {
 							}
 							break;
 						case 2:
-							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel3)
-							{
-								PlayerPrefs.SetInt(variableName,1);
-							}
+							PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") + Master.currentWorld.unlocks.unlocksLevel3);
 							break;
 						default:
 							break;
