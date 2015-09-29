@@ -1,10 +1,12 @@
 ﻿#pragma strict
 
-public enum NotificationType{tutorial,lockedWorld,lockedGame,notEnoughCoins};
+public enum NotificationType{tutorial,lockedWorld,lockedGame,notEnoughCoins,unlockedItems};
 
 var lockedIcon:GameObject;
 
 var type:NotificationType;
+
+var unlockSign:Sprite;
 
 function SetType(words:String,type:NotificationType) {
 	GetComponent(TextManager).lines[0].dialogue = words;
@@ -23,6 +25,9 @@ function SetType(words:String,type:NotificationType) {
 		case NotificationType.notEnoughCoins:
 			Destroy(lockedIcon);
 			transform.position.y = 1;
+			break;
+		case NotificationType.unlockedItems:
+			lockedIcon.GetComponent(SpriteRenderer).sprite = unlockSign;
 			break;
 		default:
 			Destroy(lockedIcon);

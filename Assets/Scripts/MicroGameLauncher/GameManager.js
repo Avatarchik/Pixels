@@ -605,7 +605,7 @@ function TutorialNotification (notificationText:String) {
 	paused = true;
 	fade.material.color.a = .5;
 	Time.timeScale = 0;
-	Camera.main.GetComponent(Master).LaunchNotification(notificationText,NotificationType.lockedWorld);
+	Camera.main.GetComponent(Master).LaunchNotification(notificationText,NotificationType.tutorial);
 	while(Master.notifying)
 	{
 		yield;

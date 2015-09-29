@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum UnlockWheelStatus{Clear,Spinning};
+public enum UnlockWheelStatus{Clear,Spinning,Notify};
 
 var bigWheelPieces:SpriteRenderer[];
 var smallWheelPieces:SpriteRenderer[];
@@ -9,7 +9,10 @@ var arrowRestingSprite:Sprite;
 var arrowSprites:Sprite[];
 
 var winnerColor:Color;
+var winnerHighlight:Color;
 var specialColor:Color;
+var specialHighlight:Color;
+var failHighlight:Color;
 
 @HideInInspector var currentState:UnlockWheelStatus;
 @HideInInspector var bigWheelWinners:boolean[];
@@ -23,9 +26,12 @@ var specialColor:Color;
 var stopButton:GameObject;
 @HideInInspector var currentStopButton:GameObject;
 
-var unlockableItems:GameObject;
+var unlockableItems:GameObject[];
+
+var lockedItems:GameObject[];
 
 function Start () {
+	UpdateUnlockables();
 	currentState = UnlockWheelStatus.Clear;
 	arrowLocation = -1;
 	bigWheelWinners = new boolean[bigWheelPieces.length];
@@ -106,11 +112,11 @@ function BigSliceManager (slice:int) {
 	{
 		if(bigWheelWinners[slice])
 		{
-			bigWheelPieces[slice].color = winnerColor;
+			bigWheelPieces[slice].color = Color.Lerp(bigWheelPieces[slice].color,winnerColor,Time.deltaTime*6);
 		}
 		else
 		{
-			bigWheelPieces[slice].color = originalColor;
+			bigWheelPieces[slice].color = Color.Lerp(bigWheelPieces[slice].color,originalColor,Time.deltaTime*6);
 		}
 		yield;
 	}
@@ -122,135 +128,398 @@ function SmallSliceManager (slice:int) {
 	{
 		if(smallWheelWinners[slice])
 		{
-			if(specialSmallValues[slice])
-			{
-				smallWheelPieces[slice].color = specialColor;
-			}
-			else
-			{
-				smallWheelPieces[slice].color = winnerColor;
-			}
+			smallWheelPieces[slice].color = Color.Lerp(smallWheelPieces[slice].color,specialColor,Time.deltaTime*8);
 		}
 		else
 		{
-			smallWheelPieces[slice].color = originalColor;
+			smallWheelPieces[slice].color = Color.Lerp(smallWheelPieces[slice].color,originalColor,Time.deltaTime*8);
 		}
 		yield;
 	}
 }
 
 function AddBig ():boolean {
-	var newAddition:int = Random.Range(0,bigWheelWinners.length);
-	var checker:int = 0;
-	while(bigWheelWinners[newAddition] && checker < 100)
+	if(currentState == UnlockWheelStatus.Clear)
 	{
-		newAddition = Random.Range(0,bigWheelWinners.length);
-		checker ++;
-	}
-	bigWheelWinners[newAddition] = true;
-	if(checker == 100)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
+		CheckAvailable();
+		var newAddition:int = Random.Range(0,bigWheelWinners.length);
+		var checker:int = 0;
+		while(bigWheelWinners[newAddition] && checker < 100)
+		{
+			newAddition = Random.Range(0,bigWheelWinners.length);
+			checker ++;
+		}
+		bigWheelWinners[newAddition] = true;
+		if(checker == 100)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }
 
 function SubtractBig ():boolean {
-	var newSubtraction:int = Random.Range(0,bigWheelWinners.length);
-	var checker:int = 0;
-	while(!bigWheelWinners[newSubtraction] && checker < 100)
+	if(currentState == UnlockWheelStatus.Clear)
 	{
-		newSubtraction = Random.Range(0,bigWheelWinners.length);
-		checker ++;
-	}
-	bigWheelWinners[newSubtraction] = false;
-	if(checker == 100)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
+		var newSubtraction:int = Random.Range(0,bigWheelWinners.length);
+		var checker:int = 0;
+		while(!bigWheelWinners[newSubtraction] && checker < 100)
+		{
+			newSubtraction = Random.Range(0,bigWheelWinners.length);
+			checker ++;
+		}
+		bigWheelWinners[newSubtraction] = false;
+		if(checker == 100)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }
 
 function AddSmall ():boolean {
-	var newAddition:int = Random.Range(0,smallWheelWinners.length);
-	var checker:int = 0;
-	while(smallWheelWinners[newAddition] && checker < 100)
+	if(currentState == UnlockWheelStatus.Clear)
 	{
-		newAddition = Random.Range(0,smallWheelWinners.length);
-		checker ++;
-	}
-	smallWheelWinners[newAddition] = true;
-	if(checker == 100)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
+		CheckAvailable();
+		var newAddition:int = Random.Range(0,smallWheelWinners.length);
+		var checker:int = 0;
+		while(smallWheelWinners[newAddition] && checker < 100)
+		{
+			newAddition = Random.Range(0,smallWheelWinners.length);
+			checker ++;
+		}
+		smallWheelWinners[newAddition] = true;
+		if(checker == 100)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }
 
 function SubtractSmall ():boolean {
-	var newSubtraction:int = Random.Range(0,smallWheelWinners.length);
-	var checker:int = 0;
-	while(!smallWheelWinners[newSubtraction] && checker < 100)
+	if(currentState == UnlockWheelStatus.Clear)
 	{
-		newSubtraction = Random.Range(0,smallWheelWinners.length);
-		checker ++;
+		var newSubtraction:int = Random.Range(0,smallWheelWinners.length);
+		var checker:int = 0;
+		while(!smallWheelWinners[newSubtraction] && checker < 100)
+		{
+			newSubtraction = Random.Range(0,smallWheelWinners.length);
+			checker ++;
+		}
+		smallWheelWinners[newSubtraction] = false;
+		if(checker == 100)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
-	smallWheelWinners[newSubtraction] = false;
-	if(checker == 100)
+}
+
+function CheckAvailable () {
+	var notify:boolean = true;
+	for(var i:int = 0; i < bigWheelWinners.length; i++)
 	{
-		return false;
+		if(bigWheelWinners[i])
+		{
+			notify = false;
+		}
 	}
-	else
+	for(i = 0; i < smallWheelWinners.length; i++)
 	{
-		return true;
+		if(smallWheelWinners[i])
+		{
+			notify = false;
+		}
+	}
+	if(notify && lockedItems.Length == 0)
+	{
+		currentState = UnlockWheelStatus.Notify;
+		Camera.main.GetComponent(Master).LaunchNotification("There's nothing to unlock right now! Playing the wheel would be a silly gamble!",NotificationType.tutorial);
+		while(Master.notifying)
+		{
+			yield;
+		}
+		currentState = UnlockWheelStatus.Clear;
 	}
 }
 
 function Spin () {
-	var modifier:float = Random.Range(.2,.7);
-	currentState = UnlockWheelStatus.Spinning;
-	yield WaitForSeconds(.2);
-	var waitTime:float = .15;
-	while(waitTime > .001)
+	if(currentState == UnlockWheelStatus.Clear)
 	{
+		var modifier:float = Random.Range(.2,.7);
+		currentState = UnlockWheelStatus.Spinning;
+		yield WaitForSeconds(.2);
+		var waitTime:float = .15;
+		while(waitTime > .001)
+		{
+			arrowLocation ++;
+			Flash();
+			yield WaitForSeconds(waitTime);
+			waitTime = Mathf.MoveTowards(waitTime,.001,.01);
+		}
+		currentStopButton = Instantiate(stopButton);
+		while(currentStopButton != null)
+		{
+			arrowLocation ++;
+			Flash();
+			yield WaitForSeconds(waitTime * modifier);
+			yield;
+		}
+		while(waitTime < .6)
+		{
+			arrowLocation ++;
+			Flash();
+			yield WaitForSeconds(waitTime);
+			waitTime = waitTime * (1 + (.2 * modifier));
+			yield;
+		}
 		arrowLocation ++;
-		yield WaitForSeconds(waitTime);
-		waitTime = Mathf.MoveTowards(waitTime,.001,.01);
-	}
-	currentStopButton = Instantiate(stopButton);
-	while(currentStopButton != null)
-	{
+		Flash();
+		yield WaitForSeconds(.6);
 		arrowLocation ++;
-		yield WaitForSeconds(waitTime * modifier);
+		Flash();
+		if(Random.value < .4)
+		{
+			yield WaitForSeconds(1.1);
+			arrowLocation ++;
+			Flash();
+		}
+		yield WaitForSeconds(.3);
+		var amountWon:int = 0;
+		if(bigWheelWinners[GetValue(true)])
+		{
+			amountWon ++;
+		}
+		if(smallWheelWinners[GetValue(false)])
+		{
+			amountWon += 2;
+		}
+		Results(amountWon);
+		UpdateUnlockables();
 		yield;
 	}
-	while(waitTime < .6)
+}
+
+function Results(amountWon:int) {
+	if(amountWon > 0)
 	{
-		arrowLocation ++;
-		yield WaitForSeconds(waitTime);
-		waitTime = waitTime * (1 + (.2 * modifier));
-		yield;
+		currentState = UnlockWheelStatus.Notify;
+		if(lockedItems.Length > 0)
+		{
+			if(amountWon > 1)
+			{
+				Camera.main.GetComponent(Master).LaunchNotification("You unlocked some new items!", NotificationType.unlockedItems);
+			}
+			else
+			{
+				Camera.main.GetComponent(Master).LaunchNotification("You unlocked a new item!", NotificationType.unlockedItems);
+			}
+			var choices:int[] = GetChoices(amountWon);
+			var newItem:GameObject[];
+			newItem = new GameObject[choices.length];
+			switch(choices.length)
+			{
+				case 1:
+					newItem[0] = Instantiate(lockedItems[choices[0]],Vector3(0,5,-9.4),Quaternion.identity);
+					break;
+				case 2:
+					newItem[0] = Instantiate(lockedItems[choices[0]],Vector3(-2,5,-9.4),Quaternion.identity);
+					newItem[1] = Instantiate(lockedItems[choices[1]],Vector3(2,5,-9.4),Quaternion.identity);
+					break;
+				case 3:
+					newItem[0] = Instantiate(lockedItems[choices[0]],Vector3(0,5,-9.4),Quaternion.identity);
+					newItem[1] = Instantiate(lockedItems[choices[1]],Vector3(-4,5,-9.4),Quaternion.identity);
+					newItem[2] = Instantiate(lockedItems[choices[2]],Vector3(4,5,-9.4),Quaternion.identity);
+					break;
+				default:
+					break;
+			}
+			for(var i:int = 0; i < newItem.length; i++)
+			{
+				newItem[i].transform.localScale = Vector3(2,2,2);
+			}
+			while(Master.notifying)
+			{
+				yield;
+			}
+			for(i = 0; i < newItem.length; i++)
+			{
+				PlayerPrefs.SetInt(unlockableItems[i].GetComponent(VariablePrefix).variablePrefix + unlockableItems[i].transform.name,1);
+				Destroy(newItem[i]);
+			}
+		}
 	}
-	arrowLocation ++;
-	yield WaitForSeconds(.6);
-	arrowLocation ++;
-	if(Random.value < .4)
+	else
 	{
-		yield WaitForSeconds(1.1);
-		arrowLocation ++;
+		yield WaitForSeconds(1);
 	}
-	yield WaitForSeconds(.3);
+	Reset();
 	currentState = UnlockWheelStatus.Clear;
-	yield;
+}
+
+function GetChoices(number:int):int[] {
+	var choice1:int;
+	choice1 = Random.Range(0,lockedItems.Length);
+	var randomizer:int = 0;
+	if(number > 1)
+	{
+		var choice2:int = Random.Range(0,lockedItems.Length);
+		while(choice2 == choice1 && randomizer < 100)
+		{
+			choice2 = Random.Range(0,lockedItems.Length);
+			randomizer ++;
+			if(randomizer == 100)
+			{
+				for(var i:int = 0; i < lockedItems.Length; i++)
+				{
+					if(choice1 != i)
+					{
+						choice2 = i;
+						break;
+					}
+				}
+			}
+		}
+	}
+	if(number > 2)
+	{
+		var choice3:int = Random.Range(0,lockedItems.Length);
+		while((choice3 == choice2 || choice3 == choice1) && randomizer < 100)
+		{
+			choice3 = Random.Range(0,lockedItems.Length);
+			randomizer ++;
+			if(randomizer == 100)
+			{
+				for(i = 0; i < lockedItems.Length; i++)
+				{
+					if(choice1 != i && choice2 != i)
+					{
+						choice3 = i;
+						break;
+					}
+				}
+			}
+		}
+	}
+	var finalArray:int[];
+	finalArray = new int[0];
+	switch(number)
+	{
+		case 1:
+			finalArray = AddInt(finalArray,choice1);
+			break;
+		case 2:
+			finalArray = AddInt(finalArray,choice1);
+			if(choice1 != choice2)
+			{
+				finalArray = AddInt(finalArray,choice2);
+			}
+			break;
+		case 3:
+			finalArray = AddInt(finalArray,choice1);
+			if(choice1 != choice2)
+			{
+				finalArray = AddInt(finalArray,choice2);
+			}
+			if(choice1 != choice3 && choice3 != choice2)
+			{
+				finalArray = AddInt(finalArray,choice3);
+			}
+			break;
+		default:
+			finalArray = new int[0];
+			break;
+	}
+	return finalArray;
+}
+
+function Flash () {
+	if(arrowLocation >= 32)
+	{
+		arrowLocation = 0;
+	}
+	if(bigWheelWinners[GetValue(true)])
+	{
+		bigWheelPieces[GetValue(true)].color = winnerHighlight;
+	}
+	else
+	{
+		bigWheelPieces[GetValue(true)].color = failHighlight;
+	}
+	if(smallWheelWinners[GetValue(false)])
+	{
+		smallWheelPieces[GetValue(false)].color = specialHighlight;
+	}
+	else
+	{
+		smallWheelPieces[GetValue(false)].color = failHighlight;
+	}
+}
+
+function Reset () {
+	for(var i:int = 0; i < bigWheelWinners.length; i++)
+	{
+		bigWheelWinners[i] = false;
+	}
+	for(i = 0; i < smallWheelWinners.length; i++)
+	{
+		smallWheelWinners[i] = false;
+	}
+}
+
+function MaxBet () {
+	for(var i:int = 0; i < bigWheelWinners.length; i++)
+	{
+		bigWheelWinners[i] = true;
+	}
+	for(i = 0; i < smallWheelWinners.length; i++)
+	{
+		smallWheelWinners[i] = true;
+	}
+}
+
+function UpdateUnlockables () {
+	lockedItems = new GameObject[0];
+	for(var i = 0; i < unlockableItems.length; i++)
+	{
+		if(PlayerPrefs.GetInt(unlockableItems[i].GetComponent(VariablePrefix).variablePrefix + unlockableItems[i].transform.name) != 1)
+		{
+			lockedItems = AddObject(lockedItems,unlockableItems[i]);
+		}
+	}
+}
+
+function AddObject (original:GameObject[],addition:GameObject):GameObject[] {
+	var finalArray:GameObject[] = new GameObject[original.length+1];
+	for(var y:int = 0; y < original.length; y++)
+	{
+		finalArray[y] = original[y];
+	}
+	finalArray[finalArray.length-1] = addition;
+	return finalArray;
+}
+
+function AddInt (original:int[],addition:int):int[] {
+	var finalArray:int[] = new int[original.length+1];
+	for(var y:int = 0; y < original.length; y++)
+	{
+		finalArray[y] = original[y];
+	}
+	finalArray[finalArray.length-1] = addition;
+	return finalArray;
 }
 
 function GetValue (big:boolean):int {

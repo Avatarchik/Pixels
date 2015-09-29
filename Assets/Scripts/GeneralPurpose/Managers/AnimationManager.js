@@ -32,18 +32,21 @@ function Start () {
 	{
 		flipped = 1;
 	}
-	if(gameObject.tag == "Player")
+	if(transform.parent != null)
 	{
-		playerManager = GetComponent(PlayerManager);
+		if(gameObject.tag == "Player")
+		{
+			playerManager = GetComponent(PlayerManager);
+		}
+		else if(transform.parent.GetComponent(PlayerManager) != null)
+		{
+			playerManager = transform.parent.GetComponent(PlayerManager);
+		}
+		rotatingSprites = new Sprite[4];
+		FillInBlanks();
+		GrabAnimationLoop();
+		StartCoroutine(Move());
 	}
-	else if(transform.parent.GetComponent(PlayerManager) != null)
-	{
-		playerManager = transform.parent.GetComponent(PlayerManager);
-	}
-	rotatingSprites = new Sprite[4];
-	FillInBlanks();
-	GrabAnimationLoop();
-	StartCoroutine(Move());
 }
 function Update () {
 
