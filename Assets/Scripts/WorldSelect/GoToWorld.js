@@ -25,16 +25,22 @@ function Load () {
 	yield WaitForSeconds(.7);
 	AudioManager.StopSong();
 	yield WaitForSeconds(1);
-	if(controller.currentWorld.basic.world == WorldSelect.Theater)
+	switch(controller.currentWorld.basic.world)
 	{
-		Application.LoadLevel("Theater");
-	}
-	else if(controller.currentWorld.basic.world == WorldSelect.Arcade)
-	{
-		Application.LoadLevel("Arcade");
-	}
-	else
-	{
-		Application.LoadLevel("MicroGameLauncher");
+		case WorldSelect.Theater:
+			Application.LoadLevel("Theater");
+			break;
+		case WorldSelect.Arcade:
+			Application.LoadLevel("Arcade");
+			break;
+		case WorldSelect.UnlockWheel:
+			Application.LoadLevel("UnlockWheel");
+			break;
+		case WorldSelect.Remix:
+			Application.LoadLevel("VRMachine	");
+			break;
+		default:
+			Application.LoadLevel("MicroGameLauncher");
+			break;
 	}
 }
