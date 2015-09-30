@@ -1,6 +1,6 @@
 	#pragma strict
 
-public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro};
+public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro,WorldReveal};
 
 static var currentState:MapStatus;
 static var returnState:MapStatus;
@@ -38,6 +38,8 @@ var intro2:GameObject;
 @HideInInspector var step:float;
 static var introducing:boolean;
 @HideInInspector var loadedText:GameObject;
+
+var reveal:GameObject;
 
 // Locations
 private var showNot:Vector3;
@@ -85,6 +87,12 @@ function Start () {
 		currentState = MapStatus.Intro;
 		Intro();
 	}
+	else if(Master.mapNotifyWorlds.length > 0)
+	{
+		AudioManager.PlaySongIntro(null,worldMusic,1);
+		currentState = MapStatus.WorldReveal;
+		WorldReveal();
+	}
 	else
 	{
 		AudioManager.PlaySongIntro(null,worldMusic,1);
@@ -104,6 +112,41 @@ function Intro() {
 	currentState = MapStatus.Clear;
 }
 
+function WorldReveal() {
+	yield WaitForSeconds(.8);
+	var revealNames:String[] = Master.mapNotifyWorlds;
+	Master.mapNotifyWorlds = new String[0];
+	for(var i:int = 0; i < revealNames.length; i++)
+	{
+		var thisWorld:Transform;
+		for(var x:int = 0; x < worlds.length; x++)
+		{
+			if(worlds[x].name == revealNames[i])
+			{
+				thisWorld = worlds[x];
+			}
+		}
+		while(Mathf.Abs(transform.position.x - thisWorld.transform.position.x * -1 * transform.localScale.x) > .1)
+		{
+			transform.position.x = Mathf.Lerp(transform.position.x,thisWorld.transform.position.x * -1 * transform.localScale.x,Time.deltaTime * .35);
+			yield;
+		}
+		for(x = 0; x < Camera.main.GetComponent(Master).worlds.length; x ++)
+		{
+			if(Camera.main.GetComponent(Master).worlds[x].basic.worldNameVar == thisWorld.GetComponent(ChangeMapState).worldNameVar)
+			{
+				Master.currentWorld = Camera.main.GetComponent(Master).worlds[x];
+			}
+		}
+		thisWorld.GetComponent(ParticleSystem).emissionRate = 400;
+		Instantiate(reveal,Vector3(thisWorld.transform.position.x,0,0),Quaternion.identity).transform.parent = thisWorld;
+		yield WaitForSeconds(2);
+		thisWorld.GetComponent(ParticleSystem).emissionRate = 0;
+		yield;
+	}
+	currentState = MapStatus.Clear;
+}
+
 function Update () {
 	// Move map if no pop-ups are on-screen.
 	switch(currentState)
@@ -112,6 +155,9 @@ function Update () {
 				allowClick = false;
 				transform.position.x = Mathf.Lerp(transform.position.x,location1,Time.deltaTime*.14);
 				transform.position.x = Mathf.MoveTowards(transform.position.x,location1,Time.deltaTime*12);
+			break;
+		case MapStatus.WorldReveal:
+				allowClick = false;
 			break;
 		case MapStatus.Clear:
 			returnState = currentState;
@@ -181,7 +227,6 @@ function Update () {
 			
 			break;
 		case MapStatus.Confirmation:
-
 			returnState = currentState;
 			showTicket();
 			FindClosest();
@@ -278,7 +323,7 @@ function FindClosest() {
 		{
 			PlayerPrefs.SetString("LastWorldVisited", worlds[closestWorld].name);
 		}
-		if(PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") != 0)
+		if(PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") != 0 && currentState != MapStatus.WorldReveal)
 		{
 			transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
 			transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);

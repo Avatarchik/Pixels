@@ -3,7 +3,8 @@
 var worldMap:GameObject;
 @HideInInspector var worldMapManager:WorldMapManager;
 
-var player:GameObject;
+@HideInInspector var player:GameObject;
+var playerPrefab:GameObject;
 @HideInInspector var playerManager:PlayerManager;
 
 var layer00:GameObject;
@@ -14,6 +15,15 @@ var layer04:GameObject;
 var layer05:GameObject;
 
 static var wind:float;
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(0,-4.896,-.8);
+	player.transform.localScale = Vector3(1.125,1.125,1.125);
+	player.transform.parent = layer01.transform;
+	player.GetComponent(PlayerManager).speedOverride = true;
+	player.GetComponent(PlayerManager).thisSpeed = .4;
+}
 
 function Start () {
 	player.transform.position.x = 0;

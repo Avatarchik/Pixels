@@ -30,6 +30,8 @@ static var currentWorld:World;
 var notification:GameObject;
 static var notifying:boolean;
 
+static var mapNotifyWorlds:String[];
+
 function Awake () {
 	Time.timeScale = 1;
 	WorldOptions();
@@ -37,11 +39,12 @@ function Awake () {
 	demo = false;
 	unlockAll = false;
 	notifying = false;
+	mapNotifyWorlds = new String[0];
 	if(launchOptions.unlockEverything){unlockAll=true;}
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new int[6];
-	currentWorld = worlds[1];
+	currentWorld = worlds[3];
 	lives = 3;
 	paused = false;
 	speedIncrease = 1;
@@ -196,7 +199,7 @@ function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
 	if(launchOptions.quickProgress)
 	{
-		unlockLevels = [0,5,10,15,20,100];
+		unlockLevels = [0,2,10,15,20,100];
 	}
 	else
 	{

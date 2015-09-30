@@ -25,7 +25,10 @@ function Start () {
 }
 
 function Update () {
-	UpdateSprites();
+	if(transform.parent.GetComponent(PlayerManager).currentState != PlayerState.SpecialHeadBob)
+	{
+		UpdateSprites();
+	}
 }
 
 function PhonemeState (phoneme:Phoneme) {

@@ -141,6 +141,7 @@ function CountScore() {
 					switch(i-1)
 					{
 						case 0:
+							Master.mapNotifyWorlds = Master.currentWorld.unlocks.unlocksLevel1;
 							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel1)
 							{
 								PlayerPrefs.SetInt(variableName,1);

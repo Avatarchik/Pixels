@@ -3,7 +3,6 @@
 var standingSprites:Sprite[];
 var walkSpriteBack:Sprite[];
 var walkSpriteFront:Sprite[];
-var walkSpriteSide:Sprite[];
 
 var specialHandsOut:Sprite;
 var specialFrown:Sprite;
@@ -42,6 +41,11 @@ function Start () {
 		{
 			playerManager = transform.parent.GetComponent(PlayerManager);
 		}
+		else if(transform.parent.parent.GetComponent(PlayerManager) != null)
+		{
+			playerManager = transform.parent.parent.GetComponent(PlayerManager);
+		}
+		
 		rotatingSprites = new Sprite[4];
 		FillInBlanks();
 		GrabAnimationLoop();
@@ -110,17 +114,17 @@ function GrabAnimationLoop()
 			{
 				transform.localScale.x = Mathf.Abs(transform.localScale.x) * -1;
 			}
-			rotatingSprites[0] = standingSprites[2];
-			rotatingSprites[1] = standingSprites[2];
-			rotatingSprites[2] = standingSprites[2];
-			rotatingSprites[3] = standingSprites[2];
+			rotatingSprites[0] = standingSprites[1];
+			rotatingSprites[1] = standingSprites[1];
+			rotatingSprites[2] = standingSprites[1];
+			rotatingSprites[3] = standingSprites[1];
 			break;
 		case PlayerState.StandingRight:
 			transform.localScale.x = Mathf.Abs(transform.localScale.x);
-			rotatingSprites[0] = standingSprites[2];
-			rotatingSprites[1] = standingSprites[2];
-			rotatingSprites[2] = standingSprites[2];
-			rotatingSprites[3] = standingSprites[2];
+			rotatingSprites[0] = standingSprites[1];
+			rotatingSprites[1] = standingSprites[1];
+			rotatingSprites[2] = standingSprites[1];
+			rotatingSprites[3] = standingSprites[1];
 			break;
 		case PlayerState.WalkingFront:
 			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
@@ -141,17 +145,17 @@ function GrabAnimationLoop()
 			{
 				transform.localScale.x = Mathf.Abs(transform.localScale.x) * -1;
 			}
-			rotatingSprites[0] = walkSpriteSide[0];
-			rotatingSprites[1] = standingSprites[2];
-			rotatingSprites[2] = walkSpriteSide[1];
-			rotatingSprites[3] = standingSprites[2];
+			rotatingSprites[0] = walkSpriteFront[0];
+			rotatingSprites[1] = standingSprites[1];
+			rotatingSprites[2] = walkSpriteFront[1];
+			rotatingSprites[3] = standingSprites[1];
 			break;
 		case PlayerState.WalkingRight:
 			transform.localScale.x = Mathf.Abs(transform.localScale.x);
-			rotatingSprites[0] = walkSpriteSide[0];
-			rotatingSprites[1] = standingSprites[2];
-			rotatingSprites[2] = walkSpriteSide[1];
-			rotatingSprites[3] = standingSprites[2];
+			rotatingSprites[0] = walkSpriteFront[0];
+			rotatingSprites[1] = standingSprites[1];
+			rotatingSprites[2] = walkSpriteFront[1];
+			rotatingSprites[3] = standingSprites[1];
 			break;
 		case PlayerState.SpecialHandsOut:
 			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;

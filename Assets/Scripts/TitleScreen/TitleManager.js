@@ -29,10 +29,24 @@ var flyIn2:GameObject;
 @HideInInspector var flyInTop:float = 22;
 @HideInInspector var flyInBottom:float = 11.85;
 
+// Player Instantiation
+var playerPrefab:GameObject;
+@HideInInspector var player:GameObject;
+var playerParent:Transform;
+
 var startSign:SpriteRenderer;
 var flats:GameObject[];
 @HideInInspector var currentFlat:GameObject;
 
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(-2,-30,-2.865);
+	player.transform.localScale = Vector3(2.5,2.5,2.5);
+	player.transform.parent = playerParent;
+	player.GetComponent(PlayerManager).speedOverride = true;
+	player.GetComponent(PlayerManager).thisSpeed = 1.4;
+	player.GetComponent(PlayerManager).currentState = PlayerState.SpecialHeadBob;
+}
 function Start () {
 	started = false;
 	flyIn.transform.localPosition.y = flyInTop;

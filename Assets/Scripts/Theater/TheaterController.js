@@ -13,6 +13,37 @@ var statsScreen:GameObject;
 var colors1:GameObject;
 var colors2:GameObject;
 
+// Player Stuff
+var playerPrefab:GameObject;
+@HideInInspector var player1:GameObject;
+@HideInInspector var player2:GameObject;
+@HideInInspector var player3:GameObject;
+var player3Parent:Transform;
+
+function Awake () {
+	player1 = Instantiate(playerPrefab);
+	player2 = Instantiate(playerPrefab);
+	player3 = Instantiate(playerPrefab);
+	player1.transform.position = Vector3(3.579,-5.1,8.5);
+	player2.transform.position = Vector3(52,-7.35,8.5);
+	player3.transform.position = Vector3(-2,-24.9,-2.865);
+	player1.transform.localScale = Vector3(1,1,1);
+	player2.transform.localScale = Vector3(2.5,2.5,2.5);
+	player3.transform.localScale = Vector3(2.5,2.5,2.5);
+	player1.transform.parent = transform;
+	player2.transform.parent = transform;
+	player3.transform.parent = player3Parent;	
+	player1.AddComponent(PlayerWalking);
+	player2.AddComponent(PlayerWalking);
+	player2.GetComponent(PlayerWalking).frontOfHousePlayer = true;
+	player1.GetComponent(PlayerManager).speedOverride = true;
+	player1.GetComponent(PlayerManager).thisSpeed = .3;
+	player2.GetComponent(PlayerManager).speedOverride = true;
+	player2.GetComponent(PlayerManager).thisSpeed = .3;
+	player3.GetComponent(PlayerManager).speedOverride = true;
+	player3.GetComponent(PlayerManager).thisSpeed = 1.4;
+	player3.GetComponent(PlayerManager).currentState = PlayerState.SpecialHeadBob;
+}
 function Start () {
 	controller = Camera.main.GetComponent(Master);
 	PlayAudio();
