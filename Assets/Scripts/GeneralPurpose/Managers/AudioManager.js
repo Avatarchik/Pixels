@@ -245,10 +245,6 @@ static function SoundVolumeChange (volume:float) {
 	effectSpeaker.volume = volume;
 }
 
-static function StopAll () {
-	StopAll(0);
-}
-
 static function StopAll (wait:float) {
 	yield WaitForSeconds(wait);
 	StopSound();

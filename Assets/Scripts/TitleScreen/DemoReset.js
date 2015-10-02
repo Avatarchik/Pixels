@@ -5,6 +5,6 @@ function Start () {
 }
 
 function Clicked () {
-	AudioManager.StopAll();
+	AudioManager.StopAll(0);
 	Application.LoadLevel("TutorialTitleScreen");
 }

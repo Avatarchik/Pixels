@@ -178,7 +178,7 @@ function Demo() {
 		{
 			yield WaitForSeconds(.5);
 			PlayerPrefs.DeleteAll();
-			AudioManager.StopAll();
+			AudioManager.StopAll(0);
 			Application.LoadLevel("GameStart");
 			Destroy(gameObject);
 		}
@@ -188,7 +188,7 @@ function Demo() {
 			unlockAll = true;
 			Initialize();
 			UnlockAllOptions();
-			AudioManager.StopAll();
+			AudioManager.StopAll(0);
 			Application.LoadLevel("TitleScreen");
 		}
 	}

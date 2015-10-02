@@ -50,7 +50,7 @@ function Update () {
 
 function ReturnToWorld () {
 	Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
-	AudioManager.StopAll();
+	AudioManager.StopAll(0);
 	AudioManager.PlaySoundTransition(transitionToTitle);
 	yield WaitForSeconds(1.7);
 	Application.LoadLevel("TitleScreen");

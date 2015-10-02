@@ -4,17 +4,10 @@ var standingSprites:Sprite[];
 var walkSpriteBack:Sprite[];
 var walkSpriteFront:Sprite[];
 
-var specialHandsOut:Sprite;
-var specialFrown:Sprite;
-var specialFrownSinging:Sprite;
 var specialHeadBob:Sprite;
-var specialHighNote:Sprite;
-var specialSinging:Sprite;
-var specialLoudSing:Sprite;
-var specialOneHandSing:Sprite;
 var specialOneHand:Sprite;
-var specialHandsOutSing:Sprite;
-var specialHandsOutHighNote:Sprite;
+var specialTwoHandsOut:Sprite;
+var specialTwoHandsUp:Sprite;
 
 @HideInInspector var frown:boolean = false;
 
@@ -69,7 +62,7 @@ function Move() {
 		{
 			GetComponent(SpriteRenderer).sprite = rotatingSprites[0];
 		}
-		else
+		else if(!cutscene)
 		{
 			switch(playerManager.step)
 			{
@@ -163,13 +156,6 @@ function GrabAnimationLoop()
 			rotatingSprites[2] = walkSpriteFront[1];
 			rotatingSprites[3] = standingSprites[1];
 			break;
-		case PlayerState.SpecialHandsOut:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialHandsOut;
-			rotatingSprites[1] = specialHandsOut;
-			rotatingSprites[2] = specialHandsOut;
-			rotatingSprites[3] = specialHandsOut;
-			break;
 		case PlayerState.SpecialHeadBob:
 			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 			rotatingSprites[0] = specialHeadBob;
@@ -177,68 +163,12 @@ function GrabAnimationLoop()
 			rotatingSprites[2] = specialHeadBob;
 			rotatingSprites[3] = standingSprites[1];
 			break;
-		case PlayerState.SpecialFrown:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialFrown;
-			rotatingSprites[1] = specialFrown;
-			rotatingSprites[2] = specialFrown;
-			rotatingSprites[3] = specialFrown;
-			break;
-		case PlayerState.SpecialFrownSinging:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialFrown;
-			rotatingSprites[1] = specialFrownSinging;
-			rotatingSprites[2] = specialFrown;
-			rotatingSprites[3] = specialFrownSinging;
-			break;
-		case PlayerState.SpecialSinging:
+		case PlayerState.Cutscene:
 			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
 			rotatingSprites[0] = standingSprites[1];
-			rotatingSprites[1] = specialSinging;
-			rotatingSprites[2] = standingSprites[1];
-			rotatingSprites[3] = specialSinging;
-			break;
-		case PlayerState.SpecialLoudSinging:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = standingSprites[1];
-			rotatingSprites[1] = specialSinging;
-			rotatingSprites[2] = specialLoudSing;
-			rotatingSprites[3] = specialLoudSing;
-			break;
-		case PlayerState.SpecialHighNote:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialHighNote;
-			rotatingSprites[1] = specialHighNote;
-			rotatingSprites[2] = specialHighNote;
-			rotatingSprites[3] = specialHighNote;
-			break;
-		case PlayerState.SpecialOneHandSing:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialOneHand;
-			rotatingSprites[1] = specialOneHandSing;
-			rotatingSprites[2] = specialOneHand;
-			rotatingSprites[3] = specialOneHandSing;
-			break;
-		case PlayerState.SpecialHandsOutSing:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialHandsOut;
-			rotatingSprites[1] = specialHandsOutSing;
-			rotatingSprites[2] = specialHandsOut;
-			rotatingSprites[3] = specialHandsOutSing;
-			break;
-		case PlayerState.SpecialHandsOutLoudSing:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialHandsOut;
-			rotatingSprites[1] = specialHandsOutSing;
-			rotatingSprites[2] = specialHandsOutHighNote;
-			rotatingSprites[3] = specialHandsOutHighNote;
-			break;
-		case PlayerState.SpecialHandsOutHighNote:
-			transform.localScale.x = Mathf.Abs(transform.localScale.x) * flipped;
-			rotatingSprites[0] = specialHandsOutHighNote;
-			rotatingSprites[1] = specialHandsOutHighNote;
-			rotatingSprites[2] = specialHandsOutHighNote;
-			rotatingSprites[3] = specialHandsOutHighNote;
+			rotatingSprites[1] = specialOneHand;
+			rotatingSprites[2] = specialTwoHandsOut;
+			rotatingSprites[3] = specialTwoHandsUp;
 			break;
 		default:
 			break;
@@ -246,54 +176,34 @@ function GrabAnimationLoop()
 }
 
 function FillInBlanks () {
-	if(specialHandsOut == null)
-	{
-		specialHandsOut = standingSprites[1];
-	}
 	if(specialHeadBob == null)
 	{
 		specialHeadBob = standingSprites[1];
 	}
-	if(specialFrown == null)
-	{
-		specialFrown = standingSprites[1];
-	}
-	if(specialHighNote == null)
-	{
-		specialHighNote = standingSprites[1];
-	}
-	if(specialSinging == null)
-	{
-		specialSinging = standingSprites[1];
-	}
-	if(specialFrownSinging == null)
-	{
-		specialFrownSinging = specialSinging;
-	}
-	if(specialLoudSing == null)
-	{
-		specialLoudSing = standingSprites[1];
-	}
-	if(specialOneHandSing == null)
-	{
-		specialOneHandSing = standingSprites[1];
-	}
 	if(specialOneHand == null)
 	{
-		specialOneHand = specialOneHandSing;
+		specialOneHand = standingSprites[1];
 	}
-	if(specialHandsOutSing == null)
+	if(specialTwoHandsOut == null)
 	{
-		specialHandsOutSing = specialHandsOut;
+		specialTwoHandsOut = standingSprites[1];
 	}
-	if(specialHandsOutHighNote == null)
+	if(specialTwoHandsUp == null)
 	{
-		specialHandsOutHighNote = specialHandsOutSing;
+		specialTwoHandsUp = standingSprites[1];
 	}
 }
 
 function Frown (frowning:boolean) {
 	frown = frowning;
+}
+
+function SpriteChange(data:int) {
+	yield WaitForEndOfFrame;
+	if(transform.name != "Mouth")
+	{
+		GetComponent(SpriteRenderer).sprite = rotatingSprites[Mathf.Min(data,3)];
+	}
 }
 
 function Cutscene () {

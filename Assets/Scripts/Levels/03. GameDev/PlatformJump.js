@@ -304,7 +304,8 @@ function Update () {
 	if(finished && !badEnd)
 	{
 		velocity = 0;
-		player.GetComponent(PlayerManager).currentState = PlayerState.SpecialHandsOut;
+		player.GetComponent(PlayerManager).currentState = PlayerState.Cutscene;
+		player.GetComponent(PlayerManager).SetSongSprite(3);
 		player.transform.position.y += deathMovement * Time.deltaTime;
 		player.transform.Rotate(0,0,50*Time.deltaTime);
 		deathMovement -= Time.deltaTime * 80;

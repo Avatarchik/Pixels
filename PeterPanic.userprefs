@@ -1,29 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/ResultsClick.js">
-    <Files>
-      <File FileName="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js" Line="384" Column="73" />
-      <File FileName="Assets/Scripts/WorldSelect/WorldMapManager.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/AudioManager.js" Line="249" Column="13" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/ResultsScreen.js" Line="189" Column="8" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/ResultsClick.js" Line="11" Column="25" />
-    </Files>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
-                <Node name="Objects" expanded="True" />
+                <Node name="Managers" expanded="True">
+                  <Node name="AnimationManager.js" selected="True" />
+                </Node>
+                <Node name="Player" expanded="True" />
               </Node>
-              <Node name="Levels" expanded="True">
-                <Node name="-01. UnlockWheel" expanded="True" />
-              </Node>
-              <Node name="MicroGameLauncher" expanded="True">
-                <Node name="ResultsClick.js" selected="True" />
-              </Node>
-              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>

@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 // Current position of the player.
-public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight,SpecialHandsOut,SpecialHeadBob,SpecialFrown,SpecialFrownSinging,SpecialSinging,SpecialLoudSinging,SpecialHighNote,SpecialOneHandSing,SpecialHandsOutSing,SpecialHandsOutLoudSing,SpecialHandsOutHighNote}
+public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight,SpecialHeadBob,Cutscene}
 var currentState:PlayerState;
 var step:int;
 static var speed:float;
@@ -81,40 +81,6 @@ function Start () {
 }
 
 function Update () {
-	/*
-	if(Input.GetKeyDown("left"))
-	{
-		currentState = PlayerState.WalkingLeft;
-	}
-	if(Input.GetKeyUp("left"))
-	{
-		currentState = PlayerState.StandingLeft;
-	}
-	if(Input.GetKeyDown("right"))
-	{
-		currentState = PlayerState.WalkingRight;
-	}
-	if(Input.GetKeyUp("right"))
-	{
-		currentState = PlayerState.StandingRight;
-	}
-	if(Input.GetKeyDown("up"))
-	{
-		currentState = PlayerState.WalkingBack;
-	}
-	if(Input.GetKeyUp("up"))
-	{
-		currentState = PlayerState.StandingBack;
-	}
-	if(Input.GetKeyDown("down"))
-	{
-		currentState = PlayerState.WalkingFront;
-	}
-	if(Input.GetKeyUp("down"))
-	{
-		currentState = PlayerState.StandingFront;
-	}
-	*/
 }
 
 function ChangePart(part:String, change:int) {
@@ -460,5 +426,8 @@ function Move() {
 }
 
 function SetSongSprite(spriteNumber:int) {
-	step = spriteNumber+1;
+	if(transform.name != "Mouth")
+	{
+		step = spriteNumber+1;
+	}
 }

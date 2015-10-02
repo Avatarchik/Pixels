@@ -38,7 +38,7 @@ function Unclicked () {
 				if(LedgerController.songPlaying)
 				{
 					LedgerController.songPlaying = false;
-					AudioManager.StopAll();
+					AudioManager.StopAll(0);
 					theaterController.PlayAudio();
 				}
 				if(TheaterController.currentState == TheaterStatus.Stats)

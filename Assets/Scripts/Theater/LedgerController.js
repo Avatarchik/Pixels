@@ -208,12 +208,12 @@ function VideoButtonPress (which:String) {
 			case "Entracte":
 				if(songPlaying)
 				{
-					AudioManager.StopAll();
+					AudioManager.StopAll(0);
 					AudioManager.PlaySound(world.audio.music[0]);
 				}
 				else
 				{
-					AudioManager.StopAll();
+					AudioManager.StopAll(0);
 					theaterController.PlayAudio();
 				}
 				break;
@@ -240,14 +240,14 @@ function RunVideo (text:GameObject) {
 	songPlaying = false;
 	videoPlaying = true;
 	loadedText = Instantiate(text);
-	AudioManager.StopAll();
+	AudioManager.StopAll(0);
 	while(loadedText != null)
 	{
 		blackout.color.a = Mathf.MoveTowards(blackout.color.a,.75,Time.deltaTime);
 		border.color.a = Mathf.MoveTowards(border.color.a,1,Time.deltaTime * 8);
 		yield;
 	}
-	AudioManager.StopAll();
+	AudioManager.StopAll(0);
 	theaterController.PlayAudio();
 	border.color.a = 0;
 	yield WaitForEndOfFrame;

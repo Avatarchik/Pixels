@@ -14,7 +14,7 @@ function Clicked () {
 		if(ledgerController.songPlaying)
 		{
 			LedgerController.songPlaying = false;
-			AudioManager.StopAll();
+			AudioManager.StopAll(0);
 			GameObject.FindGameObjectWithTag("Theater").GetComponent(TheaterController).PlayAudio();
 		}
 		ledgerController.ChangeSelection(amount);
