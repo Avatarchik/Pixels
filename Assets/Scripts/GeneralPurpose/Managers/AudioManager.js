@@ -230,11 +230,7 @@ static function PlayCutscene (sound:AudioClip, volume:float) {
 		cutsceneSpeaker.Play();
 	}	
 }
-/*
-static function FastForwardCutscene (speed:float) {
-	cutsceneSpeaker.pitch = speed;
-}
-*/
+
 static function EndCutscene () {
 	while(cutsceneSpeaker.volume != 0)
 	{
@@ -250,6 +246,11 @@ static function SoundVolumeChange (volume:float) {
 }
 
 static function StopAll () {
+	StopAll(0);
+}
+
+static function StopAll (wait:float) {
+	yield WaitForSeconds(wait);
 	StopSound();
 	StopSong();
 }

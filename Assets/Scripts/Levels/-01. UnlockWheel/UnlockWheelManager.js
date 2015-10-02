@@ -14,6 +14,8 @@ var specialColor:Color;
 var specialHighlight:Color;
 var failHighlight:Color;
 
+var successSounds:AudioClip[];
+
 static var currentState:UnlockWheelStatus;
 @HideInInspector var bigWheelWinners:boolean[];
 @HideInInspector var smallWheelWinners:boolean[];
@@ -379,6 +381,8 @@ function Results(amountWon:int) {
 				newItem[i].transform.localScale = Vector3(2,2,2);
 				newItem[i].transform.parent = transform;
 			}
+			AudioManager.PlaySound(successSounds[Mathf.Min(choices.length-1,2)]);
+			
 			while(Master.notifying)
 			{
 				yield;

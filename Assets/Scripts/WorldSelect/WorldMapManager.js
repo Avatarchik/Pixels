@@ -1,4 +1,4 @@
-	#pragma strict
+#pragma strict
 
 public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro,WorldReveal};
 
@@ -10,6 +10,7 @@ static var currentNotification:GameObject;
 
 // Audio
 var worldMusic:AudioClip;
+var worldReveal:AudioClip[];
 
 // Clear
 static var cameraVelocity:float;
@@ -140,6 +141,7 @@ function WorldReveal() {
 		}
 		thisWorld.GetComponent(ParticleSystem).emissionRate = 400;
 		Instantiate(reveal,Vector3(thisWorld.transform.position.x,0,0),Quaternion.identity).transform.parent = thisWorld;
+		AudioManager.PlaySound(worldReveal[i]);
 		yield WaitForSeconds(2);
 		thisWorld.GetComponent(ParticleSystem).emissionRate = 0;
 		yield;
