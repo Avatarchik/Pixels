@@ -55,6 +55,23 @@ var front:GameObject;
 
 @HideInInspector var clicked:boolean[];
 
+var playerPrefab:GameObject;
+var customMaterial:Material;
+@HideInInspector var player:GameObject;
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(.1827,-7.662,transform.position.z);
+	player.transform.localScale = Vector3(1.2654,1.2654,1.2654);
+	player.transform.parent = transform;
+	player.AddComponent(ChangeHue);
+	player.GetComponent(ChangeHue).hueMaterial = customMaterial;
+	player.GetComponent(ChangeHue).hue = .6;
+	player.GetComponent(ChangeHue).saturation = .9;
+	player.GetComponent(ChangeHue).doToChildren = true;
+	player.GetComponent(ChangeHue).Instant();
+}
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;

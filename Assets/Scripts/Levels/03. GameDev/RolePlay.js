@@ -16,7 +16,7 @@ var dyingMonsterSprites:Sprite[];
 var attackingMonsterSprite:Sprite;
 
 var monster:SpriteRenderer;
-var player:GameObject;
+@HideInInspector var player:GameObject;
 
 var defendButton:SpriteRenderer;
 var fightButton:SpriteRenderer;
@@ -52,6 +52,22 @@ var defendOff:Sprite;
 var origin:Vector3;
 
 @HideInInspector var monsterPosition:int;
+
+var playerPrefab:GameObject;
+var customMaterial:Material;
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(4.8928,-1.476,transform.position.z+5);
+	player.transform.localScale = Vector3(1.2654,1.2654,1.2654);
+	player.transform.parent = transform;
+	player.AddComponent(ChangeHue);
+	player.GetComponent(ChangeHue).hueMaterial = customMaterial;
+	player.GetComponent(ChangeHue).hue = .6;
+	player.GetComponent(ChangeHue).saturation = .9;
+	player.GetComponent(ChangeHue).doToChildren = true;
+	player.GetComponent(ChangeHue).Instant();
+}
 
 function Start () {
 	// Basic world variable initialization.

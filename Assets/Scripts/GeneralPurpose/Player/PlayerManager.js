@@ -342,35 +342,6 @@ public function UpdateAvailability () {
 	eyesAvailability = new boolean[eyes.length + 1];
 	topsAvailability = new boolean[tops.length + 1];
 	bottomsAvailability = new boolean[bottoms.length + 1];
-		
-	for(var hairPiece:GameObject in hair)
-	{
-		if(!PlayerPrefs.HasKey("Hair:"+hairPiece.transform.name))
-		{
-			PlayerPrefs.SetInt("Hair:"+hairPiece.transform.name,0);
-		}
-	}
-	for(var eyesPiece:GameObject in eyes)
-	{
-		if(!PlayerPrefs.HasKey("Eyes:"+eyesPiece.transform.name))
-		{
-			PlayerPrefs.SetInt("Eyes:"+eyesPiece.transform.name,0);
-		}
-	}
-	for(var topsPiece:GameObject in tops)
-	{
-		if(!PlayerPrefs.HasKey("Tops:"+topsPiece.transform.name))
-		{
-			PlayerPrefs.SetInt("Tops:"+topsPiece.transform.name,0);
-		}
-	}
-	for(var bottomsPiece:GameObject in bottoms)
-	{
-		if(!PlayerPrefs.HasKey("Bottoms:"+bottomsPiece.transform.name))
-		{
-			PlayerPrefs.SetInt("Bottoms:"+bottomsPiece.transform.name,0);
-		}
-	}
 	PlayerPrefs.SetInt("Hair:"+hair[0].transform.name,1);
 	PlayerPrefs.SetInt("Eyes:"+eyes[0].transform.name,1);
 	PlayerPrefs.SetInt("Tops:"+tops[0].transform.name,1);

@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 static var initialLoad:boolean;
 
@@ -213,6 +213,7 @@ function Initialize () {
 	CheckArcadeUnlocks();
 	if(unlockAll)
 	{
+		UnlockCustomizeOptions();
 		UnlockArcadeGames(true);
 		UnlockAllOptions();
 	}
@@ -228,6 +229,13 @@ function Initialize () {
 			{
 				PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+varNames[varName], 0);
 			}
+		}
+	}
+	for(i = 0; i < launchOptions.customizationPieces.length; i++)
+	{
+		if(!PlayerPrefs.HasKey(launchOptions.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+launchOptions.customizationPieces[i].transform.name))
+		{
+			PlayerPrefs.SetInt(launchOptions.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+launchOptions.customizationPieces[i].transform.name,0);
 		}
 	}
 	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
@@ -340,6 +348,13 @@ function Initialize () {
 	if(!PlayerPrefs.HasKey("FOHDeskSelection"))
 	{
 		PlayerPrefs.SetInt("FOHDeskSelection", 0);
+	}
+}
+
+function UnlockCustomizeOptions() {
+	for(var i:int = 0; i < launchOptions.customizationPieces.length; i++)
+	{
+		PlayerPrefs.SetInt(launchOptions.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+launchOptions.customizationPieces[i].transform.name,1);
 	}
 }
 
@@ -461,6 +476,7 @@ class Options {
 	var eraseOnLoad:boolean;
 	var demoMode:boolean;
 	var demoTime:float;
+	var customizationPieces:GameObject[];
 }
 
 function WorldOptions () {

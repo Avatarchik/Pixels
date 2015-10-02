@@ -1,4 +1,4 @@
-#pragma strict
+	#pragma strict
 
 public enum TitleStatus{Home,CustomizeNoColor,CustomizeColor,Options,Intro};
 
@@ -46,6 +46,7 @@ function Awake () {
 	player.GetComponent(PlayerManager).speedOverride = true;
 	player.GetComponent(PlayerManager).thisSpeed = 1.4;
 	player.GetComponent(PlayerManager).currentState = PlayerState.SpecialHeadBob;
+	player.transform.name = "Player";
 }
 function Start () {
 	started = false;

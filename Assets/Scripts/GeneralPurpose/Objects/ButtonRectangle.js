@@ -33,6 +33,10 @@ function Update () {
 	// Find important finger.
 	if(importantFinger == -1 && Application.loadedLevelName != "LyricsTest")
 	{
+		if(GetComponent(SpriteRenderer) != null && up != null && down != null)
+		{
+			GetComponent(SpriteRenderer).sprite = up;
+		}
 		for(var i:int = 0; i < Finger.identity.length; i++)
 		{
 			

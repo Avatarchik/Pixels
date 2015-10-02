@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js">
     <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="47" Column="25" />
+      <File FileName="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js" Line="360" Column="1" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/AnimationManager.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,12 +11,14 @@
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True">
-                  <Node name="Master.js" selected="True" />
-                </Node>
+                <Node name="Managers" expanded="True" />
                 <Node name="Objects" expanded="True" />
               </Node>
-              <Node name="WorldSelect" expanded="True" />
+              <Node name="Levels" expanded="True">
+                <Node name="-01. UnlockWheel" expanded="True">
+                  <Node name="UnlockWheelManager.js" selected="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>

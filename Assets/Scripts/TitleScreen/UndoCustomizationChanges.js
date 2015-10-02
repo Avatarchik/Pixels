@@ -1,9 +1,12 @@
 ﻿#pragma strict
 
-var player:GameObject;
+var playerParent:GameObject;
+@HideInInspector var player:GameObject;
+
 var manager:PlayerManager;
 
 function Start () {
+	player = playerParent.Find("Player").gameObject;
 	manager = player.GetComponent(PlayerManager);
 }
 function Clicked () {

@@ -14,7 +14,7 @@ var specialColor:Color;
 var specialHighlight:Color;
 var failHighlight:Color;
 
-@HideInInspector var currentState:UnlockWheelStatus;
+static var currentState:UnlockWheelStatus;
 @HideInInspector var bigWheelWinners:boolean[];
 @HideInInspector var smallWheelWinners:boolean[];
 @HideInInspector var specialSmallValues:boolean[];
@@ -31,6 +31,8 @@ var unlockableItems:GameObject[];
 var lockedItems:GameObject[];
 
 function Start () {
+	PlayerPrefs.SetInt("CurrencyNumber",1000);
+	unlockableItems = Camera.main.GetComponent(Master).launchOptions.customizationPieces;
 	UpdateUnlockables();
 	currentState = UnlockWheelStatus.Clear;
 	arrowLocation = -1;
@@ -53,7 +55,7 @@ function Start () {
 function Update () {
 	if(Input.GetKeyDown("space") && currentState == UnlockWheelStatus.Clear)
 	{
-		Spin();
+		
 	}
 	if(Input.GetKeyDown("up"))
 	{
@@ -252,64 +254,87 @@ function CheckAvailable () {
 		{
 			yield;
 		}
+		yield WaitForEndOfFrame();
 		currentState = UnlockWheelStatus.Clear;
 	}
 }
 
-function Spin () {
-	if(currentState == UnlockWheelStatus.Clear)
+function Spin (cost:int) {
+	var allowed:boolean = false;
+	for(var i:int = 0; i < bigWheelWinners.length; i++)
 	{
-		var modifier:float = Random.Range(.2,.7);
-		currentState = UnlockWheelStatus.Spinning;
-		yield WaitForSeconds(.2);
-		var waitTime:float = .15;
-		while(waitTime > .001)
+		if(bigWheelWinners[i])
 		{
-			arrowLocation ++;
-			Flash();
-			yield WaitForSeconds(waitTime);
-			waitTime = Mathf.MoveTowards(waitTime,.001,.01);
+			allowed = true;
 		}
-		currentStopButton = Instantiate(stopButton);
-		while(currentStopButton != null)
+	}
+	if(allowed)
+	{
+		if(currentState == UnlockWheelStatus.Clear)
 		{
+			PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - cost);
+			var modifier:float = Random.Range(.2,1.7);
+			currentState = UnlockWheelStatus.Spinning;
+			yield WaitForSeconds(.2);
+			var waitTime:float = .15;
+			while(waitTime > 0)
+			{
+				arrowLocation ++;
+				Flash();
+				yield WaitForSeconds(waitTime);
+				waitTime = Mathf.MoveTowards(waitTime,0,.02);
+			}
+			currentStopButton = Instantiate(stopButton);
+			while(currentStopButton != null)
+			{
+				arrowLocation ++;
+				Flash();
+				//yield WaitForSeconds(waitTime * modifier);
+				yield;
+			}
+			waitTime = .05;
+			while(waitTime < .35)
+			{
+				arrowLocation ++;
+				Flash();
+				yield WaitForSeconds(waitTime);
+				waitTime = waitTime * (1 + (.2 * modifier));
+				yield;
+			}
 			arrowLocation ++;
 			Flash();
-			yield WaitForSeconds(waitTime * modifier);
+			yield WaitForSeconds(.6);
+			arrowLocation ++;
+			Flash();
+			if(Random.value < .4)
+			{
+				yield WaitForSeconds(1.1);
+				arrowLocation ++;
+				Flash();
+			}
+			yield WaitForSeconds(.3);
+			var amountWon:int = 0;
+			if(bigWheelWinners[GetValue(true)])
+			{
+				amountWon ++;
+			}
+			if(smallWheelWinners[GetValue(false)])
+			{
+				amountWon += 2;
+			}
+			Results(amountWon);
 			yield;
 		}
-		while(waitTime < .6)
+	}
+	else
+	{
+		Camera.main.GetComponent(Master).LaunchNotification("Place a bet first!", NotificationType.notEnoughCoins);
+		currentState = UnlockWheelStatus.Notify;
+		while(Master.notifying)
 		{
-			arrowLocation ++;
-			Flash();
-			yield WaitForSeconds(waitTime);
-			waitTime = waitTime * (1 + (.2 * modifier));
 			yield;
 		}
-		arrowLocation ++;
-		Flash();
-		yield WaitForSeconds(.6);
-		arrowLocation ++;
-		Flash();
-		if(Random.value < .4)
-		{
-			yield WaitForSeconds(1.1);
-			arrowLocation ++;
-			Flash();
-		}
-		yield WaitForSeconds(.3);
-		var amountWon:int = 0;
-		if(bigWheelWinners[GetValue(true)])
-		{
-			amountWon ++;
-		}
-		if(smallWheelWinners[GetValue(false)])
-		{
-			amountWon += 2;
-		}
-		Results(amountWon);
-		UpdateUnlockables();
-		yield;
+		currentState = UnlockWheelStatus.Clear;
 	}
 }
 
@@ -327,6 +352,8 @@ function Results(amountWon:int) {
 			{
 				Camera.main.GetComponent(Master).LaunchNotification("You unlocked a new item!", NotificationType.unlockedItems);
 			}
+			currentState = UnlockWheelStatus.Notify;
+			currentState = UnlockWheelStatus.Clear;
 			var choices:int[] = GetChoices(amountWon);
 			var newItem:GameObject[];
 			newItem = new GameObject[choices.length];
@@ -350,16 +377,18 @@ function Results(amountWon:int) {
 			for(var i:int = 0; i < newItem.length; i++)
 			{
 				newItem[i].transform.localScale = Vector3(2,2,2);
+				newItem[i].transform.parent = transform;
 			}
 			while(Master.notifying)
 			{
 				yield;
 			}
-			for(i = 0; i < newItem.length; i++)
+			for(i = 0; i < choices.length; i++)
 			{
-				PlayerPrefs.SetInt(unlockableItems[i].GetComponent(VariablePrefix).variablePrefix + unlockableItems[i].transform.name,1);
+				PlayerPrefs.SetInt(lockedItems[choices[i]].GetComponent(VariablePrefix).variablePrefix + lockedItems[choices[i]].transform.name,1);
 				Destroy(newItem[i]);
 			}
+			UpdateUnlockables();
 		}
 	}
 	else
@@ -487,7 +516,7 @@ function MaxBet () {
 	}
 	for(i = 0; i < smallWheelWinners.length; i++)
 	{
-		smallWheelWinners[i] = true;
+		//smallWheelWinners[i] = true;
 	}
 }
 
