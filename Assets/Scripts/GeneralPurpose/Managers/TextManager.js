@@ -637,7 +637,14 @@ function UpdateSprites(spritePosition:int, data:SideInfo,previousData:SideInfo) 
 			}
 			if(lines.length >= lineMarker && spriteObjects[spritePosition].transform.tag == "Player")
 			{
-				spriteObjects[spritePosition].GetComponent(PlayerManager).currentState = data.state;
+				if(data.state == PlayerState.StandingFront)
+				{
+					spriteObjects[spritePosition].GetComponent(PlayerManager).currentState = PlayerState.Cutscene;	
+				}
+				else
+				{
+					spriteObjects[spritePosition].GetComponent(PlayerManager).currentState = data.state;
+				}
 			}
 		}
 		

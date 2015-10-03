@@ -73,7 +73,7 @@ function Start () {
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
 	leftCameraLimit = -160;
-	rightCameraLimit = 55;
+	rightCameraLimit = 100;
 	currentState = MapStatus.Clear;
 	returnState = currentState;
 	importantFinger = -1;

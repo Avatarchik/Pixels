@@ -35,22 +35,64 @@ function Start () {
 	latestScore = ArcadeManager.lastScore;
 	leaderBoardName = ArcadeManager.lastGameVariable;
 	
-	if(PlayerPrefs.GetFloat("ArcadeHighScore:"+leaderBoardName) < latestScore)
+	if(PlayerPrefs.GetFloat("Arcade"+leaderBoardName) < latestScore)
 	{
-		PlayerPrefs.SetFloat("ArcadeHighScore:"+leaderBoardName,latestScore);
+		PlayerPrefs.SetFloat("Arcade"+leaderBoardName,latestScore);
 	}
 	
 	if(latestScore == 0)
 	{
-		latestScore = 5.5;
+		latestScore = 1;
 	}
 	displayUsers = new User[9];
 	friendUsers = new User[0];
 	global = true;
 	bigSize = .7;
 	normalSize = .15;
+	Social.localUser.Authenticate(function(success) {
+		if(success)
+		{
+			Social.ReportScore(PlayerPrefs.GetFloat("Arcade"+leaderBoardName),"Arcade"+leaderBoardName, function(success){});
+			Social.LoadScores("Arcade"+leaderBoardName,function(scores) {
+				if(scores.Length > 0)	
+				{
+					Debug.Log("Successfully retrieved " + scores.length + " scores!");
+					allUsers = new User[scores.length];
+					for(var score:int = 0; score < scores.length; score++)
+					{
+						if(scores[score].userID == Social.localUser.id)
+						{
+							allUsers[score].name = "Bennett";
+							allUsers[score].score = 0.1;
+						}
+						else
+						{
+							allUsers[score].name = scores[score].userID;
+							allUsers[score].score = scores[score].value;
+						}
+					}
+				}
+				else
+				{
+					Debug.Log("No scores were loaded.");
+					allUsers = new User[0];
+				}
+				friendNames = new String[Social.localUser.friends.length];
+				for(var name:int = 0; name < friendNames.length; name ++)
+				{
+					friendNames[name] = Social.localUser.friends[name].userName;
+				}	
+			}
+			);
+		}
+		else
+		{
+			Debug.Log("Could not authenticate.");
+			allUsers = new User[0];
+		}
+	}
+	);
 	
-	allUsers = new User[0];
 	for(var arrayPiece:int = 0; arrayPiece < allUsers.length; arrayPiece ++)
 	{
 		allUsers[arrayPiece] = new User();

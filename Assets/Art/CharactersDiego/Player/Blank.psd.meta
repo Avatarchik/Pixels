@@ -51,7 +51,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: PlayerSprites
+  spritePackingTag: CharacterArt
   userData: 
   assetBundleName: 
   assetBundleVariant: 

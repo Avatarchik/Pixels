@@ -1,6 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
+    <Files>
+      <File FileName="Assets/Scripts/WorldSelect/WorldMapManager.js" Line="76" Column="24" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="371" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -8,10 +12,19 @@
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True">
-                  <Node name="AnimationManager.js" selected="True" />
+                  <Node name="Master.js" selected="True" />
                 </Node>
                 <Node name="Player" expanded="True" />
               </Node>
+              <Node name="Levels" expanded="True">
+                <Node name="01. Packing Peanut Factory" expanded="True" />
+                <Node name="-01. UnlockWheel" expanded="True" />
+                <Node name="03B. Arcade" expanded="True">
+                  <Node name="Objects" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="MicroGameLauncher" expanded="True" />
+              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>

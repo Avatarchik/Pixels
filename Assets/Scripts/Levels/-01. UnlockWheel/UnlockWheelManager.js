@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum UnlockWheelStatus{Clear,Spinning,Notify};
+public enum UnlockWheelStatus{Clear,Spinning,Notify,Leaving};
 
 var bigWheelPieces:SpriteRenderer[];
 var smallWheelPieces:SpriteRenderer[];
