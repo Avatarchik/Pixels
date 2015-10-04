@@ -1,6 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js">
+    <Files>
+      <File FileName="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js" Line="61" Column="11" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">

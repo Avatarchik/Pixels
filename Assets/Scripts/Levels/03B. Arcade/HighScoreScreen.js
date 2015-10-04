@@ -86,19 +86,18 @@ function Start () {
 				}	
 			//}
 			//);
+			FinishStart();
 		}
 		else
 		{
 			Debug.Log("Could not authenticate.");
 			allUsers = new User[0];
+			FinishStart();
 		}
 	}
 	);
-	
-	for(var arrayPiece:int = 0; arrayPiece < allUsers.length; arrayPiece ++)
-	{
-		allUsers[arrayPiece] = new User();
-	}
+}
+function FinishStart () {
 	if(allUsers.Length == 0)
 	{
 		CreateDefaults();
@@ -111,7 +110,7 @@ function Start () {
 	var tempArray:User[];
 	tempArray = allUsers;
 	allUsers = new User[allUsers.length + 1];
-	for(arrayPiece = 0; arrayPiece < allUsers.length; arrayPiece ++)
+	for(var arrayPiece:int = 0; arrayPiece < allUsers.length; arrayPiece ++)
 	{
 		allUsers[arrayPiece] = new User();
 	}
