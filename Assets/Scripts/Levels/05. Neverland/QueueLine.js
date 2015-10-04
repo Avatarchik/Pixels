@@ -11,7 +11,8 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
-var player:GameObject;
+var playerPrefab:GameObject;
+@HideInInspector var player:GameObject;
 
 var people:GameObject[];
 
@@ -23,6 +24,16 @@ var people:GameObject[];
 @HideInInspector var newSpeed:float;
 @HideInInspector var distanceTouch:float;
 @HideInInspector var playerDistance:float;
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(-5.1,-2.62,transform.position.z);
+	player.transform.localScale = Vector3(1,1,1);
+	player.transform.parent = transform;
+	player.GetComponent(PlayerManager).currentState = PlayerState.StandingFront;
+	player.GetComponent(PlayerManager).speedOverride = true;
+	player.GetComponent(PlayerManager).thisSpeed = .2;
+}
 
 function Start () {
 	// Basic world variable initialization.
@@ -93,7 +104,7 @@ function Update () {
 			}
 		}
 	}
-	player.GetComponent(PlayerManager).currentState = PlayerState.StandingRight;
+	player.GetComponent(PlayerManager).currentState = PlayerState.StandingFront;
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused && !touchedSomeone)
 	{
@@ -102,11 +113,11 @@ function Update () {
 			player.transform.position.x = Mathf.MoveTowards(player.transform.position.x, Finger.GetPosition(importantFinger).x, Time.deltaTime * 15);
 			if(Finger.GetPosition(importantFinger).x > player.transform.position.x && Mathf.Abs(Finger.GetPosition(importantFinger).x - player.transform.position.x) > 0)
 			{
-				player.GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;
+				player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;
 			}
 			else if(Finger.GetPosition(importantFinger).x < player.transform.position.x && Mathf.Abs(Finger.GetPosition(importantFinger).x - player.transform.position.x) > 0)
 			{
-				player.GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;
+				player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;
 			}
 		}
 	}

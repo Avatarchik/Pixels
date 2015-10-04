@@ -19,6 +19,8 @@ static var unlockLevels:int[];
 static var device:String;
 static var vertical:boolean;
 
+var showSelectedWorld:World;
+
 var appVersion:float;
 var varNames:String[];
 var launchOptions:Options;
@@ -29,10 +31,11 @@ static var currentWorld:World;
 
 var notification:GameObject;
 static var notifying:boolean;
-
 static var mapNotifyWorlds:String[];
+static var showWorldTitle:boolean;
 
 function Awake () {
+	showWorldTitle = false;
 	Time.timeScale = 1;
 	WorldOptions();
 	vertical = false;
@@ -44,7 +47,7 @@ function Awake () {
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new int[6];
-	currentWorld = worlds[3];
+	currentWorld = worlds[4];
 	lives = 3;
 	paused = false;
 	speedIncrease = 1;
@@ -100,6 +103,7 @@ function Start () {
 }
 
 function Update () {
+	showSelectedWorld = currentWorld;
 	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
 	{
 		vertical = false;

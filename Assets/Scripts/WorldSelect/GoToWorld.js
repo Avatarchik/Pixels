@@ -17,6 +17,7 @@ function Clicked () {
 function Load () {
 	if(transition != null && !done)
 	{
+		Master.showWorldTitle = true;
 		controller = Camera.main.GetComponent(Master);
 		AudioManager.PlaySoundTransition(controller.currentWorld.audio.transitionIn);
 		Instantiate(transition, Vector3(0,0,-9.5), Quaternion.identity);
@@ -37,7 +38,7 @@ function Load () {
 			Application.LoadLevel("UnlockWheel");
 			break;
 		case WorldSelect.Remix:
-			Application.LoadLevel("VRMachine	");
+			Application.LoadLevel("VRMachine");
 			break;
 		default:
 			Application.LoadLevel("MicroGameLauncher");

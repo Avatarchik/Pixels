@@ -48,6 +48,7 @@ function Update () {
 			{
 				if(touch.fingerId == identity[y])
 				{
+					phase[y] = touch.phase;
 					if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
 					{
 						identity[y] = -1;
@@ -56,7 +57,6 @@ function Update () {
 					else
 					{
 						location[y] = GetComponent.<Camera>().ScreenToWorldPoint(Vector3(touch.position.x, touch.position.y, 0));
-						phase[y] = touch.phase;
 						if(location[y].x < 9 && location[y].x > -9 && location[y].y < 9 && location[y].y > -9)
 						{
 							inGame[y] = true;

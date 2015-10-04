@@ -20,7 +20,7 @@ function Start () {
 	newText = newText.Replace(" ", "\n");
 	for(var y:int = 0; y < title.Length; y++)
 	{
-		if(Application.loadedLevelName == "WorldSelect")
+		if(Application.loadedLevelName == "WorldSelect" && Master.showWorldTitle)
 		{
 			title[y].GetComponent(TextMesh).text = newText;
 		}

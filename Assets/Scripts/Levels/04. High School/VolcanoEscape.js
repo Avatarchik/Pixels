@@ -19,7 +19,8 @@ var front:Renderer;
 
 var boulderPrefab:GameObject;
 
-var player:GameObject;
+var playerPrefab:GameObject;
+@HideInInspector var player:GameObject;
 
 @HideInInspector var playerOrigin:float;
 @HideInInspector var playerDistance:float;
@@ -40,6 +41,16 @@ var player:GameObject;
 @HideInInspector var waitTime:float;
 @HideInInspector var jumpCounter:float;
 @HideInInspector var clicked:boolean;
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(-5.624,-4.6257,transform.position.z-1);
+	player.transform.localScale = Vector3(1.406,1.406,1.406);
+	player.transform.parent = transform;
+	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;
+	player.GetComponent(PlayerManager).speedOverride = true;
+	player.GetComponent(PlayerManager).thisSpeed = .2;
+}
 
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)

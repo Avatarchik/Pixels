@@ -86,8 +86,6 @@ function Clicked () {
 					{
 						WorldMapManager.selectedLocation = transform.localPosition.x;
 						controller = Camera.main.GetComponent(Master);
-						controller.currentWorld.basic.world = thisWorld;
-						SendMessage("ReplaceMaster",SendMessageOptions.DontRequireReceiver);
 						for(var level:World in controller.worlds)
 						{
 							if(level.basic.worldNameVar == worldNameVar)

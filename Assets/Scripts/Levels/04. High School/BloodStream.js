@@ -21,7 +21,9 @@ var virusPrefab:GameObject;
 @HideInInspector var topLimit:float;
 @HideInInspector var bottomMultiplier:float;
 
-var player:PlayerManager;
+@HideInInspector var player:GameObject;
+var playerPrefab:GameObject;
+
 @HideInInspector var playerHeight:float;
 @HideInInspector var playerLimit:float;
 @HideInInspector var target:float;
@@ -34,6 +36,16 @@ var player:PlayerManager;
 @HideInInspector var currentVirus:int;
 @HideInInspector var virusSpeed:float;
 @HideInInspector var virusWaitTime:float;
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(0,-4.497,transform.position.z-3.55);
+	player.transform.localScale = Vector3(1.5,1.5,1.5);
+	player.transform.parent = transform;
+	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;
+	player.GetComponent(PlayerManager).speedOverride = true;
+	player.GetComponent(PlayerManager).thisSpeed = .2;
+}
 
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
@@ -51,7 +63,7 @@ function Start () {
 	currentVirus = 0;
 	playerHeight = -5.5;
 	playerLimit = 6;
-	player.currentState = PlayerState.StandingBack;
+	player.GetComponent(PlayerManager).currentState = PlayerState.StandingBack;
 	target = 0;
 	virusZ = 5;
 	distanceFromPlayer = 2.5;
@@ -167,15 +179,15 @@ function Update () {
 	
 	if(target > player.transform.position.x && Mathf.Abs(target - player.transform.position.x) > .1)
 	{
-		player.currentState = PlayerState.WalkingRight;
+		player.GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;
 	}
 	else if(target < player.transform.position.x && Mathf.Abs(target - player.transform.position.x) > .1)
 	{
-		player.currentState = PlayerState.WalkingLeft;
+		player.GetComponent(PlayerManager).currentState = PlayerState.WalkingLeft;
 	}
 	else
 	{
-		player.currentState = PlayerState.StandingBack;
+		player.GetComponent(PlayerManager).currentState = PlayerState.StandingBack;
 	}
 	
 	if(target>0)

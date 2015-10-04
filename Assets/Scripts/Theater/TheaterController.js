@@ -24,6 +24,9 @@ function Awake () {
 	player1 = Instantiate(playerPrefab);
 	player2 = Instantiate(playerPrefab);
 	player3 = Instantiate(playerPrefab);
+	player1.transform.name = "Player";
+	player2.transform.name = "Player";
+	player3.transform.name = "Player";
 	player1.transform.position = Vector3(3.579,-5.1,8.5);
 	player2.transform.position = Vector3(52,-7.35,8.5);
 	player3.transform.position = Vector3(-2,-24.9,-2.865);

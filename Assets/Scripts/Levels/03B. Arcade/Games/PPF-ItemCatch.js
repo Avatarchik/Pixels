@@ -124,8 +124,10 @@ function Update () {
 function Deployment () {
 	while(true)
 	{
-		
-		objectsOnScreen = AddObject(objectsOnScreen, Instantiate(fallingObject, Vector3(Random.Range(-8.5, 8.5),10,4.8), Quaternion.identity));
+		if(!finished)
+		{
+			objectsOnScreen = AddObject(objectsOnScreen, Instantiate(fallingObject, Vector3(Random.Range(-8.5, 8.5),10,4.8), Quaternion.identity));
+		}
 		objectsOnScreenTarget = AddBoolean(objectsOnScreenTarget, false);
 		waitTime *= .94;
 		if(waitTime < .3)
@@ -161,10 +163,10 @@ function AddBoolean (original:boolean[],addition:boolean):boolean[] {
 }
 
 function Finish() {
+	finished = true;
 	for(var i:int = 0; i < objectsOnScreen.length; i++)
 	{
 		Destroy(objectsOnScreen[i]);
 	}	
 	GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
-	finished = true;
 }

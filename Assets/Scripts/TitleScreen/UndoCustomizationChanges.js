@@ -6,6 +6,11 @@ var playerParent:GameObject;
 var manager:PlayerManager;
 
 function Start () {
+	Initial();
+}
+
+function Initial() {
+	yield WaitForEndOfFrame();
 	player = playerParent.Find("Player").gameObject;
 	manager = player.GetComponent(PlayerManager);
 }

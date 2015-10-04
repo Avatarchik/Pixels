@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 var colorChange:boolean;
 var colorForChange:Color;
@@ -28,11 +28,23 @@ var worldIntros:AudioClip[];
 
 @HideInInspector var playerDest:float;
 @HideInInspector var playerStart:float;
-@HideInInspector var clicked:boolean;
 
 var sharkPrefab:GameObject;
 var rockPrefab:GameObject;
-var player:GameObject;
+@HideInInspector var player:GameObject;
+var playerPrefab:GameObject;
+
+@HideInInspector var clicked:boolean[];
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(0.154,-7.4919,transform.position.z+2.27);
+	player.transform.localScale = Vector3(.56,.56,.56);
+	player.transform.parent = transform;
+	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;
+	player.GetComponent(PlayerManager).speedOverride = true;
+	player.GetComponent(PlayerManager).thisSpeed = .2;
+}
 
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
@@ -50,7 +62,8 @@ function Start () {
 	sharkExists = false;
 	choices = new int[heights.length];
 	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingBack;
-	clicked = false;
+	clicked = new boolean[5];
+	clicked = [false,false,false,false,false];
 	playerStart = -7.5;
 	playerDest = playerStart;
 	deathDistance = 1.2;
@@ -144,31 +157,18 @@ function Update () {
 			Finish(true,0);
 		}
 	}
-	// Get important finger.
-	if(importantFinger == -1)
+	for(var i:int = 0; i < Finger.identity.length; i++)
 	{
-		clicked = false;
-		for(var i:int = 0; i < Finger.identity.length; i++)
+		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && !finished)
 		{
-			if(Finger.GetExists(i) && Finger.GetInGame(i))
-			{
-				importantFinger = i;
-				break;
-			}
-		}
-	}
-	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && Finger.GetInGame(importantFinger) && !Master.paused)
-	{
-		if(!clicked)
-		{
+			clicked[i] = true;
 			Clicked();
-			clicked = true;
+			break;
 		}
-	}
-	else if(!Finger.GetExists(importantFinger))
-	{
-		importantFinger = -1;
+		else if(!Finger.GetExists(i) || !Finger.GetInGame(i))
+		{
+			clicked[i] = false;
+		}
 	}
 	
 	for(var spot:int = 0; spot < sharks.length; spot++)

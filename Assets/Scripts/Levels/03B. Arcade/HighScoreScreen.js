@@ -52,8 +52,10 @@ function Start () {
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{
-			Social.ReportScore(PlayerPrefs.GetFloat("Arcade"+leaderBoardName),"Arcade"+leaderBoardName, function(success){});
-			Social.LoadScores("Arcade"+leaderBoardName,function(scores) {
+			var leaderBoard:UnityEngine.SocialPlatforms.ILeaderboard = Social.Active.CreateLeaderboard();
+			leaderBoard.id = "Arcade"+leaderBoardName;
+			leaderBoard.LoadScores(function(success) {});
+			var scores:UnityEngine.SocialPlatforms.IScore[] = leaderBoard.scores;
 				if(scores.Length > 0)	
 				{
 					Debug.Log("Successfully retrieved " + scores.length + " scores!");
@@ -82,8 +84,8 @@ function Start () {
 				{
 					friendNames[name] = Social.localUser.friends[name].userName;
 				}	
-			}
-			);
+			//}
+			//);
 		}
 		else
 		{

@@ -56,7 +56,7 @@ function Start () {
 	
 	selectedLocation = transform.position.x;
 	
-
+	Master.showWorldTitle = false;
 	worlds = new Transform[transform.childCount];
 	for(var i:int = 0; i < worlds.length; i++)
 	{

@@ -120,7 +120,7 @@ function Deployment () {
 	while(timer > 1)
 	{
 		yield WaitForSeconds(length/(5*difficulty));
-		if(length > .4)
+		if(length > .4 && !finished)
 		{
 			objectsOnScreen = AddObject(objectsOnScreen, Instantiate(fallingObject, Vector3(Random.Range(-8.5, 8.5),10,4.8), Quaternion.identity));
 		}
