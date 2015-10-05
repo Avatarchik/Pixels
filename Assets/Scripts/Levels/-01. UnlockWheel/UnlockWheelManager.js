@@ -32,6 +32,8 @@ var unlockableItems:GameObject[];
 
 var lockedItems:GameObject[];
 
+var itemNotificationObject:GameObject;
+
 function Start () {
 	PlayerPrefs.SetInt("CurrencyNumber",1000);
 	unlockableItems = Camera.main.GetComponent(Master).launchOptions.customizationPieces;
@@ -362,23 +364,29 @@ function Results(amountWon:int) {
 			switch(choices.length)
 			{
 				case 1:
-					newItem[0] = Instantiate(lockedItems[choices[0]],Vector3(0,5,-9.4),Quaternion.identity);
+					newItem[0] = Instantiate(itemNotificationObject,Vector3(0,4.6,-9.4),Quaternion.identity);
+					newItem[0].GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
 					break;
 				case 2:
-					newItem[0] = Instantiate(lockedItems[choices[0]],Vector3(-2,5,-9.4),Quaternion.identity);
-					newItem[1] = Instantiate(lockedItems[choices[1]],Vector3(2,5,-9.4),Quaternion.identity);
+					newItem[0] = Instantiate(itemNotificationObject,Vector3(-2.25,4.6,-9.4),Quaternion.identity);
+					newItem[1] = Instantiate(itemNotificationObject,Vector3(2.25,4.6,-9.4),Quaternion.identity);
+					newItem[0].GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
+					newItem[1].GetComponent(SpriteRenderer).sprite = lockedItems[choices[1]].GetComponent(VariablePrefix).objectTypeImage;
 					break;
 				case 3:
-					newItem[0] = Instantiate(lockedItems[choices[0]],Vector3(0,5,-9.4),Quaternion.identity);
-					newItem[1] = Instantiate(lockedItems[choices[1]],Vector3(-4,5,-9.4),Quaternion.identity);
-					newItem[2] = Instantiate(lockedItems[choices[2]],Vector3(4,5,-9.4),Quaternion.identity);
+					newItem[0] = Instantiate(itemNotificationObject,Vector3(0,4.6,-9.4),Quaternion.identity);
+					newItem[1] = Instantiate(itemNotificationObject,Vector3(-4.5,4.6,-9.4),Quaternion.identity);
+					newItem[2] = Instantiate(itemNotificationObject,Vector3(4.5,4.6,-9.4),Quaternion.identity);
+					newItem[0].GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
+					newItem[1].GetComponent(SpriteRenderer).sprite = lockedItems[choices[1]].GetComponent(VariablePrefix).objectTypeImage;
+					newItem[2].GetComponent(SpriteRenderer).sprite = lockedItems[choices[2]].GetComponent(VariablePrefix).objectTypeImage;
 					break;
 				default:
 					break;
 			}
 			for(var i:int = 0; i < newItem.length; i++)
 			{
-				newItem[i].transform.localScale = Vector3(2,2,2);
+				newItem[i].transform.localScale = Vector3(14.06,14.06,14.06);
 				newItem[i].transform.parent = transform;
 			}
 			AudioManager.PlaySound(successSounds[Mathf.Min(choices.length-1,2)]);

@@ -1,9 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js">
-    <Files>
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/HighScoreScreen.js" Line="61" Column="11" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -11,10 +8,13 @@
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
-                <Node name="Objects" expanded="True" />
+                <Node name="Objects" expanded="True">
+                  <Node name="VariablePrefix.js" selected="True" />
+                </Node>
               </Node>
               <Node name="Levels" expanded="True">
                 <Node name="01. Packing Peanut Factory" expanded="True" />
+                <Node name="-01. UnlockWheel" expanded="True" />
                 <Node name="02. Museum" expanded="True" />
                 <Node name="03. GameDev" expanded="True" />
                 <Node name="03B. Arcade" expanded="True">
@@ -27,9 +27,7 @@
               <Node name="MicroGameLauncher" expanded="True" />
               <Node name="Theater" expanded="True" />
               <Node name="TitleScreen" expanded="True" />
-              <Node name="WorldSelect" expanded="True">
-                <Node name="GoToWorld.js" selected="True" />
-              </Node>
+              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>
