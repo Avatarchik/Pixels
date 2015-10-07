@@ -78,6 +78,7 @@ function Start () {
 		UnlockAllOptions();
 		UpdateAvailability();
 	}
+	StartCoroutine(Move());
 }
 
 function Update () {

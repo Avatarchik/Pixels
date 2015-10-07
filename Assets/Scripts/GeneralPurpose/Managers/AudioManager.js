@@ -246,7 +246,10 @@ static function SoundVolumeChange (volume:float) {
 }
 
 static function StopAll (wait:float) {
-	yield WaitForSeconds(wait);
+	if(wait != 0)
+	{
+		yield WaitForSeconds(wait);
+	}
 	StopSound();
 	StopSong();
 }

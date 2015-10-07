@@ -406,7 +406,7 @@ function UnlockAllOptions () {
 		}
 	}
 	PlayerPrefs.SetInt("HairSelection",1);
-	PlayerPrefs.SetInt("EyesSelection",1);
+	PlayerPrefs.SetInt("EyesSelection",0);
 	PlayerPrefs.SetInt("TopSelection",1);
 	PlayerPrefs.SetInt("BottomSelection",1);
 	PlayerPrefs.SetInt("CurrencyNumber", 1000);
@@ -515,6 +515,7 @@ class ArcadeGame {
 	var game:GameObject;
 	var cabinet:Sprite;
 	var paidUnlockCost:int;
+	var unlockText:String;
 	var playCost:int;
 	var audioCues:AudioClip[];
 	@HideInInspector var highScore:float;

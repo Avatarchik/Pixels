@@ -315,6 +315,7 @@ function GameOver () {
 	}
 	if(replay)
 	{
+		AudioManager.StopAll(.5);
 		BeforeGames();
 	}
 	else

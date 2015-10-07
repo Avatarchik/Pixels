@@ -73,7 +73,7 @@ function Start () {
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
 	leftCameraLimit = -160;
-	rightCameraLimit = 70;
+	rightCameraLimit = 85;
 	currentState = MapStatus.Clear;
 	returnState = currentState;
 	importantFinger = -1;
@@ -211,8 +211,8 @@ function Update () {
 			// Move camera according to finger velocity, but slow over time.
 			if(PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
 			{
-				transform.position.x = Mathf.Lerp(transform.position.x,location2,Time.deltaTime*.5);
-				transform.position.x = Mathf.MoveTowards(transform.position.x,location2,Time.deltaTime*12);
+				transform.position.x = Mathf.Lerp(transform.position.x,location2,Time.deltaTime*3);
+				transform.position.x = Mathf.MoveTowards(transform.position.x,location2,Time.deltaTime*8);
 			}
 			else
 			{

@@ -174,7 +174,6 @@ function ClickPlate(thisPlate:int) {
 		if(!finished)
 		{
 			plates[thisPlate].GetComponent(SpriteRenderer).sprite = overfillSprite;
-			finished = true;
 			failBackMove = true;
 			yield WaitForSeconds(1.2);
 			Finish();
@@ -210,6 +209,7 @@ function FoodServe(thisPlate:int) {
 }		
 
 function Finish() {
+	Debug.Log("hey");
 	if(!finished)
 	{
 		finished = true;

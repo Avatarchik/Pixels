@@ -22,7 +22,7 @@ function Awake () {
 	player.transform.localScale = Vector3(1.125,1.125,1.125);
 	player.transform.parent = layer01.transform;
 	player.GetComponent(PlayerManager).speedOverride = true;
-	player.GetComponent(PlayerManager).thisSpeed = .4;
+	player.GetComponent(PlayerManager).thisSpeed = .28;
 }
 
 function Start () {

@@ -44,7 +44,7 @@ var playerPrefab:GameObject;
 
 function Awake () {
 	player = Instantiate(playerPrefab);
-	player.transform.position = Vector3(-5.624,-4.6257,transform.position.z-1);
+	player.transform.position = Vector3(-5.624,-4.6257,transform.position.z-2.9);
 	player.transform.localScale = Vector3(1.406,1.406,1.406);
 	player.transform.parent = transform;
 	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;

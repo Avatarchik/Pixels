@@ -16,7 +16,8 @@ var cloudPrefab:GameObject;
 var groundPrefab:GameObject;
 var badGuyPrefab:GameObject;
 var markerPrefab:GameObject;
-var player:GameObject;
+@HideInInspector var player:GameObject;
+var playerPrefab:GameObject;
 
 @HideInInspector var deathMovement:float;
 
@@ -47,6 +48,23 @@ var player:GameObject;
 @HideInInspector var movementSpeed:float;
 
 @HideInInspector var score:float;
+var customMaterial:Material;
+
+function Awake () {
+	player = Instantiate(playerPrefab);
+	player.transform.position = Vector3(-5.624,-5.639,transform.position.z-1.406);
+	player.transform.localScale = Vector3(1.406,1.406,1.406);
+	player.transform.parent = transform;
+	player.AddComponent(ChangeHue);
+	player.GetComponent(ChangeHue).hueMaterial = customMaterial;
+	player.GetComponent(ChangeHue).hue = .6;
+	player.GetComponent(ChangeHue).saturation = .9;
+	player.GetComponent(ChangeHue).doToChildren = true;
+	player.GetComponent(ChangeHue).Instant();
+	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;
+	player.GetComponent(PlayerManager).speedOverride = true;
+	player.GetComponent(PlayerManager).thisSpeed = .2;
+}
 
 function Start () {
 	// Basic world variable initialization.

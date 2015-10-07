@@ -4,6 +4,7 @@
 @HideInInspector var paidUnlockCost:int;
 @HideInInspector var playCost:int;
 @HideInInspector var unlocked:boolean;
+@HideInInspector var currentLockText:String;
 var hide:Vector3;
 var show:Vector3;
 var gameplay:Vector3;
@@ -64,6 +65,12 @@ function Clicked () {
 			else
 			{
 				Camera.main.GetComponent(Master).LaunchNotification("You don't have enough money to play this game!",NotificationType.notEnoughCoins);
+				ArcadeManager.currentState = ArcadeState.Notification;
+				while(Master.notifying)
+				{
+					yield;
+				}
+				ArcadeManager.currentState = ArcadeState.Selecting;
 			}
 		}
 		else
@@ -84,6 +91,12 @@ function Clicked () {
 				else
 				{
 					Camera.main.GetComponent(Master).LaunchNotification("You don't have enough money to buy this game!",NotificationType.notEnoughCoins);
+					ArcadeManager.currentState = ArcadeState.Notification;
+					while(Master.notifying)
+					{
+						yield;
+					}
+					ArcadeManager.currentState = ArcadeState.Selecting;
 				}
 			}
 			else
@@ -94,6 +107,13 @@ function Clicked () {
 					AudioManager.PlaySound(lockedSounds[tempVar]);
 					TalkButton.talkWait = lockedSounds[tempVar].length;
 				}
+				Camera.main.GetComponent(Master).LaunchNotification(currentLockText,NotificationType.notEnoughCoins);
+				ArcadeManager.currentState = ArcadeState.Notification;
+				while(Master.notifying)
+				{
+					yield;
+				}
+				ArcadeManager.currentState = ArcadeState.Selecting;
 			}
 		}
 	}
@@ -102,7 +122,7 @@ function Clicked () {
 	}
 }
 
-function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:int,thisPlayCost:int,thisUnlocked:boolean) {
+function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:int,thisPlayCost:int,thisUnlocked:boolean,unlockText:String) {
 	shown = shouldShow;
 	if(costText != null)
 	{
@@ -110,6 +130,7 @@ function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:in
 		paidUnlockCost = thisPaidUnlockCost;
 		playCost = thisPlayCost;
 		unlocked = thisUnlocked;
+		currentLockText = unlockText;
 		if(unlocked)
 		{
 			costText.text = thisPlayCost.ToString();

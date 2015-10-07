@@ -150,11 +150,11 @@ function Scroll (distance:int) {
 		{
 			if(isMainScreen)
 			{
-				button.Switch(false,(games[0].paidUnlockCost>0),games[0].paidUnlockCost,games[0].playCost,games[0].unlocked);
+				button.Switch(false,(games[0].paidUnlockCost>0),games[0].paidUnlockCost,games[0].playCost,games[0].unlocked,games[0].unlockText);
 			}
 			else
 			{
-				button.Switch(true,(games[currentSelection].paidUnlockCost>0),games[currentSelection].paidUnlockCost,games[currentSelection].playCost,games[currentSelection].unlocked);
+				button.Switch(true,(games[currentSelection].paidUnlockCost>0),games[currentSelection].paidUnlockCost,games[currentSelection].playCost,games[currentSelection].unlocked,games[currentSelection].unlockText);
 			}
 		}
 		

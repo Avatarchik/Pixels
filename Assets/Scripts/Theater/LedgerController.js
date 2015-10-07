@@ -310,6 +310,10 @@ function ReplaceCover (newState:LedgerState) {
 	SwitchLocations(currentState);
 	ChooseWorld();
 	UpdateDisplay(world.basic.worldNameVar);
+	while(Master.notifying)
+	{
+		yield;
+	}
 	yield WaitForSeconds(.03);
 	pageFlip.sprite = pageFlipSprites[7]; yield WaitForSeconds(waitSpeed);
 	pageFlip.sprite = pageFlipSprites[6]; yield WaitForSeconds(waitSpeed);
