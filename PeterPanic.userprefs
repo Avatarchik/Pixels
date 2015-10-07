@@ -1,12 +1,6 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/Games/HS-BloodStream.js">
-    <Files>
-      <File FileName="Assets/Scripts/Levels/04. High School/BloodStream.js" Line="66" Column="8" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/Games/HS-BloodStream.js" Line="187" Column="37" />
-      <File FileName="Assets/Scripts/Levels/03. GameDev/PlatformJump.js" Line="50" Column="1" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/Games/GD-PlatformJump.js" Line="51" Column="29" />
-    </Files>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -19,10 +13,13 @@
                 <Node name="03. GameDev" expanded="True" />
                 <Node name="03B. Arcade" expanded="True">
                   <Node name="Games" expanded="True">
-                    <Node name="HS-BloodStream.js" selected="True" />
+                    <Node name="GD-PlatformJump.js" selected="True" />
                   </Node>
                 </Node>
                 <Node name="04. High School" expanded="True" />
+              </Node>
+              <Node name="TitleScreen" expanded="True">
+                <Node name="Visuals" expanded="True" />
               </Node>
             </Node>
           </Node>
