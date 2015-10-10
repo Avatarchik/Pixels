@@ -20,7 +20,10 @@ var objectsOnScreenTarget:boolean[];
 
 var tutorialNotification:GameObject;
 
+@HideInInspector var moveTimer:float;
+
 function Start () {
+	moveTimer = 0;
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;
@@ -111,6 +114,26 @@ function Update () {
 	if(newPosition < -7)
 	{
 		newPosition = -7;
+	}
+	if(Mathf.Abs(newPosition - crate.transform.position.x)/Time.deltaTime > .2)
+	{
+		moveTimer = .05;
+		if(newPosition > crate.transform.position.x)
+		{
+			crate.transform.rotation = Quaternion.Lerp(crate.transform.rotation,Quaternion.Euler(0,0,-10),Time.deltaTime * 7);
+		}
+		else
+		{
+			crate.transform.rotation = Quaternion.Lerp(crate.transform.rotation,Quaternion.Euler(0,0,10),Time.deltaTime * 7);
+		}
+	}
+	else
+	{
+		moveTimer -= Time.deltaTime;
+		if(moveTimer < 0)
+		{
+			crate.transform.rotation = Quaternion.Lerp(crate.transform.rotation,Quaternion.Euler(0,0,0),Time.deltaTime * 20);
+		}
 	}
 	crate.transform.position.x = newPosition / 1;
 }

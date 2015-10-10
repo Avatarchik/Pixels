@@ -1,5 +1,5 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
@@ -9,16 +9,22 @@
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
                 <Node name="Player" expanded="True" />
+                <Node name="Visual" expanded="True" />
               </Node>
               <Node name="Levels" expanded="True">
+                <Node name="01. Packing Peanut Factory" expanded="True" />
                 <Node name="-01. UnlockWheel" expanded="True" />
                 <Node name="03. GameDev" expanded="True" />
                 <Node name="03B. Arcade" expanded="True">
-                  <Node name="Games" expanded="True" />
-                  <Node name="ArcadeManager.js" selected="True" />
+                  <Node name="Games" expanded="True">
+                    <Node name="PPF-ItemCatch.js" selected="True" />
+                  </Node>
                 </Node>
                 <Node name="04. High School" expanded="True" />
                 <Node name="05. Neverland" expanded="True" />
+              </Node>
+              <Node name="MicroGameLauncher" expanded="True">
+                <Node name="UI" expanded="True" />
               </Node>
               <Node name="TitleScreen" expanded="True">
                 <Node name="Visuals" expanded="True" />
