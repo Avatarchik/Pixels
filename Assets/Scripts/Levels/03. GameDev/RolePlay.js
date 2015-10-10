@@ -59,7 +59,8 @@ var customMaterial:Material;
 function Awake () {
 	player = Instantiate(playerPrefab);
 	player.transform.position = Vector3(4.8928,-1.476,transform.position.z+5);
-	player.transform.localScale = Vector3(-1.2654,1.2654,1.2654);
+	player.transform.localScale = Vector3(1.2654,1.2654,1.2654);
+	player.GetComponent(AnimationManager).flipped = -1;
 	player.transform.parent = transform;
 	player.AddComponent(ChangeHue);
 	player.GetComponent(ChangeHue).hueMaterial = customMaterial;

@@ -35,6 +35,7 @@ var lockedItems:GameObject[];
 var itemNotificationObject:GameObject;
 
 function Start () {
+	AudioManager.PlaySong(Master.currentWorld.audio.music[0]);
 	PlayerPrefs.SetInt("CurrencyNumber",1000);
 	unlockableItems = Camera.main.GetComponent(Master).launchOptions.customizationPieces;
 	UpdateUnlockables();
