@@ -253,11 +253,7 @@ function Stamp(skip:boolean) {
 }
 
 function Finish(completionStatus:boolean) {
-	if(completionStatus)
-	{
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
-	}
-	else
+	if(!completionStatus)
 	{
 		SendTutorial();
 	}

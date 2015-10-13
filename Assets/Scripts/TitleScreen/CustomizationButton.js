@@ -15,22 +15,25 @@ function Start () {
 }
 
 function Clicked () {
-	FindPlayers();
-	TitleManager.currentState = TitleStatus.CustomizeNoColor;
-	if(part)
+	if(!Master.notifying)
 	{
-		manager[0].ChangePart(bodyPart,change);
-		for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+		FindPlayers();
+		TitleManager.currentState = TitleStatus.CustomizeNoColor;
+		if(part)
 		{
-			//manager[i].Refresh(bodyPart);
+			manager[0].ChangePart(bodyPart,change);
+			for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+			{
+				manager[i].Refresh(bodyPart);
+			}
 		}
-	}
-	else
-	{
-		manager[0].ChangeColor(bodyPart,color);
-		for(i = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+		else
 		{
-			//manager[i].Refresh(bodyPart);
+			manager[0].ChangeColor(bodyPart,color);
+			for(i = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+			{
+				manager[i].Refresh(bodyPart);
+			}
 		}
 	}
 }

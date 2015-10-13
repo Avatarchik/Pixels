@@ -73,6 +73,7 @@ function Start () {
 			peopleSpeed[i] = -peopleSpeed[i];
 		}
 	}
+	
 	plateFullness = new int[plates.length];
 	plateSpeed = new float[plates.length];
 	plateFoodType = new int[plates.length];

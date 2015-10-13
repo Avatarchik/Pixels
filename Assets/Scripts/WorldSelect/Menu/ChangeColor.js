@@ -10,11 +10,14 @@ function Start () {
 }
 
 function Clicked () {
-	FindPlayers();
-	manager[0].ChangeColor(bodyPart,colorSelection);
-	for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+	if(!Master.notifying)
 	{
-		manager[i].RefreshColor(bodyPart);
+		FindPlayers();
+		manager[0].ChangeColor(bodyPart,colorSelection);
+		for(var i:int = 0; i < GameObject.FindGameObjectsWithTag("Player").length; i++)
+		{
+			manager[i].RefreshColor(bodyPart);
+		}
 	}
 }
 

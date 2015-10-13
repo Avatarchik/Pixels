@@ -86,6 +86,9 @@ function Update () {
 
 function ChangePart(part:String, change:int) {
 	var fix:int;
+	var unavailableCheck:int = 0;
+	var initial:int;
+	
 	if(change > 0)
 	{
 		fix = 1;
@@ -97,22 +100,33 @@ function ChangePart(part:String, change:int) {
 	switch(part)
 	{
 		case "hair":
-			while(PlayerPrefs.GetInt("HairSelection")+change < 0 || !hairAvailability[PlayerPrefs.GetInt("HairSelection")+change])
+			initial = PlayerPrefs.GetInt("HairSelection");
+			while((PlayerPrefs.GetInt("HairSelection")+change < 0 || !hairAvailability[PlayerPrefs.GetInt("HairSelection")+change]) && unavailableCheck < 50)
 			{
 				change += fix;
 				if(PlayerPrefs.GetInt("HairSelection")+change >= hair.length)
 				{
-					change -= hair.length+1;
+					change -= hair.length+2;
 				}
 				if(PlayerPrefs.GetInt("HairSelection")+change < 0)
 				{
 					change = hair.length-1;
-				}			
+				}		
+				unavailableCheck++;
 			}
-			PlayerPrefs.SetInt("HairSelection",PlayerPrefs.GetInt("HairSelection")+change);
+			if(unavailableCheck >= 50 && !Master.notifying)
+			{
+				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any hair styles yet!",NotificationType.lockedWorld);
+				PlayerPrefs.SetInt("HairSelection",initial);
+			}
+			else
+			{
+				PlayerPrefs.SetInt("HairSelection",PlayerPrefs.GetInt("HairSelection")+change);
+			}
 			break;
 		case "eyes":
-			while(PlayerPrefs.GetInt("EyesSelection")+change < 0 || !eyesAvailability[PlayerPrefs.GetInt("EyesSelection")+change])
+			initial = PlayerPrefs.GetInt("EyesSelection");
+			while((PlayerPrefs.GetInt("EyesSelection")+change < 0 || !eyesAvailability[PlayerPrefs.GetInt("EyesSelection")+change]) && unavailableCheck < 50)
 			{
 				change += fix;
 				if(PlayerPrefs.GetInt("EyesSelection")+change >= eyes.length)
@@ -123,12 +137,22 @@ function ChangePart(part:String, change:int) {
 				{
 					change = eyes.length-1;
 				}
-				yield;
+				
+				unavailableCheck++;
 			}
-			PlayerPrefs.SetInt("EyesSelection",PlayerPrefs.GetInt("EyesSelection")+change);
+			if(unavailableCheck >= 50 && !Master.notifying)
+			{
+				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any different eye types yet!",NotificationType.lockedWorld);
+				PlayerPrefs.SetInt("EyesSelection",initial);
+			}
+			else
+			{
+				PlayerPrefs.SetInt("EyesSelection",PlayerPrefs.GetInt("EyesSelection")+change);
+			}
 			break;
 		case "top":
-			while(PlayerPrefs.GetInt("TopSelection")+change < 0 || !topsAvailability[PlayerPrefs.GetInt("TopSelection")+change])
+			initial = PlayerPrefs.GetInt("TopSelection");
+			while((PlayerPrefs.GetInt("TopSelection")+change < 0 || !topsAvailability[PlayerPrefs.GetInt("TopSelection")+change]) && unavailableCheck < 50)
 			{
 				change += fix;
 				if(PlayerPrefs.GetInt("TopSelection")+change >= tops.length)
@@ -139,11 +163,21 @@ function ChangePart(part:String, change:int) {
 				{
 					change = tops.length-1;
 				}
+				unavailableCheck++;
 			}
-			PlayerPrefs.SetInt("TopSelection",PlayerPrefs.GetInt("TopSelection")+change);
+			if(unavailableCheck >= 50 && !Master.notifying)
+			{
+				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any different tops yet!",NotificationType.lockedWorld);
+				PlayerPrefs.SetInt("TopSelection",initial);
+			}
+			else
+			{
+				PlayerPrefs.SetInt("TopSelection",PlayerPrefs.GetInt("TopSelection")+change);
+			}
 			break;
 		case "bottom":
-			while(PlayerPrefs.GetInt("BottomSelection")+change < 0 || !bottomsAvailability[PlayerPrefs.GetInt("BottomSelection")+change])
+			initial = PlayerPrefs.GetInt("BottomSelection");
+			while((PlayerPrefs.GetInt("BottomSelection")+change < 0 || !bottomsAvailability[PlayerPrefs.GetInt("BottomSelection")+change]) && unavailableCheck < 50)
 			{
 				change += fix;
 				if(PlayerPrefs.GetInt("BottomSelection")+change >= bottoms.length)
@@ -154,8 +188,17 @@ function ChangePart(part:String, change:int) {
 				{
 					change = bottoms.length-1;
 				}
+				unavailableCheck++;
 			}
-			PlayerPrefs.SetInt("BottomSelection",PlayerPrefs.GetInt("BottomSelection")+change);
+			if(unavailableCheck >= 50 && !Master.notifying)
+			{
+				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any different bottoms yet!",NotificationType.lockedWorld);
+				PlayerPrefs.SetInt("BottomSelection",initial);	
+			}
+			else
+			{
+				PlayerPrefs.SetInt("BottomSelection",PlayerPrefs.GetInt("BottomSelection")+change);
+			}
 			break;
 		default:
 			break;
@@ -313,9 +356,6 @@ public function UpdateAvailability () {
 	PlayerPrefs.SetInt("Eyes:"+eyes[0].transform.name,1);
 	PlayerPrefs.SetInt("Tops:"+tops[0].transform.name,1);
 	PlayerPrefs.SetInt("Bottoms:"+bottoms[0].transform.name,1);
-	PlayerPrefs.SetInt("Hair:"+hair[1].transform.name,1);
-	PlayerPrefs.SetInt("Tops:"+tops[1].transform.name,1);
-	PlayerPrefs.SetInt("Bottoms:"+bottoms[1].transform.name,1);
 	for(var hairCheck:int = 0; hairCheck < hair.length; hairCheck++)
 	{
 		if(PlayerPrefs.GetInt("Hair:"+hair[hairCheck].transform.name) == 0)

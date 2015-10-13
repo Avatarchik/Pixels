@@ -11,6 +11,7 @@ var gameplay:Vector3;
 
 var playSprite:Sprite;
 var buySprite:Sprite;
+var unlockSprite:Sprite;
 
 var openColor:Color;
 var closedColor:Color;
@@ -161,7 +162,7 @@ function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:in
 			else
 			{
 				costText.text = "";
-				subIcon.sprite = playSprite;
+				subIcon.sprite = unlockSprite;
 				GetComponent(SpriteRenderer).color = closedColor;
 				costText.characterSize = .4;
 			}

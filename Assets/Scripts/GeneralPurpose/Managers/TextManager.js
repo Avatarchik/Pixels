@@ -834,7 +834,7 @@ function BoxCut (text:String,lines:int,curLine:int,stringNo:int):Array {
 }
 
 function Clicked () {
-	if(Application.loadedLevelName == "TitleScreen")
+	if(Application.loadedLevelName == "TitleScreen" && !notification)
 	{
 		AudioManager.StopSong();
 	}

@@ -1,4 +1,4 @@
-#pragma strict
+	#pragma strict
 
 static var initialLoad:boolean;
 
@@ -207,7 +207,7 @@ function Initialize () {
 	}
 	else
 	{
-		unlockLevels = [0,15,25,35,70,100];
+		unlockLevels = [0,14,24,34,70,100];
 	}
 	if(launchOptions.eraseOnLoad || (launchOptions.eraseOnNewVersion && PlayerPrefs.GetFloat("ion") != appVersion))
 	{
@@ -269,11 +269,11 @@ function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Character selection variables.
 	if(!PlayerPrefs.HasKey("HairSelection"))
 	{
-		PlayerPrefs.SetInt("HairSelection", 1);
+		PlayerPrefs.SetInt("HairSelection", 0);
 	}
 	if(!PlayerPrefs.HasKey("HairColor"))
 	{
-		PlayerPrefs.SetInt("HairColor", 1);
+		PlayerPrefs.SetInt("HairColor", 0);
 	}
 	if(!PlayerPrefs.HasKey("EyesSelection"))
 	{
@@ -285,7 +285,7 @@ function Initialize () {
 	}
 	if(!PlayerPrefs.HasKey("TopSelection"))
 	{
-		PlayerPrefs.SetInt("TopSelection", 1);
+		PlayerPrefs.SetInt("TopSelection", 0);
 	}
 	if(!PlayerPrefs.HasKey("TopColor"))
 	{
@@ -293,7 +293,7 @@ function Initialize () {
 	}
 	if(!PlayerPrefs.HasKey("BottomSelection"))
 	{
-		PlayerPrefs.SetInt("BottomSelection", 1);
+		PlayerPrefs.SetInt("BottomSelection", 0);
 	}
 	if(!PlayerPrefs.HasKey("BottomColor"))
 	{
@@ -405,10 +405,10 @@ function UnlockAllOptions () {
 			}
 		}
 	}
-	PlayerPrefs.SetInt("HairSelection",1);
+	PlayerPrefs.SetInt("HairSelection",0);
 	PlayerPrefs.SetInt("EyesSelection",0);
-	PlayerPrefs.SetInt("TopSelection",1);
-	PlayerPrefs.SetInt("BottomSelection",1);
+	PlayerPrefs.SetInt("TopSelection",0);
+	PlayerPrefs.SetInt("BottomSelection",0);
 	PlayerPrefs.SetInt("CurrencyNumber", 1000);
 }
 

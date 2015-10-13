@@ -63,6 +63,6 @@ function Update () {
 	}
 	else
 	{
-		playerManager.currentState = PlayerState.StandingFront;
+		playerManager.currentState = PlayerState.SpecialHeadBob;
 	}
 }

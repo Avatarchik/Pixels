@@ -255,6 +255,7 @@ function ReturnToTitle() {
 		}
 		Time.timeScale = 1;
 		yield WaitForSeconds(.7);
+		Debug.Log("hey???");
 		AudioManager.StopSong();
 		yield WaitForSeconds(1);
 		if(Application.loadedLevelName == "WorldSelect")

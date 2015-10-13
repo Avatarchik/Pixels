@@ -131,7 +131,7 @@ function BeforeGames () {
 	timeBeforeLevelLoad = 1;
 	speedProgress = 0;
 	difficultyProgress = 0;
-	gameNumber = 1;
+	gameNumber = 0;
 	notified = false;
 	movingBack = false;
 	quitting = false;
