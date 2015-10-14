@@ -100,6 +100,7 @@ function Start () {
 		demo = true;
 		StartCoroutine(Demo());
 	}
+	PlayerPrefs.SetInt("CurrencyNumber", 50000);
 }
 
 function Update () {

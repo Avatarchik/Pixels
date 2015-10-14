@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 // Current position of the player.
-public enum PlayerState{StandingFront,StandingBack,StandingLeft,StandingRight,WalkingFront,WalkingBack,WalkingLeft,WalkingRight,SpecialHeadBob,Cutscene}
+public enum PlayerState{StandingFront,StandingBack,WalkingFront,WalkingBack,SpecialHeadBob,Null1,Null2,Null3,Null4,Cutscene}
 var currentState:PlayerState;
 var step:int;
 static var speed:float;
@@ -142,7 +142,7 @@ function ChangePart(part:String, change:int) {
 			}
 			if(unavailableCheck >= 50 && !Master.notifying)
 			{
-				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any different eye types yet!",NotificationType.lockedWorld);
+				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any eye types yet!",NotificationType.lockedWorld);
 				PlayerPrefs.SetInt("EyesSelection",initial);
 			}
 			else
@@ -167,7 +167,7 @@ function ChangePart(part:String, change:int) {
 			}
 			if(unavailableCheck >= 50 && !Master.notifying)
 			{
-				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any different tops yet!",NotificationType.lockedWorld);
+				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any tops yet!",NotificationType.lockedWorld);
 				PlayerPrefs.SetInt("TopSelection",initial);
 			}
 			else
@@ -192,7 +192,7 @@ function ChangePart(part:String, change:int) {
 			}
 			if(unavailableCheck >= 50 && !Master.notifying)
 			{
-				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any different bottoms yet!",NotificationType.lockedWorld);
+				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any bottoms yet!",NotificationType.lockedWorld);
 				PlayerPrefs.SetInt("BottomSelection",initial);	
 			}
 			else

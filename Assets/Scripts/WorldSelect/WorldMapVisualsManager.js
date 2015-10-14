@@ -49,20 +49,26 @@ function Update () {
 	player.transform.position.x = Mathf.MoveTowards(player.transform.position.x,0,Time.deltaTime * (5 + Mathf.Abs(player.transform.position.x * .4)));
 	//playerManager.speed = .1;	
 
-	if(player.transform.position.x > .1)
+	if(player.transform.position.x > .03)
 	{
-		playerManager.currentState = PlayerState.WalkingLeft;
+		playerManager.currentState = PlayerState.WalkingFront;
+		player.transform.GetComponent(AnimationManager).flipped = -1;
+		player.GetComponent(PlayerManager).thisSpeed = .28;
 	}
-	else if(player.transform.position.x < -.1)
+	else if(player.transform.position.x < -.03)
 	{
-		playerManager.currentState = PlayerState.WalkingRight;
+		playerManager.currentState = PlayerState.WalkingFront;
+		player.transform.GetComponent(AnimationManager).flipped = 1;
+		player.GetComponent(PlayerManager).thisSpeed = .28;
 	}
 	else if(worldMapManager.currentState == MapStatus.Confirmation)
 	{
 		playerManager.currentState = PlayerState.StandingBack;
+		player.GetComponent(PlayerManager).thisSpeed = .28;
 	}
 	else
 	{
 		playerManager.currentState = PlayerState.SpecialHeadBob;
+		player.GetComponent(PlayerManager).thisSpeed = .7;
 	}
 }

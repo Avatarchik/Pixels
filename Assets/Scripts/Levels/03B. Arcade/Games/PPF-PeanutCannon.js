@@ -64,11 +64,13 @@ function Update () {
 	}
 	else if(player.transform.position.x > target)
 	{
-		playerManager.currentState = PlayerState.WalkingLeft;
+		playerManager.currentState = PlayerState.WalkingBack;
+		player.transform.GetComponent(AnimationManager).flipped = -1;
 	}
 	else if(player.transform.position.x < target)
 	{
-		playerManager.currentState = PlayerState.WalkingRight;
+		playerManager.currentState = PlayerState.WalkingBack;
+		player.transform.GetComponent(AnimationManager).flipped = 1;
 	}
 	else
 	{

@@ -25,7 +25,7 @@ function Start () {
 }
 
 function Update () {
-	if(transform.parent.GetComponent(PlayerManager).currentState != PlayerState.SpecialHeadBob && transform.parent.GetComponent(PlayerManager).currentState != PlayerState.WalkingFront && transform.parent.GetComponent(PlayerManager).currentState != PlayerState.WalkingRight && transform.parent.GetComponent(PlayerManager).currentState != PlayerState.WalkingLeft)
+	if(transform.parent.GetComponent(PlayerManager).currentState != PlayerState.SpecialHeadBob && transform.parent.GetComponent(PlayerManager).currentState != PlayerState.WalkingFront)
 	{
 		UpdateSprites();
 	}

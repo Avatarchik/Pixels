@@ -82,6 +82,7 @@ function Clicked () {
 				{
 					PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
 					Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);
+					manager.Scroll(0);
 					if(TalkButton.talkWait < 0)
 					{
 						var tempVar:float = Random.Range(0,unlockSounds.length);

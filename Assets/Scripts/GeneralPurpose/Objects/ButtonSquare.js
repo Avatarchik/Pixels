@@ -22,6 +22,8 @@ var volume:float;
 var inMinigame:boolean;
 var inMinigameContinuousOverride:boolean = false;
 
+var notificationWatch:boolean = false;
+
 function Start () {
 	if(subText != null)
 	{
@@ -53,7 +55,10 @@ function FixedUpdate () {
 					{
 						AudioManager.PlaySound(clickSound,volume);
 					}
-					importantFinger = i;
+					if(!notificationWatch || !Master.notifying)
+					{
+						importantFinger = i;
+					}
 					if(down!=null && GetComponent(SpriteRenderer)!=null)
 					{
 						GetComponent(SpriteRenderer).sprite = down;

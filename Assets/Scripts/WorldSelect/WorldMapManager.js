@@ -40,6 +40,8 @@ var intro2:GameObject;
 static var introducing:boolean;
 @HideInInspector var loadedText:GameObject;
 
+@HideInInspector var velocities:float[];
+
 var reveal:GameObject;
 
 // Locations
@@ -53,6 +55,9 @@ function Start () {
 	location1 = 18;
 	location2 = -2.66;
 	step = -1;
+	
+	velocities = new float[3];
+	velocities = [0.0,0];
 	
 	selectedLocation = transform.position.x;
 	
@@ -80,7 +85,7 @@ function Start () {
 	mapMove = false;
 	if(mapMoveSpeed == 0 || mapMoveSpeed == null)
 	{
-		mapMoveSpeed = .035;
+		mapMoveSpeed = .07;
 	}
 	if(PlayerPrefs.GetInt("TutorialFinished") < 2)
 	{
@@ -205,6 +210,18 @@ function Update () {
 				else if(mapMove)
 				{
 					cameraVelocity = Mathf.Clamp(Finger.GetVelocity(importantFinger).x,-60,60);
+					for(var thisOne:int = velocities.length - 1; thisOne > 0; thisOne --)
+					{
+						velocities[thisOne] = velocities[thisOne-1];
+					}
+					velocities[0] = Mathf.Clamp(Finger.GetVelocity(importantFinger).x,-60,60);
+					var total:float = 0;
+					for(thisOne = 0; thisOne < velocities.length; thisOne ++)
+					{
+						total += velocities[thisOne];
+					}
+					cameraVelocity = total/3;
+					Debug.Log(cameraVelocity);
 				}
 			}
 			
@@ -226,7 +243,6 @@ function Update () {
 				}
 				cameraVelocity = Mathf.Lerp(cameraVelocity,0,Time.deltaTime * 2.5);
 			}
-			
 			break;
 		case MapStatus.Confirmation:
 			returnState = currentState;

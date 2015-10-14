@@ -179,11 +179,13 @@ function Update () {
 	
 	if(target > player.transform.position.x && Mathf.Abs(target - player.transform.position.x) > .1)
 	{
-		player.GetComponent(PlayerManager).currentState = PlayerState.WalkingRight;
+		player.GetComponent(PlayerManager).currentState = PlayerState.WalkingBack;
+		player.transform.GetComponent(AnimationManager).flipped = 1;
 	}
 	else if(target < player.transform.position.x && Mathf.Abs(target - player.transform.position.x) > .1)
 	{
-		player.GetComponent(PlayerManager).currentState = PlayerState.WalkingLeft;
+		player.GetComponent(PlayerManager).currentState = PlayerState.WalkingBack;
+		player.transform.GetComponent(AnimationManager).flipped = -1;
 	}
 	else
 	{

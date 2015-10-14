@@ -70,7 +70,7 @@ function Start () {
 	encore4ButtonOriginalSprite = encore4Button.transform.GetChild(0).GetComponent(SpriteRenderer).sprite;
 			
 	theaterController = GameObject.FindGameObjectWithTag("Theater").GetComponent(TheaterController);
-	worldNames = ["PackingPeanutFactory","Museum","HighSchool","Neverland"];
+	worldNames = ["PackingPeanutFactory","Museum","GameDev","HighSchool","Neverland"];
 	onScreen = 0;
 	offScreen = -100;
 	videoPlaying = false;
@@ -183,14 +183,16 @@ function UpdateDisplay(worldName:String){
 }
 
 function DisableButton(button:GameObject) {
+	button.GetComponent(TheaterSongLoader).allowed = false;
 	button.GetComponent(ButtonRectangle).subText.GetComponent(SpriteRenderer).sprite = lockedSprite;
-	button.GetComponent(ButtonRectangle).enabled = false;
+	//button.GetComponent(ButtonRectangle).enabled = false;
 	button.GetComponent(SpriteRenderer).color = Color(.8,.2,.2,1);
 }
 
 function EnableButton(button:GameObject, sprite:Sprite) {
+	button.GetComponent(TheaterSongLoader).allowed = true;
 	button.GetComponent(ButtonRectangle).subText.GetComponent(SpriteRenderer).sprite = sprite;
-	button.GetComponent(ButtonRectangle).enabled = true;
+	//button.GetComponent(ButtonRectangle).enabled = true;
 	button.GetComponent(SpriteRenderer).color = Color(.324,.6,.78,1);
 }
 

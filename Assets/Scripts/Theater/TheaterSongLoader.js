@@ -4,6 +4,10 @@ var type:String;
 var offSprite:Sprite;
 var onSprite:Sprite;
 
+var allowed:boolean = false;
+
+var lockText:String;
+
 function Start () {
 	
 }
@@ -25,19 +29,19 @@ function Update () {
 }
 
 function Clicked () {
-	if(LedgerController.currentState == LedgerState.Worlds)
+	if(allowed)
 	{
-		if(type == "Entracte")
+		if(LedgerController.currentState == LedgerState.Worlds)
 		{
-			LedgerController.songPlaying = !LedgerController.songPlaying;
-		}
-		if(type == "HARDMODE")
-		{
-			GameObject.FindGameObjectWithTag("LedgerController").SendMessage("StartHardMode",SendMessageOptions.DontRequireReceiver);
-		}
-		else
-		{
+			if(type == "Entracte")
+			{
+				LedgerController.songPlaying = !LedgerController.songPlaying;
+			}
 			GameObject.FindGameObjectWithTag("LedgerController").SendMessage("VideoButtonPress",type,SendMessageOptions.DontRequireReceiver);
 		}
+	}
+	else
+	{
+		Camera.main.GetComponent(Master).LaunchNotification(lockText,NotificationType.lockedWorld);
 	}
 }

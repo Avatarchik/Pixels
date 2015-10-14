@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-var desiredState:PlayerState;
+var flipped:int;
 var wait:float;
 var crossing:boolean;
 
@@ -9,16 +9,16 @@ function Start () {
 	{
 		if(transform.position.x > transform.parent.transform.position.x)
 		{
-			desiredState = PlayerState.WalkingLeft;
+			flipped = -1;
 		}
 		else
 		{
-			desiredState = PlayerState.WalkingRight;
+			flipped = 1;
 		}
 	}
 }
 
 function Update () {
-	GetComponent(PlayerManager).currentState = desiredState;
+	GetComponent(AnimationManager).flipped = flipped;
 	GetComponent(PlayerManager).speed = wait;
 }

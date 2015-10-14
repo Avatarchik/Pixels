@@ -19,6 +19,8 @@ var clickSound:AudioClip;
 var click:boolean;
 var volume:float;
 
+var notificationWatch:boolean = false;
+
 function Start () {
 	if(subText != null)
 	{
@@ -50,7 +52,10 @@ function Update () {
 					{
 						AudioManager.PlaySound(clickSound,volume);
 					}
-					importantFinger = i;
+					if(!notificationWatch)
+					{
+						importantFinger = i;
+					}
 					if(down!=null && GetComponent(SpriteRenderer)!=null)
 					{
 						GetComponent(SpriteRenderer).sprite = down;
