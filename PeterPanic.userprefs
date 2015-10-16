@@ -1,5 +1,5 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,8 +15,9 @@
                   <Node name="Objects" expanded="True" />
                 </Node>
               </Node>
-              <Node name="Theater" expanded="True">
-                <Node name="ChangeSelectedWorld.js" selected="True" />
+              <Node name="Theater" expanded="True" />
+              <Node name="TitleScreen" expanded="True">
+                <Node name="TitleManager.js" selected="True" />
               </Node>
             </Node>
           </Node>
