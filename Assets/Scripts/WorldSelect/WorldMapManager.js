@@ -221,7 +221,6 @@ function Update () {
 						total += velocities[thisOne];
 					}
 					cameraVelocity = total/3;
-					Debug.Log(cameraVelocity);
 				}
 			}
 			

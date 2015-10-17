@@ -53,6 +53,32 @@ static var FOHBoozeAvailability:boolean[];
 static var FOHTicketBoothAvailability:boolean[];
 static var FOHDeskAvailability:boolean[];
 
+// Number available numbers.
+static var stageWallAvailabilityNumber:int;
+static var stageFloorAvailabilityNumber:int;
+static var ceilingAvailabilityNumber:int;
+static var theaterWallAvailabilityNumber:int;
+static var theaterFloorAvailabilityNumber:int;
+static var curtainAvailabilityNumber:int;
+static var chairsAvailabilityNumber:int;
+
+static var FOHWallAvailabilityNumber:int;
+static var FOHFloorAvailabilityNumber:int;
+static var FOHBoozeAvailabilityNumber:int;
+static var FOHTicketBoothAvailabilityNumber:int;
+static var FOHDeskAvailabilityNumber:int;
+
+// Display stuff.
+static var thisObject:int;
+static var totalObject:int;
+static var displayCounter:float;
+var display1:TextMesh;
+var display2:TextMesh;
+static var displayTopHeight1:float;
+static var displayBottomHeight1:float;
+static var displayTopHeight2:float;
+static var displayBottomHeight2:float;
+
 function Start () {
 	// Lock or unlock all pieces, and activate availability.
 	UpdateAvailability();
@@ -61,6 +87,15 @@ function Start () {
 		UnlockAllOptions();
 		UpdateAvailability();
 	}
+	
+	// Display stuff.
+	thisObject = 0;
+	totalObject = 0;
+	displayCounter = 0;
+	displayTopHeight1 = 12;
+	displayBottomHeight1 = 7.5;
+	displayTopHeight2 = 19;
+	displayBottomHeight2 =14.5;
 	
 	// Create all pieces.
 	currentStageWall = Instantiate(stageWall[PlayerPrefs.GetInt("StageWallSelection")]);
@@ -122,13 +157,34 @@ function Start () {
 	currentFOHTicketBooth.transform.localPosition = Vector3(36.07,0.3,8);
 	currentFOHDesk.transform.localPosition = Vector3(25.5,-6.45,7);
 	
+	DisplayNumber();
 }
+
+function DisplayNumber() {
+	while(true)
+	{
+		displayCounter -= Time.deltaTime;
+		display1.text = thisObject.ToString() + "/" + totalObject.ToString();
+		display2.text = thisObject.ToString() + "/" + totalObject.ToString();
+		if(displayCounter <= 0)
+		{
+			display1.transform.position.y = Mathf.MoveTowards(display1.transform.position.y,displayTopHeight1,Time.deltaTime * 10);
+			display2.transform.position.y = Mathf.MoveTowards(display2.transform.position.y,displayTopHeight2,Time.deltaTime * 10);
+		}
+		else
+		{
+			display1.transform.position.y = Mathf.MoveTowards(display1.transform.position.y,displayBottomHeight1,Time.deltaTime * 10);
+			display2.transform.position.y = Mathf.MoveTowards(display2.transform.position.y,displayBottomHeight2,Time.deltaTime * 10);
+		}
+		yield;
+	}	
+}
+
 function ChangePartSpecific (part:String, change:int) {
 	// The function to call when you want to change a part by any amount. This is the main function to be called from external scripts.
 	switch(part)
 	{
 		case "StageWall":
-			Debug.Log(change);
 			PlayerPrefs.SetInt("StageWallSelection",change);
 			Debug.Log(PlayerPrefs.GetInt("StageWallSelection"));
 			break;
@@ -243,6 +299,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("StageWall",change);
 			}
+			thisObject = stageWall[PlayerPrefs.GetInt("StageWallSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = stageWallAvailabilityNumber;
 			break;
 		case "StageFloor":
 			Destroy(currentStageFloor);
@@ -262,6 +320,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("StageFloor",change);
 			}
+			thisObject = stageFloor[PlayerPrefs.GetInt("StageFloorSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = stageFloorAvailabilityNumber;
 			break;
 		case "Ceiling":
 			Destroy(currentCeiling);
@@ -281,6 +341,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("Ceiling",change);
 			}
+			thisObject = ceiling[PlayerPrefs.GetInt("CeilingSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = ceilingAvailabilityNumber;
 			break;
 		case "TheaterWall":
 			
@@ -301,6 +363,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("TheaterWall",change);
 			}
+			thisObject = theaterWall[PlayerPrefs.GetInt("TheaterWallSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = theaterWallAvailabilityNumber;
 			break;
 		case "TheaterFloor":
 			Destroy(currentTheaterFloor);
@@ -320,6 +384,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("TheaterFloor",change);
 			}
+			thisObject = theaterFloor[PlayerPrefs.GetInt("TheaterFloorSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = theaterFloorAvailabilityNumber;
 			break;
 		case "Curtain":
 			Destroy(currentCurtain);
@@ -339,6 +405,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("Curtain",change);
 			}
+			thisObject = curtain[PlayerPrefs.GetInt("CurtainSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = curtainAvailabilityNumber;
 			break;
 		case "Chairs":
 			Destroy(currentChairs);
@@ -358,6 +426,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("Chairs",change);
 			}
+			thisObject = chairs[PlayerPrefs.GetInt("ChairsSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = chairsAvailabilityNumber;
 			break;
 		case "FOHWall":
 			Destroy(currentFOHWall);
@@ -377,6 +447,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("FOHWall",change);
 			}
+			thisObject = FOHWall[PlayerPrefs.GetInt("FOHWallSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = FOHWallAvailabilityNumber;
 			break;
 		case "FOHFloor":
 			Destroy(currentFOHFloor);
@@ -396,6 +468,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("FOHFloor",change);
 			}
+			thisObject = FOHFloor[PlayerPrefs.GetInt("FOHFloorSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = FOHFloorAvailabilityNumber;
 			break;
 		case "FOHBooze":
 			Destroy(currentFOHBooze);
@@ -415,6 +489,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("FOHBooze",change);
 			}
+			thisObject = FOHBooze[PlayerPrefs.GetInt("FOHBoozeSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = FOHBoozeAvailabilityNumber;
 			break;
 		case "FOHTicketBooth":
 			Destroy(currentFOHTicketBooth);
@@ -434,6 +510,8 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("FOHTicketBooth",change);
 			}
+			thisObject = FOHTicketBooth[PlayerPrefs.GetInt("FOHTicketBoothSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = FOHTicketBoothAvailabilityNumber;
 			break;
 		case "FOHDesk":
 			Destroy(currentFOHDesk);
@@ -453,13 +531,31 @@ function Refresh(part:String, change:int) {
 			{
 				ChangePart("FOHDesk",change);
 			}
+			thisObject = FOHDesk[PlayerPrefs.GetInt("FOHDeskSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
+			totalObject = FOHDeskAvailabilityNumber;
 			break;
 		default:
 			break;
 	}
+	displayCounter = 1.5;
 }
 
 function UpdateAvailability () {
+
+	stageWallAvailabilityNumber = 0;
+	stageFloorAvailabilityNumber = 0;
+	ceilingAvailabilityNumber = 0;
+	theaterWallAvailabilityNumber = 0;
+	theaterFloorAvailabilityNumber = 0;
+	curtainAvailabilityNumber = 0;
+	chairsAvailabilityNumber = 0;
+
+	FOHWallAvailabilityNumber = 0;
+	FOHFloorAvailabilityNumber = 0;
+	FOHBoozeAvailabilityNumber = 0;
+	FOHTicketBoothAvailabilityNumber = 0;
+	FOHDeskAvailabilityNumber = 0;
+	
 	// Sets the availability of pieces based on PlayerPrefs.
 	stageWallAvailability = new boolean[stageWall.length + 1];
 	stageFloorAvailability = new boolean[stageFloor.length + 1];
@@ -511,6 +607,8 @@ function UpdateAvailability () {
 		else
 		{
 			stageWallAvailability[stageWallCheck] = true;
+			stageWallAvailabilityNumber++;
+			stageWall[stageWallCheck].GetComponent(VariablePrefix).thisObjectListNumber = stageWallAvailabilityNumber;
 		}
 	}
 	for(var stageFloorCheck:int = 0; stageFloorCheck < stageFloor.length; stageFloorCheck++)
@@ -522,6 +620,8 @@ function UpdateAvailability () {
 		else
 		{
 			stageFloorAvailability[stageFloorCheck] = true;
+			stageFloorAvailabilityNumber++;
+			stageFloor[stageFloorCheck].GetComponent(VariablePrefix).thisObjectListNumber = stageFloorAvailabilityNumber;
 		}
 	}
 	for(var ceilingCheck:int = 0; ceilingCheck < ceiling.length; ceilingCheck++)
@@ -533,6 +633,8 @@ function UpdateAvailability () {
 		else
 		{
 			ceilingAvailability[ceilingCheck] = true;
+			ceilingAvailabilityNumber++;
+			ceiling[ceilingCheck].GetComponent(VariablePrefix).thisObjectListNumber = ceilingAvailabilityNumber;
 		}
 	}
 	for(var theaterWallCheck:int = 0; theaterWallCheck < theaterWall.length; theaterWallCheck++)
@@ -544,6 +646,8 @@ function UpdateAvailability () {
 		else
 		{
 			theaterWallAvailability[theaterWallCheck] = true;
+			theaterWallAvailabilityNumber++;
+			theaterWall[theaterWallCheck].GetComponent(VariablePrefix).thisObjectListNumber = theaterWallAvailabilityNumber;
 		}
 	}
 	for(var theaterFloorCheck:int = 0; theaterFloorCheck < theaterFloor.length; theaterFloorCheck++)
@@ -555,6 +659,8 @@ function UpdateAvailability () {
 		else
 		{
 			theaterFloorAvailability[theaterFloorCheck] = true;
+			theaterFloorAvailabilityNumber++;
+			theaterFloor[theaterFloorCheck].GetComponent(VariablePrefix).thisObjectListNumber = theaterFloorAvailabilityNumber;
 		}
 	}
 	for(var curtainCheck:int = 0; curtainCheck < curtain.length; curtainCheck++)
@@ -566,6 +672,8 @@ function UpdateAvailability () {
 		else
 		{
 			curtainAvailability[curtainCheck] = true;
+			curtainAvailabilityNumber++;
+			curtain[curtainCheck].GetComponent(VariablePrefix).thisObjectListNumber = curtainAvailabilityNumber;
 		}
 	}
 	for(var chairsCheck:int = 0; chairsCheck < chairs.length; chairsCheck++)
@@ -577,6 +685,8 @@ function UpdateAvailability () {
 		else
 		{
 			chairsAvailability[chairsCheck] = true;
+			chairsAvailabilityNumber++;
+			chairs[chairsCheck].GetComponent(VariablePrefix).thisObjectListNumber = chairsAvailabilityNumber;
 		}
 	}
 	for(var FOHWallCheck:int = 0; FOHWallCheck < FOHWall.length; FOHWallCheck++)
@@ -588,6 +698,8 @@ function UpdateAvailability () {
 		else
 		{
 			FOHWallAvailability[FOHWallCheck] = true;
+			FOHWallAvailabilityNumber++;
+			FOHWall[FOHWallCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHWallAvailabilityNumber;
 		}
 	}
 	for(var FOHFloorCheck:int = 0; FOHFloorCheck < FOHFloor.length; FOHFloorCheck++)
@@ -599,6 +711,8 @@ function UpdateAvailability () {
 		else
 		{
 			FOHFloorAvailability[FOHFloorCheck] = true;
+			FOHFloorAvailabilityNumber++;
+			FOHFloor[FOHFloorCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHFloorAvailabilityNumber;
 		}
 	}
 	for(var FOHBoozeCheck:int = 0; FOHBoozeCheck < FOHBooze.length; FOHBoozeCheck++)
@@ -610,6 +724,8 @@ function UpdateAvailability () {
 		else
 		{
 			FOHBoozeAvailability[FOHBoozeCheck] = true;
+			FOHBoozeAvailabilityNumber++;
+			FOHBooze[FOHBoozeCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHBoozeAvailabilityNumber;
 		}
 	}
 	for(var FOHTicketBoothCheck:int = 0; FOHTicketBoothCheck < FOHTicketBooth.length; FOHTicketBoothCheck++)
@@ -621,6 +737,8 @@ function UpdateAvailability () {
 		else
 		{
 			FOHTicketBoothAvailability[FOHTicketBoothCheck] = true;
+			FOHTicketBoothAvailabilityNumber++;
+			FOHTicketBooth[FOHTicketBoothCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHTicketBoothAvailabilityNumber;
 		}
 	}
 	for(var FOHDeskCheck:int = 0; FOHDeskCheck < FOHDesk.length; FOHDeskCheck++)
@@ -632,6 +750,8 @@ function UpdateAvailability () {
 		else
 		{
 			FOHDeskAvailability[FOHDeskCheck] = true;
+			FOHDeskAvailabilityNumber++;
+			FOHDesk[FOHDeskCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHDeskAvailabilityNumber;
 		}
 	}
 }	
