@@ -100,6 +100,11 @@
      <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\SendMessageToObject.js" />
      <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\UnlockWheelManager.js" />
      <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\UnlockWheelStopButton.js" />
+     <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixDifficultyButton.js" />
+     <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixLeave.js" />
+     <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixManager.js" />
+     <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixStepButton.js" />
+     <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixWorldButton.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\BoxFill.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\ItemCatch.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\MonsterFeed.js" />
@@ -221,17 +226,11 @@
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapVisualsManager.js" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
      <None Include="Assets\Art\Materials\3DText.shader" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

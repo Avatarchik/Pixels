@@ -253,6 +253,7 @@ function Stamp(skip:boolean) {
 }
 
 function Finish(completionStatus:boolean) {
+	UITimer.soundsOn = !completionStatus;
 	if(!completionStatus)
 	{
 		SendTutorial();

@@ -240,6 +240,7 @@ function Play () {
 }
 
 function Finish(completionStatus:boolean) {
+	UITimer.soundsOn = !completionStatus;
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

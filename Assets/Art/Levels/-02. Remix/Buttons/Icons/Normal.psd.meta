@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b517d9b21ba9748db87faeacdc17f781
-timeCreated: 1432514370
-licenseType: Free
+guid: 3d6ce305dd3a9447492da39b7236e349
+timeCreated: 1445033033
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Ticket
+    21300000: SquareButtonUp
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -38,6 +38,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
@@ -50,7 +51,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: WorldMapSprites
+  spritePackingTag: UnlockWheel
   userData: 
   assetBundleName: 
   assetBundleVariant: 

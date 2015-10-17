@@ -207,6 +207,7 @@ function LaserFire (laser:SpriteRenderer) {
 	laser.sprite = laserSprites[0];
 }
 function Finish(completionStatus:boolean) {
+	UITimer.soundsOn = !completionStatus;
 	if(!finished)
 	{
 		finished = true;

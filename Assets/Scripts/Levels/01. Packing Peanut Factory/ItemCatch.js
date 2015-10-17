@@ -132,7 +132,7 @@ function Update () {
 		moveTimer -= Time.deltaTime;
 		if(moveTimer < 0)
 		{
-			crate.transform.rotation = Quaternion.Lerp(crate.transform.rotation,Quaternion.Euler(0,0,0),Time.deltaTime * 20);
+			crate.transform.rotation = Quaternion.Lerp(crate.transform.rotation,Quaternion.Euler(0,0,0),Time.deltaTime * 30);
 		}
 	}
 	crate.transform.position.x = newPosition / 1;

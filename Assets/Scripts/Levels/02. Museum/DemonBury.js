@@ -270,6 +270,7 @@ function Play () {
 }
 
 function Finish(completionStatus:boolean) {
+	UITimer.soundsOn = !completionStatus;
 	if(!finished)
 	{
 		finished = true;

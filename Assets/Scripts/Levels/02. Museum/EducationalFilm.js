@@ -211,6 +211,7 @@ function Finish(completionStatus:boolean) {
 }
 
 function Finish(completionStatus:boolean,waitTime) {
+	UITimer.soundsOn = !completionStatus;
 	yield WaitForSeconds(waitTime);
 	if(Application.loadedLevelName == "MicroTester")
 	{

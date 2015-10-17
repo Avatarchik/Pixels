@@ -315,6 +315,7 @@ function Finish(completionStatus:boolean) {
 }
 
 function Finish(completionStatus:boolean,waitTime:float) {
+	UITimer.soundsOn = !completionStatus;
 	if(!finished)
 	{
 		Debug.Log(completionStatus);

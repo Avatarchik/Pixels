@@ -317,6 +317,7 @@ function Reload (counter:float) {
 
 
 function Finish(completionStatus:boolean,waitTime:float) {
+	UITimer.soundsOn = !completionStatus;
 	if(!finished)
 	{
 		finished = true;
