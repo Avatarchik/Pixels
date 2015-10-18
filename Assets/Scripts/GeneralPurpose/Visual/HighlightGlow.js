@@ -6,10 +6,12 @@ var speed:float = 1.5;
 var amount:float = .2;
 static var flash:boolean;
 
+var pieceHighlight:boolean;
+
 function Start () {
 	flash = false;
 	sprite = GetComponent(SpriteRenderer);
-	if(Application.loadedLevelName == "WorldSelect")
+	if(!pieceHighlight)
 	{
 		WorldUpdate();
 	}

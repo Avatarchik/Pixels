@@ -52,7 +52,7 @@ function Update () {
 					{
 						AudioManager.PlaySound(clickSound,volume);
 					}
-					if(!notificationWatch)
+					if(!notificationWatch || !Master.notifying)
 					{
 						importantFinger = i;
 					}

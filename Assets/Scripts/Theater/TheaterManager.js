@@ -93,9 +93,9 @@ function Start () {
 	totalObject = 0;
 	displayCounter = 0;
 	displayTopHeight1 = 12;
-	displayBottomHeight1 = 7.5;
+	displayBottomHeight1 = 7.4;
 	displayTopHeight2 = 19;
-	displayBottomHeight2 =14.5;
+	displayBottomHeight2 =14.4;
 	
 	// Create all pieces.
 	currentStageWall = Instantiate(stageWall[PlayerPrefs.GetInt("StageWallSelection")]);
