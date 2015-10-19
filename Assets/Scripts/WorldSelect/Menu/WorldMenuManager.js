@@ -13,6 +13,7 @@ var destination:float;
 var exitColor:Color;
 var normalColor:Color;
 
+var countdown:TextMesh;
 
 function Start () {
 	if(!PlayerPrefs.HasKey("Sound"))
@@ -53,8 +54,8 @@ function MenuEffect(clicked:String) {
 	{
 		// From initial menu.
 		case "Continue":
-			Continue();
 			Exit();
+			Continue();
 			break;
 		case "Options":
 			option[0] = "Facebook";
@@ -204,9 +205,13 @@ function UpdateNamesDown () {
 }
 
 function Exit () {
-	while(transform.position.y < 25)
+	var currentTime:float = Time.realtimeSinceStartup;
+	countdown.text = "";
+	while(transform.position.y < 25 || countdown.text != "")
 	{
-		transform.position.y += Time.deltaTime * 70;
+		var deltaTime:float = Time.realtimeSinceStartup - currentTime;
+		transform.position.y += deltaTime * 70;
+		currentTime = Time.realtimeSinceStartup;
 		yield;
 	}
 	Destroy(gameObject);
@@ -214,6 +219,8 @@ function Exit () {
 }
 
 function Continue () {
+	var currentTime:float = Time.realtimeSinceStartup;
+	var timer:float = 0;
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).fade.material.color.a = 0;
@@ -222,10 +229,34 @@ function Continue () {
 	}
 	else if(Application.loadedLevelName == "MicroGameLauncher")
 	{
+		if(!GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).quitting)
+		{
+			while(timer < .4)
+			{
+				timer = Time.realtimeSinceStartup - currentTime;
+				countdown.transform.position.y = 0;
+				countdown.text = "3";
+				yield;
+			}
+			while(timer < .8)
+			{
+				timer = Time.realtimeSinceStartup - currentTime;
+				countdown.transform.position.y = 0;
+				countdown.text = "2";
+				yield;
+			}
+			while(timer < 1.2)
+			{
+				timer = Time.realtimeSinceStartup - currentTime;
+				countdown.transform.position.y = 0;
+				countdown.text = "1";
+				yield;
+			}
+		}
+		countdown.text = "";
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).fade.material.color.a = 0;
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).paused = false;
 		Time.timeScale = 1;
-		//GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).LaunchLevel(.3);
 	}
 	else if(Application.loadedLevelName == "WorldSelect")
 	{
@@ -255,7 +286,6 @@ function ReturnToTitle() {
 		}
 		Time.timeScale = 1;
 		yield WaitForSeconds(.7);
-		Debug.Log("hey???");
 		AudioManager.StopSong();
 		yield WaitForSeconds(1);
 		if(Application.loadedLevelName == "WorldSelect")

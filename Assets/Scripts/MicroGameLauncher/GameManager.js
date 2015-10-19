@@ -331,23 +331,23 @@ function GameOver () {
 }
 
 function FindEnding ():GameObject{
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber >= Master.unlockLevels[1])
+	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1])
 	{
 		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Beaten",1);
 		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed",1);
 		return Master.currentWorld.text.beatEnd;
 	}
-	else if(gameNumber >= Master.unlockLevels[3])
+	else if(gameNumber > Master.unlockLevels[3])
 	{
 		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End4Played",1);
 		return Master.currentWorld.text.end4;
 	}
-	else if(gameNumber >= Master.unlockLevels[2])
+	else if(gameNumber > Master.unlockLevels[2])
 	{
 		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End3Played",1);
 		return Master.currentWorld.text.end3;
 	}
-	else if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber >= Master.unlockLevels[1])
+	else if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber > Master.unlockLevels[1])
 	{
 		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End2Played",1);
 		return Master.currentWorld.text.end2;
@@ -550,7 +550,7 @@ function GetRandomGame() {
 function Notify(text:String) {
 	notificationText = text;
 	curNotify = Instantiate(notification);
-	curNotify.transform.position.z = -9;
+	curNotify.transform.position.z = -3.5;
 }
 
 function DifficultSpeedCheck() {

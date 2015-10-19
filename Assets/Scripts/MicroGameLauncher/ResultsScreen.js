@@ -41,6 +41,10 @@ function Start () {
 	{
 		unlockLevels = [0,0,0,0,0,0];
 	}
+	for(var level:int = 0; level < unlockLevels.length; level ++)
+	{
+		unlockLevels[level]++;
+	}
 	waitTime = .4;
 	skipWaitTime = .02;	
 	AudioManager.PlaySound(drum,.4);

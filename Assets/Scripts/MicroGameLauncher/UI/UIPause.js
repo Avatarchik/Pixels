@@ -23,7 +23,7 @@ function Update () {
 	}
 	else if(Finger.GetExists(importantFinger))
 	{
-		if((Mathf.Abs(Finger.GetPosition(importantFinger).x) > 10 || Mathf.Abs(Finger.GetPosition(importantFinger).y) > 10) && !clicked)
+		if((Mathf.Abs(Finger.GetPosition(importantFinger).x) > 10 || Mathf.Abs(Finger.GetPosition(importantFinger).y) > 10) && !clicked && Finger.GetPhase(importantFinger) == TouchPhase.Began)
 		{
 			Clicked();
 			clicked = true;

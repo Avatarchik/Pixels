@@ -65,8 +65,8 @@ function Start () {
 	order3 = new int[4];
 	
 	order1 = [0,1,2,3];
-	order2 = [0,2,1,3];
-	order3 = [3,2,0,1];
+	order2 = [0,1,2,3];
+	order3 = [0,2,1,3];
 	
 	if(Application.loadedLevelName == "MicroTester")
 	{

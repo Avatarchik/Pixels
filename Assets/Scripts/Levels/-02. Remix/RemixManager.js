@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 static var leaving:boolean;
 
@@ -35,10 +35,9 @@ function Update () {
 	}
 }
 
-function () {
+function Load() {
 	if(!leaving)
 	{
 		leaving = true;
-		
 	}
 }

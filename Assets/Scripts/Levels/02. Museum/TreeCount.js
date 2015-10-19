@@ -300,7 +300,7 @@ function SmokeEmit (which:int) {
 
 function FirstTime () {
 	var waitTime:float = .2;
-	while(true)
+	while(true && !finished)
 	{	
 		if(treeRingValues[currentTree] == 2)
 		{

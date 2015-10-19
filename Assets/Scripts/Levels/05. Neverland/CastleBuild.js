@@ -79,13 +79,16 @@ function Start () {
 }
 
 function Update () {
-	if(currentPiece < castleLocations.Length && gameObject.GetComponent(MicroGameManager).firstTime)
+	if(firstTime != null)
 	{
-		firstTime.transform.position.x = castleLocations[currentPiece].transform.position.x;
-	}
-	else
-	{
-		firstTime.transform.position.x = 100;
+		if(currentPiece < castleLocations.Length && gameObject.GetComponent(MicroGameManager).firstTime)
+		{
+			firstTime.transform.position.x = castleLocations[currentPiece].transform.position.x;
+		}
+		else
+		{
+			firstTime.transform.position.x = 100;
+		}
 	}
 	if(Input.GetKeyDown("space"))
 	{

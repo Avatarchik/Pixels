@@ -14,7 +14,7 @@ function Update () {
 function Clicked () {
 	if(!RemixManager.leaving)
 	{
-		RemixManager.leaving = true
+		RemixManager.leaving = true;
 	}
 	if(transition != null && !done)
 	{

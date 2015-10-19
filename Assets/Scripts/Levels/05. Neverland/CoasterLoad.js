@@ -70,7 +70,7 @@ function Start () {
 	currentSpeed = carSpeed;
 	if(difficulty == 3)
 	{
-		alert.color.a = 0;
+		alert.color.a = .4;
 	}
 	
 	// If the color of the UI should change.
@@ -186,7 +186,6 @@ function Finish(completionStatus:boolean) {
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
-		Debug.Log(completionStatus);
 		finished = true;
 		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);

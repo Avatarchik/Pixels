@@ -22,24 +22,30 @@ function SpriteType () {
 
 function SetSongSprite (spriteNumber:int) {
 	latestValue = spriteNumber;
-	if(frown)
+	if(mouth != null)
 	{
-		mouth.sprite = frownSprites[spriteNumber];
-	}
-	else
-	{
-		mouth.sprite = smileSprites[spriteNumber];
+		if(frown)
+		{
+			mouth.sprite = frownSprites[spriteNumber];
+		}
+		else
+		{
+			mouth.sprite = smileSprites[spriteNumber];
+		}
 	}
 }
 function Frown (newValue:boolean) {
 	frown = newValue;
-	if(frown)
+	if(mouth != null)
 	{
-		mouth.sprite = frownSprites[latestValue];
-	}
-	else
-	{
-		mouth.sprite = smileSprites[latestValue];
+		if(frown)
+		{
+			mouth.sprite = frownSprites[latestValue];
+		}
+		else
+		{
+			mouth.sprite = smileSprites[latestValue];
+		}
 	}
 }
 

@@ -142,7 +142,6 @@ function Update () {
 	{
 		if(Finger.GetExists(i) && !Master.paused && !clicked[i])
 		{
-			Debug.Log(i);
 			clicked[i] = true;
 			var distance:float = 1000;
 			var closest:int = -1;
@@ -318,7 +317,6 @@ function Finish(completionStatus:boolean,waitTime:float) {
 	UITimer.soundsOn = !completionStatus;
 	if(!finished)
 	{
-		Debug.Log(completionStatus);
 		finished = true;
 		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
