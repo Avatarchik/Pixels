@@ -1,6 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/UI/Instruction.js">
+    <Files>
+      <File FileName="Assets/Scripts/MicroGameLauncher/UI/UIPause.js" Line="30" Column="18" />
+      <File FileName="Assets/Scripts/MicroGameLauncher/UI/Instruction.js" Line="39" Column="48" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -17,11 +21,11 @@
                 </Node>
               </Node>
               <Node name="MicroGameLauncher" expanded="True">
-                <Node name="UI" expanded="True" />
+                <Node name="UI" expanded="True">
+                  <Node name="Instruction.js" selected="True" />
+                </Node>
               </Node>
-              <Node name="TitleScreen" expanded="True">
-                <Node name="TitleManager.js" selected="True" />
-              </Node>
+              <Node name="TitleScreen" expanded="True" />
             </Node>
           </Node>
         </State>

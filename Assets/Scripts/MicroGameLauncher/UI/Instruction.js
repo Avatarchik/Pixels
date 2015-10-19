@@ -31,6 +31,20 @@ function Start () {
 	MoveTo();
 }
 
+function Update () {
+	for(var i:int = 0; i < children.Length; i++)
+	{
+		if(Master.paused)
+		{
+			children[i].GetComponent(TextMesh).text = "";
+		}
+		else
+		{
+			children[i].GetComponent(TextMesh).text = text;
+		}
+	}
+}
+
 function MoveTo(){
 	var length:float = 1.1;
 	var numberOfIncreases:int = 2;
