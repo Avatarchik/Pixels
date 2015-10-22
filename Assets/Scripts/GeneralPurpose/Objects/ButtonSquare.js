@@ -25,9 +25,17 @@ var inMinigameContinuousOverride:boolean = false;
 var notificationWatch:boolean = false;
 
 function Start () {
+	if(transform.Find("Icon") != null)
+	{
+		subText = transform.Find("Icon").gameObject;
+	}
 	if(subText != null)
 	{
 		textOrigin = subText.transform.localPosition;
+		if(textOffset == Vector3.zero)
+		{
+			textOffset = Vector3(0,.01,0);
+		}
 	}
 	// Reset important finger, create bounding box.
 	importantFinger = -1;

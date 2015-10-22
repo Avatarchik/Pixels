@@ -83,10 +83,7 @@ function Start () {
 	returnState = currentState;
 	importantFinger = -1;
 	mapMove = false;
-	if(mapMoveSpeed == 0 || mapMoveSpeed == null)
-	{
-		mapMoveSpeed = .07;
-	}
+	mapMoveSpeed = .1;
 	if(PlayerPrefs.GetInt("TutorialFinished") < 2)
 	{
 		introducing = true;

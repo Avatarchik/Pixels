@@ -302,40 +302,41 @@ function FirstTime () {
 	var waitTime:float = .2;
 	while(true && !finished)
 	{	
-		if(treeRingValues[currentTree] == 2)
+		if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 2)
 		{
 			MicroGameManager.choice = 0;
 		}
-		else if(treeRingValues[currentTree] == 3)
+		else if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 3)
 		{
 			MicroGameManager.choice = 3;
 		}
-		else if(treeRingValues[currentTree] == 4)
+		else if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 4)
 		{
 			MicroGameManager.choice = 6;
 		}
 		yield WaitForSeconds(waitTime);
-		if(treeRingValues[currentTree] == 2)
+		if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 2)
 		{
 			MicroGameManager.choice = 1;
 		}
-		else if(treeRingValues[currentTree] == 3)
+		else if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 3)
 		{
 			MicroGameManager.choice = 4;
 		}
-		else if(treeRingValues[currentTree] == 4)
+		else if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 4)
 		{
 			MicroGameManager.choice = 7;
 		}
-		yield WaitForSeconds(waitTime);if(treeRingValues[currentTree] == 2)
+		yield WaitForSeconds(waitTime);
+		if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 2)
 		{
 			MicroGameManager.choice = 2;
 		}
-		else if(treeRingValues[currentTree] == 3)
+		else if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 3)
 		{
 			MicroGameManager.choice = 5;
 		}
-		else if(treeRingValues[currentTree] == 4)
+		else if(treeRingValues[Mathf.Min(treeRingValues.length-1,currentTree)] == 4)
 		{
 			MicroGameManager.choice = 8;
 		}

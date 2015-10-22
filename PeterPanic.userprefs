@@ -1,31 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/UI/Instruction.js">
-    <Files>
-      <File FileName="Assets/Scripts/MicroGameLauncher/UI/UIPause.js" Line="30" Column="18" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/UI/Instruction.js" Line="39" Column="48" />
-    </Files>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Objects" expanded="True">
-                  <Node name="Cutscene" expanded="True" />
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Visuals" expanded="True">
+                  <Node name="TimeManager.js" selected="True" />
                 </Node>
               </Node>
-              <Node name="Levels" expanded="True">
-                <Node name="03B. Arcade" expanded="True">
-                  <Node name="Objects" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="MicroGameLauncher" expanded="True">
-                <Node name="UI" expanded="True">
-                  <Node name="Instruction.js" selected="True" />
-                </Node>
-              </Node>
-              <Node name="TitleScreen" expanded="True" />
             </Node>
           </Node>
         </State>
