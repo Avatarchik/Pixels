@@ -7,7 +7,7 @@ var speed:float;
 var origin:float;
 
 function Start () {
-	origin = transform.position.x;
+	origin = transform.localPosition.x;
 	speed = 6;
 	Sway();
 }
@@ -15,8 +15,8 @@ function Start () {
 function Update () {
 	if(TitleManager.started)
 	{
-		transform.position.x = Mathf.MoveTowards(transform.position.x,destination,Time.deltaTime * speed);
-		if(transform.position.x == destination)
+		transform.localPosition.x = Mathf.MoveTowards(transform.localPosition.x,destination,Time.deltaTime * speed);
+		if(transform.localPosition.x == destination)
 		{
 			Destroy(gameObject);
 		}

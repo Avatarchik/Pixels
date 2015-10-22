@@ -1,12 +1,19 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
+              <Node name="GeneralPurpose" expanded="True">
+                <Node name="Managers" expanded="True" />
+              </Node>
+              <Node name="TitleScreen" expanded="True">
+                <Node name="Visuals" expanded="True" />
+              </Node>
               <Node name="WorldSelect" expanded="True">
+                <Node name="Menu" expanded="True" />
                 <Node name="Visuals" expanded="True">
                   <Node name="TimeManager.js" selected="True" />
                 </Node>

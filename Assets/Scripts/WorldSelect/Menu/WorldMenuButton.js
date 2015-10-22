@@ -52,7 +52,7 @@ function SetText(newText:String) {
 				break;
 		}
 	}
-	if(currentText == "Sound" || currentText == "Music")
+	if(currentText == "Sound" || currentText == "Music" || currentText == "Facebook")
 	{
 		if(gameObject.GetComponent(ButtonSquare) != null)
 		{
@@ -65,7 +65,7 @@ function SetText(newText:String) {
 			gameObject.GetComponent(ButtonRectangle).up = null;
 		}
 	}
-	if((currentText == "Sound" && PlayerPrefs.GetInt("Sound") == 0) || (currentText == "Music" && PlayerPrefs.GetInt("Music") == 0))
+	if((currentText == "Sound" && PlayerPrefs.GetInt("Sound") == 0) || (currentText == "Music" && PlayerPrefs.GetInt("Music") == 0) || (currentText == "Facebook" && PlayerPrefs.GetInt("IgnoreTimeOfDay") == 1))
 	{
 		sprite[0].transform.localPosition = Vector3(-.045,-.025,-.1);
 		GetComponent(SpriteRenderer).sprite = buttonOff;

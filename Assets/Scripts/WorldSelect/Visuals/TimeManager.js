@@ -24,14 +24,13 @@ var overrideNumber:int;
 
 static var state:TimeState;
 function Start () {
-	currentTime = -1;
 	currentTime = System.DateTime.Now.Hour;
-	if(currentTime < 0);
-	{
-		//currentTime = 12;
-	}
 	GetColors();
-	
+	if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 1)
+	{
+		currentColors = dayColorsNormal;
+		state = TimeState.DayNormal;
+	}
 	if(level1Objects.Length > 0)
 	{
 		ChangeColors(level1Objects,currentColors[0]);
@@ -77,7 +76,6 @@ function GetColors () {
 	{
 		if(currentTime < 7 || currentTime > 22)
 		{
-			Debug.Log("hey");
 			currentColors = nightColorsEvil;
 			state = TimeState.NightEvil;
 		}
@@ -143,7 +141,7 @@ function ChangeColors (objects:GameObject[],color:Color) {
 function LerpColors (objects:GameObject[],color:Color) {
 	for(var i:int = 0; i < objects.length; i++)
 	{
-		if(!objects[i].GetComponent(SpriteRenderer).Equals(null) && objects[i].GetComponent(DoNotIncludeInTODEffect) == null && objects[i].GetComponent(AnimationManager) == null)
+		if(objects[i].GetComponent(SpriteRenderer) != null && objects[i].GetComponent(DoNotIncludeInTODEffect) == null && objects[i].GetComponent(AnimationManager) == null)
 		{
 			objects[i].GetComponent(SpriteRenderer).color = Color.Lerp(objects[i].GetComponent(SpriteRenderer).color,color,Time.deltaTime);
 		}

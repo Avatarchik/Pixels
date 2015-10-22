@@ -24,6 +24,10 @@ function Start () {
 	{
 		PlayerPrefs.SetInt("Music", 1);
 	}
+	if(!PlayerPrefs.HasKey("IgnoreTimeOfDay"))
+	{
+		PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
+	}
 	option[0] = "Continue";
 	option[1] = "Options";
 	option[2] = "Title Screen";
@@ -42,10 +46,6 @@ function Start () {
 }
 
 function Update () {
-	if(WorldMapManager.currentState == MapStatus.Returning)
-	{
-		//StartCoroutine(Exit());
-	}
 }
 
 // List of what happens depending on what button is pressed, and in what menu.
@@ -70,6 +70,15 @@ function MenuEffect(clicked:String) {
 			
 		// From options screen.
 		case "Facebook":
+			if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 0)
+			{
+				PlayerPrefs.SetInt("IgnoreTimeOfDay", 1);
+			}
+			else
+			{
+				PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
+			}
+			button[0].GetComponent(WorldMenuButton).SetText(option[0]);
 			break;
 		case "Music":
 			if(PlayerPrefs.GetInt("Music") == 0)
