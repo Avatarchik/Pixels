@@ -8,7 +8,7 @@ static var playingOpening:boolean;
 
 static var started:boolean;
 // Audio
-var intro:AudioClip;
+var intros:AudioClip[];
 var titleMusic:AudioClip;
 
 // Opening
@@ -230,7 +230,8 @@ function Shake (object:GameObject, numberShakes:int, distance:Vector3){
 }
 
 function PlaySong () {
-	AudioManager.PlayCutscene(intro);
+	//AudioManager.PlayCutscene(intros[Random.Range(0,intros.length)]);
+	AudioManager.PlayCutscene(intros[3]);
 	while(AudioManager.GetLocation() < 3.15)
 	{
 		yield;

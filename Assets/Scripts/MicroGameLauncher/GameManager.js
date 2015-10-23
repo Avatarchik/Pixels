@@ -1,4 +1,4 @@
-﻿#pragma strict
+﻿	#pragma strict
 
 // Variable Types
 var transition:GameObject;

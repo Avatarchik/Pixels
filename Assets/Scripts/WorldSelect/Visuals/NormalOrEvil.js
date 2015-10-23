@@ -3,7 +3,7 @@
 var normal:boolean = false;
 
 function Start () {
-	if((PlayerPrefs.GetInt("Neverland") == 1 && normal) || (PlayerPrefs.GetInt("Neverland") != 1 && !normal))
+	if((PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1 && normal) || (PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal))
 	{
 		if(GetComponent(SpriteRenderer) != null)
 		{
@@ -14,7 +14,7 @@ function Start () {
 			GetComponent(ParticleEmitter).emit = false;
 		}
 	}
-	else if(PlayerPrefs.GetInt("Neverland") != 1 && !normal)
+	else if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal)
 	{
 		if(GetComponent(SpriteRenderer) != null)
 		{

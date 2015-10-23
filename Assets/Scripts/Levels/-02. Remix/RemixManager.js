@@ -19,12 +19,9 @@ var bossGames:GameObject[];
 
 var transition:GameObject;
 
+var VRLevelMusic:AudioClip;
+
 function Start () {
-	if(!PlayerPrefs.HasKey("RemixHasBeenPlayed") || PlayerPrefs.GetInt("RemixHasBeenPlayed") == 0)
-	{
-		Camera.main.GetComponent(Master).LaunchNotification("Select which worlds you want to include in a remix!",NotificationType.tutorial);
-		PlayerPrefs.SetInt("RemixHasBeenPlayed",1);
-	}
 	hidden = Vector3.zero;
 	shown = Vector3(14.06,14.06,14.06);
 	loadGames = new GameObject[0];
@@ -32,6 +29,18 @@ function Start () {
 	hardMode = false;
 	leaving = false;
 	step = 1;
+	BeginVR();
+}
+
+function BeginVR () {
+	yield WaitForSeconds(.4);
+	AudioManager.PlaySong(VRLevelMusic,1);
+	yield WaitForSeconds(.8);
+	if(!PlayerPrefs.HasKey("RemixHasBeenPlayed") || PlayerPrefs.GetInt("RemixHasBeenPlayed") == 0)
+	{
+		Camera.main.GetComponent(Master).LaunchNotification("Select which worlds you want to include in a remix!",NotificationType.tutorial);
+		PlayerPrefs.SetInt("RemixHasBeenPlayed",1);
+	}
 }
 
 function Update () {
@@ -77,7 +86,7 @@ function Load() {
 		{
 			Master.currentWorld.basic.games = loadGames;
 			Master.currentWorld.basic.bossGame = bossGames[Random.Range(0,bossGames.length)];
-			AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
+			AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionIn);
 			Instantiate(transition, Vector3(0,0,-9.5), Quaternion.identity);
 			yield WaitForSeconds(.7);
 			AudioManager.StopSong();

@@ -23,7 +23,7 @@ var currentColors:Color[];
 var overrideNumber:int;
 
 static var state:TimeState;
-function Start () {
+function Awake () {
 	currentTime = System.DateTime.Now.Hour;
 	if(overrideNumber >= 0)
 	{
@@ -76,7 +76,7 @@ function Update () {
 }
 
 function GetColors () {
-	if(PlayerPrefs.GetInt("Neverland") == 1)
+	if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
 	{
 		if(currentTime < 7 || currentTime > 21)
 		{

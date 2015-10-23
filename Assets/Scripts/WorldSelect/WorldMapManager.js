@@ -10,6 +10,7 @@ static var currentNotification:GameObject;
 
 // Audio
 var worldMusic:AudioClip;
+var worldMusicEvil:AudioClip;
 var worldReveal:AudioClip[];
 
 // Clear
@@ -77,8 +78,8 @@ function Start () {
 	fade = Camera.main.GetComponentInChildren(Renderer);
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
-	leftCameraLimit = -160;
-	rightCameraLimit = 85;
+	leftCameraLimit = -130;
+	rightCameraLimit = 73;
 	currentState = MapStatus.Clear;
 	returnState = currentState;
 	importantFinger = -1;
@@ -92,13 +93,27 @@ function Start () {
 	}
 	else if(Master.mapNotifyWorlds.length > 0)
 	{
-		AudioManager.PlaySongIntro(null,worldMusic,1);
+		if(TimeManager.state == TimeState.DayNormal || TimeManager.state == TimeState.NightNormal)
+		{
+			AudioManager.PlaySongIntro(null,worldMusic,1);
+		}
+		else
+		{
+			AudioManager.PlaySongIntro(null,worldMusicEvil,1);
+		}
 		currentState = MapStatus.WorldReveal;
 		WorldReveal();
 	}
 	else
 	{
-		AudioManager.PlaySongIntro(null,worldMusic,1);
+		if(TimeManager.state == TimeState.DayNormal || TimeManager.state == TimeState.NightNormal)
+		{
+			AudioManager.PlaySongIntro(null,worldMusic,1);
+		}
+		else
+		{
+			AudioManager.PlaySongIntro(null,worldMusicEvil,1);
+		}
 	}
 }
 

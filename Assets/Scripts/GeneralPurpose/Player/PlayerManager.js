@@ -447,6 +447,7 @@ function Move() {
 	while(true)
 	{ 
 		var waitTime:float;
+		step = 1;
 		if(speedOverride)
 		{
 			waitTime = thisSpeed * .7;
@@ -455,13 +456,36 @@ function Move() {
 		{
 			waitTime = speed * .7;
 		}
-		step = 1;
 		yield WaitForSeconds(waitTime);
 		step = 2;
+		if(speedOverride)
+		{
+			waitTime = thisSpeed * .7;
+		}
+		else
+		{
+			waitTime = speed * .7;
+		}
 		yield WaitForSeconds(waitTime);
 		step = 3;
+		if(speedOverride)
+		{
+			waitTime = thisSpeed * .7;
+		}
+		else
+		{
+			waitTime = speed * .7;
+		}
 		yield WaitForSeconds(waitTime);
 		step = 4;
+		if(speedOverride)
+		{
+			waitTime = thisSpeed * .7;
+		}
+		else
+		{
+			waitTime = speed * .7;
+		}
 		yield WaitForSeconds(waitTime);
 	}
 }
