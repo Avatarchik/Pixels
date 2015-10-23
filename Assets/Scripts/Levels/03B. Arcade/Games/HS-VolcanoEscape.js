@@ -66,7 +66,7 @@ function Start () {
 	boulderCenter = 1;
 	jumpCounter = Mathf.PI;
 	playerOrigin = player.transform.position.y;
-	playerDistance = 2.5;
+	playerDistance = 2.3;
 	dead = false;
 	clicked = false;
 	score = 0;

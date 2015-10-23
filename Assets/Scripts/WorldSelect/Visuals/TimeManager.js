@@ -25,6 +25,10 @@ var overrideNumber:int;
 static var state:TimeState;
 function Start () {
 	currentTime = System.DateTime.Now.Hour;
+	if(overrideNumber >= 0)
+	{
+		currentTime = overrideNumber;
+	}
 	GetColors();
 	if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 1)
 	{
@@ -74,7 +78,7 @@ function Update () {
 function GetColors () {
 	if(PlayerPrefs.GetInt("Neverland") == 1)
 	{
-		if(currentTime < 7 || currentTime > 22)
+		if(currentTime < 7 || currentTime > 21)
 		{
 			currentColors = nightColorsEvil;
 			state = TimeState.NightEvil;
@@ -97,7 +101,7 @@ function GetColors () {
 	}
 	else
 	{
-		if(currentTime < 7 || currentTime > 22)
+		if(currentTime < 7 || currentTime > 21)
 		{
 			currentColors = nightColorsNormal;
 			state = TimeState.NightNormal;

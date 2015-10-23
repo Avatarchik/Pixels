@@ -42,6 +42,8 @@ var correctKeyTimer:float;
 
 @HideInInspector var gameProgress:int;
 
+@HideInInspector var clicked:boolean[];
+
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
 	{
@@ -60,6 +62,8 @@ function Start () {
 	rightKeys = [4,5,9,10];
 	notes = new Array[5];
 	correctKeyTimer = .5;
+	clicked = new boolean[5];
+	clicked = [false,false,false,false,false];
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -157,8 +161,10 @@ function Update () {
 	
 	for(var finger:int = 0; finger < pressedKeys.length; finger++)
 	{
-		if(Finger.GetExists(finger))
+		if(Finger.GetExists(finger) && !clicked[finger])
 		{
+			Debug.Log("Finger: " + finger + "Clicked: " + clicked[finger]);
+			clicked[finger] = true;
 			var nearestKey:int = -1;
 			for(var currentKey:int = 0; currentKey < keysAllowed; currentKey ++)
 			{
@@ -186,7 +192,9 @@ function Update () {
 		else
 		{
 			pressedKeys[finger] = -1;
+			clicked[finger] = false;
 		}
+		//if(!Finger.GetExists(finger))
 	}
 	
 	var correctKeysPressed:int = 0;

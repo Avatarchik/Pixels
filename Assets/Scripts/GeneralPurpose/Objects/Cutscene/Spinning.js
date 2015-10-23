@@ -32,7 +32,7 @@ function Start () {
 }
 
 function Update () {
-	transform.localScale = Vector3.MoveTowards(transform.localScale,initialSize,Time.deltaTime * 5);
+	transform.localScale = Vector3.MoveTowards(transform.localScale,initialSize,Time.deltaTime * 50);
 }
 
 function Rotate () {

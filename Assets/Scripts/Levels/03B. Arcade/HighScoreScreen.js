@@ -49,6 +49,7 @@ function Start () {
 	global = true;
 	bigSize = .7;
 	normalSize = .15;
+	/*
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{
@@ -96,6 +97,8 @@ function Start () {
 		}
 	}
 	);
+	*/
+	FinishStart();
 }
 function FinishStart () {
 	if(allUsers.Length == 0)

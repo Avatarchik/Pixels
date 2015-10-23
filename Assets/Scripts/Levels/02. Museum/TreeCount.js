@@ -27,6 +27,8 @@ private var currentTree:int;
 private var treeSpriteValues:int[];
 private var treeRingValues:int[];
 private var treeRingSubmitted:int[];
+@HideInInspector var treeDone:boolean[];
+
 private var treeGoal:float[];
 
 private var treeStartValue:Vector3;
@@ -34,6 +36,7 @@ private var goal2:float;
 private var goal3:float;
 private var goal4:float;
 private var goalHeight:float;
+private var moveHeight:float;
 private var distance:float;
 
 private var allowable:int;
@@ -58,6 +61,7 @@ function Start () {
 	goal3 = 0;
 	goal4 = 4.92;
 	goalHeight = -.57;
+	moveHeight = -3;
 	distance = 2.46;
 	
 	
@@ -89,9 +93,11 @@ function Start () {
 	treeRingValues = new int[numberOfTrees];
 	treeRingSubmitted = new int[numberOfTrees];
 	treeGoal = new float[numberOfTrees];
+	treeDone = new boolean[numberOfTrees];
 	if(difficulty == 1){allowable=3;}	else if(difficulty == 2){allowable=6;}	else{allowable=treeSprites1.Length;}
 	for(var i:int = 0;i < numberOfTrees;i++)
 	{
+		treeDone[i] = false;
 		var thisTreeValue:int;
 		thisTreeValue = Random.Range(0,allowable);
 		trees[i] = Instantiate(treePrefab,treeStartValue + Vector3(0,0,.01 * i),Quaternion.identity);
@@ -142,12 +148,30 @@ function Update () {
 		}
 		if(trees[i]!=null)
 		{
-			if(i<currentTree && trees[i].transform.position.x != treeGoal[i])
+			if(i <= currentTree && trees[i].transform.position.y > moveHeight && trees[i].transform.position.y < goalHeight)
+			{
+				trees[i].transform.position.y = Mathf.MoveTowards(trees[i].transform.position.y,goalHeight+.1,Time.deltaTime * 9);
+				
+				if(Mathf.Abs(trees[i].transform.position.x - goal2) < 2.5)
+				{
+					trees[i].transform.position.x = Mathf.MoveTowards(trees[i].transform.position.x,goal2,Time.deltaTime * 9);
+				}
+				else if(Mathf.Abs(trees[i].transform.position.x - goal3) < 2.5)
+				{
+					trees[i].transform.position.x = Mathf.MoveTowards(trees[i].transform.position.x,goal3,Time.deltaTime * 9);
+				}
+				else if(Mathf.Abs(trees[i].transform.position.x - goal4) < 2.5)
+				{
+					trees[i].transform.position.x = Mathf.MoveTowards(trees[i].transform.position.x,goal4,Time.deltaTime * 9);
+				}
+			}
+			if(i<currentTree && (treeDone[i] == false || trees[i].transform.position.x != treeGoal[i])) 
 			{
 				trees[i].transform.position.y = Mathf.MoveTowards(trees[i].transform.position.y,goalHeight,Time.deltaTime*2);
 				trees[i].transform.position.x = Mathf.MoveTowards(trees[i].transform.position.x,treeGoal[i],Time.deltaTime*6);
 				if(trees[i].transform.position.x == treeGoal[i])
 				{
+					treeDone[i] = true;
 					SpriteRotate(trees[i],treeSpriteValues[i],i);
 					if(treeRingValues[i] != treeRingSubmitted[i])
 					{
@@ -173,7 +197,7 @@ function Update () {
 			}
 		}
 	}
-	if(currentTree < trees.Length && trees[currentTree].transform.position.y > goalHeight)
+	if(currentTree < trees.Length && trees[currentTree].transform.position.y >= goalHeight)
 	{
 		if(Mathf.Abs(trees[currentTree].transform.position.x - goal2) < distance)
 		{
@@ -223,7 +247,7 @@ function Update () {
 			{
 				trees[currentTree].transform.position.y = -6;
 			}
-			if(trees[currentTree].transform.position.y > goalHeight + .1)
+			if(trees[currentTree].transform.position.y >= goalHeight + .1)
 			{
 				trees[currentTree].transform.position.y = goalHeight + .1;
 			}
@@ -343,7 +367,7 @@ function FirstTime () {
 		yield WaitForSeconds(waitTime);
 		if(finished)
 		{
-			MicroGameManager.choice = 10;
+			MicroGameManager.choice = 9;
 		}
 		yield;
 	}

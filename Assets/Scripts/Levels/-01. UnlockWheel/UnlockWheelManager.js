@@ -273,6 +273,13 @@ function Spin (cost:int) {
 			allowed = true;
 		}
 	}
+	for(i = 0; i < smallWheelWinners.length; i++)
+	{
+		if(smallWheelWinners[i])
+		{
+			allowed = true;
+		}
+	}
 	if(allowed)
 	{
 		if(currentState == UnlockWheelStatus.Clear)

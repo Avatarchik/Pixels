@@ -50,33 +50,33 @@ function Start () {
 	whichSlider = 0;
 	rocketOrder = new int[3];
 	rocketOrder[0] = Random.Range(0,3);
-	if(rocketOrder[0] == 1)
+	if(Random.value < .5)
 	{
 		rocketOrder[0] = 2;
-	}
-	if(rocketOrder[0] == 0)
-	{
-		rocketOrder[1] = Random.Range(1,3);
+		if(Random.value < .5)
+		{
+			rocketOrder[1] = 0;
+			rocketOrder[2] = 1;
+		}
+		else
+		{
+			rocketOrder[1] = 1;
+			rocketOrder[2] = 0;
+		}
 	}
 	else
 	{
-		rocketOrder[1] = Random.Range(0,2);
-	}
-	if(rocketOrder[0] == 0 && rocketOrder[1] == 1)
-	{
-		rocketOrder[2] = 2;
-	}
-	else if(rocketOrder[0] == 0 && rocketOrder[1] == 2)
-	{
-		rocketOrder[2] = 1;
-	}
-	else if(rocketOrder[0] == 2 && rocketOrder[1] == 0)
-	{
-		rocketOrder[2] = 1;
-	}
-	else if(rocketOrder[0] == 2 && rocketOrder[1] == 1)
-	{
-		rocketOrder[2] = 0;
+		rocketOrder[0] = 0;
+		if(Random.value < .5)
+		{
+			rocketOrder[1] = 1;
+			rocketOrder[2] = 2;
+		}
+		else
+		{
+			rocketOrder[1] = 2;
+			rocketOrder[2] = 1;
+		}
 	}
 	exploded = new boolean[3];
 	exploded = [false,false,false];

@@ -562,7 +562,7 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 		{
 			PlayerPrefs.SetInt("Arcade"+thisGame.name,1);
 			thisGame.unlocked = true;
-			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",4);
+			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
 			thisGame.highScore = PlayerPrefs.GetFloat("Arcade"+thisGame.name+"Score");
 		}
 	}

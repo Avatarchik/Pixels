@@ -222,6 +222,7 @@
      <Compile Include="Assets\Scripts\WorldSelect\Visuals\DoNotIncludeInTODEffect.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Visuals\NightTimeGlow.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Visuals\NightTimeOnly.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\Visuals\NormalOrEvil.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Visuals\Shine.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Visuals\SmokeStack.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Visuals\TimeManager.js" />

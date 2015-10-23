@@ -1,5 +1,5 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
@@ -7,13 +7,22 @@
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
+                <Node name="Experimental" expanded="True" />
                 <Node name="Managers" expanded="True" />
+                <Node name="Visual" expanded="True" />
               </Node>
-              <Node name="TitleScreen" expanded="True">
-                <Node name="Visuals" expanded="True" />
+              <Node name="Levels" expanded="True">
+                <Node name="01. Packing Peanut Factory" expanded="True" />
+                <Node name="-01. UnlockWheel" expanded="True" />
+                <Node name="02. Museum" expanded="True" />
+                <Node name="03B. Arcade" expanded="True">
+                  <Node name="Games" expanded="True" />
+                  <Node name="Objects" expanded="True" />
+                </Node>
+                <Node name="04. High School" expanded="True" />
               </Node>
+              <Node name="MicroGameLauncher" expanded="True" />
               <Node name="WorldSelect" expanded="True">
-                <Node name="Menu" expanded="True" />
                 <Node name="Visuals" expanded="True">
                   <Node name="TimeManager.js" selected="True" />
                 </Node>

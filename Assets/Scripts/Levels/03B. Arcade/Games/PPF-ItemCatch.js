@@ -106,7 +106,7 @@ function Update () {
 					}
 				}
 				objectsOnScreen[i].transform.position = Vector3.MoveTowards(objectsOnScreen[i].transform.position, Vector3(crate.transform.position.x,crate.transform.position.y, objectsOnScreen[i].transform.position.z), Time.deltaTime * (10));
-				objectsOnScreen[i].transform.parent = crate.transform;
+				objectsOnScreen[i].GetComponent(SpriteRenderer).color.a = 0;
 			}
 		}
 	}
