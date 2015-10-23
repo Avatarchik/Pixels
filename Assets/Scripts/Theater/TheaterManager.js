@@ -2,7 +2,6 @@
 
 // Piece holder.
 var theaterHolder:GameObject;
-var FOHHolder:GameObject;
 
 // Current theater pieces.
 private var currentStageWall:GameObject;
@@ -13,14 +12,6 @@ private var currentTheaterFloor:GameObject;
 private var currentCurtain:GameObject;
 private var currentChairs:GameObject;
 
-// Current FOH pieces.
-private var currentFOHWall:GameObject;
-private var currentFOHFloor:GameObject;
-private var currentFOHBooze:GameObject;
-private var currentFOHTicketBooth:GameObject;
-private var currentFOHDesk:GameObject;
-private var currentledger:GameObject;
-
 // Arrays with different types of theater sprites.
 var stageWall:GameObject[];
 var stageFloor:GameObject[];
@@ -29,13 +20,6 @@ var theaterWall:GameObject[];
 var theaterFloor:GameObject[];
 var curtain:GameObject[];
 var chairs:GameObject[];
-
-// Arrays with different types of FOH sprites.
-var FOHWall:GameObject[];
-var FOHFloor:GameObject[];
-var FOHBooze:GameObject[];
-var FOHTicketBooth:GameObject[];
-var FOHDesk:GameObject[];
 
 // Theater availability arrays.
 static var stageWallAvailability:boolean[];
@@ -46,13 +30,6 @@ static var theaterFloorAvailability:boolean[];
 static var curtainAvailability:boolean[];
 static var chairsAvailability:boolean[];
 
-// FOH availability arrays.
-static var FOHWallAvailability:boolean[];
-static var FOHFloorAvailability:boolean[];
-static var FOHBoozeAvailability:boolean[];
-static var FOHTicketBoothAvailability:boolean[];
-static var FOHDeskAvailability:boolean[];
-
 // Number available numbers.
 static var stageWallAvailabilityNumber:int;
 static var stageFloorAvailabilityNumber:int;
@@ -61,12 +38,6 @@ static var theaterWallAvailabilityNumber:int;
 static var theaterFloorAvailabilityNumber:int;
 static var curtainAvailabilityNumber:int;
 static var chairsAvailabilityNumber:int;
-
-static var FOHWallAvailabilityNumber:int;
-static var FOHFloorAvailabilityNumber:int;
-static var FOHBoozeAvailabilityNumber:int;
-static var FOHTicketBoothAvailabilityNumber:int;
-static var FOHDeskAvailabilityNumber:int;
 
 // Display stuff.
 static var thisObject:int;
@@ -105,12 +76,6 @@ function Start () {
 	currentTheaterFloor = Instantiate(theaterFloor[PlayerPrefs.GetInt("TheaterFloorSelection")]);
 	currentCurtain = Instantiate(curtain[PlayerPrefs.GetInt("CurtainSelection")]);
 	currentChairs = Instantiate(chairs[PlayerPrefs.GetInt("ChairsSelection")]);
-
-	currentFOHWall = Instantiate(FOHWall[PlayerPrefs.GetInt("FOHWallSelection")]);
-	currentFOHFloor = Instantiate(FOHFloor[PlayerPrefs.GetInt("FOHFloorSelection")]);
-	currentFOHBooze = Instantiate(FOHBooze[PlayerPrefs.GetInt("FOHBoozeSelection")]);
-	currentFOHTicketBooth = Instantiate(FOHTicketBooth[PlayerPrefs.GetInt("FOHTicketBoothSelection")]);
-	currentFOHDesk = Instantiate(FOHDesk[PlayerPrefs.GetInt("FOHDeskSelection")]);
 	
 	// Set all pieces as children of the Theater Holder.
 	currentStageWall.transform.parent = theaterHolder.transform;
@@ -120,12 +85,6 @@ function Start () {
 	currentTheaterFloor.transform.parent = theaterHolder.transform;
 	currentCurtain.transform.parent = theaterHolder.transform;
 	currentChairs.transform.parent = theaterHolder.transform;
-
-	currentFOHWall.transform.parent = FOHHolder.transform;
-	currentFOHFloor.transform.parent = FOHHolder.transform;
-	currentFOHBooze.transform.parent = FOHHolder.transform;
-	currentFOHTicketBooth.transform.parent = FOHHolder.transform;
-	currentFOHDesk.transform.parent = FOHHolder.transform;
 	
 	// Name all objects for clarity.
 	currentStageWall.transform.name = "StageWall";
@@ -135,12 +94,6 @@ function Start () {
 	currentTheaterFloor.transform.name = "TheaterFloor";
 	currentCurtain.transform.name = "Curtain";
 	currentChairs.transform.name = "Chairs";
-
-	currentFOHWall.transform.name = "FOHWall";
-	currentFOHFloor.transform.name = "FOHFloor";
-	currentFOHBooze.transform.name = "FOHBooze";
-	currentFOHTicketBooth.transform.name = "FOHTicketBooth";
-	currentFOHDesk.transform.name = "FOHDesk";
 	
 	// Set object positions.
 	currentStageWall.transform.localPosition = Vector3(-3.3,3.3,10);
@@ -150,12 +103,6 @@ function Start () {
 	currentTheaterFloor.transform.localPosition = Vector3(-1.8,-15.9,8);
 	currentCurtain.transform.localPosition = Vector3(-3.3,3.3,7);
 	currentChairs.transform.localPosition = Vector3(-3.3,-15.9,7);
-
-	currentFOHWall.transform.localPosition = Vector3(35.1,0.3,10);
-	currentFOHFloor.transform.localPosition = Vector3(35.1,-15.9,9);
-	currentFOHBooze.transform.localPosition = Vector3(25.5,3.9,9);
-	currentFOHTicketBooth.transform.localPosition = Vector3(36.07,0.3,8);
-	currentFOHDesk.transform.localPosition = Vector3(25.5,-6.45,7);
 	
 	DisplayNumber();
 }
@@ -206,21 +153,6 @@ function ChangePartSpecific (part:String, change:int) {
 		case "Chairs":
 			PlayerPrefs.SetInt("ChairsSelection",change);
 			break;
-		case "FOHWall":
-			PlayerPrefs.SetInt("FOHWallSelection",change);
-			break;
-		case "FOHFloor":
-			PlayerPrefs.SetInt("FOHFloorSelection",change);
-			break;
-		case "FOHBooze":
-			PlayerPrefs.SetInt("FOHBoozeSelection",change);
-			break;
-		case "FOHTicketBooth":
-			PlayerPrefs.SetInt("FOHTicketBoothSelection",change);
-			break;
-		case "FOHDesk":
-			PlayerPrefs.SetInt("FOHDeskSelection",change);
-			break;
 		default:
 			break;
 	}
@@ -251,21 +183,6 @@ function ChangePart (part:String, change:int) {
 			break;
 		case "Chairs":
 			PlayerPrefs.SetInt("ChairsSelection",PlayerPrefs.GetInt("ChairsSelection") + change);
-			break;
-		case "FOHWall":
-			PlayerPrefs.SetInt("FOHWallSelection",PlayerPrefs.GetInt("FOHWallSelection") + change);
-			break;
-		case "FOHFloor":
-			PlayerPrefs.SetInt("FOHFloorSelection",PlayerPrefs.GetInt("FOHFloorSelection") + change);
-			break;
-		case "FOHBooze":
-			PlayerPrefs.SetInt("FOHBoozeSelection",PlayerPrefs.GetInt("FOHBoozeSelection") + change);
-			break;
-		case "FOHTicketBooth":
-			PlayerPrefs.SetInt("FOHTicketBoothSelection",PlayerPrefs.GetInt("FOHTicketBoothSelection") + change);
-			break;
-		case "FOHDesk":
-			PlayerPrefs.SetInt("FOHDeskSelection",PlayerPrefs.GetInt("FOHDeskSelection") + change);
 			break;
 		default:
 			break;
@@ -429,111 +346,6 @@ function Refresh(part:String, change:int) {
 			thisObject = chairs[PlayerPrefs.GetInt("ChairsSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
 			totalObject = chairsAvailabilityNumber;
 			break;
-		case "FOHWall":
-			Destroy(currentFOHWall);
-			if(PlayerPrefs.GetInt("FOHWallSelection") >= FOHWall.Length)
-			{
-				PlayerPrefs.SetInt("FOHWallSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("FOHWallSelection") < 0)
-			{
-				PlayerPrefs.SetInt("FOHWallSelection", FOHWall.Length-1);
-			}
-			currentFOHWall = Instantiate(FOHWall[PlayerPrefs.GetInt("FOHWallSelection")]);
-			currentFOHWall.transform.parent = FOHHolder.transform;
-			currentFOHWall.transform.localPosition = Vector3(35.1,0.3,10);
-			currentFOHWall.transform.name = "FOHWall";
-			if(FOHWallAvailability[PlayerPrefs.GetInt("FOHWallSelection")]==false)
-			{
-				ChangePart("FOHWall",change);
-			}
-			thisObject = FOHWall[PlayerPrefs.GetInt("FOHWallSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
-			totalObject = FOHWallAvailabilityNumber;
-			break;
-		case "FOHFloor":
-			Destroy(currentFOHFloor);
-			if(PlayerPrefs.GetInt("FOHFloorSelection") >= FOHFloor.Length)
-			{
-				PlayerPrefs.SetInt("FOHFloorSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("FOHFloorSelection") < 0)
-			{
-				PlayerPrefs.SetInt("FOHFloorSelection", FOHFloor.Length-1);
-			}
-			currentFOHFloor = Instantiate(FOHFloor[PlayerPrefs.GetInt("FOHFloorSelection")]);
-			currentFOHFloor.transform.parent = FOHHolder.transform;
-			currentFOHFloor.transform.localPosition = Vector3(35.1,-15.9,10);
-			currentFOHFloor.transform.name = "FOHFloor";
-			if(FOHFloorAvailability[PlayerPrefs.GetInt("FOHFloorSelection")]==false)
-			{
-				ChangePart("FOHFloor",change);
-			}
-			thisObject = FOHFloor[PlayerPrefs.GetInt("FOHFloorSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
-			totalObject = FOHFloorAvailabilityNumber;
-			break;
-		case "FOHBooze":
-			Destroy(currentFOHBooze);
-			if(PlayerPrefs.GetInt("FOHBoozeSelection") >= FOHBooze.Length)
-			{
-				PlayerPrefs.SetInt("FOHBoozeSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("FOHBoozeSelection") < 0)
-			{
-				PlayerPrefs.SetInt("FOHBoozeSelection", FOHBooze.Length-1);
-			}
-			currentFOHBooze = Instantiate(FOHBooze[PlayerPrefs.GetInt("FOHBoozeSelection")]);
-			currentFOHBooze.transform.parent = FOHHolder.transform;
-			currentFOHBooze.transform.localPosition = Vector3(25.5,3.9,9);
-			currentFOHBooze.transform.name = "FOHBooze";
-			if(FOHBoozeAvailability[PlayerPrefs.GetInt("FOHBoozeSelection")]==false)
-			{
-				ChangePart("FOHBooze",change);
-			}
-			thisObject = FOHBooze[PlayerPrefs.GetInt("FOHBoozeSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
-			totalObject = FOHBoozeAvailabilityNumber;
-			break;
-		case "FOHTicketBooth":
-			Destroy(currentFOHTicketBooth);
-			if(PlayerPrefs.GetInt("FOHTicketBoothSelection") >= FOHTicketBooth.Length)
-			{
-				PlayerPrefs.SetInt("FOHTicketBoothSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("FOHTicketBoothSelection") < 0)
-			{
-				PlayerPrefs.SetInt("FOHTicketBoothSelection", FOHTicketBooth.Length-1);
-			}
-			currentFOHTicketBooth = Instantiate(FOHTicketBooth[PlayerPrefs.GetInt("FOHTicketBoothSelection")]);
-			currentFOHTicketBooth.transform.parent = FOHHolder.transform;
-			currentFOHTicketBooth.transform.localPosition = Vector3(36.07,0.3,8);
-			currentFOHTicketBooth.transform.name = "FOHTicketBooth";
-			if(FOHTicketBoothAvailability[PlayerPrefs.GetInt("FOHTicketBoothSelection")]==false)
-			{
-				ChangePart("FOHTicketBooth",change);
-			}
-			thisObject = FOHTicketBooth[PlayerPrefs.GetInt("FOHTicketBoothSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
-			totalObject = FOHTicketBoothAvailabilityNumber;
-			break;
-		case "FOHDesk":
-			Destroy(currentFOHDesk);
-			if(PlayerPrefs.GetInt("FOHDeskSelection") >= FOHDesk.Length)
-			{
-				PlayerPrefs.SetInt("FOHDeskSelection", 0);
-			}
-			else if(PlayerPrefs.GetInt("FOHDeskSelection") < 0)
-			{
-				PlayerPrefs.SetInt("FOHDeskSelection", FOHDesk.Length-1);
-			}
-			currentFOHDesk = Instantiate(FOHDesk[PlayerPrefs.GetInt("FOHDeskSelection")]);
-			currentFOHDesk.transform.parent = FOHHolder.transform;
-			currentFOHDesk.transform.localPosition = Vector3(25.5,-6.45,7);
-			currentFOHDesk.transform.name = "FOHDesk";
-			if(FOHDeskAvailability[PlayerPrefs.GetInt("FOHDeskSelection")]==false)
-			{
-				ChangePart("FOHDesk",change);
-			}
-			thisObject = FOHDesk[PlayerPrefs.GetInt("FOHDeskSelection")].GetComponent(VariablePrefix).thisObjectListNumber;
-			totalObject = FOHDeskAvailabilityNumber;
-			break;
 		default:
 			break;
 	}
@@ -550,12 +362,7 @@ function UpdateAvailability () {
 	curtainAvailabilityNumber = 0;
 	chairsAvailabilityNumber = 0;
 
-	FOHWallAvailabilityNumber = 0;
-	FOHFloorAvailabilityNumber = 0;
-	FOHBoozeAvailabilityNumber = 0;
-	FOHTicketBoothAvailabilityNumber = 0;
-	FOHDeskAvailabilityNumber = 0;
-	
+
 	// Sets the availability of pieces based on PlayerPrefs.
 	stageWallAvailability = new boolean[stageWall.length + 1];
 	stageFloorAvailability = new boolean[stageFloor.length + 1];
@@ -564,11 +371,6 @@ function UpdateAvailability () {
 	theaterFloorAvailability = new boolean[theaterFloor.length + 1];
 	curtainAvailability = new boolean[curtain.length + 1];
 	chairsAvailability = new boolean[chairs.length + 1];
-	FOHWallAvailability = new boolean[FOHWall.length + 1];
-	FOHFloorAvailability = new boolean[FOHFloor.length + 1];
-	FOHBoozeAvailability = new boolean[FOHBooze.length + 1];
-	FOHTicketBoothAvailability = new boolean[FOHTicketBooth.length + 1];
-	FOHDeskAvailability = new boolean[FOHDesk.length + 1];
 	
 	// Unlocks the first of each set, so that we don't run into any problems where no pieces are drawable.
 	PlayerPrefs.SetInt("StageWall:"+stageWall[0].name,1);
@@ -578,11 +380,6 @@ function UpdateAvailability () {
 	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[0].name,1);
 	PlayerPrefs.SetInt("Curtain:"+curtain[0].name,1);
 	PlayerPrefs.SetInt("Chairs:"+chairs[0].name,1);
-	PlayerPrefs.SetInt("FOHWall:"+FOHWall[0].name,1);
-	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[0].name,1);
-	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[0].name,1);
-	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[0].name,1);
-	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[0].name,1);
 	
 	PlayerPrefs.SetInt("StageWall:"+stageWall[2].name,1);
 	PlayerPrefs.SetInt("StageFloor:"+stageFloor[2].name,1);
@@ -591,11 +388,6 @@ function UpdateAvailability () {
 	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[2].name,1);
 	PlayerPrefs.SetInt("Curtain:"+curtain[2].name,1);
 	PlayerPrefs.SetInt("Chairs:"+chairs[2].name,1);
-	PlayerPrefs.SetInt("FOHWall:"+FOHWall[2].name,1);
-	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[2].name,1);
-	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[2].name,1);
-	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[2].name,1);
-	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[2].name,1);
 	
 	// Changes availability booleans to true or false based on the playerprefs values.
 	for(var stageWallCheck:int = 0; stageWallCheck < stageWall.length; stageWallCheck++)
@@ -689,71 +481,6 @@ function UpdateAvailability () {
 			chairs[chairsCheck].GetComponent(VariablePrefix).thisObjectListNumber = chairsAvailabilityNumber;
 		}
 	}
-	for(var FOHWallCheck:int = 0; FOHWallCheck < FOHWall.length; FOHWallCheck++)
-	{
-		if(PlayerPrefs.GetInt("FOHWall:"+FOHWall[FOHWallCheck].transform.name) == 0)
-		{
-			FOHWallAvailability[FOHWallCheck] = false;
-		}
-		else
-		{
-			FOHWallAvailability[FOHWallCheck] = true;
-			FOHWallAvailabilityNumber++;
-			FOHWall[FOHWallCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHWallAvailabilityNumber;
-		}
-	}
-	for(var FOHFloorCheck:int = 0; FOHFloorCheck < FOHFloor.length; FOHFloorCheck++)
-	{
-		if(PlayerPrefs.GetInt("FOHFloor:"+FOHFloor[FOHFloorCheck].transform.name) == 0)
-		{
-			FOHFloorAvailability[FOHFloorCheck] = false;
-		}
-		else
-		{
-			FOHFloorAvailability[FOHFloorCheck] = true;
-			FOHFloorAvailabilityNumber++;
-			FOHFloor[FOHFloorCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHFloorAvailabilityNumber;
-		}
-	}
-	for(var FOHBoozeCheck:int = 0; FOHBoozeCheck < FOHBooze.length; FOHBoozeCheck++)
-	{
-		if(PlayerPrefs.GetInt("FOHBooze:"+FOHBooze[FOHBoozeCheck].transform.name) == 0)
-		{
-			FOHBoozeAvailability[FOHBoozeCheck] = false;
-		}
-		else
-		{
-			FOHBoozeAvailability[FOHBoozeCheck] = true;
-			FOHBoozeAvailabilityNumber++;
-			FOHBooze[FOHBoozeCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHBoozeAvailabilityNumber;
-		}
-	}
-	for(var FOHTicketBoothCheck:int = 0; FOHTicketBoothCheck < FOHTicketBooth.length; FOHTicketBoothCheck++)
-	{
-		if(PlayerPrefs.GetInt("FOHTicketBooth:"+FOHTicketBooth[FOHTicketBoothCheck].transform.name) == 0)
-		{
-			FOHTicketBoothAvailability[FOHTicketBoothCheck] = false;
-		}
-		else
-		{
-			FOHTicketBoothAvailability[FOHTicketBoothCheck] = true;
-			FOHTicketBoothAvailabilityNumber++;
-			FOHTicketBooth[FOHTicketBoothCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHTicketBoothAvailabilityNumber;
-		}
-	}
-	for(var FOHDeskCheck:int = 0; FOHDeskCheck < FOHDesk.length; FOHDeskCheck++)
-	{
-		if(PlayerPrefs.GetInt("FOHDesk:"+FOHDesk[FOHDeskCheck].transform.name) == 0)
-		{
-			FOHDeskAvailability[FOHDeskCheck] = false;
-		}
-		else
-		{
-			FOHDeskAvailability[FOHDeskCheck] = true;
-			FOHDeskAvailabilityNumber++;
-			FOHDesk[FOHDeskCheck].GetComponent(VariablePrefix).thisObjectListNumber = FOHDeskAvailabilityNumber;
-		}
-	}
 }	
 
 function UnlockAllOptions () {
@@ -786,26 +513,6 @@ function UnlockAllOptions () {
 	{
 		PlayerPrefs.SetInt("Chairs:"+chairsPiece.transform.name,1);
 	}
-	for(var FOHWallPiece:GameObject in FOHWall)
-	{
-		PlayerPrefs.SetInt("FOHWall:"+FOHWallPiece.transform.name,1);
-	}
-	for(var FOHFloorPiece:GameObject in FOHFloor)
-	{
-		PlayerPrefs.SetInt("FOHFloor:"+FOHFloorPiece.transform.name,1);
-	}
-	for(var FOHBoozePiece:GameObject in FOHBooze)
-	{
-		PlayerPrefs.SetInt("FOHBooze:"+FOHBoozePiece.transform.name,1);
-	}
-	for(var FOHTicketBoothPiece:GameObject in FOHTicketBooth)
-	{
-		PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBoothPiece.transform.name,1);
-	}
-	for(var FOHDeskPiece:GameObject in FOHDesk)
-	{
-		PlayerPrefs.SetInt("FOHDesk:"+FOHDeskPiece.transform.name,1);
-	}
 }
 function LockAllOptions () {
 	// Locks all pieces, considered an override. Also unlocks the first of each piece type.
@@ -837,26 +544,6 @@ function LockAllOptions () {
 	{
 		PlayerPrefs.SetInt("Chairs:"+chairsPiece.transform.name,0);
 	}
-	for(var FOHWallPiece:GameObject in FOHWall)
-	{
-		PlayerPrefs.SetInt("FOHWall:"+FOHWallPiece.transform.name,0);
-	}
-	for(var FOHFloorPiece:GameObject in FOHFloor)
-	{
-		PlayerPrefs.SetInt("FOHFloor:"+FOHFloorPiece.transform.name,0);
-	}
-	for(var FOHBoozePiece:GameObject in FOHBooze)
-	{
-		PlayerPrefs.SetInt("FOHBooze:"+FOHBoozePiece.transform.name,0);
-	}
-	for(var FOHTicketBoothPiece:GameObject in FOHTicketBooth)
-	{
-		PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBoothPiece.transform.name,0);
-	}
-	for(var FOHDeskPiece:GameObject in FOHDesk)
-	{
-		PlayerPrefs.SetInt("FOHDesk:"+FOHDeskPiece.transform.name,0);
-	}
 	PlayerPrefs.SetInt("StageWall:"+stageWall[0].name,1);
 	PlayerPrefs.SetInt("StageFloor:"+stageFloor[0].name,1);
 	PlayerPrefs.SetInt("Ceiling:"+ceiling[0].name,1);
@@ -864,11 +551,6 @@ function LockAllOptions () {
 	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[0].name,1);
 	PlayerPrefs.SetInt("Curtain:"+curtain[0].name,1);
 	PlayerPrefs.SetInt("Chairs:"+chairs[0].name,1);
-	PlayerPrefs.SetInt("FOHWall:"+FOHWall[0].name,1);
-	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[0].name,1);
-	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[0].name,1);
-	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[0].name,1);
-	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[0].name,1);
 	
 	PlayerPrefs.SetInt("StageWall:"+stageWall[1].name,1);
 	PlayerPrefs.SetInt("StageFloor:"+stageFloor[1].name,1);
@@ -877,11 +559,6 @@ function LockAllOptions () {
 	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[1].name,1);
 	PlayerPrefs.SetInt("Curtain:"+curtain[1].name,1);
 	PlayerPrefs.SetInt("Chairs:"+chairs[1].name,1);
-	PlayerPrefs.SetInt("FOHWall:"+FOHWall[1].name,1);
-	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[1].name,1);
-	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[1].name,1);
-	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[1].name,1);
-	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[1].name,1);
 	
 	PlayerPrefs.SetInt("StageWall:"+stageWall[2].name,1);
 	PlayerPrefs.SetInt("StageFloor:"+stageFloor[2].name,1);
@@ -890,9 +567,4 @@ function LockAllOptions () {
 	PlayerPrefs.SetInt("TheaterFloor:"+theaterFloor[2].name,1);
 	PlayerPrefs.SetInt("Curtain:"+curtain[2].name,1);
 	PlayerPrefs.SetInt("Chairs:"+chairs[2].name,1);
-	PlayerPrefs.SetInt("FOHWall:"+FOHWall[2].name,1);
-	PlayerPrefs.SetInt("FOHFloor:"+FOHFloor[2].name,1);
-	PlayerPrefs.SetInt("FOHBooze:"+FOHBooze[2].name,1);
-	PlayerPrefs.SetInt("FOHTicketBooth:"+FOHTicketBooth[2].name,1);
-	PlayerPrefs.SetInt("FOHDesk:"+FOHDesk[2].name,1);
 }

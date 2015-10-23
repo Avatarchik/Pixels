@@ -4,13 +4,9 @@ var highlight:SpriteRenderer;
 
 // All of the possible pieces and representative sprites to be loaded.
 var theaterPieces:String[];
-var FOHPieces:String[];
 var theaterPiecesSprites:Sprite[];
-var FOHPiecesSprites:Sprite[];
 var theaterHighlights:Sprite[];
-var FOHHighlights:Sprite[];
 var theaterLocations:Vector3[];
-var FOHLocations:Vector3[];
 
 // Constantly updated list of Sprites and names that could possibly be selected based on camera location.
 var selectablePieces:String[];
@@ -30,25 +26,13 @@ function Start () {
 	currentSelected = 0;
 	selectablePieces = theaterPieces;
 	selectableSprites = theaterPiecesSprites;
+	selectableHighlights = theaterHighlights;
+	selectableLocations = theaterLocations;
 }
 
 function Update () {
 	// Makes sure selection number is in range of selectable pieces.
 	CheckValue();
-	if(TheaterController.currentState == TheaterStatus.Home)
-	{
-		selectablePieces = theaterPieces;
-		selectableSprites = theaterPiecesSprites;
-		selectableHighlights = theaterHighlights;
-		selectableLocations = theaterLocations;
-	}
-	else
-	{
-		selectablePieces = FOHPieces;
-		selectableSprites = FOHPiecesSprites;
-		selectableHighlights = FOHHighlights;
-		selectableLocations = FOHLocations;
-	}
 	if(!TheaterController.customizing)
 	{
 		selectableHighlights = null;
