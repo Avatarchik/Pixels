@@ -51,7 +51,7 @@ function Update () {
 			var wholeLength:float = currentTarget/3;
 			var currentPos:float = (counter/2) - (2*currentTarget/3);
 			clickCounter = Mathf.Lerp(.5,.1,currentPos/wholeLength);
-			AudioManager.PlaySound(clickSound,.1);
+			AudioManager.PlaySound(clickSound,.3);
 		}	
 	}
 	if(currentSprite == sprites.Length && !finished && active && soundsOn)

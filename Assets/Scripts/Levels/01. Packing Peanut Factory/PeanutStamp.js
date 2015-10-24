@@ -35,7 +35,9 @@ var stamper:GameObject;
 
 @HideInInspector var itemTime:float;
 
-var tutorialNotification:GameObject;
+var peanutSmash:AudioClip;
+var metalHit:AudioClip;
+var shatter:AudioClip;
 
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
@@ -182,6 +184,7 @@ function Clicked () {
 		if(Mathf.Abs(platforms[i].transform.position.x) < .3 && !finished && objectValues[i] == 1)
 		{
 			finished = true;
+			AudioManager.PlaySound(shatter,.2,Random.Range(.9,1.1));
 			Finish(false);
 		}
 	}
@@ -191,6 +194,7 @@ function Clicked () {
 		stamper.transform.position.y = Mathf.MoveTowards(stamper.transform.position.y,stamperDown,Time.deltaTime * (speed * 5 + 25));
 		yield;
 	}
+	AudioManager.PlaySound(metalHit,.2,Random.Range(.9,1.1));
 	Stamp(true);
 	moving = false;
 	while(stamper.transform.position.y < stamperUp && !moving && !finished)
@@ -213,6 +217,7 @@ function Stamp(skip:boolean) {
 					{
 						object[currentPlatform].GetComponent(SpriteRenderer).sprite = oreSprite[3];
 						currentPlatform ++;
+						AudioManager.PlaySound(peanutSmash,.2,Random.Range(.9,1.1));
 					}
 					break;
 				case 1:	
@@ -221,6 +226,7 @@ function Stamp(skip:boolean) {
 						shards.GetComponent.<ParticleSystem>().Emit(10);
 						if(!finished)
 						{
+							AudioManager.PlaySound(peanutSmash,.2,Random.Range(.9,1.1));
 							finished = true;
 							Finish(false);
 						}
@@ -233,6 +239,7 @@ function Stamp(skip:boolean) {
 					break;
 				case 2:
 					peanuts.GetComponent.<ParticleSystem>().Emit(5);
+					AudioManager.PlaySound(peanutSmash,.2,Random.Range(.9,1.1));
 					if(oreCount < 2)
 					{
 						object[currentPlatform].GetComponent(SpriteRenderer).sprite = oreSprite[oreCount+1];

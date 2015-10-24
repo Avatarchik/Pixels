@@ -231,7 +231,7 @@ function Update () {
 	}
 	if(Finger.GetExists(importantFinger) && !Master.paused)
 	{
-		if(currentTree < trees.Length && Vector2.Distance(Finger.GetPosition(importantFinger),trees[currentTree].transform.position) < 2)
+		if(currentTree < trees.Length && Vector2.Distance(Finger.GetPosition(importantFinger),trees[currentTree].transform.position) < 2.4)
 		{
 			trees[currentTree].transform.position.x = Finger.GetPosition(importantFinger).x;
 			trees[currentTree].transform.position.y = Finger.GetPosition(importantFinger).y;

@@ -29,7 +29,8 @@ var pouredSprites:Sprite[];
 
 @HideInInspector var allowance:int;
 
-var tutorialNotification:GameObject;
+var tick:AudioClip;
+var bloop:AudioClip;
 
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
@@ -104,35 +105,42 @@ function Update () {
 }
 
 function Play () {
+	var volume:float = .4;
 	yield WaitForSeconds(clickLength * 2);
 	indicator.sprite = indicatorSprites[1];
+	AudioManager.PlaySound(tick,volume);
 	difference = .01;
 	yield WaitForSeconds(clickLength);
 	indicator.sprite = indicatorSprites[2];
+	AudioManager.PlaySound(tick,volume);
 	difference = .02;
 	allowance = 1;
 	yield WaitForSeconds(clickLength);
 	if(!clicked)
 	{
 		indicator.sprite = indicatorSprites[3];
+		AudioManager.PlaySound(tick,volume);
 	}
 	difference = .03;
 	yield WaitForSeconds(clickLength);
 	if(!clicked)
 	{
 		indicator.sprite = indicatorSprites[4];
+		AudioManager.PlaySound(tick,volume);
 	}
 	difference = .04;
 	yield WaitForSeconds(clickLength);
 	if(!clicked)
 	{
 		indicator.sprite = indicatorSprites[5];
+		AudioManager.PlaySound(tick,volume);
 	}
 	difference = .05;
 	yield WaitForSeconds(clickLength);
 	if(!clicked)
 	{
 		indicator.sprite = indicatorSprites[6];
+		AudioManager.PlaySound(tick,volume);
 	}
 	difference = .06;
 	yield WaitForSeconds(clickLength);
@@ -140,6 +148,7 @@ function Play () {
 	if(!clicked)
 	{
 		indicator.sprite = indicatorSprites[7];
+		AudioManager.PlaySound(tick,.6,1.2);
 		status.sprite = statusSprite[1];
 		SendMessage("NextNotify", SendMessageOptions.DontRequireReceiver);
 	}
@@ -190,6 +199,7 @@ function LidShake() {
 
 function WeakPour() {
 	yield WaitForSeconds(.3);
+	AudioManager.PlaySound(bloop,.3);
 	poured.sprite = pouredSprites[0];
 	particle.startColor = Color(.2,.2,.2,.4);
 	particle.emissionRate = 140;

@@ -9,11 +9,12 @@ function Start () {
 		{
 			GetComponent(SpriteRenderer).enabled = false;
 		}
-		if(GetComponent(ParticleEmitter) != null)
+		if(GetComponent(ParticleSystem) != null)
 		{
-			GetComponent(ParticleEmitter).emit = false;
+			GetComponent(ParticleSystem).enableEmission = false;
 		}
 	}
+	/*
 	else if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal)
 	{
 		if(GetComponent(SpriteRenderer) != null)
@@ -25,4 +26,5 @@ function Start () {
 			GetComponent(ParticleEmitter).emit = false;
 		}
 	}
+	*/
 }

@@ -7,6 +7,9 @@ function Start () {
 }
 
 function Clicked () {
-	GameManager.replay = replay;
-	transform.parent.SendMessage("Clicked",SendMessageOptions.DontRequireReceiver);
+	if(!ResultsScreen.notifying)
+	{
+		GameManager.replay = replay;
+		transform.parent.SendMessage("Clicked",SendMessageOptions.DontRequireReceiver);
+	}
 }

@@ -5,6 +5,7 @@ var player:GameObject;
 @HideInInspector var manager:PlayerManager;
 
 function Clicked () {
+	player = GameObject.FindGameObjectWithTag("Player");
 	if(TitleManager.currentState != TitleStatus.Intro && !Master.notifying)
 	{
 		if(player != null)

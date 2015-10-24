@@ -39,6 +39,8 @@ var completenessSprites:Sprite[];
 
 @HideInInspector var numberToBeat:int;
 
+var successLightThings:SpriteRenderer[];
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -48,6 +50,9 @@ function Start () {
 	lensChoices = new int[2];
 	importantLens = 0;
 	lensesPlugged = new boolean[lenses.length];
+	successLightThings[0].color.a = 0;
+	successLightThings[1].color.a = 0;
+	successLightThings[2].color.a = 0;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -299,6 +304,13 @@ function Update () {
 	if(gameProgress >= numberToBeat)
 	{
 		Finish(true,1);
+	}
+	for(var x:int = 0; x < successLightThings.length; x++)
+	{
+		if(x < gameProgress)
+		{
+			successLightThings[x].color.a = .27;
+		}
 	}
 }
 

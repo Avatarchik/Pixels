@@ -22,6 +22,8 @@ var tutorialNotification:GameObject;
 
 @HideInInspector var moveTimer:float;
 
+var catchSound:AudioClip;
+
 function Start () {
 	moveTimer = 0;
 	if(Application.loadedLevelName == "MicroTester")
@@ -101,7 +103,12 @@ function Update () {
 			else
 			{
 				objectsOnScreen[i].transform.position = Vector3.MoveTowards(objectsOnScreen[i].transform.position, Vector3(crate.transform.position.x,crate.transform.position.y, objectsOnScreen[i].transform.position.z), Time.deltaTime * (10));
-				objectsOnScreen[i].GetComponent(SpriteRenderer).color.a = 0;
+				if(objectsOnScreen[i].GetComponent(SpriteRenderer).color.a != 0)
+				{
+					objectsOnScreen[i].GetComponent(SpriteRenderer).color.a = 0;;
+				//	AudioManager.PlaySound(catchSound,.2,Random.Range(1.4,1.55));
+					AudioManager.PlaySound(catchSound,.17,Random.Range(.5,.7));
+				}
 			}
 		}
 	}

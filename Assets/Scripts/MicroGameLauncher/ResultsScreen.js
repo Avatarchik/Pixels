@@ -228,8 +228,10 @@ function AnnouncementOff () {
 	announcement.cover.color.a = 0;
 	announcement.lockImage.sprite = null;
 	announcement.text.text = "";
+	notifying = false;
 }	
 function AnnouncementStep1 (time:float) {
+	notifying = true;
 	announcement.chest.sprite = announcement.chestSprites[0];
 	announcement.cover.color.a = 1;
 	announcement.lockImage.sprite = announcement.lockImageSprites[0];

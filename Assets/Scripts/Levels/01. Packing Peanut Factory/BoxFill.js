@@ -25,7 +25,7 @@ var injector:GameObject;
 
 @HideInInspector var importantFinger:int;
 
-var tutorialNotification:GameObject;
+var peanutCatchSound:AudioClip;
 
 function Start () {
 	importantFinger = -1;
@@ -118,6 +118,7 @@ function Update () {
 		{
 			if(peanuts[x].transform.position.y < -2.5 && peanuts[x].transform.position.y > -3.4 && Mathf.Abs(boxes[y].transform.position.x) < 2)
 			{
+				AudioManager.PlaySound(peanutCatchSound,.05,Random.Range(.8,1.1));
 				peanuts[x].transform.parent = boxes[y].transform;
 				peanutsFree[x] = 2;
 			}

@@ -18,6 +18,8 @@ static var internalDeltaTime:float;
 static var humCharacter:Person;
 static var humming:boolean;
 
+static var effectPitchMultiplier:float;
+
 function Awake () {
 	humming = false;
 	humCharacter = Person.None;
@@ -36,6 +38,7 @@ function Awake () {
 	}
 	effectSpeaker.loop = false;
 	cutsceneSpeaker.loop = false;
+	effectPitchMultiplier = 1;
 	
 	internalDeltaTime = Time.realtimeSinceStartup;
 }
@@ -61,7 +64,7 @@ function Update () {
 	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
 	{
 		effectSpeaker.volume = soundVolume;
-		effectSpeaker.pitch = Time.timeScale;
+		effectSpeaker.pitch = Time.timeScale * effectPitchMultiplier;
 	}
 	else
 	{
@@ -206,10 +209,15 @@ static function PlaySoundTransition (sound:AudioClip) {
 }
 
 static function PlaySound (sound:AudioClip) {
-	effectSpeaker.PlayOneShot(sound,1);
+	PlaySound(sound,1);
 }
 
 static function PlaySound (sound:AudioClip, volume:float) {
+	PlaySound(sound,volume,1);
+}
+
+static function PlaySound (sound:AudioClip, volume:float, speed:float) {
+	effectPitchMultiplier = speed;
 	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
 	{
 		effectSpeaker.PlayOneShot(sound,volume);

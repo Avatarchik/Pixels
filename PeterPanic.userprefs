@@ -1,9 +1,39 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TitleScreen/ChangeTitleState.js">
+    <Files>
+      <File FileName="Assets/Scripts/TitleScreen/ChangeTitleState.js" Line="8" Column="54" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="Scripts" expanded="True">
+              <Node name="GeneralPurpose" expanded="True">
+                <Node name="Managers" expanded="True" />
+                <Node name="Objects" expanded="True" />
+                <Node name="Player" expanded="True" />
+              </Node>
+              <Node name="Levels" expanded="True">
+                <Node name="01. Packing Peanut Factory" expanded="True" />
+                <Node name="02. Museum" expanded="True" />
+                <Node name="03. GameDev" expanded="True" />
+                <Node name="03B. Arcade" expanded="True">
+                  <Node name="Games" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="MicroGameLauncher" expanded="True">
+                <Node name="UI" expanded="True" />
+              </Node>
+              <Node name="TitleScreen" expanded="True">
+                <Node name="ChangeTitleState.js" selected="True" />
+              </Node>
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Visuals" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

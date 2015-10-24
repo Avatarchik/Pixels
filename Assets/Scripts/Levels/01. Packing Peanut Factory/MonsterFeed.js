@@ -35,7 +35,7 @@ var warningRenderer:SpriteRenderer;
 @HideInInspector var importantFinger:int;
 @HideInInspector var clicked:boolean;
 
-var tutorialNotification:GameObject;
+var peanutPoop:AudioClip;
 
 function Start () {
 	warningHolder = 0;
@@ -177,6 +177,7 @@ function Warning() {
 }
 
 function Clicked() {
+	AudioManager.PlaySound(peanutPoop,.1,Random.Range(.9,1.1));
 	peanutEmitter.GetComponent.<ParticleSystem>().Emit(1);
 	var particleList:ParticleSystem.Particle[] = new ParticleSystem.Particle[peanutEmitter.GetComponent.<ParticleSystem>().particleCount];
 	peanutEmitter.GetComponent.<ParticleSystem>().GetParticles(particleList);

@@ -46,6 +46,8 @@ var markerPrefab:GameObject;
 
 @HideInInspector var movementSpeed:float;
 
+@HideInInspector var endLocation:float;
+
 var playerPrefab:GameObject;
 var customMaterial:Material;
 
@@ -90,6 +92,7 @@ function Start () {
 	platforms = new GameObject[numberOfBlocks];
 	markers = new GameObject[numberOfBlocks];
 	clicked = false;
+	endLocation = 0;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -301,7 +304,7 @@ function Update () {
 		// velocity = 67 at 5
 		// velocity = 61 at 1
 	}
-	if(finished && !badEnd)
+	if(finished && badEnd)
 	{
 		velocity = 0;
 		player.GetComponent(PlayerManager).currentState = PlayerState.Cutscene;
@@ -361,6 +364,10 @@ function Update () {
 		clicked = false;
 		importantFinger = -1;
 	}
+	if(finished && !badEnd)
+	{
+		player.transform.position.y = endLocation;
+	}
 }
 
 function Play () {
@@ -370,7 +377,8 @@ function Play () {
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
-		badEnd = completionStatus;
+		endLocation = player.transform.position.y;
+		badEnd = !completionStatus;
 		finished = true;
 		Debug.Log(completionStatus);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);

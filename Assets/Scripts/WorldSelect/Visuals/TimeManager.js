@@ -78,7 +78,7 @@ function Update () {
 function GetColors () {
 	if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
 	{
-		if(currentTime < 7 || currentTime > 21)
+		if(currentTime < 6 || currentTime > 21)
 		{
 			currentColors = nightColorsEvil;
 			state = TimeState.NightEvil;
@@ -101,7 +101,7 @@ function GetColors () {
 	}
 	else
 	{
-		if(currentTime < 7 || currentTime > 21)
+		if(currentTime < 5 || currentTime > 21)
 		{
 			currentColors = nightColorsNormal;
 			state = TimeState.NightNormal;

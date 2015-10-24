@@ -50,6 +50,8 @@ var playerPrefab:GameObject;
 @HideInInspector var score:float;
 var customMaterial:Material;
 
+@HideInInspector var endLocation:float;
+
 function Awake () {
 	player = Instantiate(playerPrefab);
 	player.transform.position = Vector3(-5.624,-5.639,transform.position.z-1.406);
@@ -85,13 +87,14 @@ function Start () {
 	velocity = 0;
 	deathMovement = 30;
 	canJump = true;
-	badEnd = false;
+	badEnd = true;
 	floors = new GameObject[numberOfBlocks];
 	clouds = new GameObject[numberOfBlocks];
 	enemies = new GameObject[numberOfBlocks];
 	platforms = new GameObject[numberOfBlocks];
 	markers = new GameObject[numberOfBlocks];
 	clicked = false;
+	endLocation = 0;
 	
 	difficulty = 3;
 	
@@ -291,13 +294,14 @@ function Update () {
 		// velocity = 67 at 5
 		// velocity = 61 at 1
 	}
-	if(finished && !badEnd)
+	if(finished && badEnd)
 	{
 		velocity = 0;
 		player.GetComponent(PlayerManager).currentState = PlayerState.Cutscene;
 		player.GetComponent(PlayerManager).SetSongSprite(3);
 		player.transform.position.y += deathMovement * Time.deltaTime;
 		player.transform.Rotate(0,0,50*Time.deltaTime);
+		
 		deathMovement -= Time.deltaTime * 80;
 	}
 	if(player.transform.position.y + (velocity * Time.deltaTime) < bottom && !finished)
@@ -346,6 +350,10 @@ function Update () {
 		clicked = false;
 		importantFinger = -1;
 	}
+	if(finished && !badEnd)
+	{
+		player.transform.position.y = endLocation;
+	}
 }
 
 function Play () {
@@ -355,6 +363,7 @@ function Play () {
 function Finish() {
 	if(!finished)
 	{
+		endLocation = player.transform.position.y;
 		finished = true;
 		yield WaitForSeconds(.35);
 		GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).FinishGame(score);
