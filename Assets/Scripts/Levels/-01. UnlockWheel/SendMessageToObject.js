@@ -12,7 +12,7 @@ function Update () {
 }
 
 function Clicked () {
-	if(UnlockWheelManager.currentState == UnlockWheelStatus.Clear)
+	if(UnlockWheelManager.currentState == UnlockWheelStatus.Clear && !Master.notifying)
 	{
 		target.SendMessage(thisName,SendMessageOptions.DontRequireReceiver);
 	}

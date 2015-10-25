@@ -115,21 +115,21 @@ function Update () {
 	{
 		if(Vector2.Distance(paperPile[i].transform.position,greenLocation) < distance && paperValue[i] == 0)
 		{
-			AudioManager.PlaySound(paperStick,.1,Random.Range(.9,1.1));
+			AudioManager.PlaySound(paperStick,.07,Random.Range(.9,1.1));
 			paperPile[successNumber].GetComponent(ObjectMovementManager).allowMovement = false;
 			paperValue[i] = 10;
 			successNumber ++;
 		}
 		if(Vector2.Distance(paperPile[i].transform.position,redLocation) < distance && paperValue[i] == 1)
 		{
-			AudioManager.PlaySound(paperStick,.1,Random.Range(.9,1.1));
+			AudioManager.PlaySound(paperStick,.07,Random.Range(.9,1.1));
 			paperPile[successNumber].GetComponent(ObjectMovementManager).allowMovement = false;
 			paperValue[i] = 11;
 			successNumber ++;
 		}
 		if(Vector2.Distance(paperPile[i].transform.position,trashLocation) < distance && paperValue[i] == 2)
 		{
-			AudioManager.PlaySound(paperStick,.1,Random.Range(.9,1.1));
+			AudioManager.PlaySound(paperStick,.07,Random.Range(.9,1.1));
 			paperPile[successNumber].GetComponent(ObjectMovementManager).allowMovement = false;
 			paperValue[i] = 12;
 			successNumber ++;

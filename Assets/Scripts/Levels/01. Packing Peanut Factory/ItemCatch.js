@@ -18,8 +18,6 @@ var objectsOnScreenTarget:boolean[];
 
 @HideInInspector var clicked:boolean;
 
-var tutorialNotification:GameObject;
-
 @HideInInspector var moveTimer:float;
 
 var catchSound:AudioClip;
@@ -106,7 +104,6 @@ function Update () {
 				if(objectsOnScreen[i].GetComponent(SpriteRenderer).color.a != 0)
 				{
 					objectsOnScreen[i].GetComponent(SpriteRenderer).color.a = 0;;
-				//	AudioManager.PlaySound(catchSound,.2,Random.Range(1.4,1.55));
 					AudioManager.PlaySound(catchSound,.17,Random.Range(.5,.7));
 				}
 			}

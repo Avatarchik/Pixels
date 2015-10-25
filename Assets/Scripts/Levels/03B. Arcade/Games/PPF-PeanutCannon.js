@@ -19,11 +19,11 @@ var cannonStep3:Sprite;
 @HideInInspector var previous:int;
 @HideInInspector var importantFinger:int;
 
-var tutorialNotification:GameObject;
-
 var score:float;
 
 @HideInInspector var waitTime:float;
+
+var peanutShot:AudioClip;
 
 function Start () {
 	cannon1.transform.position.x = -5.4231;
@@ -185,6 +185,7 @@ function fireCannon1() {
 	newNut1 = Instantiate(peanut,cannon1.transform.position - Vector3(0,1.8,0),Quaternion.identity);
 	newNut1.transform.parent = transform;
 	cannon1.GetComponent(SpriteRenderer).sprite = cannonStep1;
+	AudioManager.PlaySound(peanutShot,.6,Random.Range(.5,.8));
 	while(newNut1.transform.position.y > player.transform.position.y)
 	{
 		yield;
@@ -208,6 +209,7 @@ function fireCannon2() {
 	newNut2 = Instantiate(peanut,cannon2.transform.position - Vector3(0,1.8,0),Quaternion.identity);
 	newNut2.transform.parent = transform;
 	cannon2.GetComponent(SpriteRenderer).sprite = cannonStep1;
+	AudioManager.PlaySound(peanutShot,.6,Random.Range(.5,.8));
 	while(newNut2.transform.position.y > player.transform.position.y)
 	{
 		yield;
@@ -230,6 +232,7 @@ function fireCannon3() {
 	newNut3 = Instantiate(peanut,cannon3.transform.position - Vector3(0,1.8,0),Quaternion.identity);
 	newNut3.transform.parent = transform;
 	cannon3.GetComponent(SpriteRenderer).sprite = cannonStep1;
+	AudioManager.PlaySound(peanutShot,.6,Random.Range(.5,.8));
 	while(newNut3.transform.position.y > player.transform.position.y)
 	{
 		yield;

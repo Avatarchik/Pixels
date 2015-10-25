@@ -58,7 +58,7 @@ function Clicked () {
 	{
 		if(unlocked)
 		{
-			if(PlayerPrefs.GetInt("CurrencyNumber") > playCost)
+			if(PlayerPrefs.GetInt("CurrencyNumber") >= playCost)
 			{
 				PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - playCost);
 				manager.StartGame();
@@ -78,7 +78,7 @@ function Clicked () {
 		{
 			if(paidUnlock)
 			{
-				if(PlayerPrefs.GetInt("CurrencyNumber") > paidUnlockCost)
+				if(PlayerPrefs.GetInt("CurrencyNumber") >= paidUnlockCost)
 				{
 					PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
 					Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);

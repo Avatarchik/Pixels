@@ -230,7 +230,14 @@ function Shake (object:GameObject, numberShakes:int, distance:Vector3){
 }
 
 function PlaySong () {
-	AudioManager.PlayCutscene(intros[Random.Range(0,intros.length)]);
+	if(PlayerPrefs.GetInt("Museum") == 1)
+	{
+		AudioManager.PlayCutscene(intros[Random.Range(0,intros.length)]);
+	}
+	else
+	{
+		AudioManager.PlayCutscene(intros[0]);
+	}
 	while(AudioManager.GetLocation() < 3.15)
 	{
 		yield;

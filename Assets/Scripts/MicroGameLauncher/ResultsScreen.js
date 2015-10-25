@@ -36,15 +36,18 @@ function Start () {
 	notifying = false;
 	skip = false;
 	numberOfUnlocks = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks");
-	unlockLevels = Master.unlockLevels;
+	unlockLevels = new int[Master.unlockLevels.length];
 	if(Master.hardMode)
 	{
 		unlockLevels = [0,0,0,0,0,0];
 	}
-	for(var level:int = 0; level < unlockLevels.length; level ++)
+	else
 	{
-		unlockLevels[level]++;
-	}
+		for(var level:int = 0; level < unlockLevels.length; level ++)
+		{
+			unlockLevels[level] = Master.unlockLevels[level]+1;
+		}
+	}	
 	waitTime = .4;
 	skipWaitTime = .02;	
 	AudioManager.PlaySound(drum,.4);
@@ -163,6 +166,7 @@ function CountScore() {
 						default:
 							break;
 					}
+					notifying = true;
 					yield WaitForSeconds(.3);
 					AudioManager.PlaySound(unlockSounds[i-1],1);
 					AnnouncementStep1(1.2);
@@ -173,6 +177,7 @@ function CountScore() {
 					AnnouncementStep3(i-1);
 					yield WaitForSeconds(4);
 					AnnouncementOff();
+					notifying = false;
 				}
 			}
 		}

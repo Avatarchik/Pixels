@@ -177,7 +177,7 @@ function Warning() {
 }
 
 function Clicked() {
-	AudioManager.PlaySound(peanutPoop,.1,Random.Range(.9,1.1));
+	AudioManager.PlaySound(peanutPoop,.1,Random.Range(.7,1.1));
 	peanutEmitter.GetComponent.<ParticleSystem>().Emit(1);
 	var particleList:ParticleSystem.Particle[] = new ParticleSystem.Particle[peanutEmitter.GetComponent.<ParticleSystem>().particleCount];
 	peanutEmitter.GetComponent.<ParticleSystem>().GetParticles(particleList);

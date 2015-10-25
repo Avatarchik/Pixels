@@ -105,7 +105,7 @@ function Update () {
 }
 
 function Play () {
-	var volume:float = .4;
+	var volume:float = .3;
 	yield WaitForSeconds(clickLength * 2);
 	indicator.sprite = indicatorSprites[1];
 	AudioManager.PlaySound(tick,volume);

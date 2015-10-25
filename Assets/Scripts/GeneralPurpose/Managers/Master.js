@@ -20,6 +20,7 @@ static var device:String;
 static var vertical:boolean;
 
 var showSelectedWorld:World;
+var showUnlockLevels:int[];
 
 var appVersion:float;
 var varNames:String[];
@@ -104,6 +105,7 @@ function Start () {
 
 function Update () {
 	showSelectedWorld = currentWorld;
+	showUnlockLevels = unlockLevels;
 	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
 	{
 		vertical = false;

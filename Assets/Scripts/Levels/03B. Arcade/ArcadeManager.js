@@ -70,6 +70,10 @@ function Start () {
 	AudioManager.PlaySound(helloSounds[tempVar],1);
 	AudioManager.PlaySong(frontMusic,.5);
 	TalkButton.talkWait = helloSounds[tempVar].length;
+	if(PlayerPrefs.GetInt("Sound") == 0)
+	{
+		GetComponent(AudioSource).enabled = false;
+	}
 }
 
 function Update () {

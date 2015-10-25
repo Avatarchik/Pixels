@@ -163,7 +163,6 @@ function Update () {
 	{
 		if(Finger.GetExists(finger) && !clicked[finger])
 		{
-			Debug.Log("Finger: " + finger + "Clicked: " + clicked[finger]);
 			clicked[finger] = true;
 			var nearestKey:int = -1;
 			for(var currentKey:int = 0; currentKey < keysAllowed; currentKey ++)
@@ -191,8 +190,11 @@ function Update () {
 		}
 		else
 		{
-			pressedKeys[finger] = -1;
-			clicked[finger] = false;
+			if(!Finger.GetExists(finger))
+			{
+				clicked[finger] = false;
+				pressedKeys[finger] = -1;
+			}
 		}
 		//if(!Finger.GetExists(finger))
 	}
