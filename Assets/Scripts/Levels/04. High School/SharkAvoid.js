@@ -49,7 +49,7 @@ function Awake () {
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
 	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)]);
 	}
 	// Basic world variable initialization.
 	importantFinger = -1;

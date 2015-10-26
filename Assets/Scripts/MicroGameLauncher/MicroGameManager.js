@@ -20,7 +20,13 @@ static var choice:int;
 
 var firstTime:boolean;
 
+var gameSounds:AudioClip[];
+
 function Start () {
+	if(gameSounds.length > 0 && Random.Range(0,10.0) < 2.5)
+	{
+		AudioManager.PlayCutscene(gameSounds[Random.Range(0,gameSounds.length)]);
+	}
 	firstTime = false;
 	UITimer.soundsOn = clockSounds;
 	marker = 0;

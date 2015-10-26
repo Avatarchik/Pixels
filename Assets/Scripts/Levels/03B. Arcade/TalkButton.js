@@ -4,8 +4,18 @@ var talkSounds:AudioClip[];
 
 static var talkWait:float;
 
+var mouth:SpriteRenderer;
+var mouthClosedSprite:Sprite;
+var mouthOpenSprite:Sprite;
+
+var bennett:SpriteRenderer;
+var bennettNormal:Sprite;
+var bennettBlink:Sprite;
+
 function Awake () {
 	talkWait = 0;
+	Mouth();
+	Blink();
 }
 
 function Update () {
@@ -32,5 +42,34 @@ function Clicked () {
 		var tempVar:int = Random.Range(0,talkSounds.length);
 		AudioManager.PlaySound(talkSounds[tempVar]);
 		talkWait= talkSounds[tempVar].length;
+	}
+}
+
+function Mouth () {
+	while(true)
+	{
+		if(talkWait > 0)
+		{
+			mouth.sprite = mouthOpenSprite;
+			yield WaitForSeconds(.1);
+			mouth.sprite = mouthClosedSprite;
+			yield WaitForSeconds(.1);
+		}
+		else
+		{
+			mouth.sprite = mouthClosedSprite;
+		}
+		yield;
+	}
+}
+
+function Blink () {
+	while(true)
+	{
+		yield WaitForSeconds(Random.Range(.6,5.4));
+		bennett.sprite = bennettBlink;
+		yield WaitForSeconds(Random.Range(.15,.9));
+		bennett.sprite = bennettNormal;
+		yield;
 	}
 }

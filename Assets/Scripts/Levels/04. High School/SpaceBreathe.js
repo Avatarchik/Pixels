@@ -40,7 +40,7 @@ var clicked:boolean;
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
 	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)]);
 	}
 	currentSpaceman = 0;
 	light1.color.a = 0;

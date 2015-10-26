@@ -3,11 +3,19 @@
 var transition:GameObject;
 var done:boolean;
 var controller:Master;
+var whiteFlash:SpriteRenderer;
 
 function Start () {
 	done = false;
+	whiteFlash.color.a = 0;
 }
+
+function Update () {
+	whiteFlash.color.a = Mathf.MoveTowards(whiteFlash.color.a,0,Time.deltaTime * 3.5);
+}
+
 function Clicked () {
+	whiteFlash.color.a = 1;
 	if(WorldMapManager.currentState == MapStatus.Confirmation)
 	{
 		Load();

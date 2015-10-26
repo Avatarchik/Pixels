@@ -483,7 +483,7 @@ function LaunchLevel (wait:float) {
 				currentlyLoaded = Instantiate(bossGame, Vector3(0,0,5), Quaternion.identity);
 				if(Master.currentWorld.audio.bossGameSounds.length > 0)
 				{
-					AudioManager.PlaySound(Master.currentWorld.audio.bossGameSounds[Random.Range(0,Master.currentWorld.audio.bossGameSounds.length)],1);
+					AudioManager.PlayCutscene(Master.currentWorld.audio.bossGameSounds[Random.Range(0,Master.currentWorld.audio.bossGameSounds.length)],1);
 				}
 				break;
 			default:

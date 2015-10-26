@@ -45,7 +45,7 @@ function Start () {
 	failBack.transform.position.y = 12;
 	if(Random.Range(0,10.0) < 2.5)
 	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)]);
+		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)]);
 	}
 	whichSlider = 0;
 	rocketOrder = new int[3];
