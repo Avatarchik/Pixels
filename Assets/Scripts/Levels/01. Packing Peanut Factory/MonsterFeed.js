@@ -223,5 +223,6 @@ function SendTutorial () {
 	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 1) && Application.loadedLevelName == "MicroGameLauncher" && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") == 0 && !Master.hardMode)
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification("Keep the arrow in the green zone by tapping!");
+		PlayerPrefs.SetInt("TutorialFor:" + transform.name,-1);
 	}
 }

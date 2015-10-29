@@ -151,7 +151,7 @@ function Update () {
 		{
 			whichSlider = 1;
 		}
-		if(whichSlider == -1 && Mathf.Abs(Finger.GetPosition(importantFinger).x-slider1.transform.position.x) < 6 && Finger.GetPosition(importantFinger).y > 2)
+		if(whichSlider == -1 && Mathf.Abs(Finger.GetPosition(importantFinger).x-slider1.transform.position.x) < 9 && Finger.GetPosition(importantFinger).y > 0)
 		{
 			if(Finger.GetPosition(importantFinger).x >leftLimit && Finger.GetPosition(importantFinger).x < centerLimit + .2 && Mathf.Abs(slider2.transform.position.x-Finger.GetPosition(importantFinger).x) > 4.5)
 			{
@@ -159,14 +159,14 @@ function Update () {
 			}
 			else if(Finger.GetPosition(importantFinger).x <= leftLimit)
 			{
-				slider1.transform.position.x = Mathf.MoveTowards(slider1.transform.position.x,leftLimit,Time.deltaTime * 3);
+				slider1.transform.position.x = Mathf.MoveTowards(slider1.transform.position.x,leftLimit,Time.deltaTime * 5);
 			}
 			else if(Finger.GetPosition(importantFinger).x >= centerLimit + .2)
 			{
-				slider1.transform.position.x = Mathf.MoveTowards(slider1.transform.position.x,centerLimit + .2,Time.deltaTime * 3);
+				slider1.transform.position.x = Mathf.MoveTowards(slider1.transform.position.x,centerLimit + .5,Time.deltaTime * 5);
 			}
 		}
-		else if(whichSlider == 1 && Mathf.Abs(Finger.GetPosition(importantFinger).x-slider2.transform.position.x) < 6)
+		else if(whichSlider == 1 && Mathf.Abs(Finger.GetPosition(importantFinger).x-slider2.transform.position.x) < 9 && Finger.GetPosition(importantFinger).y > 0)
 		{
 			if(Finger.GetPosition(importantFinger).x >centerLimit - .2 && Finger.GetPosition(importantFinger).x < rightLimit && Mathf.Abs(slider1.transform.position.x-Finger.GetPosition(importantFinger).x) > 4.5)
 			{
@@ -174,11 +174,11 @@ function Update () {
 			}
 			else if(Finger.GetPosition(importantFinger).x >= rightLimit)
 			{
-				slider2.transform.position.x = Mathf.MoveTowards(slider2.transform.position.x,rightLimit,Time.deltaTime * 3);
+				slider2.transform.position.x = Mathf.MoveTowards(slider2.transform.position.x,rightLimit,Time.deltaTime * 5);
 			}
 			else if(Finger.GetPosition(importantFinger).x <= centerLimit - .2)
 			{
-				slider2.transform.position.x = Mathf.MoveTowards(slider2.transform.position.x,centerLimit - .2,Time.deltaTime * 3);
+				slider2.transform.position.x = Mathf.MoveTowards(slider2.transform.position.x,centerLimit - .5,Time.deltaTime * 5);
 			}
 		}
 	}

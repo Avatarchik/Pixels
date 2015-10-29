@@ -211,7 +211,7 @@ function Initialize () {
 	{
 		unlockLevels = [0,14,24,34,70,100];
 	}
-	if(launchOptions.eraseOnLoad || (launchOptions.eraseOnNewVersion && PlayerPrefs.GetFloat("ion") != appVersion))
+	if(launchOptions.eraseOnLoad || (launchOptions.eraseOnNewVersion && PlayerPrefs.GetFloat("AppVersion") != appVersion))
 	{
 		PlayerPrefs.DeleteAll();
 		PlayerPrefs.SetFloat("AppVersion",appVersion);
