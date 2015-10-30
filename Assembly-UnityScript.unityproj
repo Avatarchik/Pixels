@@ -141,6 +141,7 @@
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeObject.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeTimer.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ButtonLeave.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\Cabinet.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\RotateCabinets.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\TalkButton.js" />
      <Compile Include="Assets\Scripts\Levels\04. High School\AsteroidStop.js" />
@@ -231,17 +232,11 @@
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapVisualsManager.js" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
      <None Include="Assets\Art\Materials\3DText.shader" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

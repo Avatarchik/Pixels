@@ -29,7 +29,10 @@ var unlockSounds:AudioClip[];
 
 static var shown:boolean;
 
+static var currentlyLocked:boolean;
+
 function Start () {
+	currentlyLocked = false;
 	shown = false;
 	speed = 50;
 	manager = GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager);
@@ -135,6 +138,7 @@ function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:in
 		currentLockText = unlockText;
 		if(unlocked)
 		{
+			currentlyLocked = true;
 			costText.text = thisPlayCost.ToString();
 			GetComponent(SpriteRenderer).color = openColor;
 			subIcon.sprite = playSprite;
@@ -142,6 +146,7 @@ function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:in
 		}
 		else
 		{
+			currentlyLocked = true;
 			if(paidUnlock)
 			{
 				if(thisPaidUnlockCost > 999)
