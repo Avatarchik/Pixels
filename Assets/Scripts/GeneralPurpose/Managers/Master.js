@@ -19,8 +19,8 @@ static var unlockLevels:int[];
 static var device:String;
 static var vertical:boolean;
 
-var showSelectedWorld:World;
-var showUnlockLevels:int[];
+@HideInInspector var showSelectedWorld:World;
+@HideInInspector var showUnlockLevels:int[];
 
 var appVersion:float;
 var varNames:String[];

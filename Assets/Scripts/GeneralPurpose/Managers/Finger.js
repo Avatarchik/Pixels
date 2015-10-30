@@ -95,7 +95,14 @@ static function GetExists (finger:int) : boolean {
 //Function to find a finger's position.
 
 static function GetPosition (finger:int) : Vector2 {
-	return(Vector2(location[finger].x,location[finger].y));
+	if(finger >= 0)
+	{
+		return(Vector2(location[finger].x,location[finger].y));
+	}
+	else
+	{
+		return(Vector2(-10000000,-10000000));
+	}
 }
 
 //Function to find if a finger is in the game area. (9x9)

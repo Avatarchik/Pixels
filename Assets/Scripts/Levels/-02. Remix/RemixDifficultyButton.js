@@ -26,30 +26,30 @@ function Update () {
 	{
 		if(hard)
 		{
-			GetComponent(SpriteRenderer).sprite = downSprite;
-			icon.transform.localPosition.y = -.01;
-			icon.GetComponent(SpriteRenderer).color = Color.gray;
-		}	
-		else
-		{
 			GetComponent(SpriteRenderer).sprite = upSprite;
 			icon.transform.localPosition.y = 0;
 			icon.GetComponent(SpriteRenderer).color = Color.white;
+		}	
+		else
+		{
+			GetComponent(SpriteRenderer).sprite = downSprite;
+			icon.transform.localPosition.y = -.01;
+			icon.GetComponent(SpriteRenderer).color = Color.gray;
 		}
 	}
 	else
 	{
 		if(hard)
 		{
-			GetComponent(SpriteRenderer).sprite = upSprite;
-			icon.transform.localPosition.y = 0;
-			icon.GetComponent(SpriteRenderer).color = Color.white;
-		}	
-		else
-		{
 			GetComponent(SpriteRenderer).sprite = downSprite;
 			icon.transform.localPosition.y = -.01;
 			icon.GetComponent(SpriteRenderer).color = Color.gray;
+		}	
+		else
+		{
+			GetComponent(SpriteRenderer).sprite = upSprite;
+			icon.transform.localPosition.y = 0;
+			icon.GetComponent(SpriteRenderer).color = Color.white;
 		}
 	}
 }

@@ -138,7 +138,7 @@ function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:in
 		currentLockText = unlockText;
 		if(unlocked)
 		{
-			currentlyLocked = true;
+			currentlyLocked = false;
 			costText.text = thisPlayCost.ToString();
 			GetComponent(SpriteRenderer).color = openColor;
 			subIcon.sprite = playSprite;
