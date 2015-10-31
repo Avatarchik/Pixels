@@ -53,11 +53,11 @@ function Awake () {
 		currentEyes.transform.localScale = transform.lossyScale;
 		currentEyes.GetComponent(SpriteRenderer).color = eyesColor[PlayerPrefs.GetInt("EyesColor")];
 		currentEyes.transform.parent = transform;
-	currentTop = Instantiate(tops[PlayerPrefs.GetInt("TopSelection")],transform.position-Vector3(0,0,.05),Quaternion.identity);
+	currentTop = Instantiate(tops[PlayerPrefs.GetInt("TopSelection")],transform.position-Vector3(0,0,.07),Quaternion.identity);
 		currentTop.transform.localScale = transform.lossyScale;
 		currentTop.GetComponent(SpriteRenderer).color = topsColor[PlayerPrefs.GetInt("TopColor")];
 		currentTop.transform.parent = transform;
-	currentBottom = Instantiate(bottoms[PlayerPrefs.GetInt("BottomSelection")],transform.position-Vector3(0,0,.07),Quaternion.identity);
+	currentBottom = Instantiate(bottoms[PlayerPrefs.GetInt("BottomSelection")],transform.position-Vector3(0,0,.05),Quaternion.identity);
 		currentBottom.transform.localScale = transform.lossyScale;
 		currentBottom.GetComponent(SpriteRenderer).color = bottomsColor[PlayerPrefs.GetInt("BottomColor")];
 		currentBottom.transform.parent = transform;
@@ -244,10 +244,10 @@ function Refresh(part:String, change:int) {
 			currentEyes = CreateObject(currentEyes,eyes,eyesColor,eyesAvailability,.06,"Eyes","eyes",change);
 			break;
 		case "top":
-			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.05,"Top","top",change);
+			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.07,"Top","top",change);
 			break;
 		case "bottom":
-			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.07,"Bottom","bottom",change);
+			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.05,"Bottom","bottom",change);
 			break;
 		case "body":
 			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
@@ -263,8 +263,8 @@ function Refresh(part:String, change:int) {
 		case "all":
 			currentHair = CreateObject(currentHair,hair,hairColor,hairAvailability,.08,"Hair","hair",change);
 			currentEyes = CreateObject(currentEyes,eyes,eyesColor,eyesAvailability,.06,"Eyes","eyes",change);
-			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.05,"Top","top",change);
-			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.07,"Bottom","bottom",change);
+			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.07,"Top","top",change);
+			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.05,"Bottom","bottom",change);
 			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
 			{
 				PlayerPrefs.SetInt("BodyColor",0);

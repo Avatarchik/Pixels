@@ -5,6 +5,7 @@ public enum UnlockWheelStatus{Clear,Spinning,Notify,Leaving};
 var bigWheelPieces:SpriteRenderer[];
 var smallWheelPieces:SpriteRenderer[];
 var arrow:SpriteRenderer;
+var arrowGhost:SpriteRenderer;
 var arrowRestingSprite:Sprite;
 var arrowSprites:Sprite[];
 
@@ -34,7 +35,18 @@ var lockedItems:GameObject[];
 
 var itemNotificationObject:GameObject;
 
+@HideInInspector var currentWinner:int;
+
+var notifier:GameObject;
+@HideInInspector var currentNotifier:GameObject;
+
+var excitementBack:SpriteRenderer;
+var excitementGlow:SpriteRenderer;
+
 function Start () {
+	excitementBack.color.a = 0;
+	excitementGlow.color.a = 0;
+	arrowGhost.color.a = 0;
 	AudioManager.PlaySong(Master.currentWorld.audio.music[0]);
 	unlockableItems = Camera.main.GetComponent(Master).launchOptions.customizationPieces;
 	UpdateUnlockables();
@@ -57,29 +69,10 @@ function Start () {
 }
 
 function Update () {
-	if(Input.GetKeyDown("space") && currentState == UnlockWheelStatus.Clear)
-	{
-		
-	}
-	if(Input.GetKeyDown("up"))
-	{
-		AddBig();
-	}
-	if(Input.GetKeyDown("down"))
-	{
-		SubtractBig();
-	}
-	if(Input.GetKeyDown("w"))
-	{
-		AddSmall();
-	}
-	if(Input.GetKeyDown("s"))
-	{
-		SubtractSmall();
-	}
 	if(arrowLocation < 0)
 	{	
 		arrow.sprite = arrowRestingSprite;
+		arrowGhost.sprite = arrowRestingSprite;
 	}
 	else
 	{
@@ -93,6 +86,14 @@ function Update () {
 			spriteNumber -= 8;
 		}
 		arrow.sprite = arrowSprites[spriteNumber];
+		if(spriteNumber > 0)
+		{
+			arrowGhost.sprite = arrowSprites[spriteNumber-1];
+		}
+		else
+		{
+			arrowGhost.sprite = arrowSprites[arrowSprites.Length-1];
+		}
 		if(arrowLocation < 8)
 		{
 			arrow.transform.rotation.eulerAngles.z = 0;
@@ -109,6 +110,23 @@ function Update () {
 		{
 			arrow.transform.rotation.eulerAngles.z = 90;
 		}
+		if(arrowLocation < 9 && arrowLocation > 0)
+		{
+			arrowGhost.transform.rotation.eulerAngles.z = 0;
+		}
+		else if(arrowLocation < 17 && arrowLocation > 0)
+		{
+			arrowGhost.transform.rotation.eulerAngles.z = -90;
+		}
+		else if(arrowLocation < 25 && arrowLocation > 0)
+		{
+			arrowGhost.transform.rotation.eulerAngles.z = -180;
+		}
+		else
+		{
+			arrowGhost.transform.rotation.eulerAngles.z = 90;
+		}
+		arrowGhost.color.a = Mathf.MoveTowards(arrowGhost.color.a,0,Time.deltaTime * 3);
 	}
 }
 
@@ -144,93 +162,11 @@ function SmallSliceManager (slice:int) {
 	}
 }
 
-function AddBig ():boolean {
+function AddBig () {
 	if(currentState == UnlockWheelStatus.Clear)
 	{
-		CheckAvailable();
-		var newAddition:int = Random.Range(0,bigWheelWinners.length);
-		var checker:int = 0;
-		while(bigWheelWinners[newAddition] && checker < 100)
-		{
-			newAddition = Random.Range(0,bigWheelWinners.length);
-			checker ++;
-		}
-		bigWheelWinners[newAddition] = true;
-		if(checker == 100)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-}
-
-function SubtractBig ():boolean {
-	if(currentState == UnlockWheelStatus.Clear)
-	{
-		var newSubtraction:int = Random.Range(0,bigWheelWinners.length);
-		var checker:int = 0;
-		while(!bigWheelWinners[newSubtraction] && checker < 100)
-		{
-			newSubtraction = Random.Range(0,bigWheelWinners.length);
-			checker ++;
-		}
-		bigWheelWinners[newSubtraction] = false;
-		if(checker == 100)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-}
-
-function AddSmall ():boolean {
-	if(currentState == UnlockWheelStatus.Clear)
-	{
-		CheckAvailable();
-		var newAddition:int = Random.Range(0,smallWheelWinners.length);
-		var checker:int = 0;
-		while(smallWheelWinners[newAddition] && checker < 100)
-		{
-			newAddition = Random.Range(0,smallWheelWinners.length);
-			checker ++;
-		}
-		smallWheelWinners[newAddition] = true;
-		if(checker == 100)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-}
-
-function SubtractSmall ():boolean {
-	if(currentState == UnlockWheelStatus.Clear)
-	{
-		var newSubtraction:int = Random.Range(0,smallWheelWinners.length);
-		var checker:int = 0;
-		while(!smallWheelWinners[newSubtraction] && checker < 100)
-		{
-			newSubtraction = Random.Range(0,smallWheelWinners.length);
-			checker ++;
-		}
-		smallWheelWinners[newSubtraction] = false;
-		if(checker == 100)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		currentWinner = Random.Range(0,bigWheelWinners.Length);
+		bigWheelWinners[currentWinner] = true;
 	}
 }
 
@@ -264,27 +200,14 @@ function CheckAvailable () {
 }
 
 function Spin (cost:int) {
-	var allowed:boolean = false;
-	for(var i:int = 0; i < bigWheelWinners.length; i++)
-	{
-		if(bigWheelWinners[i])
-		{
-			allowed = true;
-		}
-	}
-	for(i = 0; i < smallWheelWinners.length; i++)
-	{
-		if(smallWheelWinners[i])
-		{
-			allowed = true;
-		}
-	}
-	if(allowed)
+	if(PlayerPrefs.GetInt("CurrencyNumber") >= cost)
 	{
 		if(currentState == UnlockWheelStatus.Clear)
 		{
+			var amountWon:int = 0;
 			PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - cost);
-			var modifier:float = Random.Range(.2,1.7);
+			var modifier:float = Random.Range(.2,17);
+			AddBig();
 			currentState = UnlockWheelStatus.Spinning;
 			yield WaitForSeconds(.2);
 			var waitTime:float = .15;
@@ -303,43 +226,90 @@ function Spin (cost:int) {
 				//yield WaitForSeconds(waitTime * modifier);
 				yield;
 			}
-			waitTime = .05;
-			while(waitTime < .35)
+			waitTime = .02;
+			var number:int = 0;
+			while(number < 12)
 			{
+				number ++;
 				arrowLocation ++;
 				Flash();
 				yield WaitForSeconds(waitTime);
-				waitTime = waitTime * (1 + (.2 * modifier));
 				yield;
 			}
-			arrowLocation ++;
-			Flash();
-			yield WaitForSeconds(.6);
-			arrowLocation ++;
-			Flash();
-			if(Random.value < .4)
+			if(Random.value < .9)
 			{
-				yield WaitForSeconds(1.1);
-				arrowLocation ++;
-				Flash();
+				amountWon = 1;
+				if(Random.value < .5)
+				{
+					number = 0;
+					amountWon = 2;
+					SuperCharge();
+					while(number < 15)
+					{
+						number ++;
+						arrowLocation ++;
+						Flash();
+						yield WaitForSeconds(waitTime);
+						yield;
+					}
+					if(Random.value < 1.5)
+					{
+						excitementBack.color.a = .7;
+						excitementGlow.color.a = .7;
+						number = 0;
+						amountWon = 3;
+						UltraCharge();
+						while(number < 40)
+						{
+							number ++;
+							arrowLocation ++;
+							arrowGhost.color.a = .5;
+							Flash();
+							yield WaitForSeconds(waitTime);
+							yield;
+						}
+					}
+				}
+				while(waitTime < .05 || currentWinner != GetValue())
+				{
+					arrowLocation ++;
+					Flash();
+					yield WaitForSeconds(waitTime);
+					waitTime = waitTime * (1.08);
+					if(waitTime > .35)
+					{
+						waitTime = .35;
+					}
+					yield;
+				}
 			}
+			else
+			{
+				amountWon = 0;
+				while(waitTime < .28 || currentWinner == GetValue())
+				{
+					arrowLocation ++;
+					Flash();
+					yield WaitForSeconds(waitTime);
+					waitTime = waitTime * (1 + (.1 * modifier));
+					if(waitTime > .35)
+					{
+						waitTime = .35;
+					}
+					yield;
+				}
+			}
+			
 			yield WaitForSeconds(.3);
-			var amountWon:int = 0;
-			if(bigWheelWinners[GetValue(true)])
-			{
-				amountWon ++;
-			}
-			if(smallWheelWinners[GetValue(false)])
-			{
-				amountWon += 2;
-			}
 			Results(amountWon);
+			excitementBack.color.a = 0;
+			excitementGlow.color.a = 0;
 			yield;
 		}
 	}
 	else
 	{
-		Camera.main.GetComponent(Master).LaunchNotification("Place a bet first!", NotificationType.notEnoughCoins);
+		Camera.main.GetComponent(Master).LaunchNotification("Not enough money!", NotificationType.notEnoughCoins);
 		currentState = UnlockWheelStatus.Notify;
 		while(Master.notifying)
 		{
@@ -349,64 +319,88 @@ function Spin (cost:int) {
 	}
 }
 
+function SuperCharge () {
+	MaxBet();
+}
+
+function UltraCharge () {
+	BetRest();
+}
+
 function Results(amountWon:int) {
 	if(amountWon > 0)
 	{
 		currentState = UnlockWheelStatus.Notify;
 		if(lockedItems.Length > 0)
 		{
-			if(amountWon > 1)
-			{
-				Camera.main.GetComponent(Master).LaunchNotification("You unlocked some new items!", NotificationType.unlockedItems);
-			}
-			else
-			{
-				Camera.main.GetComponent(Master).LaunchNotification("You unlocked a new item!", NotificationType.unlockedItems);
-			}
 			currentState = UnlockWheelStatus.Notify;
-			currentState = UnlockWheelStatus.Clear;
 			var choices:int[] = GetChoices(amountWon);
-			var newItem:GameObject[];
-			newItem = new GameObject[choices.length];
+			currentNotifier = Instantiate(notifier);
+			var textLength:int = 13;
 			switch(choices.length)
 			{
 				case 1:
-					newItem[0] = Instantiate(itemNotificationObject,Vector3(0,4.6,-9.4),Quaternion.identity);
-					newItem[0].GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock1Item.GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock1Text.text = lockedItems[choices[0]].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+					if(lockedItems[choices[0]].GetComponent(VariablePrefix).unlockText.length > textLength)
+					{
+						currentNotifier.GetComponent(UnlockThing).unlock1Text.characterSize = .1;
+					}
+					
+					Destroy(currentNotifier.GetComponent(UnlockThing).unlock2Item);
+					Destroy(currentNotifier.GetComponent(UnlockThing).unlock3Item);
 					break;
 				case 2:
-					newItem[0] = Instantiate(itemNotificationObject,Vector3(-2.25,4.6,-9.4),Quaternion.identity);
-					newItem[1] = Instantiate(itemNotificationObject,Vector3(2.25,4.6,-9.4),Quaternion.identity);
-					newItem[0].GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
-					newItem[1].GetComponent(SpriteRenderer).sprite = lockedItems[choices[1]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock1Item.GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock1Text.text = lockedItems[choices[0]].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+					if(lockedItems[choices[0]].GetComponent(VariablePrefix).unlockText.length > textLength)
+					{
+						currentNotifier.GetComponent(UnlockThing).unlock1Text.characterSize = .1;
+					}
+					
+					currentNotifier.GetComponent(UnlockThing).unlock2Item.GetComponent(SpriteRenderer).sprite = lockedItems[choices[1]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock2Text.text = lockedItems[choices[1]].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+					if(lockedItems[choices[1]].GetComponent(VariablePrefix).unlockText.length > textLength)
+					{
+						currentNotifier.GetComponent(UnlockThing).unlock2Text.characterSize = .1;
+					}
+					
+					Destroy(currentNotifier.GetComponent(UnlockThing).unlock3Item);
 					break;
 				case 3:
-					newItem[0] = Instantiate(itemNotificationObject,Vector3(0,4.6,-9.4),Quaternion.identity);
-					newItem[1] = Instantiate(itemNotificationObject,Vector3(-4.5,4.6,-9.4),Quaternion.identity);
-					newItem[2] = Instantiate(itemNotificationObject,Vector3(4.5,4.6,-9.4),Quaternion.identity);
-					newItem[0].GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
-					newItem[1].GetComponent(SpriteRenderer).sprite = lockedItems[choices[1]].GetComponent(VariablePrefix).objectTypeImage;
-					newItem[2].GetComponent(SpriteRenderer).sprite = lockedItems[choices[2]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock1Item.GetComponent(SpriteRenderer).sprite = lockedItems[choices[0]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock1Text.text = lockedItems[choices[0]].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+					if(lockedItems[choices[0]].GetComponent(VariablePrefix).unlockText.length > textLength)
+					{
+						currentNotifier.GetComponent(UnlockThing).unlock1Text.characterSize = .1;
+					}
+					
+					currentNotifier.GetComponent(UnlockThing).unlock2Item.GetComponent(SpriteRenderer).sprite = lockedItems[choices[1]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock2Text.text = lockedItems[choices[1]].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+					if(lockedItems[choices[1]].GetComponent(VariablePrefix).unlockText.length > textLength)
+					{
+						currentNotifier.GetComponent(UnlockThing).unlock2Text.characterSize = .1;
+					}
+					
+					currentNotifier.GetComponent(UnlockThing).unlock3Item.GetComponent(SpriteRenderer).sprite = lockedItems[choices[2]].GetComponent(VariablePrefix).objectTypeImage;
+					currentNotifier.GetComponent(UnlockThing).unlock3Text.text = lockedItems[choices[2]].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+					if(lockedItems[choices[2]].GetComponent(VariablePrefix).unlockText.length > textLength)
+					{
+						currentNotifier.GetComponent(UnlockThing).unlock3Text.characterSize = .1;
+					}
 					break;
 				default:
 					break;
 			}
-			for(var i:int = 0; i < newItem.length; i++)
+			for(var i:int  = 0; i < choices.length; i++)
 			{
-				newItem[i].transform.localScale = Vector3(14.06,14.06,14.06);
-				newItem[i].transform.parent = transform;
+				PlayerPrefs.SetInt(lockedItems[choices[i]].GetComponent(VariablePrefix).variablePrefix + lockedItems[choices[i]].transform.name,1);
 			}
-			AudioManager.PlaySound(successSounds[Mathf.Min(choices.length-1,2)]);
-			
-			while(Master.notifying)
+			while(currentNotifier != null)
 			{
 				yield;
 			}
-			for(i = 0; i < choices.length; i++)
-			{
-				PlayerPrefs.SetInt(lockedItems[choices[i]].GetComponent(VariablePrefix).variablePrefix + lockedItems[choices[i]].transform.name,1);
-				Destroy(newItem[i]);
-			}
+			currentState = UnlockWheelStatus.Clear;
 			UpdateUnlockables();
 		}
 	}
@@ -499,21 +493,13 @@ function Flash () {
 	{
 		arrowLocation = 0;
 	}
-	if(bigWheelWinners[GetValue(true)])
+	if(bigWheelWinners[GetValue()])
 	{
-		bigWheelPieces[GetValue(true)].color = winnerHighlight;
+		bigWheelPieces[GetValue()].color = winnerHighlight;
 	}
 	else
 	{
-		bigWheelPieces[GetValue(true)].color = failHighlight;
-	}
-	if(smallWheelWinners[GetValue(false)])
-	{
-		smallWheelPieces[GetValue(false)].color = specialHighlight;
-	}
-	else
-	{
-		smallWheelPieces[GetValue(false)].color = failHighlight;
+		bigWheelPieces[GetValue()].color = failHighlight;
 	}
 }
 
@@ -531,11 +517,18 @@ function Reset () {
 function MaxBet () {
 	for(var i:int = 0; i < bigWheelWinners.length; i++)
 	{
-		bigWheelWinners[i] = true;
+		//bigWheelWinners[i] = true;
 	}
 	for(i = 0; i < smallWheelWinners.length; i++)
 	{
-		//smallWheelWinners[i] = true;
+		smallWheelWinners[i] = true;
+	}
+}
+
+function BetRest () {
+	for(var i:int = 0; i < bigWheelWinners.length; i++)
+	{
+		bigWheelWinners[i] = true;
 	}
 }
 
@@ -570,328 +563,104 @@ function AddInt (original:int[],addition:int):int[] {
 	return finalArray;
 }
 
-function GetValue (big:boolean):int {
+function GetValue ():int {
 	switch(arrowLocation)
 	{
 		case 0:
-			if(big)
-			{
-				return 0;
-			}
-			else
-			{
-				return 0;
-			}
+			return 0;
 			break;
 		case 1:
-			if(big)
-			{
-				return 0;
-			}
-			else
-			{
-				return 1;
-			}
+			return 0;
 			break;
 		case 2:
-			if(big)
-			{
-				return 1;
-			}
-			else
-			{
-				return 1;
-			}
+			return 0;
 			break;
 		case 3:
-			if(big)
-			{
-				return 1;
-			}
-			else
-			{
-				return 2;
-			}
+			return 0;
 			break;
 		case 4:
-			if(big)
-			{
-				return 2;
-			}
-			else
-			{
-				return 3;
-			}
+			return 1;
 			break;
 		case 5:
-			if(big)
-			{
-				return 2;
-			}
-			else
-			{
-				return 4;
-			}
+			return 1;
 			break;
 		case 6:
-			if(big)
-			{
-				return 3;
-			}
-			else
-			{
-				return 4;
-			}
+			return 1;
 			break;
 		case 7:
-			if(big)
-			{
-				return 3;
-			}
-			else
-			{
-				return 5;
-			}
+			return 1;
 			break;
 		case 8:
-			if(big)
-			{
-				return 4;
-			}
-			else
-			{
-				return 6;
-			}
+			return 2;
 			break;
 		case 9:
-			if(big)
-			{
-				return 4;
-			}
-			else
-			{
-				return 7;
-			}
+			return 2;
 			break;
 		case 10:
-			if(big)
-			{
-				return 5;
-			}
-			else
-			{
-				return 7;
-			}
+			return 2;
 			break;
 		case 11:
-			if(big)
-			{
-				return 5;
-			}
-			else
-			{
-				return 8;
-			}
+			return 2;
 			break;
 		case 12:
-			if(big)
-			{
-				return 6;
-			}
-			else
-			{
-				return 9;
-			}
+			return 3;
 			break;
 		case 13:
-			if(big)
-			{
-				return 6;
-			}
-			else
-			{
-				return 10;
-			}
+			return 3;
 			break;
 		case 14:
-			if(big)
-			{
-				return 7;
-			}
-			else
-			{
-				return 10;
-			}
+			return 3;
 			break;
 		case 15:
-			if(big)
-			{
-				return 7;
-			}
-			else
-			{
-				return 11;
-			}
+			return 3;
 			break;
 		case 16:
-			if(big)
-			{
-				return 8;
-			}
-			else
-			{
-				return 12;
-			}
+			return 4;
 			break;
 		case 17:
-			if(big)
-			{
-				return 8;
-			}
-			else
-			{
-				return 13;
-			}
+			return 4;
 			break;
 		case 18:
-			if(big)
-			{
-				return 9;
-			}
-			else
-			{
-				return 13;
-			}
+			return 4;
 			break;
 		case 19:
-			if(big)
-			{
-				return 9;
-			}
-			else
-			{
-				return 14;
-			}
+			return 4;
 			break;
 		case 20:
-			if(big)
-			{
-				return 10;
-			}
-			else
-			{
-				return 15;
-			}
+			return 5;
 			break;
 		case 21:
-			if(big)
-			{
-				return 10;
-			}
-			else
-			{
-				return 16;
-			}
+			return 5;
 			break;
 		case 22:
-			if(big)
-			{
-				return 11;
-			}
-			else
-			{
-				return 16;
-			}
+			return 5;
 			break;
 		case 23:
-			if(big)
-			{
-				return 11;
-			}
-			else
-			{
-				return 17;
-			}
+			return 5;
 			break;
 		case 24:
-			if(big)
-			{
-				return 12;
-			}
-			else
-			{
-				return 18;
-			}
+			return 6;
 			break;
 		case 25:
-			if(big)
-			{
-				return 12;
-			}
-			else
-			{
-				return 19;
-			}
+			return 6;
 			break;
 		case 26:
-			if(big)
-			{
-				return 13;
-			}
-			else
-			{
-				return 19;
-			}
+			return 6;
 			break;
 		case 27:
-			if(big)
-			{
-				return 13;
-			}
-			else
-			{
-				return 20;
-			}
+			return 6;
 			break;
 		case 28:
-			if(big)
-			{
-				return 14;
-			}
-			else
-			{
-				return 21;
-			}
+			return 7;
 			break;
 		case 29:
-			if(big)
-			{
-				return 14;
-			}
-			else
-			{
-				return 22;
-			}
+			return 7;
 			break;
 		case 30:
-			if(big)
-			{
-				return 15;
-			}
-			else
-			{
-				return 22;
-			}
+			return 7;
 			break;
 		case 31:
-			if(big)
-			{
-				return 15;
-			}
-			else
-			{
-				return 23;
-			}
+			return 7;
 			break;
 		default:
 			return -1;

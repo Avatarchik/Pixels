@@ -207,7 +207,7 @@ function Update () {
 				{
 					if((Mathf.Abs(Finger.GetPosition(importantFinger).x) > 13.5 && Mathf.Abs(Finger.GetPosition(importantFinger).y) < 5.3)|| (Mathf.Abs(Finger.GetPosition(importantFinger).x) > 6 && Finger.GetPosition(importantFinger).y < -12))
 					{
-						cameraVelocity = Finger.GetPosition(importantFinger).x * -2;
+						cameraVelocity = Finger.GetPosition(importantFinger).x * -1.3;
 					}
 					else
 					{
