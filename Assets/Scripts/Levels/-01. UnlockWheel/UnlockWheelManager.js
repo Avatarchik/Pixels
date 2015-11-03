@@ -252,7 +252,7 @@ function Spin (cost:int) {
 						yield WaitForSeconds(waitTime);
 						yield;
 					}
-					if(Random.value < 1.5)
+					if(Random.value < .5)
 					{
 						excitementBack.color.a = .7;
 						excitementGlow.color.a = .7;

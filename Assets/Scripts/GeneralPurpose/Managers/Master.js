@@ -411,7 +411,6 @@ function UnlockAllOptions () {
 	PlayerPrefs.SetInt("EyesSelection",0);
 	PlayerPrefs.SetInt("TopSelection",0);
 	PlayerPrefs.SetInt("BottomSelection",0);
-	PlayerPrefs.SetInt("CurrencyNumber", 1000);
 }
 
 class BasicVariables {

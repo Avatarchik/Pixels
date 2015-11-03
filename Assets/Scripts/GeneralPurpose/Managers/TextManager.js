@@ -653,11 +653,11 @@ function UpdateSprites(spritePosition:int, data:SideInfo,previousData:SideInfo) 
 		switch(spritePosition)
 		{
 			case 0:
-				xPosition = -5; 
+				xPosition = -6; 
 				zPosition = transform.position.z+1;
 				break;
 			case 1:
-				xPosition = 5;
+				xPosition = 6;
 				zPosition = transform.position.z+1.5;
 				break;
 			case 2:
