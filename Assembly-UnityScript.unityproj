@@ -74,7 +74,8 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\Spinning.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Cutscene\SpriteChoice.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\DestroyObjectOnClick.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\MoveToCorner.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Device\PortraitOrLandscapeSprite.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Device\iPadOriPhonePosition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Notification.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectLoop.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\ObjectMovementManager.js" />
@@ -85,7 +86,6 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\SpriteRotate.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\Transition.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Objects\VariablePrefix.js" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\Objects\iPadOriPhone.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\ConstantMotion.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\CreatePlayer.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\MouthMovement.js" />
@@ -234,17 +234,11 @@
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapVisualsManager.js" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
      <None Include="Assets\Art\Materials\3DText.shader" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

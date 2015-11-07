@@ -5,9 +5,10 @@
 @HideInInspector var playCost:int;
 @HideInInspector var unlocked:boolean;
 @HideInInspector var currentLockText:String;
-var hide:Vector3;
-var show:Vector3;
-var gameplay:Vector3;
+
+var locations169:ArcadeButtonLocations;
+var locations43:ArcadeButtonLocations;
+@HideInInspector var locations:ArcadeButtonLocations;
 
 var playSprite:Sprite;
 var buySprite:Sprite;
@@ -36,22 +37,30 @@ function Start () {
 	shown = false;
 	speed = 50;
 	manager = GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager);
+	if(Master.device == "16:9")
+	{
+		locations = locations169;
+	}
+	else if(Master.device == "4:3");
+	{
+		locations = locations43;
+	}
 }
 
 function Update () {
 	if(manager.currentState == ArcadeState.Playing || manager.currentState == ArcadeState.Results)
 	{
-		transform.position = Vector3.MoveTowards(transform.position,gameplay,Time.deltaTime * speed);
+		transform.position = Vector3.MoveTowards(transform.position,locations.gameplay,Time.deltaTime * speed);
 	}
 	else
 	{
 		if(shown)
 		{
-			transform.position = Vector3.MoveTowards(transform.position,show,Time.deltaTime * speed);
+			transform.position = Vector3.MoveTowards(transform.position,locations.show,Time.deltaTime * speed);
 		}
 		else
 		{
-			transform.position = Vector3.MoveTowards(transform.position,hide,Time.deltaTime * speed);
+			transform.position = Vector3.MoveTowards(transform.position,locations.hide,Time.deltaTime * speed);
 		}
 	}
 }
@@ -174,4 +183,10 @@ function Switch (shouldShow:boolean,thisPaidUnlock:boolean,thisPaidUnlockCost:in
 			}
 		}	
 	}
+}
+
+class ArcadeButtonLocations {
+	var hide:Vector3;
+	var show:Vector3;
+	var gameplay:Vector3;
 }

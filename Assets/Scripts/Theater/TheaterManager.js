@@ -63,10 +63,26 @@ function Start () {
 	thisObject = 0;
 	totalObject = 0;
 	displayCounter = 0;
-	displayTopHeight1 = 12;
-	displayBottomHeight1 = 7.4;
-	displayTopHeight2 = 19;
-	displayBottomHeight2 =14.4;
+	
+	if(Master.device == "16:9")
+	{
+		display1.transform.position.x = 15.2;
+		displayTopHeight1 = 12;
+		displayBottomHeight1 = 7.4;
+		display2.transform.position.x = 8.8;
+		displayTopHeight2 = 19;
+		displayBottomHeight2 = 14.4;
+	}
+	else if(Master.device == "4:3");
+	{
+		display1.transform.position.x = 14.5;
+		displayTopHeight1 = 14;
+		displayBottomHeight1 = 10;
+		display2.transform.position.x = 10.5;
+		displayTopHeight2 = 18;
+		displayBottomHeight2 = 13.6;
+	}
+	
 	
 	// Create all pieces.
 	currentStageWall = Instantiate(stageWall[PlayerPrefs.GetInt("StageWallSelection")]);

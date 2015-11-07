@@ -56,14 +56,19 @@ function Awake () {
 	hardMode = false;
 	
 	// Set iOS device settings, including framerate and permitted orientations, and find Top and Bottom objects.
-	if(CheckDeviceType("iPad"))
+	if(CheckDeviceType("4:3"))
 	{
-		device = "iPad";
+		device = "4:3";
 	}
 	else
 	{
-		device = "normal";
+		device = "16:9";
 	}
+	if(launchOptions.iPadMode)
+	{
+		device = "4:3";
+	}
+	
 	//var children:Transform[];
 	for(var child:Transform in gameObject.GetComponentsInChildren(Transform))
 	{
@@ -106,27 +111,11 @@ function Start () {
 function Update () {
 	showSelectedWorld = currentWorld;
 	showUnlockLevels = unlockLevels;
-	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
+	CheckOrientation();
+	if(vertical) 
 	{
-		vertical = false;
-		if(device == "iPad")
+		if(device == "4:3")
 		{
-			//topBar.transform.position = Vector3(0,25,-8.9);
-			//bottomBar.transform.position = Vector3(0,-25,-8.9);
-			GetComponent.<Camera>().orthographicSize = 12;
-		}
-		else
-		{
-			GetComponent.<Camera>().orthographicSize = 9;
-		}
-	}
-	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
-	{
-		vertical = true;
-		if(device == "iPad")
-		{
-			//topBar.transform.position = Vector3(25,0,-8.9);
-			//bottomBar.transform.position = Vector3(-25,0,-8.9);
 			GetComponent.<Camera>().orthographicSize = 16;
 		}
 		else
@@ -134,13 +123,35 @@ function Update () {
 			GetComponent.<Camera>().orthographicSize = 20;
 		}
 	}
+	else
+	{
+		if(device == "4:3")
+		{
+			GetComponent.<Camera>().orthographicSize = 12;
+		}
+		else
+		{
+			GetComponent.<Camera>().orthographicSize = 9;
+		}
+	}
+}
+
+function CheckOrientation () {
+	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
+	{
+		vertical = false;
+	}
+	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
+	{
+		vertical = true;
+	}
 }
 
 // This function returns the device type to adjust the screen size (and borders) for iPad and older iPhone models.
 function CheckDeviceType(search:String):boolean {
 	switch(search)
 	{
-		case "iPad":
+		case "4:3":
 			if(iOS.Device.generation == iOS.DeviceGeneration.iPadAir1 || iOS.Device.generation == iOS.DeviceGeneration.iPadAir2|| iOS.Device.generation == iOS.DeviceGeneration.iPad1Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad2Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad3Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad4Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad5Gen || iOS.Device.generation == iOS.DeviceGeneration.iPadUnknown)
 			{
 				return true;
@@ -481,6 +492,7 @@ class Options {
 	var eraseOnLoad:boolean;
 	var demoMode:boolean;
 	var demoTime:float;
+	var iPadMode:boolean;
 	var customizationPieces:GameObject[];
 }
 
