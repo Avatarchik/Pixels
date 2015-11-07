@@ -111,8 +111,8 @@ function Update () {
 		vertical = false;
 		if(device == "iPad")
 		{
-			topBar.transform.position = Vector3(0,25,-8.9);
-			bottomBar.transform.position = Vector3(0,-25,-8.9);
+			//topBar.transform.position = Vector3(0,25,-8.9);
+			//bottomBar.transform.position = Vector3(0,-25,-8.9);
 			GetComponent.<Camera>().orthographicSize = 12;
 		}
 		else
@@ -125,13 +125,13 @@ function Update () {
 		vertical = true;
 		if(device == "iPad")
 		{
-			topBar.transform.position = Vector3(25,0,-8.9);
-			bottomBar.transform.position = Vector3(-25,0,-8.9);
+			//topBar.transform.position = Vector3(25,0,-8.9);
+			//bottomBar.transform.position = Vector3(-25,0,-8.9);
 			GetComponent.<Camera>().orthographicSize = 16;
 		}
 		else
 		{
-			GetComponent.<Camera>().orthographicSize = 16;
+			GetComponent.<Camera>().orthographicSize = 20;
 		}
 	}
 }
