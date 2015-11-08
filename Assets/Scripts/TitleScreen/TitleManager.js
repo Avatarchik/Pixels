@@ -110,28 +110,28 @@ function RegularUpdate () {
 			case TitleStatus.Home:
 				AudioManager.humCharacter = Person.None;
 				transform.position = Vector2.Lerp(transform.position, Vector2(0,0),speed);
-				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
+				returnButton.transform.position.y = Mathf.Lerp(returnButton.transform.position.y, 22,speed);
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
 				break;
 			case TitleStatus.CustomizeNoColor:
 				AudioManager.humCharacter = Person.Peter;
 				transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
-				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14.08),speed);
+				returnButton.transform.position.y = Mathf.Lerp(returnButton.transform.position.y, 14.08,speed);
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
 				break;
 			case TitleStatus.CustomizeColor:
 				AudioManager.humCharacter = Person.Peter;
 				transform.position = Vector2.Lerp(transform.position, Vector2(0,29),speed);
-				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,14.08),speed);
+				returnButton.transform.position.y = Mathf.Lerp(returnButton.transform.position.y, 14.08,speed);
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-14.15),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(12.4,-1),speed);
 				break;
 			case TitleStatus.Options:
 				AudioManager.humCharacter = Person.None;
 				transform.position = Vector2.Lerp(transform.position, Vector2(-30,0),speed);
-				returnButton.transform.position = Vector2.Lerp(returnButton.transform.position, Vector2(-7,22),speed);
+				returnButton.transform.position.y = Mathf.Lerp(returnButton.transform.position.y, 22,speed);
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,-1),speed);
 				break;

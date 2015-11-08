@@ -23,7 +23,7 @@ function Update () {
 	}
 	else if(Finger.GetExists(importantFinger))
 	{
-		if((Mathf.Abs(Finger.GetPosition(importantFinger).x) > 10 || Mathf.Abs(Finger.GetPosition(importantFinger).y) > 10) && !clicked)
+		if(((Mathf.Abs(Finger.GetPosition(importantFinger).x) > 10 && !Master.vertical) || (Mathf.Abs(Finger.GetPosition(importantFinger).y) > 10 && Master.vertical)) && !clicked)
 		{
 			Clicked();
 		}

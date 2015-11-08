@@ -1,12 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Objects/Device/PortraitOrLandscapeSprite.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TitleScreen/TitleManager.js">
     <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="581" Column="6" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/Objects/ArcadeButton.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Objects/Device/PortraitOrLandscapeSprite.js" Line="22" Column="2" />
-      <File FileName="Assets/Scripts/Levels/-02. Remix/RemixStepButton.js" Line="9" Column="18" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/AudioManager.js" Line="95" Column="35" />
+      <File FileName="Assets/Scripts/TitleScreen/TitleManager.js" Line="121" Column="97" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
