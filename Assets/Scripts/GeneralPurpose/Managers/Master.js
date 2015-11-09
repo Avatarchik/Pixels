@@ -114,13 +114,22 @@ function Update () {
 	CheckOrientation();
 	if(vertical) 
 	{
+		switch(device)
+		{
+			case "16:9":
+				break;
+			case "4:3":
+				break;
+			default:
+				break;
+		}
 		if(device == "4:3")
 		{
 			GetComponent.<Camera>().orthographicSize = 16;
 		}
 		else
 		{
-			GetComponent.<Camera>().orthographicSize = 20;
+			GetComponent.<Camera>().orthographicSize = 16;
 		}
 	}
 	else

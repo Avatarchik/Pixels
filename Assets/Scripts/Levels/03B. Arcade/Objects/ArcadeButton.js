@@ -41,7 +41,7 @@ function Start () {
 	{
 		locations = locations169;
 	}
-	else if(Master.device == "4:3");
+	else if(Master.device == "4:3")
 	{
 		locations = locations43;
 	}

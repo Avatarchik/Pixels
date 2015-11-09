@@ -9,7 +9,7 @@ function Start () {
 	}
 	if(GetComponent(TextMesh) != null)
 	{
-		CheckText();
+		//CheckText();
 	}
 	if(GetComponent(ButtonSquare) != null)
 	{

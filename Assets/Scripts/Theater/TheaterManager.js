@@ -66,14 +66,14 @@ function Start () {
 	
 	if(Master.device == "16:9")
 	{
-		display1.transform.position.x = 15.2;
-		displayTopHeight1 = 12;
-		displayBottomHeight1 = 7.4;
+		display1.transform.position.x = 14.7;
+		displayTopHeight1 = 11;
+		displayBottomHeight1 = 7;
 		display2.transform.position.x = 8.8;
 		displayTopHeight2 = 19;
 		displayBottomHeight2 = 14.4;
 	}
-	else if(Master.device == "4:3");
+	else if(Master.device == "4:3")
 	{
 		display1.transform.position.x = 14.5;
 		displayTopHeight1 = 14;
