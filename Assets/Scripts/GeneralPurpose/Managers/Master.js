@@ -60,7 +60,11 @@ function Awake () {
 	{
 		device = "4:3";
 	}
-	else
+	else if(CheckDeviceType("16:9"))
+	{
+		device = "16:9";
+	}
+	else 
 	{
 		device = "16:9";
 	}
@@ -146,11 +150,11 @@ function Update () {
 }
 
 function CheckOrientation () {
-	if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight || Input.deviceOrientation == DeviceOrientation.FaceDown) 
+	if(Screen.width/Screen.height >= 1)
 	{
 		vertical = false;
 	}
-	else if(Input.deviceOrientation == DeviceOrientation.Portrait || Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown) 
+	else
 	{
 		vertical = true;
 	}
@@ -161,8 +165,8 @@ function CheckDeviceType(search:String):boolean {
 	switch(search)
 	{
 		case "4:3":
-			if(iOS.Device.generation == iOS.DeviceGeneration.iPadAir1 || iOS.Device.generation == iOS.DeviceGeneration.iPadAir2|| iOS.Device.generation == iOS.DeviceGeneration.iPad1Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad2Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad3Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad4Gen || iOS.Device.generation == iOS.DeviceGeneration.iPad5Gen || iOS.Device.generation == iOS.DeviceGeneration.iPadUnknown)
-			{
+			if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-1.333) <.1 || Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-1.333)<.1)
+			{	
 				return true;
 			}
 			else
@@ -170,8 +174,15 @@ function CheckDeviceType(search:String):boolean {
 				return false;
 			}
 			break;
-		case "old iPhone":
-			return false;
+		case "16:9":
+			if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.5625)<.1 || Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.5625)<.1)
+			{	
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 			break;
 		default:
 			return false;
