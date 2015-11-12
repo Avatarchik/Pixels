@@ -2,20 +2,31 @@
 
 static var speed:boolean;
 
+@HideInInspector var slowOverride:boolean;
+
 function Start () {
 	speed = false;
+	slowOverride = false;
 }
 
 function Update () {
-	if(speed && GameObject.FindGameObjectWithTag("Transition") == null)
+	if(slowOverride)
 	{
-		Time.timeScale = 4;
-		AudioListener.volume = .25;
+		Time.timeScale = .6;
+		AudioListener.volume = 1;
 	}
 	else
 	{
-		Time.timeScale = 1;
-		AudioListener.volume = 1;
+		if(speed && GameObject.FindGameObjectWithTag("Transition") == null)
+		{
+			Time.timeScale = 4;
+			AudioListener.volume = .25;
+		}
+		else
+		{
+			Time.timeScale = 1;
+			AudioListener.volume = 1;
+		}
 	}
 	if(Input.GetKeyDown("f"))
 	{
@@ -24,6 +35,15 @@ function Update () {
 	if(Input.GetKeyUp("f"))
 	{
 		speed = false;
+	}
+	
+	if(Input.GetKeyDown("q"))
+	{
+		slowOverride = true;
+	}
+	if(Input.GetKeyUp("q"))
+	{
+		slowOverride = false;
 	}
 }
 

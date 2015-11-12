@@ -128,7 +128,7 @@ function CountScore() {
 			{
 				nextGoal = i + 1;
 			}
-			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i)
+			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i && Master.currentWorld.basic.worldNameVar != "Neverland")
 			{
 				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",i);
 				for(var thisParticle:ParticleSystem in particles)
