@@ -44,6 +44,8 @@ static var introducing:boolean;
 @HideInInspector var velocities:float[];
 
 var reveal:GameObject;
+var townDestructionCover:SpriteRenderer;
+var townDestructionSound:AudioClip;
 
 // Locations
 private var showNot:Vector3;
@@ -85,6 +87,10 @@ function Start () {
 	importantFinger = -1;
 	mapMove = false;
 	mapMoveSpeed = .08;
+	if(Master.worldCoverOn)
+	{
+		townDestructionCover.color.a = 1;
+	}
 	if(PlayerPrefs.GetInt("TutorialFinished") < 2)
 	{
 		introducing = true;
@@ -115,6 +121,7 @@ function Start () {
 			AudioManager.PlaySongIntro(null,worldMusicEvil,1);
 		}
 	}
+	MapCover();
 }
 
 function Intro() {
@@ -163,7 +170,32 @@ function WorldReveal() {
 		thisWorld.GetComponent(ParticleSystem).emissionRate = 0;
 		yield;
 	}
+	CheckForMapState();
+}
+
+function CheckForMapState() {
+	if(PlayerPrefs.GetInt("WorldMapState") == 0 && PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
+	{
+		PlayerPrefs.SetInt("WorldMapState",1);
+		while(townDestructionCover.color.a != 1)
+		{
+			townDestructionCover.color.a = Mathf.MoveTowards(townDestructionCover.color.a,1,Time.deltaTime*.3);
+			yield;
+		}
+		Master.worldCoverOn = true;
+		AudioManager.PlaySound(townDestructionSound);
+		Application.LoadLevel("WorldSelect");
+	}
 	currentState = MapStatus.Clear;
+}
+
+function MapCover() {
+	yield WaitForSeconds(1);
+	while(townDestructionCover.color.a != 0)
+	{
+		townDestructionCover.color.a = Mathf.MoveTowards(townDestructionCover.color.a,0,Time.deltaTime * 1);
+		yield;
+	}
 }
 
 function Update () {

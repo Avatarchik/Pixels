@@ -3,7 +3,7 @@
 var normal:boolean = false;
 
 function Start () {
-	if((PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1 && normal) || (PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal))
+	if((PlayerPrefs.GetInt("WorldMapState") == 1 && normal) || (PlayerPrefs.GetInt("WorldMapState") != 1 && !normal))
 	{
 		if(GetComponent(SpriteRenderer) != null)
 		{
@@ -14,6 +14,8 @@ function Start () {
 			GetComponent(ParticleSystem).enableEmission = false;
 		}
 	}
+	
+	//HighSchoolBeatEndPlayed
 	/*
 	else if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal)
 	{

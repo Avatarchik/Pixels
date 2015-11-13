@@ -34,6 +34,7 @@ var notification:GameObject;
 static var notifying:boolean;
 static var mapNotifyWorlds:String[];
 static var showWorldTitle:boolean;
+static var worldCoverOn:boolean;
 
 function Awake () {
 	showWorldTitle = false;
@@ -43,6 +44,7 @@ function Awake () {
 	demo = false;
 	unlockAll = false;
 	notifying = false;
+	worldCoverOn = false;
 	mapNotifyWorlds = new String[0];
 	if(launchOptions.unlockEverything){unlockAll=true;}
 	
@@ -225,6 +227,7 @@ function Demo() {
 			unlockAll = true;
 			Initialize();
 			UnlockAllOptions();
+			PlayerPrefs.SetInt("CurrencyNumber", 1000);
 			AudioManager.StopAll(0);
 			Application.LoadLevel("TitleScreen");
 		}
@@ -289,6 +292,10 @@ function Initialize () {
 	if(!PlayerPrefs.HasKey("TutorialFinished"))
 	{
 		PlayerPrefs.SetInt("TutorialFinished", 0);
+	}
+	if(!PlayerPrefs.HasKey("WorldMapState"))
+	{
+		PlayerPrefs.SetInt("WorldMapState", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Options variables.
 	if(!PlayerPrefs.HasKey("Sound"))
@@ -385,6 +392,10 @@ function Initialize () {
 	if(!PlayerPrefs.HasKey("FOHDeskSelection"))
 	{
 		PlayerPrefs.SetInt("FOHDeskSelection", 0);
+	}
+	if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
+	{
+		PlayerPrefs.SetInt("WorldMapState",1);
 	}
 }
 

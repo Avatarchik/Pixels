@@ -69,6 +69,10 @@ function Start () {
 }
 
 function Update () {
+	if(Input.GetKeyDown("space"))
+	{
+		Spin(0);
+	}
 	if(arrowLocation < 0)
 	{	
 		arrow.sprite = arrowRestingSprite;

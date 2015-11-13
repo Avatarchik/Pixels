@@ -76,7 +76,7 @@ function Update () {
 }
 
 function GetColors () {
-	if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
+	if(PlayerPrefs.GetInt("WorldMapState") == 1)
 	{
 		if(currentTime < 6 || currentTime > 21)
 		{
