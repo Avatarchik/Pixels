@@ -62,14 +62,3 @@ function GetValue () {
 	specialPrice = Mathf.Lerp(maximumCost,minimumCost,percent) + 5;
 	maxBet = smallPrice * 16 * .9;
 }
-
-function CancelBet () {
-	manager.Reset();
-	smallBet = 0;
-	bigBet = 0;
-}
-function Spin () {
-	manager.Spin(currentBet);
-	smallBet = 0;
-	bigBet = 0;
-}

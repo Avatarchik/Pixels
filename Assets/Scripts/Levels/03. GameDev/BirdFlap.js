@@ -44,7 +44,7 @@ function Start () {
 	clicked = false;
 	
 	// Level specific variable initialization.
-	pipeStartLocation = 10;
+	pipeStartLocation = 15;
 	distanceBetweenPipes = 15.5;
 	minPipeHeight = -4.01;
 	maxPipeHeight = 4.01;

@@ -279,7 +279,7 @@ function GameOver () {
 	yield WaitForSeconds(.5);
 	pausable = false;
 	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
-	if(!Master.hardMode)
+	if(!Master.hardMode && !quitting)
 	{
 		loadedText = Instantiate(FindEnding());
 		yield WaitForSeconds(.2);

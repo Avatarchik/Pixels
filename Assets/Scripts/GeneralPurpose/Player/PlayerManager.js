@@ -32,6 +32,7 @@ var currentHair:GameObject;
 var currentEyes:GameObject;
 var currentTop:GameObject;
 var currentBottom:GameObject;
+var currentMouth:GameObject;
 
 var save:int[];
 
@@ -64,6 +65,7 @@ function Awake () {
 	if(PlayerPrefs.GetInt("BodyColor") < bodyColor.Length)
 	{
 		GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+		currentMouth.GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
 	}
 	if(!standStill)
 	{
@@ -106,7 +108,7 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("HairSelection")+change >= hair.length)
 				{
-					change -= hair.length+2;
+					change -= hair.length+1;
 				}
 				if(PlayerPrefs.GetInt("HairSelection")+change < 0)
 				{
@@ -244,7 +246,7 @@ function Refresh(part:String, change:int) {
 			currentEyes = CreateObject(currentEyes,eyes,eyesColor,eyesAvailability,.06,"Eyes","eyes",change);
 			break;
 		case "top":
-			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.07,"Top","top",change);
+			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.7,"Top","top",change);
 			break;
 		case "bottom":
 			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.05,"Bottom","bottom",change);
@@ -259,11 +261,12 @@ function Refresh(part:String, change:int) {
 				PlayerPrefs.SetInt("BodyColor",bodyColor.Length-1);
 			}
 			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+			currentMouth.GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
 			break;
 		case "all":
 			currentHair = CreateObject(currentHair,hair,hairColor,hairAvailability,.08,"Hair","hair",change);
 			currentEyes = CreateObject(currentEyes,eyes,eyesColor,eyesAvailability,.06,"Eyes","eyes",change);
-			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.07,"Top","top",change);
+			currentTop = CreateObject(currentTop,tops,topsColor,topsAvailability,.7,"Top","top",change);
 			currentBottom = CreateObject(currentBottom,bottoms,bottomsColor,bottomsAvailability,.05,"Bottom","bottom",change);
 			if(PlayerPrefs.GetInt("BodyColor") >= bodyColor.Length)
 			{
@@ -274,6 +277,7 @@ function Refresh(part:String, change:int) {
 				PlayerPrefs.SetInt("BodyColor",bodyColor.Length-1);
 			}
 			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+			currentMouth.GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
 			break;
 	}
 }
@@ -320,6 +324,7 @@ function RefreshColor(part:String) {
 				PlayerPrefs.SetInt("BodyColor",bodyColor.Length-1);
 			}
 			GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
+			currentMouth.GetComponent(SpriteRenderer).color = bodyColor[PlayerPrefs.GetInt("BodyColor")];
 			break;
 	}
 }

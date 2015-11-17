@@ -70,10 +70,6 @@ function Awake () {
 	{
 		device = "16:9";
 	}
-	if(launchOptions.iPadMode)
-	{
-		device = "4:3";
-	}
 	
 	//var children:Transform[];
 	for(var child:Transform in gameObject.GetComponentsInChildren(Transform))
@@ -523,7 +519,6 @@ class Options {
 	var eraseOnLoad:boolean;
 	var demoMode:boolean;
 	var demoTime:float;
-	var iPadMode:boolean;
 	var customizationPieces:GameObject[];
 }
 
