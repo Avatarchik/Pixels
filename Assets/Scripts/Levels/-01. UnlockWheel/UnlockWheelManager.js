@@ -1,37 +1,378 @@
 ﻿#pragma strict
 
 public enum UnlockWheelStatus{Clear,Spinning,Notify,Leaving};
-
+static var currentState:UnlockWheelStatus;
 var successSounds:AudioClip[];
 
-static var currentState:UnlockWheelStatus;
+var spinningSprites:Sprite[];
+var bombSprite:Sprite;
+var characterSprite:Sprite;
+var theaterSprite:Sprite;
+var propSprite:Sprite;
+var specialSprites:Sprite[];
 
-@HideInInspector var currentStopButton:GameObject;
+var machine:GameObject;
+var slot1:SpriteRenderer;
+var slot2:SpriteRenderer;
+var slot3:SpriteRenderer;
 
-var unlockableItems:GameObject[];
+var costReader1:TextMesh;
+var costReader2:TextMesh;
+var backgroundBlack:SpriteRenderer;
 
+@HideInInspector var unlockableItems:GameObject[];
 @HideInInspector var lockedItems:GameObject[];
+@HideInInspector var lockedClothingItems:GameObject[];
+@HideInInspector var lockedTheaterPieces:GameObject[];
+@HideInInspector var lockedPropPieces:GameObject[];
 
-var lockedClothingItems:GameObject[];
-var lockedTheaterPieces:GameObject[];
+@HideInInspector var minimumPrice:float;
+@HideInInspector var maximumPrice:float;
+@HideInInspector var price:int;
 
-var itemNotificationObject:GameObject;
+@HideInInspector var winners:GameObject[];
+@HideInInspector var winType:String;
+@HideInInspector var winNumber:int;
+@HideInInspector var shakeAmount:float;
+@HideInInspector var choices:GameObject[];
 
 var notifier:GameObject;
 @HideInInspector var currentNotifier:GameObject;
 
+@HideInInspector var endSprites:Sprite[];
+
 function Start () {
+	endSprites = new Sprite[3];
+	choices = new GameObject[3];
+	price = 0;
 	AudioManager.PlaySong(Master.currentWorld.audio.music[0]);
+	currentState = UnlockWheelStatus.Clear;
 	unlockableItems = Camera.main.GetComponent(Master).launchOptions.customizationPieces;
 	UpdateUnlockables();
+	GetPrice();
+	Shake();
 }
 
 function Update () {
-	
+	costReader1.text = price.ToString();
+	costReader2.text = price.ToString();
+	if(currentState == UnlockWheelStatus.Spinning)
+	{
+		backgroundBlack.color.a += Time.deltaTime * .1;
+	}
+	else
+	{
+		backgroundBlack.color.a -= Time.deltaTime * .1;
+	}
+}
+
+function GetPrice () {
+	minimumPrice = Camera.main.GetComponent(Master).launchOptions.economy.minimumUnlockCost;
+	maximumPrice = Camera.main.GetComponent(Master).launchOptions.economy.maximumUnlockCost;
+	price = Mathf.Lerp(maximumPrice,minimumPrice,((lockedItems.length * 1.0)/(unlockableItems.Length * 1.0)));
+}
+
+function Spin () {
+	if(PlayerPrefs.GetInt("CurrencyNumber") >= price)
+	{
+		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")-price);
+		currentState = UnlockWheelStatus.Spinning;
+		var spinCounter:int = 0;
+		var spinlimit:int = Random.Range(45,55);
+		shakeAmount = .05;
+		DetermineWinners();
+		while(spinCounter < spinlimit)
+		{
+			slot1.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+			slot2.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+			slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+			spinCounter ++;
+			yield;
+		}
+		shakeAmount = .1;
+		slot1.sprite = endSprites[0];
+		spinlimit += Random.Range(20,40);
+		while(spinCounter < spinlimit)
+		{
+			slot2.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+			slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+			spinCounter ++;
+			yield;
+		}
+		shakeAmount = .15;
+		slot2.sprite = endSprites[1];
+		spinlimit += Random.Range(20,40);
+		while(spinCounter < spinlimit)
+		{
+			slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+			spinCounter ++;
+			yield;
+		}
+		slot3.sprite = endSprites[2];
+		shakeAmount = 0;
+		currentState = UnlockWheelStatus.Notify;
+		yield WaitForSeconds(.5);
+		Results(winNumber);
+	}
+	else
+	{
+		Camera.main.GetComponent(Master).LaunchNotification("You need more coins first!",NotificationType.notEnoughCoins);
+		currentState = UnlockWheelStatus.Notify;
+		while(Master.notifying)
+		{
+			yield;
+		}
+		currentState = UnlockWheelStatus.Clear;
+	}
+}
+
+function DetermineWinners() {
+	var player:boolean = (lockedClothingItems.length > 0);
+	var theater:boolean = (lockedTheaterPieces.length > 0);
+	var props:boolean = (lockedPropPieces.length > 0);
+	winNumber = 0;
+	var winValue:float = Random.value;
+	if(winValue < .4)
+	{
+		winNumber = 1;
+		if(winValue < .05)
+		{
+			winNumber = 3;
+		}
+	}
+	else
+	{
+		winNumber = 0;
+	}
+	winners = new GameObject[winNumber];
+	if(winNumber == 0) 
+	{
+		winType = "none";
+	}
+	else if(winNumber == 1)
+	{
+		winType = "?";
+		var repeatability:int = 10;
+		while(repeatability > 0 && winType == "?")
+		{
+			var randomNumber:float = Random.value;
+			if(randomNumber < .3 && lockedClothingItems.Length > 0)
+			{
+				winType = "player";
+				winners[0] = lockedClothingItems[Random.Range(0,lockedClothingItems.length)];
+				endSprites[0] = characterSprite;
+				endSprites[1] = characterSprite;
+				endSprites[2] = characterSprite;
+				choices[0] = lockedClothingItems[Random.Range(0,lockedClothingItems.length)];
+			}
+			else if(randomNumber < .7 && lockedTheaterPieces.Length > 0)
+			{
+				winType = "theater";
+				winners[0] = lockedTheaterPieces[Random.Range(0,lockedTheaterPieces.length)];
+				endSprites[0] = theaterSprite;
+				endSprites[1] = theaterSprite;
+				endSprites[2] = theaterSprite;
+				choices[0] = lockedTheaterPieces[Random.Range(0,lockedTheaterPieces.length)];
+			}
+			else if(lockedPropPieces.Length > 0)
+			{
+				winType = "prop";
+				winners[0] = lockedPropPieces[Random.Range(0,lockedPropPieces.length)];
+				endSprites[0] = propSprite;
+				endSprites[1] = propSprite;
+				endSprites[2] = propSprite;
+				choices[0] = lockedPropPieces[Random.Range(0,lockedPropPieces.length)];
+			}
+			repeatability --;
+		}
+	}
+	else if(winNumber == 3)
+	{
+		winType = "special";
+		for(var i:int = 0; i < 3; i++)
+		{	
+			randomNumber = Random.value;
+			if(randomNumber < .25 && lockedClothingItems.Length > 0)
+			{
+				winners[i] = lockedClothingItems[Random.Range(0,lockedClothingItems.length)];
+			}
+			else if(randomNumber < .75 && lockedTheaterPieces.Length > 0)
+			{
+				winners[i] = lockedTheaterPieces[Random.Range(0,lockedTheaterPieces.length)];
+			}
+			else if(lockedPropPieces.Length > 0)
+			{
+				winners[i] = lockedPropPieces[Random.Range(0,lockedPropPieces.length)];
+			}
+			else
+			{
+				winners[i] = null;
+			}
+		}
+		endSprites[0] = specialSprites[0];
+		endSprites[1] = specialSprites[1];
+		endSprites[2] = specialSprites[2];
+		var retries:int = 50;
+		if(lockedItems.Length > 2)
+		{
+			choices[0] = lockedItems[Random.Range(0,lockedItems.length)];
+			choices[1] = lockedItems[Random.Range(0,lockedItems.length)];
+			while(choices[1] == choices[0] && retries > 0)
+			{
+				choices[1] = lockedItems[Random.Range(0,lockedItems.length)];
+				retries --;
+			}
+			retries = 50;
+			choices[2] = lockedItems[Random.Range(0,lockedItems.length)];
+			while((choices[2] == choices[0] || choices[2] == choices[1]) && retries > 0)
+			{
+				choices[2] = lockedItems[Random.Range(0,lockedItems.length)];
+				retries --;
+			}
+		}
+		else if(lockedItems.Length > 1)
+		{
+			choices[0] = lockedItems[Random.Range(0,lockedItems.length)];
+			choices[1] = lockedItems[Random.Range(0,lockedItems.length)];
+			while(choices[1] == choices[0] && retries > 0)
+			{
+				choices[1] = lockedItems[Random.Range(0,lockedItems.length)];
+				retries --;
+			}
+			winNumber = 2;
+		}
+		else
+		{
+			choices[0] = lockedItems[Random.Range(0,lockedItems.length)];
+			winNumber = 1;
+		}
+	}
+	if(winType == "none")
+	{
+		randomNumber = Random.value;
+		if(randomNumber < .1)
+		{
+			endSprites[0] = theaterSprite;
+			endSprites[1] = bombSprite;
+			endSprites[2] = bombSprite;
+		}
+		else if(randomNumber < .2)
+		{
+			endSprites[0] = characterSprite;
+			endSprites[1] = characterSprite;
+			endSprites[2] = bombSprite;
+		}
+		else if(randomNumber < .3)
+		{
+			endSprites[0] = theaterSprite;
+			endSprites[1] = theaterSprite;
+			endSprites[2] = bombSprite;
+		}
+		else if(randomNumber < .4)
+		{
+			endSprites[0] = propSprite;
+			endSprites[1] = characterSprite;
+			endSprites[2] = bombSprite;
+		}
+		else if(randomNumber < .5)
+		{
+			endSprites[0] = propSprite;
+			endSprites[1] = propSprite;
+			endSprites[2] = bombSprite;
+		}
+		else if(randomNumber < .6)
+		{
+			endSprites[0] = bombSprite;
+			endSprites[1] = bombSprite;
+			endSprites[2] = bombSprite;
+		}
+		else if(randomNumber < .7)
+		{
+			endSprites[0] = characterSprite;
+			endSprites[1] = bombSprite;
+			endSprites[2] = theaterSprite;
+		}
+		else if(randomNumber < .8)
+		{
+			endSprites[0] = theaterSprite;
+			endSprites[1] = bombSprite;
+			endSprites[2] = propSprite;
+		}
+		else if(randomNumber < .9)
+		{
+			endSprites[0] = bombSprite;
+			endSprites[1] = bombSprite;
+			endSprites[2] = bombSprite;
+		}
+		else
+		{
+			endSprites[0] = characterSprite;
+			endSprites[1] = characterSprite;
+			endSprites[2] = bombSprite;
+		}
+	}
+}
+
+function Results (number:int) {
+	if(number > 0)
+	{
+		currentNotifier = Instantiate(notifier);
+		var textLength:int = 13;
+		if(number > 0)
+		{
+			currentNotifier.GetComponent(UnlockThing).unlock1Item.GetComponent(SpriteRenderer).sprite = choices[0].GetComponent(VariablePrefix).objectTypeImage;
+			currentNotifier.GetComponent(UnlockThing).unlock1Text.text = choices[0].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+			if(choices[0].GetComponent(VariablePrefix).unlockText.length > textLength)
+			{
+				currentNotifier.GetComponent(UnlockThing).unlock1Text.characterSize = .1;
+			}
+		}
+		if(number > 1)
+		{
+			currentNotifier.GetComponent(UnlockThing).unlock2Item.GetComponent(SpriteRenderer).sprite = choices[1].GetComponent(VariablePrefix).objectTypeImage;
+			currentNotifier.GetComponent(UnlockThing).unlock2Text.text = choices[1].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+			if(choices[1].GetComponent(VariablePrefix).unlockText.length > textLength)
+			{
+				currentNotifier.GetComponent(UnlockThing).unlock2Text.characterSize = .1;
+			}
+		}
+		else
+		{
+			Destroy(currentNotifier.GetComponent(UnlockThing).unlock2Item);
+		}
+		if(number > 2)
+		{
+			currentNotifier.GetComponent(UnlockThing).unlock3Item.GetComponent(SpriteRenderer).sprite = choices[2].GetComponent(VariablePrefix).objectTypeImage;
+			currentNotifier.GetComponent(UnlockThing).unlock3Text.text = choices[2].GetComponent(VariablePrefix).unlockText + "\n Unlocked!";
+			if(choices[2].GetComponent(VariablePrefix).unlockText.length > textLength)
+			{
+				currentNotifier.GetComponent(UnlockThing).unlock3Text.characterSize = .1;
+			}
+		}
+		else
+		{
+			Destroy(currentNotifier.GetComponent(UnlockThing).unlock3Item);
+		}
+		for(var i:int  = 0; i < number; i++)
+		{
+			PlayerPrefs.SetInt(choices[i].GetComponent(VariablePrefix).variablePrefix + choices[i].transform.name,1);
+		}
+		while(currentNotifier != null)
+		{
+			yield;
+		}
+	}
+	UpdateUnlockables();
+	GetPrice();
+	currentState = UnlockWheelStatus.Clear;
 }
 
 function UpdateUnlockables () {
 	lockedItems = new GameObject[0];
+	lockedTheaterPieces = new GameObject[0];
+	lockedClothingItems = new GameObject[0];
+	lockedPropPieces = new GameObject[0];
+	
 	for(var i = 0; i < unlockableItems.length; i++)
 	{
 		if(PlayerPrefs.GetInt(unlockableItems[i].GetComponent(VariablePrefix).variablePrefix + unlockableItems[i].transform.name) != 1)
@@ -46,6 +387,10 @@ function UpdateUnlockables () {
 			{
 				lockedClothingItems = AddObject(lockedClothingItems,unlockableItems[i]);
 			}
+			if(itemType.Contains("Prop:") || itemType.Contains("Set:"))
+			{
+				lockedPropPieces = AddObject(lockedPropPieces,unlockableItems[i]);
+			}
 		}
 	}
 }
@@ -58,4 +403,21 @@ function AddObject (original:GameObject[],addition:GameObject):GameObject[] {
 	}
 	finalArray[finalArray.length-1] = addition;
 	return finalArray;
+}
+
+function Shake () {
+	var origin:Vector3 = machine.transform.position;
+	while(true)
+	{
+		if(shakeAmount == 0)
+		{
+			machine.transform.position = origin;
+		}
+		else
+		{
+			machine.transform.position = origin + Vector3(Random.Range(-shakeAmount,shakeAmount),Random.Range(-shakeAmount,shakeAmount),0);
+			yield WaitForSeconds(.01);
+		}
+		yield;
+	}
 }

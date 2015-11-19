@@ -46,7 +46,7 @@ function Start () {
 	lineLength = 16;
 	if(notification)
 	{
-		lineLength = 19;
+		lineLength = 18;
 	}
 	numberOfLines = 3;
 	leftSpriteNumber = 0;

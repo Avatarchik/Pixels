@@ -145,6 +145,14 @@ function Update () {
 			GetComponent.<Camera>().orthographicSize = 9;
 		}
 	}
+	if(Input.GetKey("down") && Input.GetKey("m"))
+	{
+		PlayerPrefs.SetInt("CurrencyNumber",Mathf.Max(PlayerPrefs.GetInt("CurrencyNumber") - 10,0));
+	}
+	else if(Input.GetKey("up") && Input.GetKey("m"))
+	{
+		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") + 10);
+	}
 }
 
 function CheckOrientation () {
@@ -520,6 +528,14 @@ class Options {
 	var demoMode:boolean;
 	var demoTime:float;
 	var customizationPieces:GameObject[];
+	var economy:Economy;
+}
+
+class Economy {
+	var regularGameValue:int;
+	var hardGameValue:int;
+	var minimumUnlockCost:int;
+	var maximumUnlockCost:int;
 }
 
 function WorldOptions () {

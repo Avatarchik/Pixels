@@ -101,10 +101,10 @@ function CountScore() {
 			yield WaitForSeconds(waitTime);
 		}
 		currentDisplayedScore ++;
-		var currencyValue:int = 1;
+		var currencyValue:int = Camera.main.GetComponent(Master).launchOptions.economy.regularGameValue;
 		if(Master.hardMode)
 		{
-			currencyValue *= 2;
+			currencyValue *= Camera.main.GetComponent(Master).launchOptions.economy.hardGameValue;
 		}
 		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+currencyValue);
 		for(var thisText:TextMesh in text)
