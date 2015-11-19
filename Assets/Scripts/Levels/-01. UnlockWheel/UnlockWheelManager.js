@@ -42,6 +42,10 @@ var notifier:GameObject;
 @HideInInspector var endSprites:Sprite[];
 
 function Start () {
+	if(!PlayerPrefs.HasKey("PlayerUnlockSlotLosses"))
+	{
+		PlayerPrefs.SetInt("PlayerUnlockSlotLosses", 0);
+	}
 	endSprites = new Sprite[3];
 	choices = new GameObject[3];
 	price = 0;
@@ -132,8 +136,9 @@ function DetermineWinners() {
 	var props:boolean = (lockedPropPieces.length > 0);
 	winNumber = 0;
 	var winValue:float = Random.value;
-	if(winValue < .4)
+	if(winValue < .4 + (.1 * PlayerPrefs.GetInt("PlayerUnlockSlotLosses")))
 	{
+		PlayerPrefs.SetInt("PlayerUnlockSlotLosses", 0);
 		winNumber = 1;
 		if(winValue < .05)
 		{
@@ -142,6 +147,7 @@ function DetermineWinners() {
 	}
 	else
 	{
+		PlayerPrefs.SetInt("PlayerUnlockSlotLosses", PlayerPrefs.GetInt("PlayerUnlockSlotLosses") + 1);
 		winNumber = 0;
 	}
 	winners = new GameObject[winNumber];

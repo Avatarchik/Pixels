@@ -10,7 +10,10 @@ var unlock3Text:TextMesh;
 
 @HideInInspector var step:int;
 
+var sounds:AudioClip[];
+
 function Start () {
+	AudioManager.PlaySound(sounds[0]);
 	step = 1;
 	unlock1Item.transform.localScale = Vector3(2,2,2);
 	unlock2Item.transform.localScale = Vector3(2,2,2);
@@ -88,4 +91,12 @@ function Update () {
 
 function Clicked () {
 	step ++;
+	if(step == 2 && unlock2Item != null)
+	{
+	AudioManager.PlaySound(sounds[1]);
+	}
+	else if(step == 3 && unlock3Item != null)
+	{
+	AudioManager.PlaySound(sounds[2]);
+	}
 }
