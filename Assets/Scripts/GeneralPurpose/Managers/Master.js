@@ -35,6 +35,7 @@ static var notifying:boolean;
 static var mapNotifyWorlds:String[];
 static var showWorldTitle:boolean;
 static var worldCoverOn:boolean;
+static var inCutscene:boolean;
 
 function Awake () {
 	showWorldTitle = false;
@@ -45,6 +46,7 @@ function Awake () {
 	unlockAll = false;
 	notifying = false;
 	worldCoverOn = false;
+	inCutscene = false;
 	mapNotifyWorlds = new String[0];
 	if(launchOptions.unlockEverything){unlockAll=true;}
 	
@@ -198,11 +200,13 @@ function CheckDeviceType(search:String):boolean {
 }
 
 function Demo() {
+	var resetTimer:float = 20;
 	counter = launchOptions.demoTime;
 	while(true)
 	{
-		if(Finger.GetExists(0) == true)
+		if(Finger.GetExists(0))
 		{
+			resetTimer = 20;
 			if((Finger.GetPosition(0).x < -13 && Finger.GetPosition(0).y > 6.5) || (Finger.GetPosition(0).x < -6 && Finger.GetPosition(0).y > 13.5))
 			{
 				counter -= Time.deltaTime;
@@ -215,9 +219,12 @@ function Demo() {
 		else
 		{
 			counter = launchOptions.demoTime;
+			if(!inCutscene)
+			{
+				resetTimer -= Time.deltaTime;
+			}
 		}
-		yield;
-		if(counter < 0)
+		if(counter < 0 || resetTimer < 0)
 		{
 			yield WaitForSeconds(.5);
 			PlayerPrefs.DeleteAll();
@@ -235,8 +242,8 @@ function Demo() {
 			AudioManager.StopAll(0);
 			Application.LoadLevel("TitleScreen");
 		}
+		yield;
 	}
-	yield;
 }
 
 function Initialize () {

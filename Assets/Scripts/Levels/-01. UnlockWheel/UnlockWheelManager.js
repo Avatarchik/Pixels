@@ -4,6 +4,10 @@ public enum UnlockWheelStatus{Clear,Spinning,Notify,Leaving};
 static var currentState:UnlockWheelStatus;
 var successSounds:AudioClip[];
 
+var slotCoinSound:AudioClip;
+var slotRandomSound:AudioClip;
+var slotStopSound:AudioClip;
+
 var spinningSprites:Sprite[];
 var bombSprite:Sprite;
 var characterSprite:Sprite;
@@ -77,50 +81,80 @@ function GetPrice () {
 }
 
 function Spin () {
-	if(PlayerPrefs.GetInt("CurrencyNumber") >= price)
+	if(lockedItems.Length > 0)
 	{
-		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")-price);
-		currentState = UnlockWheelStatus.Spinning;
-		var spinCounter:int = 0;
-		var spinlimit:int = Random.Range(45,55);
-		shakeAmount = .05;
-		DetermineWinners();
-		while(spinCounter < spinlimit)
+		if(PlayerPrefs.GetInt("CurrencyNumber") >= price)
 		{
-			slot1.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
-			slot2.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
-			slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
-			spinCounter ++;
-			yield;
+			AudioManager.PlaySound(slotCoinSound,.65);
+			yield WaitForSeconds(.5);
+			PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")-price);
+			currentState = UnlockWheelStatus.Spinning;
+			var spinCounter:int = 0;
+			var spinlimit:int = Random.Range(45,55);
+			shakeAmount = .05;
+			DetermineWinners();
+			while(spinCounter < spinlimit)
+			{
+				slot1.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+				slot2.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+				slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+				spinCounter ++;
+				if(spinCounter % 6 == 0)
+				{
+					AudioManager.PlaySound(slotRandomSound,.5,Random.Range(.5,1.5));
+				}
+				yield;
+			}
+			AudioManager.PlaySound(slotStopSound);
+			shakeAmount = .1;
+			slot1.sprite = endSprites[0];
+			spinlimit += Random.Range(20,40);
+			while(spinCounter < spinlimit)
+			{
+				slot2.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+				slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+				spinCounter ++;
+				if(spinCounter % 6 == 0)
+				{
+					AudioManager.PlaySound(slotRandomSound,.5,Random.Range(.5,1.5));
+				}
+				yield;
+			}
+			AudioManager.PlaySound(slotStopSound);
+			shakeAmount = .15;
+			slot2.sprite = endSprites[1];
+			spinlimit += Random.Range(20,40);
+			while(spinCounter < spinlimit)
+			{
+				slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
+				spinCounter ++;
+				if(spinCounter % 6 == 0)
+				{
+					AudioManager.PlaySound(slotRandomSound,.5,Random.Range(.5,1.5));
+				}
+				yield;
+			}
+			AudioManager.PlaySound(slotStopSound);
+			slot3.sprite = endSprites[2];
+			shakeAmount = 0;
+			currentState = UnlockWheelStatus.Notify;
+			yield WaitForSeconds(.5);
+			Results(winNumber);
 		}
-		shakeAmount = .1;
-		slot1.sprite = endSprites[0];
-		spinlimit += Random.Range(20,40);
-		while(spinCounter < spinlimit)
+		else
 		{
-			slot2.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
-			slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
-			spinCounter ++;
-			yield;
+			Camera.main.GetComponent(Master).LaunchNotification("You need more coins first!",NotificationType.notEnoughCoins);
+			currentState = UnlockWheelStatus.Notify;
+			while(Master.notifying)
+			{
+				yield;
+			}
+			currentState = UnlockWheelStatus.Clear;
 		}
-		shakeAmount = .15;
-		slot2.sprite = endSprites[1];
-		spinlimit += Random.Range(20,40);
-		while(spinCounter < spinlimit)
-		{
-			slot3.sprite = spinningSprites[Random.Range(0,spinningSprites.length)];
-			spinCounter ++;
-			yield;
-		}
-		slot3.sprite = endSprites[2];
-		shakeAmount = 0;
-		currentState = UnlockWheelStatus.Notify;
-		yield WaitForSeconds(.5);
-		Results(winNumber);
 	}
 	else
 	{
-		Camera.main.GetComponent(Master).LaunchNotification("You need more coins first!",NotificationType.notEnoughCoins);
+		Camera.main.GetComponent(Master).LaunchNotification("You've unlocked everything! Good job!",NotificationType.notEnoughCoins);
 		currentState = UnlockWheelStatus.Notify;
 		while(Master.notifying)
 		{

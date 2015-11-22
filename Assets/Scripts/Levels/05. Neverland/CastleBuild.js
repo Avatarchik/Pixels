@@ -121,7 +121,7 @@ function Update () {
 			{
 				finishedPieces[piece].transform.position.y -= Time.deltaTime * 20;
 				finishedPieces[piece].transform.rotation.eulerAngles.z += Time.deltaTime * 20;
-				Finish(false,1);
+				Finish(false,.4);
 			}
 		}
 	}
@@ -185,7 +185,7 @@ function Play () {
 		currentPiece ++;
 		if(currentPiece == finishedPieces.Length)
 		{
-			Finish(true,2);
+			Finish(true,1);
 		}
 		yield;
 	}

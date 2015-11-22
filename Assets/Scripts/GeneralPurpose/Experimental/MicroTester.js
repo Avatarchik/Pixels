@@ -139,7 +139,6 @@ function BetweenGame () {
 
 // End game and reset timer.
 function GameComplete (success:boolean) {
-	Debug.Log(success);
 	if(success)
 	{
 		failure = false;

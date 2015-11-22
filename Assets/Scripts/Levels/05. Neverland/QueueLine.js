@@ -25,14 +25,18 @@ var people:GameObject[];
 @HideInInspector var distanceTouch:float;
 @HideInInspector var playerDistance:float;
 
+var firstTimeNotifier:GameObject;
+
 function Awake () {
 	player = Instantiate(playerPrefab);
-	player.transform.position = Vector3(-5.1,-2.62,transform.position.z);
+	player.transform.position = Vector3(-5.1,-2.42,transform.position.z);
 	player.transform.localScale = Vector3(1,1,1);
 	player.transform.parent = transform;
 	player.GetComponent(PlayerManager).currentState = PlayerState.StandingFront;
 	player.GetComponent(PlayerManager).speedOverride = true;
 	player.GetComponent(PlayerManager).thisSpeed = .2;
+	firstTimeNotifier.transform.parent = player.transform;
+	firstTimeNotifier.transform.localPosition.x = 0;
 }
 
 function Start () {

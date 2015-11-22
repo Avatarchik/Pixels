@@ -112,7 +112,7 @@ function Update () {
 	if(drop)
 	{
 		cage.transform.position.y = Mathf.MoveTowards(cage.transform.position.y,cageGoal,Time.deltaTime * 20);
-		if(Mathf.Abs(cage.transform.position.x-CEO.transform.position.x) < 1.5 && Mathf.Abs(cage.transform.position.y-cageGoal) < .5 && Mathf.Abs(CEO.transform.position.y - peanutLocation.y) < 1)
+		if(Mathf.Abs(cage.transform.position.x-CEO.transform.position.x) < 1.4 && Mathf.Abs(cage.transform.position.y-cageGoal) < .5 && Mathf.Abs(CEO.transform.position.y - peanutLocation.y) < 1)
 		{
 			caught = true;
 			Finish(true,.5);

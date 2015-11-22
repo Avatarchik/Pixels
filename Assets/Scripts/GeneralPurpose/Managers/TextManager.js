@@ -52,6 +52,7 @@ function Start () {
 	leftSpriteNumber = 0;
 	rightSpriteNumber = 0;
 	backgroundChangeSpeed = 0;
+	Master.inCutscene = true;
 	
 	if(song!=null)
 	{
@@ -85,6 +86,7 @@ function Start () {
 	else
 	{
 		Destroy(gameObject);
+		Master.inCutscene = false;
 	}
 	if(options.pushLines)
 	{
@@ -585,14 +587,14 @@ function UpdateSet () {
 			transform.position.x = Mathf.MoveTowards(transform.position.x,30,Time.deltaTime*60);
 			if(!automatic)
 			{
-				//yield WaitForEndOfFrame;
-			//	yield WaitForEndOfFrame;
 				Destroy(gameObject);
+				Master.inCutscene = false;
 			}	
 		}
 		if(transform.position.x == 30 && options.recordingType == RecordType.None && !options.rebalance)
 		{
 			Destroy(gameObject);
+			Master.inCutscene = false;
 		}
 		yield;
 	}

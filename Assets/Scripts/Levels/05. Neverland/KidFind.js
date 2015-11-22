@@ -37,6 +37,8 @@ var screen:SpriteRenderer;
 
 var revealSprites:Sprite[];
 
+var ghostScream:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -70,7 +72,7 @@ function Start () {
 	ghostSpeed = new float[numberOfGhosts];
 	success = false;
 	failed = false;
-	ghostDistance = 2;
+	ghostDistance = 1.5;
 
 	var variableSpeed:float = 2 + 2 * speed;
 	for(var i:int = 0; i < numberOfGhosts;i++)
@@ -121,6 +123,27 @@ function Update () {
 		ghosts[ceoGhost].GetComponent(SpriteRotate).sprites = revealSprites;
 		ghostSpeed[ceoGhost] = 20;
 	}	
+	else if(finished)
+	{
+		for(var thisGhost:int = 0; thisGhost < ghosts.length; thisGhost++)
+		{
+			if(thisGhost != ceoGhost)
+			{
+				if(ghosts[thisGhost].transform.localScale.y > 0)
+				{
+					ghosts[thisGhost].transform.localScale += Vector3(3,3,0) * Time.deltaTime;
+				}
+				else
+				{
+					ghosts[thisGhost].transform.localScale += Vector3(3,-3,0) * Time.deltaTime;
+				}
+			}
+			else
+			{
+				ghosts[thisGhost].transform.position.x += 20 * Time.deltaTime;
+			}
+		}
+	}
 	screen.color.a = Mathf.MoveTowards(screen.color.a,0,Time.deltaTime * 2);
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
@@ -150,6 +173,10 @@ function Update () {
 			}
 			else
 			{
+				if(!finished)
+				{
+					AudioManager.PlaySound(ghostScream,.7,.5);
+				}
 				Finish(false,1);
 			}
 		}
