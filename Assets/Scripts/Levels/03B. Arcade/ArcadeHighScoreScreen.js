@@ -29,11 +29,14 @@ var defaultFriendNames:String[];
 
 @HideInInspector var clicked:boolean;
 
+var gameNameDisplay:TextMesh;
+
 function Start () {
 	clicked = false;
 	
 	latestScore = ArcadeManager.lastScore;
 	leaderBoardName = ArcadeManager.lastGameVariable;
+	gameNameDisplay.text = ArcadeManager.lastGameVariable;
 	
 	if(PlayerPrefs.GetFloat("Arcade"+leaderBoardName) < latestScore)
 	{

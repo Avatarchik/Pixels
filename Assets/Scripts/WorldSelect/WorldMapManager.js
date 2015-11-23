@@ -1,6 +1,6 @@
 #pragma strict
 
-public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro,WorldReveal};
+public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro,WorldReveal,HighScore};
 
 static var currentState:MapStatus;
 static var returnState:MapStatus;

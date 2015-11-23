@@ -128,6 +128,7 @@
      <Compile Include="Assets\Scripts\Levels\03. GameDev\MicroPay.js" />
      <Compile Include="Assets\Scripts\Levels\03. GameDev\PlatformJump.js" />
      <Compile Include="Assets\Scripts\Levels\03. GameDev\RolePlay.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeHighScoreScreen.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\ArcadeManager.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\GD-BirdFlap.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\GD-PlatformJump.js" />
@@ -136,7 +137,6 @@
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\MUS-FoodServe.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\PPF-ItemCatch.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\PPF-PeanutCannon.js" />
-     <Compile Include="Assets\Scripts\Levels\03B. Arcade\HighScoreScreen.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeButton.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeEnd.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeGlow.js" />
@@ -217,6 +217,7 @@
      <Compile Include="Assets\Scripts\WorldSelect\GoToWorld1.js" />
      <Compile Include="Assets\Scripts\WorldSelect\HardModeActive.js" />
      <Compile Include="Assets\Scripts\WorldSelect\HardModeToggle.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\LevelHighScoreScreen.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\ChangeColor.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />

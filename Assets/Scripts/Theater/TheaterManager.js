@@ -112,8 +112,8 @@ function Start () {
 	currentChairs.transform.name = "Chairs";
 	
 	// Set object positions.
-	currentStageWall.transform.localPosition = Vector3(-3.3,3.3,10);
-	currentStageFloor.transform.localPosition = Vector3(-3.3,-15.9,10);
+	currentStageWall.transform.localPosition = Vector3(-3.3,3.3,13);
+	currentStageFloor.transform.localPosition = Vector3(-3.3,-15.9,13);
 	currentCeiling.transform.localPosition = Vector3(-1.8,3.3,8);
 	currentTheaterWall.transform.localPosition = Vector3(-1.8,3.3,8);
 	currentTheaterFloor.transform.localPosition = Vector3(-1.8,-15.9,8);
@@ -226,7 +226,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentStageWall = Instantiate(stageWall[PlayerPrefs.GetInt("StageWallSelection")]);
 			currentStageWall.transform.parent = theaterHolder.transform;
-			currentStageWall.transform.localPosition = Vector3(-3.3,3.3,10);
+			currentStageWall.transform.localPosition = Vector3(-3.3,3.3,13);
 			currentStageWall.transform.name = "StageWall";
 			if(stageWallAvailability[PlayerPrefs.GetInt("StageWallSelection")]==false)
 			{
@@ -247,7 +247,7 @@ function Refresh(part:String, change:int) {
 			}
 			currentStageFloor = Instantiate(stageFloor[PlayerPrefs.GetInt("StageFloorSelection")]);
 			currentStageFloor.transform.parent = theaterHolder.transform;
-			currentStageFloor.transform.localPosition = Vector3(-3.3,-15.9,10);
+			currentStageFloor.transform.localPosition = Vector3(-3.3,-15.9,13);
 			currentStageFloor.transform.name = "StageFloor";
 			if(stageFloorAvailability[PlayerPrefs.GetInt("StageFloorSelection")]==false)
 			{

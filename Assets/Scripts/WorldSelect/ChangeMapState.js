@@ -23,6 +23,9 @@ var buttonIcon:SpriteRenderer;
 var warningNote:GameObject;
 var warningText:String;
 
+var highScoreObject:GameObject;
+@HideInInspector var currentHighScoreBoard:GameObject;
+
 function Start () {
 	showCounter = 0;
 	StartCoroutine(UpdateWorldAvailability());
@@ -103,7 +106,20 @@ function Clicked () {
 					WorldMapManager.currentState = MapStatus.Notification;
 				}
 			}
-			
+			break;
+		case MapStatus.HighScore:
+			Debug.Log("hey");
+			if(currentHighScoreBoard == null)
+			{
+				WorldMapManager.currentState = MapStatus.HighScore;
+				currentHighScoreBoard = Instantiate(highScoreObject);
+				currentHighScoreBoard.transform.position.z = -4;
+				while(currentHighScoreBoard != null)
+				{
+					yield;
+				}
+				WorldMapManager.currentState = MapStatus.Confirmation;
+			}
 			break;
 		default:
 			break;

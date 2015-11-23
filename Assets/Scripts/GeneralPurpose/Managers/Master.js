@@ -24,7 +24,7 @@ static var vertical:boolean;
 
 var appVersion:float;
 var varNames:String[];
-var launchOptions:Options;
+var settings:Options;
 var arcadeGames:ArcadeGame[];
 var worlds:World[];
 var worldOptions:WorldOptions;
@@ -48,7 +48,7 @@ function Awake () {
 	worldCoverOn = false;
 	inCutscene = false;
 	mapNotifyWorlds = new String[0];
-	if(launchOptions.unlockEverything){unlockAll=true;}
+	if(settings.unlockEverything){unlockAll=true;}
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new int[6];
@@ -94,7 +94,7 @@ function Awake () {
 	
 	DontDestroyOnLoad(gameObject);
 	Initialize();
-	if(launchOptions.skipOpening)
+	if(settings.skipOpening)
 	{
 		PlayerPrefs.SetInt("TutorialFinished",2);
 	}
@@ -105,7 +105,7 @@ function Awake () {
 }
 
 function Start () {
-	if(launchOptions.demoMode)
+	if(settings.demoMode)
 	{
 		demo = true;
 		StartCoroutine(Demo());
@@ -201,7 +201,7 @@ function CheckDeviceType(search:String):boolean {
 
 function Demo() {
 	var resetTimer:float = 20;
-	counter = launchOptions.demoTime;
+	counter = settings.demoTime;
 	while(true)
 	{
 		if(Finger.GetExists(0))
@@ -218,7 +218,7 @@ function Demo() {
 		}
 		else
 		{
-			counter = launchOptions.demoTime;
+			counter = settings.demoTime;
 			if(!inCutscene)
 			{
 				resetTimer -= Time.deltaTime;
@@ -232,9 +232,9 @@ function Demo() {
 			Application.LoadLevel("GameStart");
 			Destroy(gameObject);
 		}
-		else if (counter > launchOptions.demoTime * 2)
+		else if (counter > settings.demoTime * 2)
 		{
-			launchOptions.unlockEverything = true;
+			settings.unlockEverything = true;
 			unlockAll = true;
 			Initialize();
 			UnlockAllOptions();
@@ -248,7 +248,7 @@ function Demo() {
 
 function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
-	if(launchOptions.quickProgress)
+	if(settings.quickProgress)
 	{
 		unlockLevels = [0,2,10,15,20,100];
 	}
@@ -256,7 +256,7 @@ function Initialize () {
 	{
 		unlockLevels = [0,14,24,34,70,100];
 	}
-	if(launchOptions.eraseOnLoad || (launchOptions.eraseOnNewVersion && PlayerPrefs.GetFloat("AppVersion") != appVersion))
+	if(settings.eraseOnLoad || (settings.eraseOnNewVersion && PlayerPrefs.GetFloat("AppVersion") != appVersion))
 	{
 		PlayerPrefs.DeleteAll();
 		PlayerPrefs.SetFloat("AppVersion",appVersion);
@@ -282,11 +282,11 @@ function Initialize () {
 			}
 		}
 	}
-	for(i = 0; i < launchOptions.customizationPieces.length; i++)
+	for(i = 0; i < settings.customizationPieces.length; i++)
 	{
-		if(!PlayerPrefs.HasKey(launchOptions.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+launchOptions.customizationPieces[i].transform.name))
+		if(!PlayerPrefs.HasKey(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name))
 		{
-			PlayerPrefs.SetInt(launchOptions.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+launchOptions.customizationPieces[i].transform.name,0);
+			PlayerPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,0);
 		}
 	}
 	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
@@ -411,9 +411,9 @@ function Initialize () {
 }
 
 function UnlockCustomizeOptions() {
-	for(var i:int = 0; i < launchOptions.customizationPieces.length; i++)
+	for(var i:int = 0; i < settings.customizationPieces.length; i++)
 	{
-		PlayerPrefs.SetInt(launchOptions.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+launchOptions.customizationPieces[i].transform.name,1);
+		PlayerPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,1);
 	}
 }
 

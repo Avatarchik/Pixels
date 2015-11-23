@@ -55,7 +55,7 @@ function Start () {
 	price = 0;
 	AudioManager.PlaySong(Master.currentWorld.audio.music[0]);
 	currentState = UnlockWheelStatus.Clear;
-	unlockableItems = Camera.main.GetComponent(Master).launchOptions.customizationPieces;
+	unlockableItems = Camera.main.GetComponent(Master).settings.customizationPieces;
 	UpdateUnlockables();
 	GetPrice();
 	Shake();
@@ -75,8 +75,8 @@ function Update () {
 }
 
 function GetPrice () {
-	minimumPrice = Camera.main.GetComponent(Master).launchOptions.economy.minimumUnlockCost;
-	maximumPrice = Camera.main.GetComponent(Master).launchOptions.economy.maximumUnlockCost;
+	minimumPrice = Camera.main.GetComponent(Master).settings.economy.minimumUnlockCost;
+	maximumPrice = Camera.main.GetComponent(Master).settings.economy.maximumUnlockCost;
 	price = Mathf.Lerp(maximumPrice,minimumPrice,((lockedItems.length * 1.0)/(unlockableItems.Length * 1.0)));
 }
 
