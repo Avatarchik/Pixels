@@ -14,8 +14,9 @@ function Update () {
 }
 
 function TreeCycle () {
-	if(PlayerPrefs.GetInt("Neverland") == 1 && evil != null)
+	if(PlayerPrefs.GetInt("WorldMapState") != 1 && evil != null)
 	{
+		
 		GetComponent(SpriteRenderer).sprite = evil;
 	}
 	else

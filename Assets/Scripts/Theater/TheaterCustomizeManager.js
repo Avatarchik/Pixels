@@ -52,7 +52,10 @@ function Update () {
 	{
 		highlight.sprite = null;
 	}
-	highlight.transform.localPosition = selectableLocations[currentSelected];
+	if(highlight != null)
+	{
+		highlight.transform.localPosition = selectableLocations[currentSelected];
+	}
 }
 
 function PieceChange (change:int) {

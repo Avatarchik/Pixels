@@ -1,12 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WorldSelect/LevelHighScoreScreen.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
     <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="478" Column="26" />
-      <File FileName="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WorldSelect/LevelHighScoreScreen.js" Line="46" Column="88" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/GameManager.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WorldSelect/ChangeMapState.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="423" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

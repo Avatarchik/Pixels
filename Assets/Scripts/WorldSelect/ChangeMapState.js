@@ -108,7 +108,6 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.HighScore:
-			Debug.Log("hey");
 			if(currentHighScoreBoard == null)
 			{
 				WorldMapManager.currentState = MapStatus.HighScore;

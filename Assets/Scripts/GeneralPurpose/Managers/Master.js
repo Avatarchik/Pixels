@@ -200,7 +200,7 @@ function CheckDeviceType(search:String):boolean {
 }
 
 function Demo() {
-	var resetTimer:float = 20;
+	var resetTimer:float = settings.resetTime;
 	counter = settings.demoTime;
 	while(true)
 	{
@@ -219,7 +219,7 @@ function Demo() {
 		else
 		{
 			counter = settings.demoTime;
-			if(!inCutscene)
+			if(!inCutscene && settings.resetTime > 0)
 			{
 				resetTimer -= Time.deltaTime;
 			}
@@ -420,6 +420,7 @@ function UnlockCustomizeOptions() {
 function UnlockAllOptions () {
 	PlayerPrefs.DeleteAll();
 	PlayerPrefs.SetInt("TutorialFinished",2);
+	PlayerPrefs.SetInt("WorldMapState",2);
 	for(var aWorld:World in worlds)
 	{
 		var worldName:String;
@@ -534,6 +535,7 @@ class Options {
 	var eraseOnLoad:boolean;
 	var demoMode:boolean;
 	var demoTime:float;
+	var resetTime:float;
 	var customizationPieces:GameObject[];
 	var economy:Economy;
 }
