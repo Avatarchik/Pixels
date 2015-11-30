@@ -21,14 +21,6 @@ function Start () {
 	{
 		movementSpeed = 3;
 	}
-	if(show == Vector3.zero)
-	{
-		show = transform.position;
-	}
-	if(hide == Vector3.zero)
-	{
-		hide = transform.position;
-	}
 }
 
 function Update () {
@@ -38,8 +30,16 @@ function Update () {
 function Show () {
 	showing = true;
 	hiding = false;
+	if(transform.name == "Wall3")
+	{
+		Debug.Log("Current: " + transform.position + " To: " + show + " Showing: " + showing);
+	}
 	while(transform.position != show && showing)
 	{
+		if(transform.name == "Wall3")
+		{
+			Debug.Log("Current: " + transform.position + " To: " + show + " Showing: " + showing);
+		}
 		transform.position = Vector3.MoveTowards(transform.position,show,Time.deltaTime*movementSpeed);
 		yield;
 	}

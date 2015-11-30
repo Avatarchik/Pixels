@@ -64,7 +64,7 @@ function Start () {
 	totalObject = 0;
 	displayCounter = 0;
 	
-	if(Master.device == "16:9")
+	if(Master.device == "16:9" && display1 != null)
 	{
 		display1.transform.position.x = 14.7;
 		displayTopHeight1 = 11;
@@ -73,7 +73,7 @@ function Start () {
 		displayTopHeight2 = 19;
 		displayBottomHeight2 = 14.4;
 	}
-	else if(Master.device == "4:3")
+	else if(Master.device == "4:3" && display1 != null)
 	{
 		display1.transform.position.x = 14.5;
 		displayTopHeight1 = 14;
@@ -124,7 +124,7 @@ function Start () {
 }
 
 function DisplayNumber() {
-	while(true)
+	while(true && display1 != null)
 	{
 		displayCounter -= Time.deltaTime;
 		display1.text = thisObject.ToString() + "/" + totalObject.ToString();
