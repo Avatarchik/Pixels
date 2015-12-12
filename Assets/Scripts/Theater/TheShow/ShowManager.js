@@ -31,7 +31,7 @@ function Start () {
 	}
 	else
 	{
-		musicSpeaker.clip = rehearsalMusic;
+		musicSpeaker.clip = performanceMusic;
 		vocalSpeakerGood.clip = vocalsSuccess;
 		vocalSpeakerBad.clip = vocalsFailureRehearsal;
 	}
@@ -39,6 +39,8 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log(musicSpeaker.time);
+//Debug.Log(musicSpeaker.time);
 	if(PlayerPrefs.GetInt("Music") == 1)
 	{
 		musicSpeaker.volume = 1;
@@ -71,6 +73,10 @@ function Show () {
 	}
 	for(var i:int = 0; i < 5; i++)
 	{
+		while(musicSpeaker.time < scenes[i].info.gameStartTime)
+		{
+			yield;
+		}
 		if(PlayerPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") != 1)
 		{
 			break;

@@ -44,16 +44,16 @@ function Update () {
 	pieceName = selectablePieces[currentSelected];
 	pieceSprite = selectableSprites[currentSelected];
 	
-	if(selectableHighlights != null)
-	{
-		highlight.sprite = selectableHighlights[currentSelected];
-	}
-	else
-	{
-		highlight.sprite = null;
-	}
 	if(highlight != null)
 	{
+		if(selectableHighlights != null)
+		{
+			highlight.sprite = selectableHighlights[currentSelected];
+		}
+		else
+		{
+			highlight.sprite = null;
+		}
 		highlight.transform.localPosition = selectableLocations[currentSelected];
 	}
 }
