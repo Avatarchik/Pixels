@@ -322,7 +322,7 @@ function showTicket() {
 	var childImages:Component[];
 	childText = ticket.GetComponentsInChildren(TextMesh);
 	childImages = ticket.GetComponentsInChildren(Renderer);
-	ticket.GetComponentInChildren(HardModeToggle).UpdateVisuals(false);
+	(ticket.GetComponentInChildren(HardModeToggle) as HardModeToggle).UpdateVisuals(false);
 	for(var text:TextMesh in childText)
 	{
 		if(text.transform.name == "Title")
@@ -360,7 +360,7 @@ function showTicket() {
 }
 function hideTicket() {
 	Master.hardMode = false;
-	ticket.GetComponentInChildren(HardModeToggle).UpdateVisuals(true);
+	(ticket.GetComponentInChildren(HardModeToggle) as HardModeToggle).UpdateVisuals(true);
 	while(Vector3.Distance(ticket.transform.position, hideNot) > .5 && currentState == MapStatus.Clear)
 	{
 		ticket.transform.position = Vector3.Lerp(ticket.transform.position,hideNot, Time.deltaTime);

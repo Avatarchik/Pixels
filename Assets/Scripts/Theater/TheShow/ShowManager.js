@@ -2,7 +2,19 @@
 
 var scenes:Scene[];
 
+var musicSpeaker:AudioSource;
+var vocalSpeakerGood:AudioSource;
+var vocalSpeakerBad:AudioSource;
+
+var performanceMusic:AudioClip;
+var rehearsalMusic:AudioClip;
+var vocalsSuccess:AudioClip;
+var vocalsFailurePerformance:AudioClip;
+var vocalsFailureRehearsal:AudioClip;
+
+static var performance:boolean;
 function Start () {
+	performance = true;
 	for(var i:int = 0; i < scenes.length; i++)
 	{
 		scenes[i].effects.originalColor = new Color[scenes[i].effects.colorChangeObjects.length];
@@ -11,11 +23,87 @@ function Start () {
 			scenes[i].effects.originalColor[x] = scenes[i].effects.colorChangeObjects[x].color;
 		}
 	}
-	StartScene(scenes[0]);
+	if(Master.allowShow)
+	{
+		musicSpeaker.clip = performanceMusic;
+		vocalSpeakerGood.clip = vocalsSuccess;
+		vocalSpeakerBad.clip = vocalsFailurePerformance;
+	}
+	else
+	{
+		musicSpeaker.clip = rehearsalMusic;
+		vocalSpeakerGood.clip = vocalsSuccess;
+		vocalSpeakerBad.clip = vocalsFailureRehearsal;
+	}
+	Show();
 }
 
 function Update () {
+	if(PlayerPrefs.GetInt("Music") == 1)
+	{
+		musicSpeaker.volume = 1;
+		if(performance)
+		{
+			vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,1,Time.deltaTime * 1.2);
+			vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,0,Time.deltaTime);
+		}
+		else
+		{
+			vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,0,Time.deltaTime);
+			vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,1,Time.deltaTime * 1.2);
+		}
+	}
+	else
+	{
+		musicSpeaker.volume = 0;
+		vocalSpeakerGood.volume = 0;
+		vocalSpeakerBad.volume = 0;
+	}
+}
 
+function Show () {	
+	musicSpeaker.Play();
+	vocalSpeakerBad.Play();
+	vocalSpeakerGood.Play();
+	while(musicSpeaker.time < scenes[0].info.gameStartTime)
+	{
+		yield;
+	}
+	for(var i:int = 0; i < 5; i++)
+	{
+		if(PlayerPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") != 1)
+		{
+			break;
+		}
+		StartScene(scenes[i]);
+		while(musicSpeaker.time < scenes[i].info.gameEndTime)
+		{
+			yield;
+		}
+		EndScene(scenes[i]);
+	}
+	EndShow ();
+}
+
+function EndShow () {
+	
+}
+
+function Test () {
+	var marker:int = 0;
+	while(true)
+	{
+		if(Input.GetKeyDown("space"))
+		{
+			StartScene(scenes[marker]);
+			if(marker > 0)
+			{
+				EndScene(scenes[marker-1]);
+			}
+			marker++;
+		}
+		yield;
+	}
 }
 
 function StartScene (scene:Scene) {
@@ -42,15 +130,13 @@ function EndScene (scene:Scene) {
 	{
 		if(scene.effects.movingObjects[i].GetComponent(ShowObjectManager) != null)
 		{
-			scene.effects.movingObjects[i].GetComponent(ShowObjectManager).Show();
+			scene.effects.movingObjects[i].GetComponent(ShowObjectManager).Hide();
 		}
 	}
 }
 
 class Scene {
 	var gameName:String;
-	var gameStartTime:float;
-	var gameEndTime:float;
 	var effects:SceneEffects;
 	var info:SceneInfo;
 }
@@ -63,7 +149,8 @@ class SceneEffects {
 }
 
 class SceneInfo {
-	var variableCheck:String;
 	var maximumScore:float;
 	var theaterLocation:Vector3;	
+	var gameStartTime:float;
+	var gameEndTime:float;
 }

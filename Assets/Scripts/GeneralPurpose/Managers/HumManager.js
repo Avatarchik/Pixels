@@ -17,6 +17,7 @@ function Update () {
 	{
 		hum.time = AudioManager.GetLocation();
 	}
+
 	if(hum != null)
 	{
 		if(AudioManager.humming && !hum.isPlaying)

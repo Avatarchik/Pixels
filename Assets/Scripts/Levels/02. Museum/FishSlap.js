@@ -108,7 +108,7 @@ function Start () {
 			counted[i] = false;
 			fish[i] = Instantiate(fishPrefab,startLocation,Quaternion.identity);
 			fish[i].transform.parent = transform;
-			fish[i].GetComponentInChildren(SpriteRenderer).sprite = fishSizeSprites[0];
+			(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).sprite = fishSizeSprites[0];
 			iconLeft.GetComponent(SpriteRenderer).sprite = fishSizeSprites[0];
 			iconRight.GetComponent(SpriteRenderer).sprite = fishSizeSprites[0];
 			iconLeft.GetComponent(SpriteRenderer).color = fishColors1[color1];
@@ -117,19 +117,19 @@ function Start () {
 			done[i] = false;
 			if(Random.Range(0,2) == 0 || (i>=2 && !leftFish[i-1] && !leftFish[i-2]))
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors1[color1];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors1[color1];
 				leftFish[i] = true;
 				leftCounterNumber ++;
 			}
 			else
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors2[color2];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors2[color2];
 				leftFish[i] = false;
 				rightCounterNumber ++;
 			}
 			if(i >= 2 && leftFish[i-1] && leftFish[i-2] && leftFish[i])
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors2[color2];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors2[color2];
 				leftFish[i] = false;
 				leftCounterNumber --;
 				rightCounterNumber ++;
@@ -143,7 +143,7 @@ function Start () {
 			counted[i] = false;
 			fish[i] = Instantiate(fishPrefab,startLocation,Quaternion.identity);
 			fish[i].transform.parent = transform;
-			fish[i].GetComponentInChildren(SpriteRenderer).sprite = fishSizeSprites[Random.Range(0,fishSizeSprites.length)];
+			(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).sprite = fishSizeSprites[Random.Range(0,fishSizeSprites.length)];
 			iconLeft.GetComponent(SpriteRenderer).sprite = fishSizeSprites[0];
 			iconRight.GetComponent(SpriteRenderer).sprite = fishSizeSprites[0];
 			iconLeft.GetComponent(SpriteRenderer).color = fishColors1[color1];
@@ -152,19 +152,19 @@ function Start () {
 			done[i] = false;
 			if(Random.Range(0,2) == 0 || (i>=2 && !leftFish[i-1] && !leftFish[i-2]))
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors1[color1];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors1[color1];
 				leftFish[i] = true;
 				leftCounterNumber ++;
 			}
 			else
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors2[color2];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors2[color2];
 				leftFish[i] = false;
 				rightCounterNumber ++;
 			}
 			if(i >= 2 && leftFish[i-1] && leftFish[i-2] && leftFish[i])
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors2[color2];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors2[color2];
 				leftFish[i] = false;
 				leftCounterNumber --;
 				rightCounterNumber ++;
@@ -186,22 +186,22 @@ function Start () {
 			done[i] = false;
 			if(Random.Range(0,2) == 0 || (i>=2 && !leftFish[i-1] && !leftFish[i-2]))
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).sprite = fishSizeSprites[0];
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors1[color1];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).sprite = fishSizeSprites[0];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors1[color1];
 				leftFish[i] = true;
 				leftCounterNumber ++;
 			}
 			else
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).sprite = fishSizeSprites[2];
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors1[color1];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).sprite = fishSizeSprites[2];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors1[color1];
 				leftFish[i] = false;
 				rightCounterNumber ++;
 			}
 			if(i >= 2 && leftFish[i-1] && leftFish[i-2] && leftFish[i])
 			{
-				fish[i].GetComponentInChildren(SpriteRenderer).sprite = fishSizeSprites[2];
-				fish[i].GetComponentInChildren(SpriteRenderer).color = fishColors1[color1];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).sprite = fishSizeSprites[2];
+				(fish[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = fishColors1[color1];
 				leftFish[i] = false;
 				rightCounterNumber ++;
 				leftCounterNumber--;

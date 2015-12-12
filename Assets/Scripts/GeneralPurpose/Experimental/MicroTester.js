@@ -56,7 +56,7 @@ function Start () {
 	// Microgame variables.
 	timeMultiplier = speed;
 	difficulty = difficultyAmount;
-	
+
 	// Between game variables.
 	if(speedChange == 0)
 	{

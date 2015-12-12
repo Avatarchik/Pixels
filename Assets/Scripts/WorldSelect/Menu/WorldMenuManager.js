@@ -136,11 +136,11 @@ function UpdateNamesUp () {
 			button[i] = Instantiate(buttonPrefab, transform.position + Vector3(0,3.8 - i * 2.9,-.01), Quaternion.identity);
 			if(option[i] == "Title Screen" || option[i] == "Back")
 			{
-				button[i].GetComponentInChildren(SpriteRenderer).color = exitColor;
+				(button[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = exitColor;
 			}
 			else
 			{
-				button[i].GetComponentInChildren(SpriteRenderer).color = normalColor;
+				(button[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = normalColor;
 			}
 			if(Application.loadedLevelName != "TitleScreen")
 			{
@@ -183,11 +183,11 @@ function UpdateNamesDown () {
 			button[i] = Instantiate(buttonPrefab, transform.position + Vector3(0,3.8 - i * 2.9,0), Quaternion.identity);
 			if(option[i] == "Title Screen")
 			{
-				button[i].GetComponentInChildren(SpriteRenderer).color = exitColor;
+				(button[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = exitColor;
 			}
 			else
 			{
-				button[i].GetComponentInChildren(SpriteRenderer).color = normalColor;
+				(button[i].GetComponentInChildren(SpriteRenderer) as SpriteRenderer).color = normalColor;
 			}
 			button[i].GetComponent(WorldMenuButton).SetText(option[i]);
 			button[i].transform.parent = transform;

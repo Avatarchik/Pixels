@@ -30,16 +30,8 @@ function Update () {
 function Show () {
 	showing = true;
 	hiding = false;
-	if(transform.name == "Wall3")
-	{
-		Debug.Log("Current: " + transform.position + " To: " + show + " Showing: " + showing);
-	}
 	while(transform.position != show && showing)
 	{
-		if(transform.name == "Wall3")
-		{
-			Debug.Log("Current: " + transform.position + " To: " + show + " Showing: " + showing);
-		}
 		transform.position = Vector3.MoveTowards(transform.position,show,Time.deltaTime*movementSpeed);
 		yield;
 	}
@@ -48,7 +40,7 @@ function Show () {
 function Hide () {
 	showing = false;
 	hiding = true;
-	while(transform.position != show && hiding)
+	while(transform.position != hide && hiding)
 	{
 		transform.position = Vector3.MoveTowards(transform.position,hide,Time.deltaTime*movementSpeed);
 		yield;

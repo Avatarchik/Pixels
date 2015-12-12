@@ -101,7 +101,7 @@ function Start () {
 		viruses[i].transform.localScale = Vector3(1,1,1);
 		viruses[i].AddComponent(SpriteRenderer);
 		viruses[i].GetComponent(SpriteRenderer).sprite = null;
-		viruses[i].GetComponentInChildren(ParticleSystem).emissionRate = 0;
+		(viruses[i].GetComponentInChildren(ParticleSystem) as ParticleSystem).emissionRate = 0;
 	}
 	
 	
@@ -119,7 +119,7 @@ function Update () {
 	{
 		if(i<currentVirus)
 		{
-			viruses[i].GetComponentInChildren(ParticleSystem).emissionRate = 50;
+			(viruses[i].GetComponentInChildren(ParticleSystem) as ParticleSystem).emissionRate = 50;
 			if(viruses[i].transform.position.y > virusBottom)
 			{
 				viruses[i].transform.position = Vector3.MoveTowards(viruses[i].transform.position, Vector3(virusStartPositions[i]*bottomMultiplier,virusBottom,virusZ),Time.deltaTime*virusSpeed);

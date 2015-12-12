@@ -1,6 +1,12 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Theater/TheShow/ShowManager.js">
+    <Files>
+      <File FileName="Assets/Scripts/Theater/TheShow/ShowManager.js" Line="89" Column="2" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="40" Column="21" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/AudioManager.js" Line="48" Column="5" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

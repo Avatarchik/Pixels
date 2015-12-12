@@ -37,6 +37,9 @@ static var showWorldTitle:boolean;
 static var worldCoverOn:boolean;
 static var inCutscene:boolean;
 
+static var allowShow:boolean;
+static var matinee:boolean;
+
 function Awake () {
 	showWorldTitle = false;
 	Time.timeScale = 1;
@@ -47,6 +50,8 @@ function Awake () {
 	notifying = false;
 	worldCoverOn = false;
 	inCutscene = false;
+	allowShow = false;
+	matinee = false;
 	mapNotifyWorlds = new String[0];
 	if(settings.unlockEverything){unlockAll=true;}
 	
@@ -116,6 +121,8 @@ function Update () {
 	showSelectedWorld = currentWorld;
 	showUnlockLevels = unlockLevels;
 	CheckOrientation();
+	CheckForShowTime();
+	
 	if(vertical) 
 	{
 		switch(device)
@@ -147,14 +154,6 @@ function Update () {
 			GetComponent.<Camera>().orthographicSize = 9;
 		}
 	}
-	if(Input.GetKey("down") && Input.GetKey("m"))
-	{
-		PlayerPrefs.SetInt("CurrencyNumber",Mathf.Max(PlayerPrefs.GetInt("CurrencyNumber") - 10,0));
-	}
-	else if(Input.GetKey("up") && Input.GetKey("m"))
-	{
-		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") + 10);
-	}
 }
 
 function CheckOrientation () {
@@ -168,6 +167,32 @@ function CheckOrientation () {
 	}
 }
 
+function CheckForShowTime () {
+	if(PlayerPrefs.GetInt("NightShowDate:"+System.DateTime.Today) != 1)
+	{
+		if(((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19))
+		{
+			allowShow = true;
+			matinee = false;
+		}
+		else
+		{
+			allowShow = false;
+		}
+	}
+	else if (PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today) != 1)
+	{
+		if((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 19)
+		{
+			allowShow = true;
+			matinee = true;
+		}
+		else
+		{
+			allowShow = false;
+		}
+	}
+}
 // This function returns the device type to adjust the screen size (and borders) for iPad and older iPhone models.
 function CheckDeviceType(search:String):boolean {
 	switch(search)
@@ -204,6 +229,14 @@ function Demo() {
 	counter = settings.demoTime;
 	while(true)
 	{
+		if(Input.GetKey("down") && Input.GetKey("m"))
+		{
+			PlayerPrefs.SetInt("CurrencyNumber",Mathf.Max(PlayerPrefs.GetInt("CurrencyNumber") - 10,0));
+		}
+		else if(Input.GetKey("up") && Input.GetKey("m"))
+		{
+			PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") + 10);
+		}
 		if(Finger.GetExists(0))
 		{
 			resetTimer = 20;
