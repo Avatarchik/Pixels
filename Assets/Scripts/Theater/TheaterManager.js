@@ -4,13 +4,13 @@
 var theaterHolder:GameObject;
 
 // Current theater pieces.
-private var currentStageWall:GameObject;
-private var currentStageFloor:GameObject;
-private var currentCeiling:GameObject;
-private var currentTheaterWall:GameObject;
-private var currentTheaterFloor:GameObject;
-private var currentCurtain:GameObject;
-private var currentChairs:GameObject;
+@HideInInspector var currentStageWall:GameObject;
+@HideInInspector var currentStageFloor:GameObject;
+@HideInInspector var currentCeiling:GameObject;
+@HideInInspector var currentTheaterWall:GameObject;
+@HideInInspector var currentTheaterFloor:GameObject;
+@HideInInspector var currentCurtain:GameObject;
+@HideInInspector var currentChairs:GameObject;
 
 // Arrays with different types of theater sprites.
 var stageWall:GameObject[];

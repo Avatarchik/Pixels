@@ -12,9 +12,17 @@ var vocalsSuccess:AudioClip;
 var vocalsFailurePerformance:AudioClip;
 var vocalsFailureRehearsal:AudioClip;
 
+var theater:GameObject;
+@HideInInspector var currentTheaterPosition:Vector3;
+@HideInInspector var currentTheaterSpeed:float;
+
+static var currentMusicLocation:float;
+
 static var performance:boolean;
 function Start () {
 	performance = true;
+	currentTheaterPosition = Vector3.zero;
+	currentMusicLocation = 0;
 	for(var i:int = 0; i < scenes.length; i++)
 	{
 		scenes[i].effects.originalColor = new Color[scenes[i].effects.colorChangeObjects.length];
@@ -39,8 +47,29 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(musicSpeaker.time);
-//Debug.Log(musicSpeaker.time);
+	currentMusicLocation = musicSpeaker.time;
+	if(Mathf.Abs(vocalSpeakerBad.time - musicSpeaker.time) > .1)
+	{
+		vocalSpeakerBad.time = musicSpeaker.time;
+	}
+	if(Mathf.Abs(vocalSpeakerGood.time - musicSpeaker.time) > .1)
+	{
+		vocalSpeakerGood.time = musicSpeaker.time;
+	}
+	if(Input.GetKey("f"))
+	{
+		musicSpeaker.pitch = 10;
+		vocalSpeakerBad.pitch = 10;
+		vocalSpeakerGood.pitch = 10;
+		Time.timeScale = 10;
+	}
+	else
+	{
+		musicSpeaker.pitch = 1;
+		vocalSpeakerBad.pitch = 1;
+		vocalSpeakerGood.pitch = 1;
+		Time.timeScale = 1;
+	}
 	if(PlayerPrefs.GetInt("Music") == 1)
 	{
 		musicSpeaker.volume = 1;
@@ -61,19 +90,20 @@ function Update () {
 		vocalSpeakerGood.volume = 0;
 		vocalSpeakerBad.volume = 0;
 	}
+	theater.transform.position = Vector3.MoveTowards(theater.transform.position,currentTheaterPosition,Time.deltaTime * currentTheaterSpeed);
 }
 
 function Show () {	
 	musicSpeaker.Play();
 	vocalSpeakerBad.Play();
 	vocalSpeakerGood.Play();
-	while(musicSpeaker.time < scenes[0].info.gameStartTime)
+	while(currentMusicLocation < scenes[0].info.gameStartTime)
 	{
 		yield;
 	}
 	for(var i:int = 0; i < 5; i++)
 	{
-		while(musicSpeaker.time < scenes[i].info.gameStartTime)
+		while(currentMusicLocation < scenes[i].info.gameStartTime)
 		{
 			yield;
 		}
@@ -82,7 +112,7 @@ function Show () {
 			break;
 		}
 		StartScene(scenes[i]);
-		while(musicSpeaker.time < scenes[i].info.gameEndTime)
+		while(currentMusicLocation < scenes[i].info.gameEndTime)
 		{
 			yield;
 		}
@@ -114,6 +144,8 @@ function Test () {
 
 function StartScene (scene:Scene) {
 	var i:int = 0;
+	currentTheaterPosition = scene.info.theaterLocation;
+	currentTheaterSpeed = scene.info.theaterMovementSpeed;
 	for(i = 0; i < scene.effects.movingObjects.length; i++)
 	{
 		if(scene.effects.movingObjects[i].GetComponent(ShowObjectManager) != null)
@@ -157,6 +189,7 @@ class SceneEffects {
 class SceneInfo {
 	var maximumScore:float;
 	var theaterLocation:Vector3;	
+	var theaterMovementSpeed:float;
 	var gameStartTime:float;
 	var gameEndTime:float;
 }
