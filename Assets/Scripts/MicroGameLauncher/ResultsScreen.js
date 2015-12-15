@@ -26,6 +26,8 @@ var unlockApplause:AudioClip[];
 var unlockSounds:AudioClip[];
 var drum:AudioClip;
 
+@HideInInspector var nextGoal:int = 1;
+
 function Start () {
 	sign.sprite = signSprites[0];
 	AnnouncementOff();
@@ -93,7 +95,7 @@ function Update () {
 
 function CountScore() {
 	yield WaitForSeconds(1);
-	var nextGoal:int = 1;
+	FindNextGoal();
 	while(currentDisplayedScore < score)
 	{
 		if(waitTime != .01)
@@ -124,10 +126,6 @@ function CountScore() {
 		}
 		for(var i:int = 0; i < unlockLevels.length; i++)
 		{
-			if(currentDisplayedScore == unlockLevels[i])
-			{
-				nextGoal = i + 1;
-			}
 			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i && Master.currentWorld.basic.worldNameVar != "Neverland")
 			{
 				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",i);
@@ -194,7 +192,7 @@ function CountScore() {
 		}
 	}
 	yield WaitForSeconds(1.2);
-	sign.sprite = signSprites[nextGoal];
+	SignStuff();
 	while(!finished)
 	{
 		yield;
@@ -205,6 +203,40 @@ function CountScore() {
 		yield;
 	}
 	Destroy(gameObject);
+}
+
+function FindNextGoal () {
+	if(Master.hardMode)
+	{
+		nextGoal = 5;
+	}
+	else
+	{
+		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore");
+		if(score > highestScore)
+		{
+			highestScore = score;
+		}
+		nextGoal = 1;
+		for(var i:int = 0; i < unlockLevels.length; i++)
+		{
+			if(highestScore > unlockLevels[i])
+			{
+				nextGoal = i + 2;
+			}
+		}
+	}	
+}
+
+function SignStuff() {
+	var originalSize:Vector3 = sign.transform.localScale;
+	sign.transform.localScale = Vector3(1.6,1.6,1.6);
+	sign.sprite = signSprites[nextGoal];
+	while(sign.transform.localScale != originalSize)
+	{
+		sign.transform.localScale = Vector3.MoveTowards(sign.transform.localScale,originalSize,Time.deltaTime*20);
+		yield;
+	}
 }
 
 function Clicked() {

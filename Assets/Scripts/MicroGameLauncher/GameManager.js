@@ -253,6 +253,7 @@ function Quit () {
 	lives = 0;
 	BroadcastArray(gameCovers,"DisplayChange","Clear");
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
+	AudioManager.StopSong();
 	GameOver();
 }
 
