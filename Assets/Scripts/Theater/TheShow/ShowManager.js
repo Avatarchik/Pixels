@@ -16,10 +16,16 @@ var theater:GameObject;
 @HideInInspector var currentTheaterPosition:Vector3;
 @HideInInspector var currentTheaterSpeed:float;
 
+@HideInInspector var scores:float[];
+
+static var good:boolean;
+
 static var currentMusicLocation:float;
 
 static var performance:boolean;
 function Start () {
+	good = true;
+	scores = new float[10];
 	performance = true;
 	currentTheaterPosition = Vector3.zero;
 	currentMusicLocation = 0;
@@ -58,10 +64,10 @@ function Update () {
 	}
 	if(Input.GetKey("f"))
 	{
-		musicSpeaker.pitch = 10;
-		vocalSpeakerBad.pitch = 10;
-		vocalSpeakerGood.pitch = 10;
-		Time.timeScale = 10;
+		musicSpeaker.pitch = 20;
+		vocalSpeakerBad.pitch = 20;
+		vocalSpeakerGood.pitch = 20;
+		Time.timeScale = 20;
 	}
 	else
 	{
@@ -75,13 +81,21 @@ function Update () {
 		musicSpeaker.volume = 1;
 		if(performance)
 		{
-			vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,1,Time.deltaTime * 1.2);
-			vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,0,Time.deltaTime);
+			if(good)
+			{
+				vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,1,Time.deltaTime * 4.5);
+				vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,0,Time.deltaTime * 4);
+			}
+			else
+			{
+				vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,0,Time.deltaTime * 4);
+				vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,1,Time.deltaTime * 4.5);
+			}
 		}
 		else
 		{
-			vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,0,Time.deltaTime);
-			vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,1,Time.deltaTime * 1.2);
+			vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,0,Time.deltaTime * 4);
+			vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,1,Time.deltaTime * 4.5);
 		}
 	}
 	else
