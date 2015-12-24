@@ -16,7 +16,7 @@ var theater:GameObject;
 @HideInInspector var currentTheaterPosition:Vector3;
 @HideInInspector var currentTheaterSpeed:float;
 
-@HideInInspector var scores:float[];
+var scores:float[];
 
 static var good:boolean;
 

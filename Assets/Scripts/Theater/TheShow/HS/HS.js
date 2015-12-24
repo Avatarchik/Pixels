@@ -27,9 +27,9 @@ var musicEndTime:float;
 
 function Start () {
 	good = true;
-	score = 0;
+	score = 100;
 	goodScore = 1;
-	badScore = .4;
+	badScore = 1.8;
 	numberGood = 1;
 	numberBad = 1;
 	threshold = .65;
@@ -88,20 +88,20 @@ function MusicControl () {
 			ShowManager.good = true;
 			for(i = 0; i < speakers.length; i++)
 			{
-				speakers[i].volume = Mathf.MoveTowards(speakers[i].volume,0,Time.deltaTime);
+				speakers[i].volume = Mathf.MoveTowards(speakers[i].volume,0,Time.deltaTime * 4);
 			}
 		}
 		else
 		{
 			ShowManager.good = false;
-			speakers[failChoice].volume = Mathf.MoveTowards(speakers[failChoice].volume,1.2,Time.deltaTime);
+			speakers[failChoice].volume = Mathf.MoveTowards(speakers[failChoice].volume,4.5,Time.deltaTime);
 		}
 		yield;
 	}
 }
 
 function GoodHit () {
-	score += goodScore;
+	//score += goodScore;
 	numberGood++;
 	if(!good && numberBad/numberGood < threshold)
 	{

@@ -42,7 +42,7 @@ var hitRange:float;
 
 @HideInInspector var badScore:float;
 
-@HideInInspector var badCounter:int;
+@HideInInspector var badCounter:float;
 
 @HideInInspector var clicked:boolean[];
 
@@ -63,11 +63,11 @@ function Start () {
 	showLocationZ = -.01;
 	hideLocationZ = 10;
 	lastLightNumber = 0;
-	badScore = -.2;
+	badScore = -.45;
 	noteSpeed = 1;
 	for(var i:int = 0; i < hitTimes.length; i++)
 	{
-		hitTimes[i] += .1;
+		hitTimes[i] += 0;
 	}
 	CreateNotes();
 	if(hitTimes.Length > 0)
@@ -187,11 +187,20 @@ function Gameplay () {
 		}
 		yield;
 	}
+	var goodHits:int = 0;
 	for(i = 0; i < hitButtonScores.length; i++)
 	{
-		score += hitButtonScores[i];
-		score -= badCounter * badScore;
+		if(hitButtonScores[i] > 0)
+		{
+			goodHits ++ ;
+			score += hitButtonScores[i];
+		}
+		
 	}
+	Debug.Log(score + "     " + badCounter + "     " + badScore);
+	score = (score/hitButtons.Length) * 100;
+	score = Mathf.Max(0,score - (badCounter * badScore));
+	Debug.Log(score);
 	GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[1] = score;
 	smokeMachine.emissionRate = 10;
 	smokeMachine.startSpeed = 3;
@@ -217,15 +226,17 @@ function TopRowHit () {
 	if(closestDistance < hitRange && closest != -1)
 	{
 		hitButtonScores[closest] = (1 - closestDistance/hitRange)/2 + .5;
-		if(hitButtonScores[closest] > .85)
+		if(hitButtonScores[closest] > .93)
 		{
+			hitButtonScores[closest] = 1;
 			Feedback(true,0);
 			stageLights.color.a = 1;
 			stageLightGlow.color.a = 1;
 			LightChange();
 		}
-		else if(hitButtonScores[closest] > .7)
+		else if(hitButtonScores[closest] > .85)
 		{
+			hitButtonScores[closest] = .85;
 			Feedback(true,1);
 			stageLights.color.a = 1;
 			stageLightGlow.color.a = 1;
@@ -233,6 +244,7 @@ function TopRowHit () {
 		}
 		else
 		{
+			hitButtonScores[closest] = .7;
 			Feedback(true,2);
 			stageLights.color.a = .4;
 			stageLightGlow.color.a = .4;

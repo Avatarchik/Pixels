@@ -1,11 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Theater/TheShow/GD/GD.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js">
     <Files>
-      <File FileName="Assets/Scripts/Theater/TheShow/HS/HS.js" Line="61" Column="59" />
-      <File FileName="Assets/Scripts/Theater/TheShow/ShowManager.js" Line="98" Column="92" />
-      <File FileName="Assets/Scripts/Theater/TheShow/GD/GD.js" Line="59" Column="50" />
-      <File FileName="Assets/Scripts/Theater/TheShow/MUS/MUS.js" Line="70" Column="21" />
+      <File FileName="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js" Line="80" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -18,10 +18,16 @@ var volumeSprites:Sprite[];
 
 @HideInInspector var multiplyAmount:float;
 
-var startTime:float;
-var endTime:float;
+@HideInInspector var score:float;
+@HideInInspector var totalVolume:float;
+
+@HideInInspector var startTime:float;
+@HideInInspector var endTime:float;
 
 function Start () {
+	score = 100;
+	startTime = 56;
+	endTime = 86;
 	volumeLevels = [1f,1f,1f];
 	multiplyAmount = 1;
 	topLimit = -1.4;
@@ -38,7 +44,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(volumeLevels[0] + " Center: " + centers[0]);
 	for(var i:int = 0; i < sliders.length; i++)
 	{
 		for(var x:int = 0; x < Finger.identity.length; x++)
@@ -50,15 +55,23 @@ function Update () {
 		}
 		if(sliders[i].transform.position.y < centers[i])
 		{
-			volumeLevels[i] = Mathf.MoveTowards(volumeLevels[i],1 - ((sliders[i].transform.position.y - centers[i])/(bottomLimit - centers[i])),Time.deltaTime);
+			volumeLevels[i] = Mathf.MoveTowards(volumeLevels[i],1 - ((sliders[i].transform.position.y - centers[i])/(bottomLimit - centers[i])),Time.deltaTime * 1.5);
 		}
 		else
 		{
 			volumeLevels[i] = Mathf.Clamp(volumeLevels[i] * ((sliders[i].transform.position.y - centers[i]) * Time.deltaTime * .25 + 1),0,2);
 		}
-		sliderVolumes[i].sprite = volumeSprites[Mathf.Floor(volumeLevels[i] * 12 + .3)];
+		sliderVolumes[i].sprite = volumeSprites[Mathf.Min(Mathf.Floor(volumeLevels[i] * 12 + .3),volumeSprites.Length-1)];
 	}
-	
+	totalVolume = 0;
+	for(i = 0; i < volumeLevels.length; i++)
+	{
+		totalVolume += volumeLevels[i] - 1;
+	}
+	totalVolume *= 4;
+	totalVolume += 12;
+	largeVolume.sprite = volumeSprites[Mathf.Min(Mathf.Floor(totalVolume),volumeSprites.Length-1)];
+	score -= Time.deltaTime * Mathf.Abs((totalVolume-12) * .4);
 }
 
 function GamePlay () {
@@ -74,6 +87,6 @@ function GamePlay () {
 			centers[i] = originalCenters[i] + Random.Range(-variance,variance);
 		}
 		yield WaitForSeconds(Random.Range(.5,4));
-		yield;
 	}
+	GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[2] = score;
 }

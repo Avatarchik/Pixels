@@ -98,6 +98,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\SkipCounterIncrease.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\TimeScaleChange.js" />
      <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\ButtonManager.js" />
+     <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\DylanTalk.js" />
      <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\LeaveUnlockWheel.js" />
      <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\SendMessageToObject.js" />
      <Compile Include="Assets\Scripts\Levels\-01. UnlockWheel\UnlockThing.js" />
