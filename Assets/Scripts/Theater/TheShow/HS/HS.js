@@ -25,7 +25,17 @@ var musicEndTime:float;
 @HideInInspector var numberBad:float;
 @HideInInspector var threshold:float;
 
+var emily:Emily;
+
 function Start () {
+	if(emily.recording)
+	{
+		Recording();
+	}
+	else
+	{
+		EmilyTalk();
+	}
 	good = true;
 	score = 100;
 	goodScore = 1;
@@ -72,7 +82,7 @@ function MusicControl () {
 	{
 		yield;
 	}
-	Debug.Log(ShowManager.currentMusicLocation);
+	ShowManager.good = true;
 	for(var i:int = 0; i < speakers.length; i++)
 	{
 		if(failSounds.Length > i)
@@ -93,7 +103,12 @@ function MusicControl () {
 		}
 		else
 		{
+			Debug.Log(speakers[failChoice].time - (ShowManager.currentMusicLocation - musicStartTime));
 			ShowManager.good = false;
+			if(Mathf.Abs(speakers[failChoice].time - (ShowManager.currentMusicLocation - musicStartTime)) > .1)
+			{
+				speakers[failChoice].time = ShowManager.currentMusicLocation - musicStartTime;
+			}
 			speakers[failChoice].volume = Mathf.MoveTowards(speakers[failChoice].volume,4.5,Time.deltaTime);
 		}
 		yield;
@@ -137,4 +152,42 @@ function AddNumber (original:float[],addition:float):float[] {
 	}
 	finalArray[finalArray.length-1] = addition;
 	return finalArray;
+}
+
+function EmilyTalk () {
+	for(var i:int = 0; i < emily.mouthChanges.length; i++)
+	{
+		while(ShowManager.currentMusicLocation < emily.mouthChanges[i])
+		{
+			yield;
+		}
+		emily.emilyMouth.sprite = emily.emilyMouthSprites[emily.mouthChangeNumbers[i]];
+	}
+}
+
+function Recording () {
+	while(true)
+	{
+		if(Input.GetKeyDown("m"))
+		{
+			emily.mouthChanges = AddNumber(emily.mouthChanges,ShowManager.currentMusicLocation);
+			emily.mouthChangeNumbers = AddNumber(emily.mouthChangeNumbers,0);
+		}
+		if(Input.GetKeyUp("m"))
+		{
+			emily.mouthChanges = AddNumber(emily.mouthChanges,ShowManager.currentMusicLocation);
+			emily.mouthChangeNumbers = AddNumber(emily.mouthChangeNumbers,1);
+		}
+		yield;
+	}
+}
+
+
+class Emily {
+	var emily:SpriteRenderer;
+	var emilyMouth:SpriteRenderer;
+	var emilyMouthSprites:Sprite[];
+	var mouthChanges:float[];
+	var mouthChangeNumbers:int[];
+	var recording:boolean;
 }

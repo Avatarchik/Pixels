@@ -24,6 +24,8 @@ var volumeSprites:Sprite[];
 @HideInInspector var startTime:float;
 @HideInInspector var endTime:float;
 
+var eric:Eric;
+
 function Start () {
 	score = 100;
 	startTime = 56;
@@ -39,6 +41,15 @@ function Start () {
 	{
 		centers[i] = sliders[i].transform.position.y;
 		originalCenters[i] = centers[i];
+	}
+	if(eric.recording)
+	{
+		Recording();
+	}
+	else
+	{
+		EricMove();
+		EricTalk();
 	}
 	GamePlay();
 }
@@ -80,6 +91,7 @@ function GamePlay () {
 	{
 		yield;
 	}
+	ShowManager.good = true;
 	while(ShowManager.currentMusicLocation < endTime)
 	{
 		for(var i:int = 0; i < centers.length; i++)
@@ -89,4 +101,89 @@ function GamePlay () {
 		yield WaitForSeconds(Random.Range(.5,4));
 	}
 	GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[2] = score;
+}
+
+function AddNumber (original:float[],addition:float):float[] {
+	var finalArray:float[] = new float[original.length+1];
+	for(var y:float = 0; y < original.length; y++)
+	{
+		finalArray[y] = original[y];
+	}
+	finalArray[finalArray.length-1] = addition;
+	return finalArray;
+}
+
+function AddNumber (original:int[],addition:int):int[] {
+	var finalArray:int[] = new int[original.length+1];
+	for(var y:int = 0; y < original.length; y++)
+	{
+		finalArray[y] = original[y];
+	}
+	finalArray[finalArray.length-1] = addition;
+	return finalArray;
+}
+
+function EricTalk () {
+	for(var i:int = 0; i < eric.mouthChanges.length; i++)
+	{
+		while(ShowManager.currentMusicLocation < eric.mouthChanges[i])
+		{
+			yield;
+		}
+		eric.ericMouth.sprite = eric.ericMouthSprites[eric.mouthChangeNumbers[i]];
+	}
+}
+
+function EricMove () {
+	var which:boolean = true;
+	for(var i:int = 0; i < eric.moveTimes.length; i++)
+	{
+		while(ShowManager.currentMusicLocation < eric.moveTimes[i])
+		{
+			yield;
+		}
+		if(which)
+		{
+			eric.eric.sprite = eric.ericSprites[0];
+		}	
+		else
+		{
+			eric.eric.sprite = eric.ericSprites[1];
+		}
+		eric.eric.transform.position.x -= eric.amountToMove;
+		which = !which;
+	}
+}
+
+function Recording () {
+	while(true)
+	{
+		if(Input.GetKeyDown("m"))
+		{
+			eric.mouthChanges = AddNumber(eric.mouthChanges,ShowManager.currentMusicLocation);
+			eric.mouthChangeNumbers = AddNumber(eric.mouthChangeNumbers,0);
+		}
+		if(Input.GetKeyUp("m"))
+		{
+			eric.mouthChanges = AddNumber(eric.mouthChanges,ShowManager.currentMusicLocation);
+			eric.mouthChangeNumbers = AddNumber(eric.mouthChangeNumbers,1);
+		}
+		if(Input.GetKeyDown("q"))
+		{
+			eric.moveTimes = AddNumber(eric.moveTimes,ShowManager.currentMusicLocation);
+		}
+		yield;
+	}
+}
+
+class Eric {
+	var eric:SpriteRenderer;
+	var ericMouth:SpriteRenderer;
+	var ericSprites:Sprite[];
+	var ericMouthSprites:Sprite[];
+	var mouthChanges:float[];
+	var mouthChangeNumbers:int[];
+	var amountToMove:float;
+	var moveTimes:float[];
+	var recording:boolean;
 }

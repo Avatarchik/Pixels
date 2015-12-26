@@ -12,8 +12,6 @@ var dylan:SpriteRenderer;
 var dylanNormal:Sprite;
 var dylanBlink:Sprite;
 
-var talkOptions:AudioClip[];
-
 function Awake () {
 	talkWait = 0;
 	Mouth();
@@ -25,11 +23,11 @@ function Update () {
 }
 
 function Clicked () {
-	Talk(talkOptions);
+	Talk(talkSounds);
 }
 
 function Talk (clips:AudioClip[]) {
-	if(talkWait < 0)
+	if(talkWait <= 0)
 	{
 		var tempVar:int = Random.Range(0,clips.length);
 		AudioManager.PlaySound(clips[tempVar]);

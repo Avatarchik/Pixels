@@ -25,7 +25,7 @@ var costReader2:TextMesh;
 var backgroundBlack:SpriteRenderer;
 
 @HideInInspector var unlockableItems:GameObject[];
-@HideInInspector var lockedItems:GameObject[];
+var lockedItems:GameObject[];
 @HideInInspector var lockedClothingItems:GameObject[];
 @HideInInspector var lockedTheaterPieces:GameObject[];
 @HideInInspector var lockedPropPieces:GameObject[];
@@ -45,11 +45,18 @@ var notifier:GameObject;
 
 @HideInInspector var endSprites:Sprite[];
 
+var welcomeSounds:AudioClip[];
+var winSounds:AudioClip[];
+var loseSounds:AudioClip[];
+
+var dylan:DylanTalk;
+
 function Start () {
 	if(!PlayerPrefs.HasKey("PlayerUnlockSlotLosses"))
 	{
 		PlayerPrefs.SetInt("PlayerUnlockSlotLosses", 0);
 	}
+	dylan.Talk(welcomeSounds);
 	endSprites = new Sprite[3];
 	choices = new GameObject[3];
 	price = 0;
@@ -400,6 +407,17 @@ function Results (number:int) {
 		while(currentNotifier != null)
 		{
 			yield;
+		}
+		if(Random.value < .5)
+		{
+			dylan.Talk(winSounds);
+		}
+	}
+	else
+	{
+		if(Random.value < .5)
+		{
+			dylan.Talk(loseSounds);
 		}
 	}
 	UpdateUnlockables();

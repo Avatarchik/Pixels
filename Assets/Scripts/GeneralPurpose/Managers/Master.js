@@ -297,9 +297,9 @@ function Initialize () {
 	CheckArcadeUnlocks();
 	if(unlockAll)
 	{
-		UnlockCustomizeOptions();
 		UnlockArcadeGames(true);
 		UnlockAllOptions();
+		UnlockCustomizeOptions();
 	}
 	for(var i:int = 0; i < worlds.length; i++)
 	{
@@ -498,6 +498,7 @@ function UnlockAllOptions () {
 	PlayerPrefs.SetInt("EyesSelection",0);
 	PlayerPrefs.SetInt("TopSelection",0);
 	PlayerPrefs.SetInt("BottomSelection",0);
+	UnlockCustomizeOptions();
 }
 
 class BasicVariables {

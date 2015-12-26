@@ -21,9 +21,14 @@ static var choice:int;
 var firstTime:boolean;
 
 var gameSounds:AudioClip[];
+var likeliness:float = .25;
 
 function Start () {
-	if(gameSounds.length > 0 && Random.Range(0,10.0) < 2.5)
+	if(likeliness == 0)
+	{
+		likeliness = .25;
+	}	
+	if(gameSounds.length > 0 && Random.value < likeliness)
 	{
 		AudioManager.PlayCutscene(gameSounds[Random.Range(0,gameSounds.length)]);
 	}

@@ -171,6 +171,7 @@ function Gameplay () {
 	{
 		yield;
 	}
+	ShowManager.good = true;
 	smokeMachine.emissionRate = 40;
 	smokeMachine.startSpeed = 9;
 	while(ShowManager.currentMusicLocation < hitTimes[hitTimes.length-1])
@@ -197,10 +198,8 @@ function Gameplay () {
 		}
 		
 	}
-	Debug.Log(score + "     " + badCounter + "     " + badScore);
 	score = (score/hitButtons.Length) * 100;
 	score = Mathf.Max(0,score - (badCounter * badScore));
-	Debug.Log(score);
 	GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[1] = score;
 	smokeMachine.emissionRate = 10;
 	smokeMachine.startSpeed = 3;
