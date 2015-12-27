@@ -83,8 +83,9 @@ function Clicked () {
 }
 
 function Good () {
-	if(hittable)
+	if(hittable && !HS.currentHit)
 	{
+		HS.currentHit = true;
 		manager.GoodHit();
 		sprite.color = colors[2];
 		currentBrightness = 1;

@@ -1,5 +1,7 @@
 	#pragma strict
 
+import UnityEngine.SocialPlatforms;
+
 static var initialLoad:boolean;
 
 public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix};
@@ -99,6 +101,7 @@ function Awake () {
 	
 	DontDestroyOnLoad(gameObject);
 	Initialize();
+	Social.localUser.Authenticate (ProcessAuthentication);
 	if(settings.skipOpening)
 	{
 		PlayerPrefs.SetInt("TutorialFinished",2);
@@ -690,4 +693,16 @@ function LaunchNotification (text:String,type:NotificationType) {
 		yield;
 	}
 	notifying = false;
+}
+
+function ProcessAuthentication (success: boolean) {
+	if (success) 
+	{
+		//Debug.Log ("Authenticated");
+		//Debug.Log (Social.localUser.userName);
+	}
+	else
+	{
+		//Debug.Log ("Failed to authenticate");
+	}
 }

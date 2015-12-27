@@ -27,6 +27,8 @@ var musicEndTime:float;
 
 var emily:Emily;
 
+static var currentHit:boolean;
+
 function Start () {
 	if(emily.recording)
 	{
@@ -66,6 +68,7 @@ function Start () {
 }
 
 function Update () {
+	currentHit = false;
 	if(Input.GetKeyDown("a"))
 	{
 		times = AddNumber(times,ShowManager.currentMusicLocation);
@@ -103,7 +106,6 @@ function MusicControl () {
 		}
 		else
 		{
-			Debug.Log(speakers[failChoice].time - (ShowManager.currentMusicLocation - musicStartTime));
 			ShowManager.good = false;
 			if(Mathf.Abs(speakers[failChoice].time - (ShowManager.currentMusicLocation - musicStartTime)) > .1)
 			{

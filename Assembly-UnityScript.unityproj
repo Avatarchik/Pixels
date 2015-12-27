@@ -194,6 +194,7 @@
      <Compile Include="Assets\Scripts\Theater\TheShow\MUS\Feedback.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\MUS\MUS.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\NL\NL.js" />
+     <Compile Include="Assets\Scripts\Theater\TheShow\NL\NLMoveObject.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\PPF\PPF.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\ShowManager.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\ShowObjectManager.js" />

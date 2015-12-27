@@ -31,6 +31,8 @@ var defaultFriendNames:String[];
 
 var gameNameDisplay:TextMesh;
 
+var notConnected:TextMesh;
+
 function Start () {
 	clicked = false;
 	
@@ -52,7 +54,6 @@ function Start () {
 	global = true;
 	bigSize = .7;
 	normalSize = .15;
-	/*
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{
@@ -77,32 +78,42 @@ function Start () {
 							allUsers[score].score = scores[score].value;
 						}
 					}
+					friendNames = new String[Social.localUser.friends.length];
+					for(var name:int = 0; name < friendNames.length; name ++)
+					{
+						friendNames[name] = Social.localUser.friends[name].userName;
+					}	
+					FinishStart();
 				}
 				else
 				{
 					Debug.Log("No scores were loaded.");
 					allUsers = new User[0];
+					NotConnected();
 				}
-				friendNames = new String[Social.localUser.friends.length];
-				for(var name:int = 0; name < friendNames.length; name ++)
-				{
-					friendNames[name] = Social.localUser.friends[name].userName;
-				}	
-			//}
-			//);
-			FinishStart();
 		}
 		else
 		{
 			Debug.Log("Could not authenticate.");
 			allUsers = new User[0];
-			FinishStart();
+			NotConnected();
 		}
 	}
 	);
-	*/
-	FinishStart();
 }
+
+function NotConnected () {
+	for(var i:int = 0; i < displayUsers.length; i++)
+	{
+		locationNumbers[i].GetComponent(TextMesh).text = "";
+		locationNames[i].GetComponent(TextMesh).text = "";
+		locationScores[i].GetComponent(TextMesh).text = "";
+	}	
+	globalHighlight.color.a = 0;
+	friendsHighlight.color.a = 0;
+	notConnected.color.a = 1;
+}
+
 function FinishStart () {
 	if(allUsers.Length == 0)
 	{
