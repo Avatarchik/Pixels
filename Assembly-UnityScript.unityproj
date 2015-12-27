@@ -193,6 +193,8 @@
      <Compile Include="Assets\Scripts\Theater\TheShow\MUS\CrossStage.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\MUS\Feedback.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\MUS\MUS.js" />
+     <Compile Include="Assets\Scripts\Theater\TheShow\NL\EmilyMovement.js" />
+     <Compile Include="Assets\Scripts\Theater\TheShow\NL\EricMovement.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\NL\NL.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\NL\NLMoveObject.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\PPF\PPF.js" />
