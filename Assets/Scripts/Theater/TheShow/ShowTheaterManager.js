@@ -23,7 +23,6 @@ function FindPieces() {
 	theaterFloor = manager.currentTheaterFloor.GetComponent(SpriteRenderer);
 	curtain = manager.currentCurtain.GetComponent(SpriteRenderer);
 	chairs = manager.currentChairs.GetComponent(SpriteRenderer);
-	StartOfShow();
 }
 
 function StartOfShow () {
@@ -36,6 +35,20 @@ function StartOfShow () {
 		curtain.color = Color(brightness,brightness,brightness,1);
 		chairs.color = Color(brightness,brightness,brightness,1);
 		brightness = Mathf.MoveTowards(brightness,.14,Time.deltaTime * .3);
+		yield;
+	}
+}
+
+function EndOfShow () {
+	var brightness:float = chairs.color.r;
+	while(brightness != 1)
+	{
+		ceiling.color = Color(brightness,brightness,brightness,1);
+		theaterWall.color = Color(brightness,brightness,brightness,1);
+		theaterFloor.color = Color(brightness,brightness,brightness,1);
+		curtain.color = Color(brightness,brightness,brightness,1);
+		chairs.color = Color(brightness,brightness,brightness,1);
+		brightness = Mathf.MoveTowards(brightness,1,Time.deltaTime * .3);
 		yield;
 	}
 }

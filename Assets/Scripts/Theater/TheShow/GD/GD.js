@@ -86,7 +86,7 @@ function Update () {
 }
 
 function GamePlay () {
-	var variance:float = .8;
+	var variance:float = 1.3;
 	while(ShowManager.currentMusicLocation < startTime)
 	{
 		yield;

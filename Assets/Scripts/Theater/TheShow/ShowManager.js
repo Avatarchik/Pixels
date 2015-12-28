@@ -16,13 +16,18 @@ var theater:GameObject;
 @HideInInspector var currentTheaterPosition:Vector3;
 @HideInInspector var currentTheaterSpeed:float;
 
-var scores:float[];
+@HideInInspector var scores:float[];
+
+var theaterLights:ShowTheaterManager;
+
+var curtains:ShowCurtains;
 
 static var good:boolean;
 
 static var currentMusicLocation:float;
 
 static var performance:boolean;
+
 function Start () {
 	good = true;
 	scores = new float[10];
@@ -107,14 +112,12 @@ function Update () {
 	theater.transform.position = Vector3.MoveTowards(theater.transform.position,currentTheaterPosition,Time.deltaTime * currentTheaterSpeed);
 }
 
-function Show () {	
+function Show () {
+	yield WaitForSeconds(1);
+	theaterLights.StartOfShow();	
 	musicSpeaker.Play();
 	vocalSpeakerBad.Play();
 	vocalSpeakerGood.Play();
-	while(currentMusicLocation < scenes[0].info.gameStartTime)
-	{
-		yield;
-	}
 	for(var i:int = 0; i < 5; i++)
 	{
 		while(currentMusicLocation < scenes[i].info.gameStartTime)
@@ -136,7 +139,8 @@ function Show () {
 }
 
 function EndShow () {
-	
+	curtains.Close();
+	theaterLights.EndOfShow();
 }
 
 function Test () {
