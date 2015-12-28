@@ -22,6 +22,8 @@ var theaterLights:ShowTheaterManager;
 
 var curtains:ShowCurtains;
 
+var results:TheShowResultsScreen;
+
 static var good:boolean;
 
 static var currentMusicLocation:float;
@@ -141,6 +143,8 @@ function Show () {
 function EndShow () {
 	curtains.Close();
 	theaterLights.EndOfShow();
+	yield WaitForSeconds(4.5);
+	results.DisplayScores(scores);
 }
 
 function Test () {

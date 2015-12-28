@@ -27,6 +27,10 @@ function Close () {
 	for(var i:int = 0; i < curtains.length; i++)
 	{
 		GoTo(curtains[i],goals[i]);
+		if(i == curtains.Length -1)
+		{
+			GoTo(curtains[i],goals[i]);
+		}
 	}
 }
 

@@ -1,6 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Theater/TheShow/TheShowResultsScreen.js">
+    <Files>
+      <File FileName="Assets/Scripts/Theater/TheShow/PPF/PPF.js" Line="128" Column="117" />
+      <File FileName="Assets/Scripts/Theater/TheShow/NL/NL.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Theater/TheShow/MUS/MUS.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Theater/TheShow/HS/HS.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Theater/TheShow/GD/GD.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Theater/TheShow/TheShowResultsScreen.js" Line="38" Column="121" />
+      <File FileName="Assets/Scripts/Theater/TheShow/ShowManager.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Theater/TheShow/ShowCurtains.js" Line="32" Column="31" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

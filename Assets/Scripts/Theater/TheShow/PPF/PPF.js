@@ -125,7 +125,7 @@ function Update () {
 				totalBad += numberBadFilled;
 				totalGood += (numberGoodFilled/goalTotal);
 				score += Mathf.Max(25,(100 - numberBadFilled));
-				GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[0] = score;
+				GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[0] = Mathf.Clamp(score/5,0,100);
 				UpdatePixels();
 			}
 		}
