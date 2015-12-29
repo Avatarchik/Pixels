@@ -39,6 +39,14 @@ var tempSave:boolean[];
 
 @HideInInspector var letterMovement:boolean;
 
+var CEOs:SpriteRenderer[];
+var mouths:SpriteRenderer[];
+var mouthClosed:Sprite;
+var mouthOpen:Sprite;
+
+var times:float[];
+var timeNumber:int[];
+
 function Start () {
 	letterMovement = false;
 	numberOfLettersSent = 0;
@@ -54,6 +62,7 @@ function Start () {
 	started = false;
 	active = new boolean[goal.Length];
 	UpdatePixels();
+	Talk();
 }
 
 function UpdatePixels () {
@@ -90,6 +99,26 @@ function LetterMove () {
 	yield WaitForSeconds(.4);
 	letterMovement = false;
 	
+}
+
+function Talk () {
+	for(var i:int = 0; i < times.length; i++)
+	{
+		while(ShowManager.currentMusicLocation < times[i])
+		{
+			yield;
+		}
+		if(timeNumber[i] == 0)
+		{
+			mouths[0].sprite = mouthClosed;
+			mouths[1].sprite = mouthClosed;
+		}
+		else
+		{
+			mouths[0].sprite = mouthOpen;
+			mouths[1].sprite = mouthOpen;
+		}
+	}
 }
 
 function Throw () {
@@ -187,12 +216,15 @@ function Update () {
 			}
 		}
 	}
-	if(Input.GetKeyDown("p"))
+	if(Input.GetKeyDown("a"))
 	{
-		for(i = 0; i < tempSave.length; i++)
-		{
-			tempSave[i] = goal4[i];
-		}
+		times = AddNumber(times,ShowManager.currentMusicLocation);
+		timeNumber = AddNumber(timeNumber,1);
+	}
+	if(Input.GetKeyUp("a"))
+	{
+		times = AddNumber(times,ShowManager.currentMusicLocation);
+		timeNumber = AddNumber(timeNumber,0);
 	}
 }
 
@@ -219,3 +251,23 @@ function PickGoal () {
 		goal = goal4;
 	}
 }	
+
+function AddNumber (original:int[],addition:int):int[] {
+	var finalArray:int[] = new int[original.length+1];
+	for(var y:int = 0; y < original.length; y++)
+	{
+		finalArray[y] = original[y];
+	}
+	finalArray[finalArray.length-1] = addition;
+	return finalArray;
+}
+
+function AddNumber (original:float[],addition:float):float[] {
+	var finalArray:float[] = new float[original.length+1];
+	for(var y:float = 0; y < original.length; y++)
+	{
+		finalArray[y] = original[y];
+	}
+	finalArray[finalArray.length-1] = addition;
+	return finalArray;
+}

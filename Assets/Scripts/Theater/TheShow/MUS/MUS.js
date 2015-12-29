@@ -53,6 +53,8 @@ var bottomButton:GameObject;
 
 var buttonDistance:float;
 
+var feedbackLights:SpriteRenderer[];
+
 function Start () {
 	misses = 0;
 	clicked = [false,false,false,false,false];
@@ -91,6 +93,10 @@ function Update () {
 		{
 			hitButtons[i].GetComponent(SpriteRenderer).color.a = 0;
 		}
+	}
+	for(i = 0; i < feedbackLights.length; i++)
+	{
+		feedbackLights[i].color.a = Mathf.MoveTowards(feedbackLights[i].color.a,0,Time.deltaTime * 4);
 	}
 	if(Input.GetKeyDown("up"))
 	{
@@ -241,6 +247,7 @@ function TopRowHit () {
 	}
 	if(closestDistance < hitRange && closest != -1)
 	{
+		feedbackLights[0].color.a = 1;
 		hitButtonScores[closest] = (1 - closestDistance/hitRange)/2 + .5;
 		if(hitButtonScores[closest] > .93)
 		{
@@ -298,6 +305,7 @@ function BottomRowHit () {
 	}
 	if(closestDistance < hitRange && closest != -1)
 	{
+		feedbackLights[1].color.a = 1;
 		hitButtonScores[closest] = (1 - closestDistance/hitRange)/2 + .5;
 		if(hitButtonScores[closest] > .85)
 		{

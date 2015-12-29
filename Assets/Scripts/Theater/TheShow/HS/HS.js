@@ -4,6 +4,7 @@ var wordHolder:Transform;
 var wordPrefab:GameObject;
 var words:String[];
 var times:float[];
+var locations:Vector3[];
 
 var score:float;
 
