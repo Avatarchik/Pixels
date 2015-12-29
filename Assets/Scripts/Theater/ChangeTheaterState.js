@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-
-
 var newState:TheaterStatus;
 var allowedStates:TheaterStatus[];
 @HideInInspector var manager:PlayerManager;
@@ -27,6 +25,10 @@ function Unclicked () {
 		{
 			allowed = true;
 		}
+	}
+	if(Master.notifying)
+	{
+		allowed = false;
 	}
 	if(allowed && TheaterController.buttonCooldown < 0)
 	{

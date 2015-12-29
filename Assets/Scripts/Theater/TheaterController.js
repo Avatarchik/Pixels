@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public enum TheaterStatus{Home,Front,Stats,CustomizeNoColor,CustomizeColor};
+public enum TheaterStatus{Home,Front,Stats,CustomizeNoColor,CustomizeColor,Show};
 static var currentState:TheaterStatus;
 static var customizing:boolean;
 static var buttonCooldown:float;
@@ -129,6 +129,19 @@ function Update () {
 				
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-14.15),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(12.4,.2),speed);
+				break;
+			case TheaterStatus.Show:
+				AudioManager.humCharacter = Person.None;
+				
+				transform.position = Vector2.MoveTowards(transform.position,Vector2(0,0),speed);
+				transform.position = Vector2.Lerp(transform.position,Vector2(0,0),speed/4);
+				
+				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.1,0,2),speed*2);
+				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.1,0,2),speed/2);
+				
+				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
+				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,.2),speed);
+				
 				break;
 			default:
 				break;

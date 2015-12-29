@@ -19,7 +19,6 @@ function Start () {
 }
 
 function Clicked () {
-Debug.Log("HEY");
 	if(automatic)
 	{
 		if((theaterController.currentState == TheaterStatus.Home || theaterController.currentState == TheaterStatus.Front) && TheaterController.buttonCooldown < 0)

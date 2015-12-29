@@ -171,34 +171,42 @@ function CheckOrientation () {
 }
 
 function CheckForShowTime () {
-	if(PlayerPrefs.GetInt("NightShowDate:"+System.DateTime.Today) != 1)
+	if(settings.alwaysPerform)
 	{
-		if(((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19))
-		{
-			allowShow = true;
-			matinee = false;
-		}
-		else
-		{
-			allowShow = false;
-		}
-	}
-	else if (PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today) != 1)
-	{
-		if((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 19)
-		{
-			allowShow = true;
-			matinee = true;
-		}
-		else
-		{
-			allowShow = false;
-		}
+		allowShow = true;
 	}
 	else
 	{
-		allowShow = false;
+		if(PlayerPrefs.GetInt("NightShowDate:"+System.DateTime.Today) != 1)
+		{
+			if(((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19))
+			{
+				allowShow = true;
+				matinee = false;
+			}
+			else
+			{
+				allowShow = false;
+			}
+		}
+		else if (PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today) != 1)
+		{
+			if((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 14)
+			{
+				allowShow = true;
+				matinee = true;
+			}
+			else
+			{
+				allowShow = false;
+			}
+		}
+		else
+		{
+			allowShow = false;
+		}
 	}
+	//Debug.Log(allowShow + "    " + matinee);
 }
 // This function returns the device type to adjust the screen size (and borders) for iPad and older iPhone models.
 function CheckDeviceType(search:String):boolean {
@@ -574,6 +582,7 @@ class Options {
 	var unlockEverything:boolean;
 	var skipOpening:boolean;
 	var eraseOnLoad:boolean;
+	var alwaysPerform:boolean;
 	var demoMode:boolean;
 	var demoTime:float;
 	var resetTime:float;

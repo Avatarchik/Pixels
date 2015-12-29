@@ -184,6 +184,7 @@
      <Compile Include="Assets\Scripts\Theater\ChangeSelectedWorld.js" />
      <Compile Include="Assets\Scripts\Theater\ChangeTheaterState.js" />
      <Compile Include="Assets\Scripts\Theater\FirstTimeTheaterNotifier.js" />
+     <Compile Include="Assets\Scripts\Theater\HideForShow.js" />
      <Compile Include="Assets\Scripts\Theater\LedgerController.js" />
      <Compile Include="Assets\Scripts\Theater\PlayerWalking.js" />
      <Compile Include="Assets\Scripts\Theater\StatScreenMenuOption.js" />
@@ -209,6 +210,7 @@
      <Compile Include="Assets\Scripts\Theater\TheShow\ShowObjectManager.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\ShowTheaterManager.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\TheShowResultsScreen.js" />
+     <Compile Include="Assets\Scripts\Theater\TheShowButton.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterController.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterCustomizeManager.js" />
      <Compile Include="Assets\Scripts\Theater\TheaterManager.js" />
