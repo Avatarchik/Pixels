@@ -28,12 +28,9 @@ static var good:boolean;
 
 static var currentMusicLocation:float;
 
-static var performance:boolean;
-
 function Start () {
 	good = true;
 	scores = new float[10];
-	performance = true;
 	currentTheaterPosition = Vector3.zero;
 	currentMusicLocation = 0;
 	for(var i:int = 0; i < scenes.length; i++)
@@ -52,7 +49,7 @@ function Start () {
 	}
 	else
 	{
-		musicSpeaker.clip = performanceMusic;
+		musicSpeaker.clip = rehearsalMusic;
 		vocalSpeakerGood.clip = vocalsSuccess;
 		vocalSpeakerBad.clip = vocalsFailureRehearsal;
 	}
@@ -86,18 +83,10 @@ function Update () {
 	if(PlayerPrefs.GetInt("Music") == 1)
 	{
 		musicSpeaker.volume = 1;
-		if(performance)
+		if(good)
 		{
-			if(good)
-			{
-				vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,1,Time.deltaTime * 4.5);
-				vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,0,Time.deltaTime * 4);
-			}
-			else
-			{
-				vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,0,Time.deltaTime * 4);
-				vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,1,Time.deltaTime * 4.5);
-			}
+			vocalSpeakerGood.volume = Mathf.MoveTowards(vocalSpeakerGood.volume,1,Time.deltaTime * 4.5);
+			vocalSpeakerBad.volume = Mathf.MoveTowards(vocalSpeakerBad.volume,0,Time.deltaTime * 4);
 		}
 		else
 		{

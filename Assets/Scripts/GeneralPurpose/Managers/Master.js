@@ -195,6 +195,10 @@ function CheckForShowTime () {
 			allowShow = false;
 		}
 	}
+	else
+	{
+		allowShow = false;
+	}
 }
 // This function returns the device type to adjust the screen size (and borders) for iPad and older iPhone models.
 function CheckDeviceType(search:String):boolean {

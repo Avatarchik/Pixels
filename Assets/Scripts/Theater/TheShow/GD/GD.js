@@ -24,9 +24,12 @@ var volumeSprites:Sprite[];
 @HideInInspector var startTime:float;
 @HideInInspector var endTime:float;
 
+@HideInInspector var speaker:AudioSource;
+
 var eric:Eric;
 
 function Start () {
+	speaker = GetComponent(AudioSource);
 	score = 100;
 	startTime = 56;
 	endTime = 86;
@@ -78,6 +81,14 @@ function Update () {
 	for(i = 0; i < volumeLevels.length; i++)
 	{
 		totalVolume += volumeLevels[i] - 1;
+	}
+	if(PlayerPrefs.GetInt("Sound") == 1 && ShowManager.currentMusicLocation < endTime && ShowManager.currentMusicLocation > startTime)
+	{
+		speaker.volume = Mathf.Max(0,totalVolume - .5)/3.5;
+	}
+	else
+	{
+		speaker.volume = Mathf.MoveTowards(speaker.volume,0,Time.deltaTime * 3);
 	}
 	totalVolume *= 4;
 	totalVolume += 12;

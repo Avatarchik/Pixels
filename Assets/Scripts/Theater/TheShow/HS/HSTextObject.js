@@ -22,7 +22,10 @@ var colors:Color[];
 @HideInInspector var hittable:boolean;
 @HideInInspector var done:boolean;
 
+@HideInInspector var finished:boolean;
+
 function Start () {
+	finished = false;
 	leadUp = 1;
 	window = .7;
 	glow.color.a = 0;
@@ -75,7 +78,7 @@ function Update () {
 }
 
 function Clicked () {
-	if(hittable)
+	if(hittable && !finished)
 	{
 		done = true;
 		Good();
@@ -89,6 +92,7 @@ function Good () {
 		manager.GoodHit();
 		sprite.color = colors[2];
 		currentBrightness = 1;
+		finished = true;
 		while(currentBrightness != 0)
 		{
 			currentBrightness = Mathf.MoveTowards(currentBrightness,0,Time.deltaTime*4);

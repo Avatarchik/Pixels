@@ -55,10 +55,7 @@ function GamePlay () {
 		{
 			yield;
 		}
-		if(i == 0)
-		{
-			ShowManager.good = true;
-		}
+		ShowManager.good = true;
 		pressable = pressableTime;
 		pressableEvent = i;
 		BackUp(i);
@@ -80,6 +77,7 @@ function BackUp (which:int) {
 	yield WaitForSeconds(pressableTime + .2);
 	if(events[which].necessary && !events[which].success)
 	{
+		ShowManager.good = false;
 		if(Master.vertical)
 		{
 			Instantiate(bad,lights[1].transform.position - Vector3(0,0,1),Quaternion.identity);

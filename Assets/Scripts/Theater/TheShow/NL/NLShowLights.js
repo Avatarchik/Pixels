@@ -10,7 +10,10 @@ function Start () {
 function Update () {
 }
 function StartEvent (which:int) {
-	sprite.color.a = 1;
+	if(Master.allowShow)
+	{
+		sprite.color.a = 1;
+	}
 	if(lights.Length > which)
 	{
 		sprite.sprite = lights[which];

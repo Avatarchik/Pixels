@@ -125,6 +125,14 @@ function Update () {
 				totalBad += numberBadFilled;
 				totalGood += (numberGoodFilled/goalTotal);
 				score += Mathf.Max(25,(100 - numberBadFilled));
+				if(score > 60)
+				{
+					ShowManager.good = true;
+				}
+				else
+				{
+					ShowManager.good = false;
+				}
 				GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[0] = Mathf.Clamp(score/5,0,100);
 				UpdatePixels();
 			}

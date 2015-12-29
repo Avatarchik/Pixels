@@ -92,11 +92,11 @@ function Unclicked () {
 				AudioManager.PlaySoundTransition(controller.currentWorld.audio.transitionOut);
 				Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);
 				done = true;
+				yield WaitForSeconds(.7);
+				AudioManager.StopSong();
+				yield WaitForSeconds(1.3);
+				Application.LoadLevel("WorldSelect");
 			}
-			yield WaitForSeconds(.7);
-			AudioManager.StopSong();
-			yield WaitForSeconds(1.3);
-			Application.LoadLevel("WorldSelect");
 		}
 	}
 }

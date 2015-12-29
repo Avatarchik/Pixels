@@ -38,6 +38,8 @@ var feedback:GameObject[];
 
 @HideInInspector var lastLightNumber:float;
 
+@HideInInspector var misses:int;
+
 var hitRange:float;
 
 @HideInInspector var badScore:float;
@@ -52,6 +54,7 @@ var bottomButton:GameObject;
 var buttonDistance:float;
 
 function Start () {
+	misses = 0;
 	clicked = [false,false,false,false,false];
 	badCounter = 0;
 	startLocationY = new float[2];
@@ -172,7 +175,10 @@ function Gameplay () {
 		yield;
 	}
 	ShowManager.good = true;
-	smokeMachine.emissionRate = 40;
+	if(Master.allowShow)
+	{
+		smokeMachine.emissionRate = 40;
+	}
 	smokeMachine.startSpeed = 9;
 	while(ShowManager.currentMusicLocation < hitTimes[hitTimes.length-1])
 	{
@@ -185,6 +191,14 @@ function Gameplay () {
 				stageLightGlow.color.a = 0;
 				Feedback(hitButtonTop[i],3);
 			}
+		}
+		if(misses > 1)
+		{
+			ShowManager.good = false;
+		}
+		else
+		{	
+			ShowManager.good = true;
 		}
 		yield;
 	}
@@ -201,7 +215,10 @@ function Gameplay () {
 	score = (score/hitButtons.Length) * 100;
 	score = Mathf.Max(0,score - (badCounter * badScore));
 	GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[1] = score;
-	smokeMachine.emissionRate = 10;
+	if(Master.allowShow)
+	{
+		smokeMachine.emissionRate = 10;
+	}
 	smokeMachine.startSpeed = 3;
 	while(stageLights.color.a != 0 || stageLightGlow.color.a != 0)
 	{
@@ -229,24 +246,33 @@ function TopRowHit () {
 		{
 			hitButtonScores[closest] = 1;
 			Feedback(true,0);
-			stageLights.color.a = 1;
-			stageLightGlow.color.a = 1;
+			if(Master.allowShow)
+			{
+				stageLights.color.a = 1;
+				stageLightGlow.color.a = 1;
+			}
 			LightChange();
 		}
 		else if(hitButtonScores[closest] > .85)
 		{
 			hitButtonScores[closest] = .85;
 			Feedback(true,1);
-			stageLights.color.a = 1;
-			stageLightGlow.color.a = 1;
+			if(Master.allowShow)
+			{
+				stageLights.color.a = 1;
+				stageLightGlow.color.a = 1;
+			}
 			LightChange();
 		}
 		else
 		{
 			hitButtonScores[closest] = .7;
 			Feedback(true,2);
-			stageLights.color.a = .4;
-			stageLightGlow.color.a = .4;
+			if(Master.allowShow)
+			{
+				stageLights.color.a = .4;
+				stageLightGlow.color.a = .4;
+			}
 			LightChange();
 		}
 	}
@@ -298,6 +324,14 @@ function BottomRowHit () {
 	
 function Feedback (top:boolean,which:int) {
 	var latestFeedback:GameObject = Instantiate(feedback[which]);
+	if(which == 3)
+	{
+		misses ++;
+	}
+	else
+	{
+		misses = Mathf.Max(misses-1,0);
+	}	
 	latestFeedback.transform.parent = deskContentsHolder.transform;
 	if(top)
 	{
@@ -351,16 +385,19 @@ function AddObject (original:GameObject[],addition:GameObject):GameObject[] {
 }
 
 function LightChange () {
-	var randomizer:int = 0;
-	var newNumber:int = Random.Range(0,lightSprites.length);
-	while(newNumber == lastLightNumber && randomizer < 30)
+	if(Master.allowShow)
 	{
-		newNumber = Random.Range(0,lightSprites.length);
-		randomizer ++;
+		var randomizer:int = 0;
+		var newNumber:int = Random.Range(0,lightSprites.length);
+		while(newNumber == lastLightNumber && randomizer < 30)
+		{
+			newNumber = Random.Range(0,lightSprites.length);
+			randomizer ++;
+		}
+		lastLightNumber = newNumber;
+		stageLights.sprite = lightSprites[newNumber];
+		stageLightGlow.color = lightColors[newNumber];
 	}
-	lastLightNumber = newNumber;
-	stageLights.sprite = lightSprites[newNumber];
-	stageLightGlow.color = lightColors[newNumber];
 }
 
 function FlyOver () {

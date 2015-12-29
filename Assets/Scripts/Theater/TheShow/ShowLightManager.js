@@ -17,7 +17,7 @@ function Start () {
 function Update () {
 	for(var i:int = 0; i < lights.length; i++)
 	{
-		if(active == i)
+		if(active == i && Master.allowShow)
 		{
 			lights[i].color.a = Mathf.MoveTowards(lights[i].color.a,1,Time.deltaTime*speed);
 		}
