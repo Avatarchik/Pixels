@@ -10,8 +10,9 @@ function Update () {
 }
 
 function Clicked () {
-	if(!Master.notifying && TheaterController.currentState == TheaterStatus.Stats)
+	if(!Master.notifying && TheaterController.currentState == TheaterStatus.Stats && TheaterController.buttonCooldown < 0)
 	{
+		TheaterController.buttonCooldown = .2;
 		if(PlayerPrefs.GetInt("HighSchool") == 1)
 		{
 			LedgerController.currentState = LedgerState.Closed;

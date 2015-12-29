@@ -8,7 +8,10 @@ var sprites:Sprite[];
 
 function Start () {
 	which = sprites.Length -1;
-	GamePlay ();
+	if(Master.allowShow)
+	{
+		GamePlay ();
+	}
 }
 
 function Update () {

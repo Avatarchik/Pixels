@@ -86,12 +86,18 @@ function LetterMove () {
 	letter.color.a = 1;
 	letterMovement = true;
 	yield WaitForSeconds(.6);
+	Throw();
+	yield WaitForSeconds(.4);
+	letterMovement = false;
+	
+}
+
+function Throw () {
 	while(letter.transform.localPosition.x != 25)
 	{
 		letter.transform.localPosition.x = Mathf.MoveTowards(letter.transform.localPosition.x,25, Time.deltaTime*15);
 		yield;
 	}
-	letterMovement = false;
 	letter.color.a = 0;
 	letter.transform.localPosition = letterOrigin;
 }
