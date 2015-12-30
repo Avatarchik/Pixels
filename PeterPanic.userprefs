@@ -1,12 +1,6 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TitleScreen/TitleManager.js">
-    <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="211" Column="28" />
-      <File FileName="Assets/Scripts/Theater/TheShowButton.js" Line="16" Column="3" />
-      <File FileName="Assets/Scripts/TitleScreen/TitleManager.js" Line="58" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

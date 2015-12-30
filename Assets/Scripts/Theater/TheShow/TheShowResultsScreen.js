@@ -66,6 +66,7 @@ function DisplayScores (newScores:float[]) {
 	PlayerPrefs.SetFloat(Master.currentWorld.basic.worldNameVar+"HighScoreHard",totalScore);
 	if(Master.allowShow)
 	{
+		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+Mathf.Floor(totalScore/5));
 		if(Master.matinee)
 		{
 			PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today,1);
