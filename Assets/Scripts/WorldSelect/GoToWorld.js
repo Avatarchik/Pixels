@@ -37,7 +37,14 @@ function Load () {
 	switch(controller.currentWorld.basic.world)
 	{
 		case WorldSelect.Theater:
-			Application.LoadLevel("Theater");
+			if(Master.hardMode && Master.allowShow)
+			{	
+				Application.LoadLevel("TheShow");
+			}
+			else
+			{
+				Application.LoadLevel("Theater");
+			}
 			break;
 		case WorldSelect.Arcade:
 			Application.LoadLevel("Arcade");

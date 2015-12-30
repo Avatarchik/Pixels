@@ -47,6 +47,9 @@ var mouthOpen:Sprite;
 var times:float[];
 var timeNumber:int[];
 
+var normalCEO:Sprite;
+var eyesCEO:Sprite;
+
 function Start () {
 	letterMovement = false;
 	numberOfLettersSent = 0;
@@ -117,6 +120,16 @@ function Talk () {
 		{
 			mouths[0].sprite = mouthOpen;
 			mouths[1].sprite = mouthOpen;
+		}
+		if(i == 17 || i == 39 || i == 152)
+		{
+			CEOs[0].sprite = eyesCEO;
+			CEOs[1].sprite = eyesCEO;
+		}
+		if(i == 22 || i == 47 || i == 157)
+		{
+			CEOs[0].sprite = normalCEO;
+			CEOs[1].sprite = normalCEO;
 		}
 	}
 }

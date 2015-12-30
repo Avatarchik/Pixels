@@ -34,6 +34,14 @@ function UpdateVisuals (reset:boolean) {
 			GetComponent(SpriteRenderer).color = Color(1,.35,.35,1);
 		}
 	}
+	if(Master.currentWorld.basic.worldNameVar == "Theater" && Master.allowShow)
+	{
+		Master.hardMode = true;
+	}
+	else
+	{
+		Master.hardMode = false;
+	}
 }
 
 function Clicked () {
@@ -54,7 +62,6 @@ function Clicked () {
 	}
 	else
 	{
-		Debug.Log("hey");
 		WorldMapManager.currentNotification = Instantiate(warningNote);
 		WorldMapManager.currentState = MapStatus.Notification;
 	}

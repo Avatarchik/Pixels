@@ -101,6 +101,7 @@ function Awake () {
 	
 	DontDestroyOnLoad(gameObject);
 	Initialize();
+	CheckForShowTime();
 	Social.localUser.Authenticate (ProcessAuthentication);
 	if(settings.skipOpening)
 	{
@@ -124,7 +125,6 @@ function Update () {
 	showSelectedWorld = currentWorld;
 	showUnlockLevels = unlockLevels;
 	CheckOrientation();
-	CheckForShowTime();
 	
 	if(vertical) 
 	{
@@ -171,40 +171,44 @@ function CheckOrientation () {
 }
 
 function CheckForShowTime () {
-	if(settings.alwaysPerform)
+	while(true)
 	{
-		allowShow = true;
-	}
-	else
-	{
-		if(PlayerPrefs.GetInt("NightShowDate:"+System.DateTime.Today) != 1)
+		if(settings.alwaysPerform)
 		{
-			if(((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19))
+			allowShow = true;
+		}
+		else if(PlayerPrefs.GetInt("HighSchool") == 1)
+		{
+			if(PlayerPrefs.GetInt("NightShowDate:"+System.DateTime.Today) != 1)
 			{
-				allowShow = true;
-				matinee = false;
+				if(((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19))
+				{
+					allowShow = true;
+					matinee = false;
+				}
+				else
+				{
+					allowShow = false;
+				}
+			}
+			else if (PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today) != 1)
+			{
+				if((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 14)
+				{
+					allowShow = true;
+					matinee = true;
+				}
+				else
+				{
+					allowShow = false;
+				}
 			}
 			else
 			{
 				allowShow = false;
 			}
 		}
-		else if (PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today) != 1)
-		{
-			if((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 14)
-			{
-				allowShow = true;
-				matinee = true;
-			}
-			else
-			{
-				allowShow = false;
-			}
-		}
-		else
-		{
-			allowShow = false;
-		}
+		yield WaitForSeconds(10);
 	}
 	//Debug.Log(allowShow + "    " + matinee);
 }

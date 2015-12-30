@@ -63,6 +63,7 @@ function DisplayScores (newScores:float[]) {
 	}
 	finalScore.text = Mathf.Ceil(totalScore).ToString();
 	PlayerPrefs.SetFloat(Master.currentWorld.basic.worldNameVar+"HighScore",totalScore);
+	PlayerPrefs.SetFloat(Master.currentWorld.basic.worldNameVar+"HighScoreHard",totalScore);
 	if(Master.allowShow)
 	{
 		if(Master.matinee)
