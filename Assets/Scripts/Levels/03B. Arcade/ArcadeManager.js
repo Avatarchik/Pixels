@@ -32,6 +32,7 @@ var shutDownSound:AudioClip;
 var helloSounds:AudioClip[];
 var goodbyeSounds:AudioClip[];
 var gameStartGeneralSounds:AudioClip[];
+@HideInInspector var currentGameSounds:AudioClip[];
 
 static var lastScore:float;
 static var lastGameVariable:String;
@@ -198,9 +199,16 @@ function FindPositions () {
 
 function StartGame () {
 	currentState = ArcadeState.Playing;
-	if(TalkButton.talkWait < 0 && Random.value > .6)
+	if(TalkButton.talkWait < 0 && Random.value > .3)
 	{
-		AudioManager.PlaySound(gameStartGeneralSounds[Random.Range(0,gameStartGeneralSounds.length)]);
+		if(Random.value > .8 && games[currentSelection].audioCues.length > 0)
+		{
+			AudioManager.PlaySound(games[currentSelection].audioCues[Random.Range(0,games[currentSelection].audioCues.length)]);
+		}
+		else
+		{
+			AudioManager.PlaySound(gameStartGeneralSounds[Random.Range(0,gameStartGeneralSounds.length)]);
+		}
 		yield WaitForSeconds(2.2);
 	}
 	else

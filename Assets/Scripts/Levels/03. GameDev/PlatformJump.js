@@ -380,7 +380,6 @@ function Finish(completionStatus:boolean,waitTime:float) {
 		endLocation = player.transform.position.y;
 		badEnd = !completionStatus;
 		finished = true;
-		Debug.Log(completionStatus);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)
 		{

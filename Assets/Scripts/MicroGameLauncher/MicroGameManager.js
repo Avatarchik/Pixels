@@ -22,6 +22,7 @@ var firstTime:boolean;
 
 var gameSounds:AudioClip[];
 var likeliness:float = .25;
+var volume:float = 1;
 
 function Start () {
 	if(likeliness == 0)
@@ -30,7 +31,7 @@ function Start () {
 	}	
 	if(gameSounds.length > 0 && Random.value < likeliness)
 	{
-		AudioManager.PlayCutscene(gameSounds[Random.Range(0,gameSounds.length)]);
+		AudioManager.PlayCutscene(gameSounds[Random.Range(0,gameSounds.length)],volume);
 	}
 	firstTime = false;
 	UITimer.soundsOn = clockSounds;
