@@ -120,6 +120,7 @@ function Start () {
 function Update () {
 	if(success)
 	{
+		ghosts[ceoGhost].transform.localScale = Vector3(.5,.5,.5);
 		ghosts[ceoGhost].GetComponent(SpriteRotate).sprites = revealSprites;
 		ghostSpeed[ceoGhost] = 20;
 	}	

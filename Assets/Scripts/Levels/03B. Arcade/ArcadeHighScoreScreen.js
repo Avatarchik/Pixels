@@ -111,6 +111,8 @@ function NotConnected () {
 	}	
 	globalHighlight.color.a = 0;
 	friendsHighlight.color.a = 0;
+	globalText.color.a = 0;
+	friendsText.color.a = 0;
 	notConnected.color.a = 1;
 }
 

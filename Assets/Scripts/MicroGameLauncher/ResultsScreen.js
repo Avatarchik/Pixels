@@ -177,7 +177,7 @@ function CountScore() {
 					if(PlayerPrefs.GetInt("UnlockNotifiedAboutFurtherUnlocks") != 1)
 					{
 						PlayerPrefs.SetInt("UnlockNotifiedAboutFurtherUnlocks", 1);
-						Camera.main.GetComponent(Master).LaunchNotification("Replay levels to unlock new difficulties and stuff!",NotificationType.notEnoughCoins);
+						Camera.main.GetComponent(Master).LaunchNotification("Replay to unlock new difficulties and stuff!",NotificationType.notEnoughCoins);
 						while(Master.notifying)
 						{
 							yield;

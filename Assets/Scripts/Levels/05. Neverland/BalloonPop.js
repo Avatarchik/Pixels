@@ -134,7 +134,7 @@ function Start () {
 		}
 		if(balloons[i])
 		{
-			balloonObjects[i] = Instantiate(headPrefab,faceSpots[i] - Vector3(0,0,4.9),Quaternion.identity);
+			balloonObjects[i] = Instantiate(headPrefab,faceSpots[i] - Vector3(0,0,1.5),Quaternion.identity);
 			balloonObjects[i].GetComponent(SpriteRenderer).sprite = balloonSprites[difficulty-1];
 			balloonObjects[i]. transform.parent = transform;
 		}

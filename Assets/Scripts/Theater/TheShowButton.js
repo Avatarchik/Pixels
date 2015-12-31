@@ -41,7 +41,7 @@ function Clicked () {
 		}
 		else
 		{
-			Camera.main.GetComponent(Master).LaunchNotification("You need more people's help before you put on a show!",NotificationType.notEnoughCoins);
+			Camera.main.GetComponent(Master).LaunchNotification("You need more people before you put on a show!",NotificationType.notEnoughCoins);
 			while(Master.notifying)
 			{
 				yield;

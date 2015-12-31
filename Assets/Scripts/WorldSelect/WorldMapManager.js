@@ -179,11 +179,13 @@ function CheckForMapState() {
 		PlayerPrefs.SetInt("WorldMapState",1);
 		while(townDestructionCover.color.a != 1)
 		{
+			AudioManager.SongVolumeChange(1-townDestructionCover.color.a,100);
 			townDestructionCover.color.a = Mathf.MoveTowards(townDestructionCover.color.a,1,Time.deltaTime*.3);
 			yield;
 		}
 		Master.worldCoverOn = true;
 		AudioManager.PlaySound(townDestructionSound);
+		AudioManager.SongVolumeChange(1,100);
 		Application.LoadLevel("WorldSelect");
 	}
 	currentState = MapStatus.Clear;

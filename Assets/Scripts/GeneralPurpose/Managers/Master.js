@@ -701,15 +701,18 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 }
 
 function LaunchNotification (text:String,type:NotificationType) {
-	notifying = true;
-	var newNotification:GameObject;
-	newNotification = Instantiate(notification);
-	newNotification.GetComponent(NotificationManager).SetType(text,type);
-	while(newNotification!=null)
+	if(!notifying)
 	{
-		yield;
+		notifying = true;
+		var newNotification:GameObject;
+		newNotification = Instantiate(notification);
+		newNotification.GetComponent(NotificationManager).SetType(text,type);
+		while(newNotification!=null)
+		{
+			yield;
+		}
+		notifying = false;
 	}
-	notifying = false;
 }
 
 function ProcessAuthentication (success: boolean) {
