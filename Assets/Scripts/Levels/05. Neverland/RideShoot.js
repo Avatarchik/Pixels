@@ -45,6 +45,8 @@ var bottleSprites:Sprite[];
 
 @HideInInspector var clicked:boolean[];
 
+var crashSound:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -334,6 +336,7 @@ function BottleAnimate (thisBottle:int) {
 		{
 			yield;
 		}
+		AudioManager.PlaySound(crashSound,1,Random.Range(.7,1.3));
 		BottleFly(bottles[thisBottle].transform);
 		bottles[thisBottle].GetComponent(SpriteRenderer).sprite = bottleSprites[0];
 		yield WaitForSeconds(.05);

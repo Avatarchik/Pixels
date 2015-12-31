@@ -1,14 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/05. Neverland/KidFind.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/05. Neverland/RideShoot.js">
     <Files>
-      <File FileName="Assets/Scripts/Levels/02. Museum/FishSlap.js" Line="70" Column="9" />
-      <File FileName="Assets/Scripts/Levels/03. GameDev/LightCombine.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MicroGameLauncher/UI/UITimer.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeHighScoreScreen.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WorldSelect/WorldMapManager.js" Line="188" Column="34" />
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/AudioManager.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Levels/05. Neverland/KidFind.js" Line="123" Column="53" />
+      <File FileName="Assets/Scripts/Levels/05. Neverland/RideShoot.js" Line="339" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
