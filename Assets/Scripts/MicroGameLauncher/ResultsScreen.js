@@ -174,6 +174,15 @@ function CountScore() {
 					AudioManager.PlaySound(unlockApplause[i-1],.4);	
 					AnnouncementStep3(i-1);
 					yield WaitForSeconds(4);
+					if(PlayerPrefs.GetInt("UnlockNotifiedAboutFurtherUnlocks") != 1)
+					{
+						PlayerPrefs.SetInt("UnlockNotifiedAboutFurtherUnlocks", 1);
+						Camera.main.GetComponent(Master).LaunchNotification("Replay levels to unlock new difficulties and stuff!",NotificationType.notEnoughCoins);
+						while(Master.notifying)
+						{
+							yield;
+						}
+					}
 					AnnouncementOff();
 					notifying = false;
 				}

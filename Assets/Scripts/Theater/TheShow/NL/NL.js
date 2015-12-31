@@ -18,7 +18,7 @@ var bad:GameObject;
 function Start () {
 	score = 0;
 	pressable = -1;
-	pressableTime = .4;
+	pressableTime = .5;
 	incorrectPresses = 0;
 	pressableEvent = -1;
 	badScore = 5;
@@ -35,11 +35,11 @@ function Update () {
 	{
 		if(pressable >= 0)
 		{
-			lights[i].color.a = Mathf.MoveTowards(lights[i].color.a,1,Time.deltaTime * 13);
+			lights[i].color.a = Mathf.MoveTowards(lights[i].color.a,1,Time.deltaTime * 22);
 		}
 		else
 		{
-			lights[i].color.a = Mathf.MoveTowards(lights[i].color.a,0,Time.deltaTime * 13);
+			lights[i].color.a = Mathf.MoveTowards(lights[i].color.a,0,Time.deltaTime * 22);
 		}	
 	}
 	if(Input.GetKeyDown("space"))

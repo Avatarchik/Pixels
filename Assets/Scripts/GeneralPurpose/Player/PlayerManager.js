@@ -116,7 +116,7 @@ function ChangePart(part:String, change:int) {
 				}		
 				unavailableCheck++;
 			}
-			if(unavailableCheck >= 50 && !Master.notifying)
+			if((unavailableCheck >= 50 || change == 0) && !Master.notifying)
 			{
 				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any hair styles yet!",NotificationType.lockedWorld);
 				PlayerPrefs.SetInt("HairSelection",initial);

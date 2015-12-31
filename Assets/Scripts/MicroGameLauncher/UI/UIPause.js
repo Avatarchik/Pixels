@@ -37,12 +37,15 @@ function Update () {
 }
 
 function Clicked() {
-	if(Application.loadedLevelName == "MicroTester")
+	if(!Master.notifying)
 	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).Clicked();
-	}
-	else 
-	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).Clicked();
+		if(Application.loadedLevelName == "MicroTester")
+		{
+			GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).Clicked();
+		}
+		else 
+		{
+			GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).Clicked();
+		}
 	}
 }
