@@ -1,8 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/05. Neverland/RideShoot.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
     <Files>
-      <File FileName="Assets/Scripts/Levels/05. Neverland/RideShoot.js" Line="339" Column="38" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="734" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

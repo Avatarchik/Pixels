@@ -168,11 +168,11 @@ function Flow () {
 	walking = false;	
 	if(difficulty == 1)
 	{
-		yield WaitForSeconds(.5);
+		yield WaitForSeconds(.8);
 	}
 	else
 	{
-		yield WaitForSeconds(.1);
+		yield WaitForSeconds(.4);
 	}
 	escaping = true;
 }

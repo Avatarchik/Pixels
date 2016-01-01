@@ -57,7 +57,7 @@ function Start () {
 function StartScreen () {
 	if(Master.allowShow)
 	{
-		Camera.main.GetComponent(Master).LaunchNotification("The show is one! You should head to the theater!!",NotificationType.notEnoughCoins);
+		Camera.main.GetComponent(Master).LaunchNotification("The show is on! You should head to the theater!!",NotificationType.notEnoughCoins);
 	}
 	while(Master.notifying)
 	{

@@ -21,7 +21,7 @@ static var unlockLevels:int[];
 static var device:String;
 static var vertical:boolean;
 
-@HideInInspector var showSelectedWorld:World;
+var showSelectedWorld:World;
 @HideInInspector var showUnlockLevels:int[];
 
 var appVersion:float;
@@ -103,6 +103,7 @@ function Awake () {
 	Initialize();
 	CheckForShowTime();
 	Social.localUser.Authenticate (ProcessAuthentication);
+	PushNotificationRegistration();
 	if(settings.skipOpening)
 	{
 		PlayerPrefs.SetInt("TutorialFinished",2);
@@ -210,7 +211,6 @@ function CheckForShowTime () {
 		}
 		yield WaitForSeconds(10);
 	}
-	//Debug.Log(allowShow + "    " + matinee);
 }
 // This function returns the device type to adjust the screen size (and borders) for iPad and older iPhone models.
 function CheckDeviceType(search:String):boolean {
@@ -724,5 +724,27 @@ function ProcessAuthentication (success: boolean) {
 	else
 	{
 		//Debug.Log ("Failed to authenticate");
+	}
+}
+
+function PushNotificationRegistration () {
+	iOS.NotificationServices.RegisterForNotifications(iOS.NotificationType.Alert);
+	iOS.NotificationServices.ClearLocalNotifications();
+	if(PlayerPrefs.GetInt("HighSchool") == 1)
+	{
+		for(var i:int = 0; i < 8; i++)
+		{
+			var newNotif:iOS.LocalNotification;
+			newNotif.alertBody = "The show is on!";
+			if(System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Monday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Tuesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Wednesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Thursday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Friday)
+			{
+				newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(19);
+			}
+			else
+			{
+				newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(14);
+			}
+			iOS.NotificationServices.ScheduleLocalNotification(newNotif);
+		}
 	}
 }
