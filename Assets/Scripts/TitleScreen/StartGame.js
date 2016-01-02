@@ -12,7 +12,7 @@ function Start () {
 }
 
 function Clicked () {
-	if(transition != null && !done && TitleManager.currentState == TitleStatus.Home)
+	if(transition != null && !done && TitleManager.currentState == TitleStatus.Home && !Master.notifying)
 	{
 		TitleManager.currentState = TitleStatus.Leaving;
 		AudioManager.PlaySoundTransition(transitionToWorld);

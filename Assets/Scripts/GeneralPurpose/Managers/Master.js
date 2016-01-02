@@ -735,6 +735,7 @@ function PushNotificationRegistration () {
 		for(var i:int = 0; i < 8; i++)
 		{
 			var newNotif:iOS.LocalNotification;
+			newNotif = new iOS.LocalNotification();
 			newNotif.alertBody = "The show is on!";
 			if(System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Monday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Tuesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Wednesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Thursday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Friday)
 			{
