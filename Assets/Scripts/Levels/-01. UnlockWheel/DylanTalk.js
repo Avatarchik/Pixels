@@ -30,7 +30,7 @@ function Talk (clips:AudioClip[]) {
 	if(talkWait <= 0)
 	{
 		var tempVar:int = Random.Range(0,clips.length);
-		AudioManager.PlaySound(clips[tempVar]);
+		AudioManager.PlayCutscene(clips[tempVar]);
 		talkWait = clips[tempVar].length;
 	}
 }

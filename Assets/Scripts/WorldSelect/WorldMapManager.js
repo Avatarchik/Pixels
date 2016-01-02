@@ -37,6 +37,8 @@ var intro2:GameObject;
 @HideInInspector var startLocation:float;
 @HideInInspector var location1:float;
 @HideInInspector var location2:float;
+@HideInInspector var location3:float;
+@HideInInspector var unlockNotified:boolean;
 @HideInInspector var step:float;
 static var introducing:boolean;
 @HideInInspector var loadedText:GameObject;
@@ -57,6 +59,8 @@ function Start () {
 	startLocation = -150;
 	location1 = 18;
 	location2 = -2.66;
+	location3 = 57;
+	unlockNotified = false;
 	step = -1;
 	
 	velocities = new float[3];
@@ -276,6 +280,12 @@ function Update () {
 				transform.position.x = Mathf.Lerp(transform.position.x,location2,Time.deltaTime*3);
 				transform.position.x = Mathf.MoveTowards(transform.position.x,location2,Time.deltaTime*8);
 			}
+			else if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1 && PlayerPrefs.GetInt("CurrencyNumber") >= 50 && PlayerPrefs.GetInt("UnlockWheel") == 1)
+			{
+				SendUnlockNote();
+				transform.position.x = Mathf.Lerp(transform.position.x,location3,Time.deltaTime*3);
+				transform.position.x = Mathf.MoveTowards(transform.position.x,location3,Time.deltaTime*8);
+			}
 			else
 			{
 				if(transform.position.x + (cameraVelocity * mapMoveSpeed) > leftCameraLimit && transform.position.x + (cameraVelocity * mapMoveSpeed) < rightCameraLimit)
@@ -391,5 +401,13 @@ function FindClosest() {
 			transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
 			transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);
 		}
+	}
+}
+
+function SendUnlockNote() {
+	if(!unlockNotified)
+	{
+		unlockNotified = true;
+		Camera.main.GetComponent(Master).LaunchNotification("Let's go unlock something!",NotificationType.notEnoughCoins);
 	}
 }

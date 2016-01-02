@@ -54,7 +54,7 @@ var dylan:DylanTalk;
 function Start () {
 	if(!PlayerPrefs.HasKey("PlayerUnlockSlotLosses"))
 	{
-		PlayerPrefs.SetInt("PlayerUnlockSlotLosses", 0);
+		PlayerPrefs.SetFloat("PlayerUnlockSlotLosses", 0);
 	}
 	dylan.Talk(welcomeSounds);
 	endSprites = new Sprite[3];
@@ -177,9 +177,13 @@ function DetermineWinners() {
 	var props:boolean = (lockedPropPieces.length > 0);
 	winNumber = 0;
 	var winValue:float = Random.value;
-	if(winValue < .4 + (.1 * PlayerPrefs.GetInt("PlayerUnlockSlotLosses")))
+	if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1)
 	{
-		PlayerPrefs.SetInt("PlayerUnlockSlotLosses", 0);
+		winValue = .1;
+	}
+	if(winValue < .5 + (.1 * PlayerPrefs.GetFloat("PlayerUnlockSlotLosses")))
+	{
+		PlayerPrefs.SetFloat("PlayerUnlockSlotLosses", 0);
 		winNumber = 1;
 		if(winValue < .05)
 		{
@@ -188,7 +192,7 @@ function DetermineWinners() {
 	}
 	else
 	{
-		PlayerPrefs.SetInt("PlayerUnlockSlotLosses", PlayerPrefs.GetInt("PlayerUnlockSlotLosses") + 1);
+		PlayerPrefs.SetFloat("PlayerUnlockSlotLosses", PlayerPrefs.GetFloat("PlayerUnlockSlotLosses") + 1);
 		winNumber = 0;
 	}
 	winners = new GameObject[winNumber];
@@ -203,6 +207,10 @@ function DetermineWinners() {
 		while(repeatability > 0 && winType == "?")
 		{
 			var randomNumber:float = Random.value;
+			if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1)
+			{
+				randomNumber = .2;
+			}
 			if(randomNumber < .3 && lockedClothingItems.Length > 0)
 			{
 				winType = "player";
@@ -411,6 +419,15 @@ function Results (number:int) {
 		if(Random.value < .5)
 		{
 			dylan.Talk(winSounds);
+		}
+		if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1)
+		{
+			PlayerPrefs.SetInt("FirstThingUnlocked",1);
+			Camera.main.GetComponent(Master).LaunchNotification("Go to the Theater or Title Screen to dress Peter!",NotificationType.notEnoughCoins);
+			while(Master.notifying)
+			{
+				yield;
+			}
 		}
 	}
 	else
