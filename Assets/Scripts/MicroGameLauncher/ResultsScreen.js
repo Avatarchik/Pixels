@@ -41,10 +41,12 @@ function Start () {
 	unlockLevels = new int[Master.unlockLevels.length];
 	if(Master.hardMode)
 	{
+		Social.ReportScore(score,Master.currentWorld.basic.worldNameVar+"Hard",DidItWork);
 		unlockLevels = [0,0,0,0,0,0];
 	}
 	else
 	{
+		Social.ReportScore(score,Master.currentWorld.basic.worldNameVar,DidItWork);
 		for(var level:int = 0; level < unlockLevels.length; level ++)
 		{
 			unlockLevels[level] = Master.unlockLevels[level]+1;
@@ -221,7 +223,7 @@ function FindNextGoal () {
 	}
 	else
 	{
-		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore");
+		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Hard");
 		if(score > highestScore)
 		{
 			highestScore = score;
@@ -336,4 +338,15 @@ class Announcement {
 	var lockImageSprites:Sprite[];
 	var unlock:SpriteRenderer;
 	var unlockParticle:ParticleSystem;
+}
+
+function DidItWork (itDid:boolean){
+	if(itDid)
+	{
+		Debug.Log("Score successfully submitted.");
+	}
+	else
+	{
+		Debug.Log("Score submission failed.");
+	}
 }

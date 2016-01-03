@@ -62,6 +62,8 @@ function DisplayScores (newScores:float[]) {
 		yield;
 	}
 	finalScore.text = Mathf.Ceil(totalScore).ToString();
+	Social.ReportScore(totalScore,Master.currentWorld.basic.worldNameVar,DidItWork);
+	Social.ReportScore(totalScore,Master.currentWorld.basic.worldNameVar+"Hard",DidItWork);
 	PlayerPrefs.SetFloat(Master.currentWorld.basic.worldNameVar+"HighScore",totalScore);
 	PlayerPrefs.SetFloat(Master.currentWorld.basic.worldNameVar+"HighScoreHard",totalScore);
 	if(Master.allowShow)
@@ -78,4 +80,15 @@ function DisplayScores (newScores:float[]) {
 	}
 	yield WaitForSeconds(1);
 	finished = true;
+}
+
+function DidItWork (itDid:boolean){
+	if(itDid)
+	{
+		Debug.Log("Score successfully submitted.");
+	}
+	else
+	{
+		Debug.Log("Score submission failed.");
+	}
 }

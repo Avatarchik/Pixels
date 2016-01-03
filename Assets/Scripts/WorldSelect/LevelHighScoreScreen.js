@@ -59,7 +59,7 @@ function Start () {
 		if(success)
 		{
 			var leaderBoard:UnityEngine.SocialPlatforms.ILeaderboard = Social.Active.CreateLeaderboard();
-			leaderBoard.id = "Arcade"+leaderBoardName;
+			leaderBoard.id = leaderBoardName;
 			leaderBoard.LoadScores(function(success) {});
 			var scores:UnityEngine.SocialPlatforms.IScore[] = leaderBoard.scores;
 				if(scores.Length > 0)	

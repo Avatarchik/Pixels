@@ -54,6 +54,7 @@ function Start () {
 	global = true;
 	bigSize = .7;
 	normalSize = .15;
+	Social.ReportScore(latestScore,"Arcade"+leaderBoardName,DidItWork);
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{
@@ -427,6 +428,17 @@ function UpdateDisplay () {
 		}
 	}	
 }	
+
+function DidItWork (itDid:boolean){
+	if(itDid)
+	{
+		Debug.Log("Score successfully submitted.");
+	}
+	else
+	{
+		Debug.Log("Score submission failed.");
+	}
+}
 
 class User {
 	var globalRank:int;
