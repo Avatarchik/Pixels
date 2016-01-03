@@ -153,13 +153,18 @@ function Scroll (distance:int) {
 		}
 		for(var button:ArcadeButton in buttons.GetComponentsInChildren(ArcadeButton))
 		{
+			var unlocked:boolean = false;
+			if(PlayerPrefs.GetInt("Arcade"+games[currentSelection].name) == 1)
+			{
+				unlocked = true;
+			}
 			if(isMainScreen)
 			{
-				button.Switch(false,(games[0].paidUnlockCost>0),games[0].paidUnlockCost,games[0].playCost,games[0].unlocked,games[0].unlockText);
+				button.Switch(false,(games[0].paidUnlockCost>0),games[0].paidUnlockCost,games[0].playCost,false,games[0].unlockText);
 			}
 			else
 			{
-				button.Switch(true,(games[currentSelection].paidUnlockCost>0),games[currentSelection].paidUnlockCost,games[currentSelection].playCost,games[currentSelection].unlocked,games[currentSelection].unlockText);
+				button.Switch(true,(games[currentSelection].paidUnlockCost>0),games[currentSelection].paidUnlockCost,games[currentSelection].playCost,unlocked,games[currentSelection].unlockText);
 			}
 		}
 		

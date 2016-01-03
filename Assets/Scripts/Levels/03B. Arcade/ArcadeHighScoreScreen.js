@@ -40,9 +40,9 @@ function Start () {
 	leaderBoardName = ArcadeManager.lastGameVariable;
 	gameNameDisplay.text = ArcadeManager.lastGameVariable;
 	
-	if(PlayerPrefs.GetFloat("Arcade"+leaderBoardName) < latestScore)
+	if(PlayerPrefs.GetFloat("Arcade"+leaderBoardName+"Score") < latestScore)
 	{
-		PlayerPrefs.SetFloat("Arcade"+leaderBoardName,latestScore);
+		PlayerPrefs.SetFloat("Arcade"+leaderBoardName+"Score",latestScore);
 	}
 	
 	if(latestScore == 0)
@@ -58,16 +58,14 @@ function Start () {
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{
-			var leaderBoard:UnityEngine.SocialPlatforms.ILeaderboard = Social.Active.CreateLeaderboard();
-			leaderBoard.id = "Arcade"+leaderBoardName;
-			leaderBoard.LoadScores(function(success) {});
-			var scores:UnityEngine.SocialPlatforms.IScore[] = leaderBoard.scores;
+			Social.LoadScores("Arcade"+leaderBoardName, function(scores) {
 				if(scores.Length > 0)	
 				{
 					Debug.Log("Successfully retrieved " + scores.length + " scores!");
 					allUsers = new User[scores.length];
-					for(var score:int = 0; score < scores.length; score++)
+					for(var score:int = 0; score < allUsers.length; score++)
 					{
+						allUsers[score] = new User();
 						if(scores[score].userID == Social.localUser.id)
 						{
 							allUsers[score].name = "Bennett";
@@ -92,6 +90,7 @@ function Start () {
 					allUsers = new User[0];
 					NotConnected();
 				}
+			});
 		}
 		else
 		{
@@ -126,7 +125,6 @@ function FinishStart () {
 	{
 		friendNames = defaultFriendNames;
 	}
-	
 	var tempArray:User[];
 	tempArray = allUsers;
 	allUsers = new User[allUsers.length + 1];
@@ -139,17 +137,15 @@ function FinishStart () {
 		allUsers[i] = tempArray[i];
 		allUsers[i].peter = false;
 	}
-	
+	allUsers[allUsers.length-1] = new User();
 	allUsers[allUsers.length-1].name = "Peter";
 	allUsers[allUsers.length-1].score = latestScore;
 	allUsers[allUsers.length-1].peter = true;
-	
 	CreateFriendsList();
 	allUsers = OrderList(allUsers);
 	friendUsers = OrderList(friendUsers);
 	CreateDisplayList(allUsers);
-	UpdateDisplay();
-	
+	UpdateDisplay();	
 	ShowResults();
 }
 
@@ -241,7 +237,6 @@ function ShowResults() {
 	friendsHighlight.color.a = 0;
 	globalText.color.a = 0;
 	friendsText.color.a = 0;
-	
 	var peterLocation:int = -1;
 	UpdateColors();
 	for(var i:int = 0; i < displayUsers.length; i++)
@@ -359,7 +354,7 @@ function CreateDisplayList (users:User[]) {
 		{
 			if(users.length - 1 - placement < 0)
 			{
-				displayUsers[placement] = null;
+				displayUsers[placement] = CreateEmptyPlayer();
 			}
 			else if(users[users.length - 1 - placement] != null)
 			{
@@ -373,7 +368,7 @@ function CreateDisplayList (users:User[]) {
 		{	
 			if(displayUsers.length - 1 - placement < 0 || displayUsers.length - 1 - placement >= users.length)
 			{
-				displayUsers[placement] = null;
+				displayUsers[placement] = CreateEmptyPlayer();
 			}
 			else if(users[displayUsers.length - 1 - placement] != null)
 			{
@@ -387,7 +382,7 @@ function CreateDisplayList (users:User[]) {
 		{
 			if(playerLocation + 4 - placement < 0)
 			{
-				displayUsers[placement] = null;
+				displayUsers[placement] = CreateEmptyPlayer();
 			}
 			else if(users[playerLocation + 4 - placement] != null)
 			{
@@ -395,7 +390,7 @@ function CreateDisplayList (users:User[]) {
 			}
 		}
 	}
-	while(displayUsers[0] == null)
+	while(displayUsers[0] == null || displayUsers[0].name == "")
 	{
 		for(placement = 0; placement < displayUsers.length-1; placement++)
 		{
@@ -409,6 +404,15 @@ function CreateDisplayList (users:User[]) {
 			displayUsers[placement] = null;
 		}
 	}
+}
+
+function CreateEmptyPlayer ():User {
+	var newUser:User = new User();
+	newUser.name = "";
+	newUser.score = 0;
+	newUser.globalRank = 1000;
+	newUser.peter = false;
+	return newUser;
 }
 
 function UpdateDisplay () {

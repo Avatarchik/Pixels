@@ -21,7 +21,7 @@ static var unlockLevels:int[];
 static var device:String;
 static var vertical:boolean;
 
-var showSelectedWorld:World;
+@HideInInspector var showSelectedWorld:World;
 @HideInInspector var showUnlockLevels:int[];
 
 var appVersion:float;
@@ -302,7 +302,7 @@ function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
 	if(settings.quickProgress)
 	{
-		unlockLevels = [0,2,10,15,20,100];
+		unlockLevels = [0,2,5,7,10,100];
 	}
 	else
 	{
@@ -637,7 +637,6 @@ class ArcadeGame {
 	var playCost:int;
 	var audioCues:AudioClip[];
 	@HideInInspector var highScore:float;
-	@HideInInspector var unlocked:boolean;
 }
 
 function CheckArcadeUnlocks () {
@@ -647,17 +646,6 @@ function CheckArcadeUnlocks () {
 		{
 			PlayerPrefs.SetInt("Arcade"+thisGame.name,0);
 		}	
-		else
-		{
-			if(PlayerPrefs.GetInt("Arcade"+thisGame.name) == 0)
-			{
-				thisGame.unlocked = false;
-			}
-			else
-			{
-				thisGame.unlocked = true;
-			}
-		}
 		if(!PlayerPrefs.HasKey("Arcade"+thisGame.name+"Score"))
 		{
 			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
@@ -678,7 +666,6 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 		for(var thisGame:ArcadeGame in arcadeGames)
 		{
 			PlayerPrefs.SetInt("Arcade"+thisGame.name,1);
-			thisGame.unlocked = true;
 			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
 			thisGame.highScore = PlayerPrefs.GetFloat("Arcade"+thisGame.name+"Score");
 		}
@@ -694,9 +681,8 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 			}
 		}
 		PlayerPrefs.SetInt("Arcade"+specificGame.name,1);
-		specificGame.unlocked = true;
 		PlayerPrefs.SetFloat("Arcade"+specificGame.name+"Score",0);
-		specificGame.highScore = PlayerPrefs.GetFloat("Arcade"+specificGame.name+"Score");
+		specificGame.highScore = PlayerPrefs.GetFloat("Arcade"+specificGame.name);
 	}
 }
 
