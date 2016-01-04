@@ -79,7 +79,11 @@ function Update () {
 	}
 	totalVolume = 0;
 	for(i = 0; i < volumeLevels.length; i++)
-	{
+	{	
+		if(ShowManager.currentMusicLocation < endTime)
+		{
+			score = Mathf.Max(score - (Time.deltaTime * Mathf.Abs(volumeLevels[i]-1) * 1.4),0);
+		}
 		totalVolume += volumeLevels[i] - 1;
 	}
 	if(PlayerPrefs.GetInt("Sound") == 1 && ShowManager.currentMusicLocation < endTime && ShowManager.currentMusicLocation > startTime)
@@ -93,7 +97,8 @@ function Update () {
 	totalVolume *= 4;
 	totalVolume += 12;
 	largeVolume.sprite = volumeSprites[Mathf.Min(Mathf.Floor(totalVolume),volumeSprites.Length-1)];
-	score -= Time.deltaTime * Mathf.Abs((totalVolume-12) * .4);
+	//score -= Time.deltaTime * Mathf.Abs((totalVolume-12) * .4);
+	Debug.Log(score);
 }
 
 function GamePlay () {

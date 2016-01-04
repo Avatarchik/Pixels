@@ -57,6 +57,11 @@ function Start () {
 function StartScreen () {
 	if(Master.allowShow)
 	{
+		if(!Master.initialLoad)
+		{
+			yield WaitForSeconds(1);
+		}
+		Master.initialLoad = false;
 		Camera.main.GetComponent(Master).LaunchNotification("The show is on! You should head to the theater!",NotificationType.notEnoughCoins);
 	}
 	while(Master.notifying)

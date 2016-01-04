@@ -201,7 +201,7 @@ function Play () {
 		yield;
 	}
 	highlight.GetComponent(SpriteRenderer).color.a = 0;
-	AudioManager.PlaySound(flameSound);
+	AudioManager.PlaySound(flameSound,.6);
 	while(fire[0].color.a != 1)
 	{
 		fire[0].color.a = Mathf.MoveTowards(fire[0].color.a,1,Time.deltaTime * 5);
@@ -227,7 +227,7 @@ function Play () {
 		yield;
 	}
 	highlight.GetComponent(SpriteRenderer).color.a = 0;
-	AudioManager.PlaySound(flameSound);
+	AudioManager.PlaySound(flameSound,.6);
 	while(fire[1].color.a != 1)
 	{
 		fire[1].color.a = Mathf.MoveTowards(fire[1].color.a,1,Time.deltaTime * 5);
@@ -253,7 +253,7 @@ function Play () {
 		yield;
 	}
 	highlight.GetComponent(SpriteRenderer).color.a = 0;
-	AudioManager.PlaySound(flameSound);
+	AudioManager.PlaySound(flameSound,.6);
 	while(fire[2].color.a != 1)
 	{
 		fire[2].color.a = Mathf.MoveTowards(fire[2].color.a,1,Time.deltaTime * 5);

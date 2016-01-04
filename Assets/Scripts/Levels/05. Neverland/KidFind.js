@@ -17,6 +17,8 @@ var lightningSprites:Sprite[];
 var ghostPrefab:GameObject;
 var CEOPrefab:GameObject;
 
+var CEOEasy:GameObject;
+
 @HideInInspector var numberOfGhosts:int;
 @HideInInspector var ghostZLoc:float;
 @HideInInspector var ghostBottomLimit:float;
@@ -55,6 +57,10 @@ function Start () {
 	{
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
+	}
+	if(difficulty == 1)
+	{
+		CEOPrefab = CEOEasy;
 	}
 	length = 9;
 	timer = length;

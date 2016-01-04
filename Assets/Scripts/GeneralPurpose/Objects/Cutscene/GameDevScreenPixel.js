@@ -103,7 +103,7 @@ function ChessBoard(on:boolean) {
 }
 
 function Border(on:boolean) {
-	if(column == 1 || column == 6)
+	if(column == 1 || column == 2 || column == 5 || column == 6)
 	{
 		if(row%2 == 0)
 		{

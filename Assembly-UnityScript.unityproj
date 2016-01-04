@@ -175,6 +175,7 @@
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\HeartNotifier.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\Instruction.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\LifeSpriteChanger.js" />
+     <Compile Include="Assets\Scripts\MicroGameLauncher\UI\ReplaceIfEvil.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SpeedObject.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SpeedSpriteChanger.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\UI\SuccessNotificationSpriteChanger.js" />

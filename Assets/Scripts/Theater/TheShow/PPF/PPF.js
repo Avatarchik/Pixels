@@ -181,7 +181,7 @@ function Update () {
 				{
 					ShowManager.good = false;
 				}
-				GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[0] = Mathf.Clamp(score/5,0,100);
+				GameObject.FindGameObjectWithTag("ShowManager").GetComponent(ShowManager).scores[0] = Mathf.Clamp(score/4,0,100);
 				UpdatePixels();
 			}
 		}
