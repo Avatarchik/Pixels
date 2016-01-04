@@ -51,6 +51,8 @@ var markerPrefab:GameObject;
 var playerPrefab:GameObject;
 var customMaterial:Material;
 
+var jump:AudioClip;
+
 function Awake () {
 	player = Instantiate(playerPrefab);
 	player.transform.position = Vector3(-5.624,-5.639,transform.position.z-1.406);
@@ -140,7 +142,7 @@ function Start () {
 		{
 			case 0:
 				floors[i] = Instantiate(groundPrefab,Vector3(location,groundHeight,transform.position.z),Quaternion.identity);
-				if(Random.value > .5)
+				if(Random.value > .7)
 				{
 					clouds[i] = Instantiate(cloudPrefab,Vector3(location,Random.Range(cloudHeightMinimum,cloudHeightMaximum),transform.position.z),Quaternion.identity);
 				}
@@ -253,7 +255,6 @@ function Update () {
 	else if(platforms[nearestBlock] != null)
 	{
 		Finish(false,1);
-		Debug.Log("Platform");
 	}
 	else
 	{
@@ -274,7 +275,6 @@ function Update () {
 			if(player.transform.position.y < enemies[nearestBlock].transform.position.y + 2)
 			{
 				Finish(false,1);
-				Debug.Log("Enemy");
 			}
 			else if( player.transform.position.y < enemies[nearestBlock].transform.position.y + 3.5)
 			{
@@ -357,6 +357,7 @@ function Update () {
 	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && canJump && !finished)
 	{	
 		clicked = true;
+		AudioManager.PlaySound(jump,.25);
 		velocity = 59.5 + 1.5*speed;
 	}
 	else if(!Finger.GetExists(importantFinger))

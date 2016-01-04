@@ -96,7 +96,7 @@ function Unclicked () {
 				done = true;
 				yield WaitForSeconds(.7);
 				AudioManager.StopSong();
-				yield WaitForSeconds(1.3);
+				yield WaitForSeconds(.9);
 				Application.LoadLevel("WorldSelect");
 			}
 		}

@@ -51,6 +51,7 @@ var playerPrefab:GameObject;
 var customMaterial:Material;
 
 @HideInInspector var endLocation:float;
+var jump:AudioClip;
 
 function Awake () {
 	player = Instantiate(playerPrefab);
@@ -342,6 +343,7 @@ function Update () {
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && canJump && !finished)
 	{	
+		AudioManager.PlaySound(jump,.25);
 		clicked = true;
 		velocity = 59.5 + 1.5*speed;
 	}

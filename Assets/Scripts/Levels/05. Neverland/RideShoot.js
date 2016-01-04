@@ -336,7 +336,7 @@ function BottleAnimate (thisBottle:int) {
 		{
 			yield;
 		}
-		AudioManager.PlaySound(crashSound,1,Random.Range(.7,1.3));
+		AudioManager.PlaySound(crashSound,.03,Random.Range(.7,1.3));
 		BottleFly(bottles[thisBottle].transform);
 		bottles[thisBottle].GetComponent(SpriteRenderer).sprite = bottleSprites[0];
 		yield WaitForSeconds(.05);

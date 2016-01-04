@@ -46,6 +46,11 @@ function Start () {
 		leaderBoardName = Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar;
 	}
 	gameNameText.text = Camera.main.GetComponent(Master).currentWorld.basic.worldNameFull;
+	if(gameNameText.text.length <= 10)
+	{
+		gameNameText.characterSize = .4;
+		gameNameText.transform.localPosition.y += .05;
+	}
 	if(latestScore == 0)
 	{
 		latestScore = 1;

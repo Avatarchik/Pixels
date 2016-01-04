@@ -65,6 +65,7 @@ var warningSprite:Sprite;
 
 @HideInInspector var importantFinger:int;
 @HideInInspector var clicked:boolean;
+var splash:AudioClip;
 
 function Start () {
 	failBackMove = false;
@@ -250,6 +251,7 @@ function Update () {
 		{
 			if(currentFish < fish.Length && fish[currentFish] != null && fish[currentFish].transform.position == topCenter && !clicked)
 			{
+				AudioManager.PlaySound(splash,.5);
 				if(Finger.GetPosition(importantFinger).x < 0)
 				{
 					if(!leftFish[currentFish])

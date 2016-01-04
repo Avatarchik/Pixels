@@ -41,6 +41,8 @@ var completenessSprites:Sprite[];
 
 var successLightThings:SpriteRenderer[];
 
+var shuffle:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -318,6 +320,7 @@ function Play () {
 }
 
 function Reload (counter:float) {
+	AudioManager.PlaySound(shuffle,.7);
 	while(counter > 0)
 	{
 		PickNewColors();
