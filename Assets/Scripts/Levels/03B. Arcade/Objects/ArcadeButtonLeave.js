@@ -24,7 +24,7 @@ function Clicked () {
 		}
 		yield WaitForSeconds(.7);
 		AudioManager.StopSong();
-		yield WaitForSeconds(1);
+		yield WaitForSeconds(.5);
 		Application.LoadLevel("WorldSelect");
 		yield WaitForSeconds(2);
 	}

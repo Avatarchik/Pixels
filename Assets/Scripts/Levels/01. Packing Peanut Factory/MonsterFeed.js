@@ -131,7 +131,7 @@ function Play () {
 		{
 			point.transform.position.y = pointerBottom + (pointerAmount/100) * currentLevel;
 		}
-		if(Mathf.Abs(currentLevel - goal) > goalLeniency[difficulty-1])
+		if(Mathf.Abs(currentLevel - goal) > goalLeniency[Mathf.Min(difficulty-1,goalLeniency.Length-1)])
 		{
 			monsterTimer -= Time.deltaTime;
 			Warning();

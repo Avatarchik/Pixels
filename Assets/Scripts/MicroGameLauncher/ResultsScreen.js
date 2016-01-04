@@ -39,7 +39,11 @@ function Start () {
 	skip = false;
 	numberOfUnlocks = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks");
 	unlockLevels = new int[Master.unlockLevels.length];
-	if(Master.hardMode)
+	if(Master.currentWorld.basic.worldNameVar == "VRTraining")
+	{
+		unlockLevels = [0,0,0,0,0,0];
+	}
+	else if(Master.hardMode)
 	{
 		Social.ReportScore(score,Master.currentWorld.basic.worldNameVar+"Hard",DidItWork);
 		unlockLevels = [0,0,0,0,0,0];

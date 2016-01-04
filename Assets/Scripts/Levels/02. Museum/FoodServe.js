@@ -47,7 +47,7 @@ function Start () {
 	failBack.transform.position.y = 12;
 	if(Random.Range(0,10.0) < 2.5)
 	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)],.8);
+		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)],.7);
 	}
 	clickWait = .1;
 	firstNotify = false;

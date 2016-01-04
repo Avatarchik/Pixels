@@ -80,6 +80,7 @@ function Start () {
 					friendNames = new String[Social.localUser.friends.length];
 					for(var name:int = 0; name < friendNames.length; name ++)
 					{
+						Debug.Log(Social.localUser.friends[name].userName);
 						friendNames[name] = Social.localUser.friends[name].userName;
 					}	
 					FinishStart();
@@ -356,7 +357,7 @@ function CreateDisplayList (users:User[]) {
 		{
 			if(users.length - 1 - placement < 0)
 			{
-				displayUsers[placement] = null;
+				displayUsers[placement] = CreateEmptyPlayer();
 			}
 			else if(users[users.length - 1 - placement] != null)
 			{

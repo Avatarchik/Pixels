@@ -139,11 +139,11 @@
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\PPF-ItemCatch.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Games\PPF-PeanutCannon.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeButton.js" />
+     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeButtonLeave.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeEnd.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeGlow.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeObject.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ArcadeTimer.js" />
-     <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\ButtonLeave.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\Objects\Cabinet.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\RotateCabinets.js" />
      <Compile Include="Assets\Scripts\Levels\03B. Arcade\TalkButton.js" />

@@ -39,7 +39,7 @@ var creditsObject:GameObject;
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
 	{
-		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)],.8);
+		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)],.7);
 	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
