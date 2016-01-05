@@ -36,6 +36,9 @@ var speedText:TextMesh;
 var alert:SpriteRenderer;
 var alertSprites:Sprite[];
 
+var indicator:SpriteRenderer;
+var indicatorSprites:Sprite[];
+
 var lever:SpriteRenderer;
 var leverSprites:Sprite[];
 @HideInInspector var defaultNumber:int;
@@ -105,24 +108,29 @@ function Update () {
 		if(car.transform.position.x > 10)
 		{
 			alert.sprite = alertSprites[3];
+			indicator.sprite = indicatorSprites[3];
 		}
 		else
 		{
 			if(projection > 100)
 			{
 				alert.sprite = alertSprites[3];
+				indicator.sprite = indicatorSprites[3];
 			}
 			else if(projection > 30)
 			{
 				alert.sprite = alertSprites[2];
+				indicator.sprite = indicatorSprites[2];
 			}
 			else if(projection > -10)
 			{
 				alert.sprite = alertSprites[1];
+				indicator.sprite = indicatorSprites[1];
 			}
 			else
 			{
 				alert.sprite = alertSprites[0];
+				indicator.sprite = indicatorSprites[0];
 			}
 		}
 	}
@@ -142,7 +150,7 @@ function Update () {
 	timer -= Time.deltaTime;
 	if((timer < 0 || car.transform.position.x > 14) && !finished)
 	{
-		if(currentSpeed < 15 && Mathf.Abs(car.transform.position.x) < 12)
+		if(currentSpeed < 20 && Mathf.Abs(car.transform.position.x) < 12)
 		{
 			Finish(true,1);
 		}

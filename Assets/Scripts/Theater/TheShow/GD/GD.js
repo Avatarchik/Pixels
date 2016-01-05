@@ -98,7 +98,6 @@ function Update () {
 	totalVolume += 12;
 	largeVolume.sprite = volumeSprites[Mathf.Min(Mathf.Floor(totalVolume),volumeSprites.Length-1)];
 	//score -= Time.deltaTime * Mathf.Abs((totalVolume-12) * .4);
-	Debug.Log(score);
 }
 
 function GamePlay () {

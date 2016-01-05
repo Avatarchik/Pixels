@@ -80,7 +80,6 @@ function Update () {
 function Clicked () {
 	if(hittable && !finished)
 	{
-		done = true;
 		Good();
 	}
 }
@@ -88,6 +87,7 @@ function Clicked () {
 function Good () {
 	if(hittable && !HS.currentHit)
 	{
+		done = true;
 		HS.currentHit = true;
 		manager.GoodHit();
 		sprite.color = colors[2];
@@ -99,6 +99,10 @@ function Good () {
 			yield;
 		}
 		Destroy(gameObject);
+	}
+	else
+	{
+		done = false;
 	}
 }
 
