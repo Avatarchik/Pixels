@@ -33,6 +33,8 @@ var firstTime:GameObject;
 
 @HideInInspector var clicked:boolean;
 
+var firework:ParticleSystem;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -225,6 +227,10 @@ function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
 		finished = true;
+		if(completionStatus)
+		{
+			firework.Emit(4);
+		}
 		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);
 		if(colorChange)

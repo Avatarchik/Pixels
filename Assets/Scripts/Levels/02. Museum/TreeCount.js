@@ -47,6 +47,8 @@ var smokeParts:ParticleSystem[];
 // IMPORTANT TOUCH INFO
 private var importantFinger:int;
 
+var mulchSound:AudioClip;
+
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
@@ -204,18 +206,21 @@ function Update () {
 			treeRingSubmitted[currentTree] = 2;
 			treeGoal[currentTree] = goal2;
 			currentTree++;
+			AudioManager.PlaySound(mulchSound,.5);
 		}
 		else if(Mathf.Abs(trees[currentTree].transform.position.x - goal3) < distance)
 		{
 			treeRingSubmitted[currentTree] = 3;
 			treeGoal[currentTree] = goal3;
 			currentTree++;
+			AudioManager.PlaySound(mulchSound,.5);
 		}
 		else if(Mathf.Abs(trees[currentTree].transform.position.x - goal4) < distance)
 		{
 			treeRingSubmitted[currentTree] = 4;
 			treeGoal[currentTree] = goal4;
 			currentTree++;
+			AudioManager.PlaySound(mulchSound,.5);
 		}
 	}
 	if(importantFinger == -1)

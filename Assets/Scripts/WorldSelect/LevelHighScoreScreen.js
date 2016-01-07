@@ -33,6 +33,8 @@ var gameNameText:TextMesh;
 
 var notConnected:TextMesh;
 
+var loading:GameObject;
+
 function Start () {
 	clicked = false;
 	if(Master.hardMode)
@@ -74,7 +76,7 @@ function Start () {
 						if(scores[score].userID == Social.localUser.id)
 						{
 							allUsers[score].name = "Bennett";
-							allUsers[score].score = 0.1;
+							allUsers[score].score = 1;
 						}
 						else
 						{
@@ -120,6 +122,10 @@ function NotConnected () {
 	globalText.color.a = 0;
 	friendsText.color.a = 0;
 	notConnected.color.a = 1;
+	if(loading != null)
+	{
+		Destroy(loading);
+	}
 }
 
 function FinishStart () {
@@ -155,6 +161,10 @@ function FinishStart () {
 	CreateDisplayList(allUsers);
 	UpdateDisplay();
 	ShowResults();
+	if(loading != null)
+	{
+		Destroy(loading);
+	}
 }
 
 function RegularUpdate () {
@@ -430,7 +440,7 @@ function UpdateDisplay () {
 		{
 			locationNumbers[i].GetComponent(TextMesh).text = displayUsers[i].globalRank.ToString();
 			locationNames[i].GetComponent(TextMesh).text = displayUsers[i].name;
-			locationScores[i].GetComponent(TextMesh).text = displayUsers[i].score.ToString("f2");
+			locationScores[i].GetComponent(TextMesh).text = displayUsers[i].score.ToString("f0");
 		}
 		else
 		{

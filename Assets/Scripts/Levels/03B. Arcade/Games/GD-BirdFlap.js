@@ -40,6 +40,8 @@ var birdSprites:Sprite[];
 
 @HideInInspector var score:float;
 
+var flapSound:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -176,6 +178,7 @@ function Update () {
 	if(Input.GetKeyDown("space") && !dead)
 	{
 		Flap();
+		AudioManager.PlaySound(flapSound,.2,1.4);
 		if(momentum < -momentumChange * .5)
 		{
 			momentum = momentumChange * .5;
@@ -206,6 +209,7 @@ function Update () {
 	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && !dead)
 	{
 		Flap();
+		AudioManager.PlaySound(flapSound,.2,1.4);
 		if(momentum < -momentumChange * .5)
 		{
 			momentum = momentumChange * .5;

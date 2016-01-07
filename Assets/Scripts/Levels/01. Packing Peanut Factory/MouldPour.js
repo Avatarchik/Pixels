@@ -31,6 +31,7 @@ var pouredSprites:Sprite[];
 
 var tick:AudioClip;
 var bloop:AudioClip;
+var goodPour:AudioClip;
 
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
@@ -214,6 +215,7 @@ function WeakPour() {
 function GoodPour() {
 	if(!finished)
 	{
+		AudioManager.PlaySound(goodPour,.4);
 		finished = true;
 		particle.emissionRate = 3;
 		yield WaitForSeconds(.07);

@@ -59,6 +59,11 @@ var playerPrefab:GameObject;
 var customMaterial:Material;
 @HideInInspector var player:GameObject;
 
+var location:SpriteRenderer;
+
+var outOfAmmo:AudioClip;
+var gunshot:AudioClip;
+
 function Awake () {
 	player = Instantiate(playerPrefab);
 	player.transform.position = Vector3(.1827,-7.662,transform.position.z);
@@ -134,6 +139,7 @@ function Start () {
 }
 
 function Update () {
+	location.color.a = Mathf.MoveTowards(location.color.a,0,Time.deltaTime * 2);
 	if(leftEnemy == null && centerEnemy == null && rightEnemy == null && maxEnemies < 0)
 	{
 		Finish(true,.5);
@@ -152,6 +158,7 @@ function Update () {
 	
 	if(Input.GetKeyDown("left"))
 	{
+		AudioManager.PlaySound(gunshot,.7);
 		if(leftEnemy != null)
 		{
 			Destroy(leftEnemy);
@@ -160,6 +167,7 @@ function Update () {
 	}
 	if(Input.GetKeyDown("up"))
 	{
+		AudioManager.PlaySound(gunshot,.5);
 		if(centerEnemy != null)
 		{
 			Destroy(centerEnemy);
@@ -168,6 +176,7 @@ function Update () {
 	}
 	if(Input.GetKeyDown("right"))
 	{
+		AudioManager.PlaySound(gunshot,.3);
 		if(rightEnemy != null)
 		{
 			Destroy(rightEnemy);
@@ -182,10 +191,17 @@ function Update () {
 	// Get important finger.
 	for(var i:int = 0; i < Finger.identity.length; i++)
 	{
+		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && ammoLeft <= 0)
+		{
+			AudioManager.PlaySound(outOfAmmo);
+		}
 		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && ammoLeft > 0)
 		{
 			clicked[i] = true;
 			RemoveAmmo();
+			AudioManager.PlaySound(gunshot,.5,Random.Range(.95,1.05));
+			location.transform.position.x = Finger.GetPosition(i).x;
+			location.transform.position.y = Finger.GetPosition(i).y;
 			if(leftEnemy != null && Vector2.Distance(Finger.GetPosition(i), leftEnemy.transform.position) < maxDistance)
 			{
 				Destroy(leftEnemy);

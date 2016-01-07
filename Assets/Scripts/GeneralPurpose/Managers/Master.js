@@ -40,7 +40,8 @@ static var worldCoverOn:boolean;
 static var inCutscene:boolean;
 
 static var allowShow:boolean;
-static var matinee:boolean;
+
+static var date:String;
 
 function Awake () {
 	showWorldTitle = false;
@@ -53,7 +54,6 @@ function Awake () {
 	worldCoverOn = false;
 	inCutscene = false;
 	allowShow = false;
-	matinee = false;
 	mapNotifyWorlds = new String[0];
 	if(settings.unlockEverything){unlockAll=true;}
 	
@@ -174,35 +174,16 @@ function CheckOrientation () {
 function CheckForShowTime () {
 	while(true)
 	{
+		date = System.DateTime.Today.Day + " " + System.DateTime.Today.Month + " " + System.DateTime.Today.Year;
 		if(settings.alwaysPerform)
 		{
 			allowShow = true;
 		}
-		else if(PlayerPrefs.GetInt("HighSchool") == 1)
+		else if(PlayerPrefs.GetInt("HighSchool") == 1 && PlayerPrefs.GetInt("ShowDate:"+date) != 1)
 		{
-			if(PlayerPrefs.GetInt("NightShowDate:"+System.DateTime.Today) != 1)
+			if((((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19)) || ((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 14))
 			{
-				if(((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19))
-				{
-					allowShow = true;
-					matinee = false;
-				}
-				else
-				{
-					allowShow = false;
-				}
-			}
-			else if (PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today) != 1)
-			{
-				if((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 14)
-				{
-					allowShow = true;
-					matinee = true;
-				}
-				else
-				{
-					allowShow = false;
-				}
+				allowShow = true;
 			}
 			else
 			{
@@ -246,6 +227,7 @@ function CheckDeviceType(search:String):boolean {
 function Demo() {
 	var resetTimer:float = settings.resetTime;
 	counter = settings.demoTime;
+	PlayerPrefs.SetInt("CurrencyNumber",1000);
 	while(true)
 	{
 		if(Input.GetKey("down") && Input.GetKey("m"))

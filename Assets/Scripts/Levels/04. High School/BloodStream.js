@@ -85,7 +85,7 @@ function Start () {
 	virusSpeed = 4 + 1 * speed;
 	virusWaitTime = .7 - (.1*speed);
 	length = 2 + viruses.Length * virusWaitTime + (virusTop - virusBottom)/virusSpeed;
-	timer = length;
+	timer = length - .4;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
 	if(virusWaitTime < .3)

@@ -155,7 +155,7 @@ function Clicked () {
 	}
 	if(currentPeanut < peanutsFree.Length)
 	{
-		AudioManager.PlaySound(peanutCatchSound,.04,Random.Range(.8,1.1));
+		AudioManager.PlaySound(peanutCatchSound,.09,Random.Range(.8,1.1));
 		peanutsFree[currentPeanut] = 1;
 	}
 	currentPeanut++;

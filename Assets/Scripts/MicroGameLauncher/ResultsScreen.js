@@ -227,7 +227,7 @@ function FindNextGoal () {
 	}
 	else
 	{
-		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Hard");
+		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar);
 		if(score > highestScore)
 		{
 			highestScore = score;
@@ -239,6 +239,10 @@ function FindNextGoal () {
 			{
 				nextGoal = i + 2;
 			}
+		}
+		if(highestScore < 15)
+		{
+			nextGoal = 1;
 		}
 	}	
 }

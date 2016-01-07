@@ -15,7 +15,12 @@ var normalColor:Color;
 
 var countdown:TextMesh;
 
+var notify:TextMesh;
+
+var countdownSound:AudioClip;
+
 function Start () {
+	notify.color.a = 0;
 	if(!PlayerPrefs.HasKey("Sound"))
 	{
 		PlayerPrefs.SetInt("Sound", 1);
@@ -46,6 +51,9 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log("Hey");
+	notify.color.a = Mathf.MoveTowards(notify.color.a,0,Time.deltaTime * 1);
+	Debug.Log(notify.color.a);
 }
 
 // List of what happens depending on what button is pressed, and in what menu.
@@ -73,10 +81,12 @@ function MenuEffect(clicked:String) {
 			if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 0)
 			{
 				PlayerPrefs.SetInt("IgnoreTimeOfDay", 1);
+				NotifyText("Timed world map effects disabled!");
 			}
 			else
 			{
 				PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
+				NotifyText("Timed world map effects enabled!");
 			}
 			button[0].GetComponent(WorldMenuButton).SetText(option[0]);
 			break;
@@ -84,10 +94,12 @@ function MenuEffect(clicked:String) {
 			if(PlayerPrefs.GetInt("Music") == 0)
 			{
 				PlayerPrefs.SetInt("Music", 1);
+				NotifyText("Music on!");
 			}
 			else
 			{
 				PlayerPrefs.SetInt("Music", 0);
+				NotifyText("Music off!");
 			}
 			button[1].GetComponent(WorldMenuButton).SetText(option[1]);
 			break;
@@ -95,10 +107,12 @@ function MenuEffect(clicked:String) {
 			if(PlayerPrefs.GetInt("Sound") == 0)
 			{
 				PlayerPrefs.SetInt("Sound", 1);
+				NotifyText("Music on!");
 			}
 			else
 			{
 				PlayerPrefs.SetInt("Sound", 0);
+				NotifyText("Music off!");
 			}
 			button[2].GetComponent(WorldMenuButton).SetText(option[2]);
 			break;
@@ -245,6 +259,7 @@ function Continue () {
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
 				countdown.text = "3";
+				AudioManager.PlaySound(countdownSound);
 				yield;
 			}
 			while(timer < .8)
@@ -252,6 +267,7 @@ function Continue () {
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
 				countdown.text = "2";
+				AudioManager.PlaySound(countdownSound);
 				yield;
 			}
 			while(timer < 1.2)
@@ -259,6 +275,7 @@ function Continue () {
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
 				countdown.text = "1";
+				AudioManager.PlaySound(countdownSound);
 				yield;
 			}
 		}
@@ -285,6 +302,7 @@ function ReturnToTitle() {
 		WorldMapManager.currentState = MapStatus.Returning;
 		//Camera.main.GetComponent(Master).currentWorld.basic.colors = transitionColors;
 		Instantiate(transition, Vector3(0,0,-9.5), Quaternion.identity);
+		LoadLevelMovement();
 		if(Application.loadedLevelName == "WorldSelect")
 		{
 			AudioManager.PlaySoundTransition(transitionToTitle);
@@ -306,4 +324,18 @@ function ReturnToTitle() {
 			Application.LoadLevel("WorldSelect");
 		}
 	}
+}
+
+function LoadLevelMovement () {
+	while(true)
+	{
+		transform.position.x -= Time.deltaTime * 50;
+		yield;
+	}
+}
+
+function NotifyText(text:String) {
+	Debug.Log("hey");
+	notify.text = text;
+	notify.color.a = 1;
 }

@@ -27,6 +27,8 @@ var ballPrefab:GameObject;
 var burst:GameObject;
 @HideInInspector var mostRecentBurst:GameObject;
 
+var hitSound:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -167,6 +169,7 @@ function Update () {
 				{
 					if(Mathf.Abs(bricks[brick].transform.position.x-balls[ball].transform.position.x) < brickWidth/2 && Mathf.Abs(bricks[brick].transform.position.y-balls[ball].transform.position.y) < brickHeight/2)
 					{
+						AudioManager.PlaySound(hitSound);
 						mostRecentBurst = Instantiate(burst,bricks[brick].transform.position,Quaternion.identity);
 						mostRecentBurst.transform.parent = transform;
 						brickExists[brick] = false;

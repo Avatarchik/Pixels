@@ -1,8 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/05. Neverland/CoasterLoad.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/TextManager.js">
     <Files>
-      <File FileName="Assets/Scripts/Levels/05. Neverland/CoasterLoad.js" Line="252" Column="1" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/TextManager.js" Line="971" Column="1" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="69" Column="110" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

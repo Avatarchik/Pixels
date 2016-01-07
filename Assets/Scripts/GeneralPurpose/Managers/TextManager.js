@@ -32,10 +32,16 @@ static var rightSpriteNumber:int;
 
 @HideInInspector var newColor:Color;
 
+var credits:CreditsInfo;
+
 function Awake () {
 	finished = false;
 }
 function Start () {
+	if(Application.loadedLevelName == "LyricsTest" || Application.loadedLevelName == "MicroGameLauncher")
+	{
+		Credits();
+	}
 	// Initialize variable values.
 	spriteObjects = new GameObject[3];
 	lineMarker = 0;
@@ -889,6 +895,104 @@ class RecordOptions {
 	var difference:float;
 	var pushLines:boolean;
 	var whichLine:int;
+}
+
+class CreditsInfo {
+	@HideInInspector var creditObject:GameObject;
+	@HideInInspector var topVertical:Vector3;
+	@HideInInspector var bottomVertical:Vector3;
+	@HideInInspector var topHorizontal:Vector3;
+	@HideInInspector var bottomHorizontal:Vector3;
+	@HideInInspector var text:TextMesh;
+	@HideInInspector var distanceProgress:float;
+	@HideInInspector var currentTop:Vector3;
+	@HideInInspector var currentBottom:Vector3;
+	var waitTime:float = 1;
+	var credits:String[];
+}
+
+function Credits () {
+	credits.creditObject = transform.Find("Credits").gameObject;
+	credits.text = credits.creditObject.transform.Find("CreditsText").GetComponent(TextMesh);
+	if(Master.device == "16:9")
+	{
+		credits.topVertical = Vector3(14.5,11.8,-.1);
+		credits.bottomVertical = Vector3(14.5,9.5,-.1);
+		credits.topHorizontal = Vector3(7.74,4.8,-.1);
+		credits.bottomHorizontal = Vector3(7.74,2.5,-.1);
+	}
+	else if(Master.device == "4:3")
+	{
+		credits.topVertical = Vector3(11.7,11.8,-.1);
+		credits.bottomVertical = Vector3(11.7,9.7,-.1);
+		credits.topHorizontal = Vector3(7.74,7.8,-.1);
+		credits.bottomHorizontal = Vector3(7.74,5.7,-.1);
+	}
+	else
+	{
+		credits.topVertical = Vector3(14.5,11.8,-.1);
+		credits.bottomVertical = Vector3(14.5,9.7,-.1);
+		credits.topHorizontal = Vector3(7.74,4.8,-.1);
+		credits.bottomHorizontal = Vector3(7.74,2.7,-.1);
+	}
+	credits.currentTop = credits.topVertical;
+	credits.currentBottom = credits.bottomVertical;
+	credits.distanceProgress = 0;
+	CreditsMovement();
+	while(AudioManager.GetLocation() < credits.waitTime)
+	{
+		yield;
+	}
+	for(var i:int = 0; i < credits.credits.length; i ++)
+	{
+		if(credits.credits[i].Length > 30)
+		{
+			credits.text.characterSize = 0.04;
+		}
+		else if(credits.credits[i].Length > 22)
+		{
+			credits.text.characterSize = 0.048;
+		}
+		else
+		{
+			credits.text.characterSize = 0.052;
+		}
+		credits.text.text = credits.credits[i];
+		while(credits.distanceProgress != 1)
+		{
+			credits.distanceProgress = Mathf.MoveTowards(credits.distanceProgress,1,Time.deltaTime * 4 * Time.timeScale);
+			yield;
+		}
+		var counter:float = 1.4;
+		while(counter > 0)
+		{
+			counter -= Time.deltaTime * Time.timeScale;
+			yield;
+		}
+	}
+	while(credits.distanceProgress != 0)
+	{
+		credits.distanceProgress = Mathf.MoveTowards(credits.distanceProgress,0,Time.deltaTime * 4 * Time.timeScale);
+		yield;
+	}
+}
+
+function CreditsMovement () {
+	while(credits.creditObject != null)
+	{
+		if(Master.vertical)
+		{
+			credits.currentTop = credits.topVertical;
+			credits.currentBottom = credits.bottomVertical;
+		}
+		else
+		{
+			credits.currentTop = credits.topHorizontal;
+			credits.currentBottom = credits.bottomHorizontal;
+		}
+		credits.creditObject.transform.localPosition = Vector3.Lerp(credits.currentTop,credits.currentBottom,credits.distanceProgress);
+		yield;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

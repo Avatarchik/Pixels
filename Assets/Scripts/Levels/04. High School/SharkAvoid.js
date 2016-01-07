@@ -34,6 +34,8 @@ var rockPrefab:GameObject;
 @HideInInspector var player:GameObject;
 var playerPrefab:GameObject;
 
+var bubbles:GameObject;
+
 @HideInInspector var clicked:boolean[];
 
 function Awake () {
@@ -44,6 +46,9 @@ function Awake () {
 	player.GetComponent(PlayerManager).currentState = PlayerState.WalkingFront;
 	player.GetComponent(PlayerManager).speedOverride = true;
 	player.GetComponent(PlayerManager).thisSpeed = .2;
+	bubbles.transform.parent = player.transform;
+	bubbles.transform.position.x = player.transform.position.x;
+	bubbles.transform.position.y = player.transform.position.y;
 }
 
 function Start () {

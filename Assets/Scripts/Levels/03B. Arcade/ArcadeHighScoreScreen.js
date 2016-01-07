@@ -33,6 +33,8 @@ var gameNameDisplay:TextMesh;
 
 var notConnected:TextMesh;
 
+var loading:GameObject;
+
 function Start () {
 	clicked = false;
 	
@@ -114,6 +116,10 @@ function NotConnected () {
 	globalText.color.a = 0;
 	friendsText.color.a = 0;
 	notConnected.color.a = 1;
+	if(loading != null)
+	{
+		Destroy(loading);
+	}
 }
 
 function FinishStart () {
@@ -147,6 +153,10 @@ function FinishStart () {
 	CreateDisplayList(allUsers);
 	UpdateDisplay();	
 	ShowResults();
+	if(loading != null)
+	{
+		Destroy(loading);
+	}
 }
 
 function RegularUpdate () {

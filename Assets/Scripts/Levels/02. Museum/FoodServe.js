@@ -42,6 +42,9 @@ var people:GameObject[];
 
 @HideInInspector var clickWait:float;
 
+var failSound:AudioClip;
+var clickSound:AudioClip;
+
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
@@ -149,6 +152,7 @@ function Update () {
 	{
 		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && !finished)
 		{
+			AudioManager.PlaySound(clickSound,1);
 			clicked[i] = true;
 			var nearestNum:float = 1000;
 			var rightPlate:int = -1;
@@ -192,6 +196,7 @@ function ClickPlate(thisPlate:int) {
 			finished = true;
 			failBackMove = true;
 			yield WaitForSeconds(1.2);
+			AudioManager.PlaySound(failSound,1,.7);
 			Finish(false);
 		}
 	}

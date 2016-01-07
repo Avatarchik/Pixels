@@ -69,14 +69,7 @@ function DisplayScores (newScores:float[]) {
 	if(Master.allowShow)
 	{
 		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+Mathf.Floor(totalScore/5));
-		if(Master.matinee)
-		{
-			PlayerPrefs.GetInt("MatineeShowDate:"+System.DateTime.Today,1);
-		}
-		else
-		{
-			PlayerPrefs.GetInt("NightShowDate:"+System.DateTime.Today,1);
-		}
+		PlayerPrefs.GetInt("ShowDate:"+Master.date,1);
 	}
 	yield WaitForSeconds(1);
 	finished = true;
