@@ -37,6 +37,7 @@ function Start () {
 }
 
 function BeginVR () {
+	BroadcastMessage("EnterVR",SendMessageOptions.DontRequireReceiver);
 	yield WaitForSeconds(.4);
 	AudioManager.PlaySong(VRLevelMusic,1);
 	yield WaitForSeconds(.8);
@@ -46,7 +47,6 @@ function BeginVR () {
 		PlayerPrefs.SetInt("RemixHasBeenPlayed",1);
 	}
 	yield WaitForSeconds(1);
-	BroadcastMessage("EnterVR",SendMessageOptions.DontRequireReceiver);
 }
 
 function Update () {
