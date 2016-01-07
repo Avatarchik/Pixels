@@ -231,6 +231,7 @@
      <Compile Include="Assets\Scripts\TitleScreen\Tutorial\TutorialObject.js" />
      <Compile Include="Assets\Scripts\TitleScreen\UndoCustomizationChanges.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\HideDuringIntro.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Visuals\JamesCredit.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\Logo.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\OpenCurtain.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\OpenSpot.js" />

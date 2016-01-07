@@ -945,9 +945,9 @@ function Credits () {
 	}
 	for(var i:int = 0; i < credits.credits.length; i ++)
 	{
-		if(credits.credits[i].Length > 30)
+		if(credits.credits[i].Length > 27)
 		{
-			credits.text.characterSize = 0.04;
+			credits.text.characterSize = 0.044;
 		}
 		else if(credits.credits[i].Length > 22)
 		{

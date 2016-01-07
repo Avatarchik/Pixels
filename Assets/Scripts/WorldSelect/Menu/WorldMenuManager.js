@@ -51,9 +51,7 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log("Hey");
 	notify.color.a = Mathf.MoveTowards(notify.color.a,0,Time.deltaTime * 1);
-	Debug.Log(notify.color.a);
 }
 
 // List of what happens depending on what button is pressed, and in what menu.
