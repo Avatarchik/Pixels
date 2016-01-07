@@ -14,14 +14,18 @@ var difficultySelect:GameObject;
 @HideInInspector var shown:Vector3;
 
 var worldButtons:GameObject[];
-var loadGames:GameObject[];
-var bossGames:GameObject[];
+@HideInInspector var loadGames:GameObject[];
+@HideInInspector var bossGames:GameObject[];
 
 var transition:GameObject;
 
 var VRLevelMusic:AudioClip;
 
+var gameOpenings:GameObject[];
+
 function Start () {
+	Master.currentWorld.text.regularOpening = gameOpenings[Random.Range(0,gameOpenings.length)];
+	Master.currentWorld.text.firstOpening = gameOpenings[Random.Range(0,gameOpenings.length)];
 	hidden = Vector3.zero;
 	shown = Vector3(14.06,14.06,14.06);
 	loadGames = new GameObject[0];
@@ -41,6 +45,8 @@ function BeginVR () {
 		Camera.main.GetComponent(Master).LaunchNotification("Select which worlds you want to include in a remix!",NotificationType.tutorial);
 		PlayerPrefs.SetInt("RemixHasBeenPlayed",1);
 	}
+	yield WaitForSeconds(1);
+	BroadcastMessage("EnterVR",SendMessageOptions.DontRequireReceiver);
 }
 
 function Update () {

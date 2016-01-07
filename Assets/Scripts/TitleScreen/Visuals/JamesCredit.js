@@ -6,7 +6,10 @@ function Start () {
 }
 
 function Update () {
-	
+	if(TitleManager.currentState == TitleStatus.Leaving)
+	{
+		GetComponent(TextMesh).color.a = Mathf.MoveTowards(GetComponent(TextMesh).color.a,0,Time.deltaTime * 6);
+	}
 }
 
 function Opening () {

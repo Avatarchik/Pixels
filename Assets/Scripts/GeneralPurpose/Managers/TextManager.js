@@ -912,8 +912,11 @@ class CreditsInfo {
 }
 
 function Credits () {
-	credits.creditObject = transform.Find("Credits").gameObject;
-	credits.text = credits.creditObject.transform.Find("CreditsText").GetComponent(TextMesh);
+	if(transform.Find("Credits") != null)
+	{
+		credits.creditObject = transform.Find("Credits").gameObject;
+		credits.text = credits.creditObject.transform.Find("CreditsText").GetComponent(TextMesh);
+	}
 	if(Master.device == "16:9")
 	{
 		credits.topVertical = Vector3(14.5,11.8,-.1);

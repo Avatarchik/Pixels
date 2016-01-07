@@ -222,6 +222,7 @@ function BetweenGame () {
 	if(failure) 
 	{
 		UI.BroadcastMessage("NotifySuccess", false,SendMessageOptions.DontRequireReceiver);
+		UI.BroadcastMessage("NotifySuccess", false,SendMessageOptions.DontRequireReceiver);
 		BroadcastArray(gameCovers,"DisplayChange","Failure");
 		AudioManager.PlaySound(Master.currentWorld.audio.failure,.5);
 		lives--;
@@ -282,13 +283,15 @@ function GameOver () {
 	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
 	if(!Master.hardMode && !quitting)
 	{
-		loadedText = Instantiate(FindEnding());
-		yield WaitForSeconds(.2);
-		Destroy(currentlyLoaded);
-		while(!loadedText.GetComponent(TextManager).finished){yield;}
+		if(FindEnding() != null)
+		{
+			loadedText = Instantiate(FindEnding());
+			yield WaitForSeconds(.2);
+			Destroy(currentlyLoaded);
+			while(!loadedText.GetComponent(TextManager).finished){yield;}
+		}
 	}
 	Master.lastScore = gameNumber;
-//	yield WaitForSeconds(.2);
 	currentResults = Instantiate(results,Vector3(results.transform.position.x,20,results.transform.position.z), Quaternion.identity);
 	var sinCounter:float = 0;
 	var sinMultiplier:float = 20;
