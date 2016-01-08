@@ -13,9 +13,12 @@ function Update () {
 }
 
 function Opening () {
-	while(AudioManager.GetLocation() < 2.2 || TitleManager.currentState == TitleStatus.Intro)
+	while((AudioManager.GetLocation() < 2.2 || TitleManager.currentState == TitleStatus.Intro))
 	{
 		yield;
 	}
-	GetComponent(TextMesh).color.a = 1;
+	if(TitleManager.currentState != TitleStatus.Leaving)
+	{
+		GetComponent(TextMesh).color.a = 1;
+	}
 }	

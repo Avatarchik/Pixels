@@ -59,7 +59,7 @@ function Awake () {
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new int[6];
-	currentWorld = worlds[4];
+	currentWorld = worlds[3];
 	lives = 3;
 	paused = false;
 	speedIncrease = 1;

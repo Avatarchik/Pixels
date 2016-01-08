@@ -55,6 +55,7 @@ var buttonDistance:float;
 
 var feedbackLights:SpriteRenderer[];
 
+
 function Start () {
 	misses = 0;
 	clicked = [false,false,false,false,false];

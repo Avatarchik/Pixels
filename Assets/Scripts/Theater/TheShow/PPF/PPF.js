@@ -50,6 +50,7 @@ var timeNumber:int[];
 var normalCEO:Sprite;
 var eyesCEO:Sprite;
 
+
 function Start () {
 	letterMovement = false;
 	numberOfLettersSent = 0;

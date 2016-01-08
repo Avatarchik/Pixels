@@ -69,8 +69,8 @@ function Update () {
 				transform.position = Vector2.MoveTowards(transform.position,Vector2(0,0),speed);
 				transform.position = Vector2.Lerp(transform.position,Vector2(0,0),speed/4);
 				
-				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.1,0,2),speed*2);
-				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.1,0,2),speed/2);
+				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.3,0,2),speed*2);
+				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.3,0,2),speed/2);
 				
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,.2),speed);
@@ -82,8 +82,8 @@ function Update () {
 				transform.position = Vector2.MoveTowards(transform.position,Vector2(-32,0),speed);
 				transform.position = Vector2.Lerp(transform.position,Vector2(-32,0),speed/4);
 				
-				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.1,0,2),speed*2);
-				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.1,0,2),speed/2);
+				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.3,0,2),speed*2);
+				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.3,0,2),speed/2);
 				
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,.2),speed);
@@ -110,8 +110,8 @@ function Update () {
 				transform.position = Vector2.MoveTowards(transform.position,Vector2(0,25.1),speed);
 				transform.position = Vector2.Lerp(transform.position,Vector2(0,25.1),speed/4);
 				
-				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.1,0,2),speed*2);
-				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.1,0,2),speed/2);
+				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.3,0,2),speed*2);
+				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.3,0,2),speed/2);
 				
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,.2),speed);
@@ -124,8 +124,8 @@ function Update () {
 				transform.position = Vector2.MoveTowards(transform.position,Vector2(0,25.1),speed);
 				transform.position = Vector2.Lerp(transform.position,Vector2(0,25.1),speed/4);
 				
-				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.1,0,2),speed*2);
-				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.1,0,2),speed/2);
+				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.3,0,2),speed*2);
+				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.3,0,2),speed/2);
 				
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-14.15),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(12.4,.2),speed);
@@ -136,8 +136,8 @@ function Update () {
 				transform.position = Vector2.MoveTowards(transform.position,Vector2(0,0),speed);
 				transform.position = Vector2.Lerp(transform.position,Vector2(0,0),speed/4);
 				
-				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.1,0,2),speed*2);
-				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.1,0,2),speed/2);
+				statsScreen.transform.position = Vector3.MoveTowards(statsScreen.transform.position,Vector3(-32.3,0,2),speed*2);
+				statsScreen.transform.position = Vector3.Lerp(statsScreen.transform.position,Vector3(-32.3,0,2),speed/2);
 				
 				colors1.transform.position = Vector2.Lerp(colors1.transform.position, Vector2(0,-20),speed);
 				colors2.transform.position = Vector2.Lerp(colors2.transform.position, Vector2(22,.2),speed);

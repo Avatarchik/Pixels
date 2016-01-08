@@ -9,7 +9,11 @@ function Update () {
 }
 
 function Clicked () {
-	if(transform.parent.parent.GetComponent(TextManager) != null)
+	if(transform.parent.parent.GetComponent(NotificationManager) != null)
+	{
+		transform.parent.parent.GetComponent(TextManager).Next();
+	}
+	else if(transform.parent.parent.GetComponent(TextManager) != null)
 	{
 		transform.parent.parent.GetComponent(TextManager).Clicked();
 	}

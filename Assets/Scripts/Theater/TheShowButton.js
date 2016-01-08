@@ -1,9 +1,11 @@
 ﻿#pragma strict
 
-@HideInInspector var variableName:String;
-
 function Start () {
-	variableName = "TheaterTheShowButton";
+	if(PlayerPrefs.GetInt("HighSchool") != 1)
+	{
+		GetComponent(SpriteRenderer).color = Color.gray;
+		GetComponent(ButtonSquare).up = GetComponent(ButtonSquare).down;
+	}
 }
 
 function Update () {
@@ -16,27 +18,13 @@ function Clicked () {
 		if(PlayerPrefs.GetInt("HighSchool") == 1)
 		{
 			LedgerController.currentState = LedgerState.Closed;
-			if(!PlayerPrefs.HasKey(variableName) || PlayerPrefs.GetInt(variableName) == 0)
-			{
-				if(Master.allowShow)
-				{
-					Camera.main.GetComponent(Master).LaunchNotification("Perform the show weekdays at 7 PM and weekends at 2 PM!",NotificationType.notEnoughCoins);
-				}
-				else
-				{
-					Camera.main.GetComponent(Master).LaunchNotification("When the show is dark, come here to rehearse!",NotificationType.notEnoughCoins);
-				}
-				PlayerPrefs.SetInt(variableName,1);
-				while(Master.notifying)
-				{
-					yield;
-				}
-			}
 			TheaterController.customizing = false;
 			TheaterController.buttonCooldown = .2;
 			TheaterController.currentState = TheaterStatus.Show;
-			yield WaitForSeconds(1);
+			AudioManager.SongVolumeChange(0,2);
+			yield WaitForSeconds(.6);
 			AudioManager.StopSong();
+			AudioManager.SongVolumeChange(1,100);
 			Application.LoadLevel("TheShow");
 		}
 		else

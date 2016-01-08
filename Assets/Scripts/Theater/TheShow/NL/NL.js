@@ -15,6 +15,7 @@ var bad:GameObject;
 @HideInInspector var score:float;
 @HideInInspector var badScore:float;
 
+
 function Start () {
 	score = 0;
 	pressable = -1;

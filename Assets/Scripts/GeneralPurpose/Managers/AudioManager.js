@@ -49,7 +49,7 @@ function Update () {
 	{
 		for(var i:int = 0; i < musicSpeaker.length; i++)
 		{
-			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,internalDeltaTime*musicChangeSpeed);
+			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,Time.deltaTime * musicChangeSpeed);
 			musicSpeaker[i].pitch = Time.timeScale;
 		}
 		cutsceneSpeaker.pitch = Time.timeScale;
@@ -196,10 +196,7 @@ static function StopSound () {
 }
 
 static function SongVolumeChange (volume:float, speed:float) {
-	for(var i:int = 0; i < musicSpeaker.length; i++)
-	{
-		musicSpeaker[i].volume = volume;
-	}
+	musicVolume = volume;
 	musicChangeSpeed = speed;
 }
 

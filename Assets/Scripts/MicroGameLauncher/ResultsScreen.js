@@ -28,7 +28,10 @@ var drum:AudioClip;
 
 @HideInInspector var nextGoal:int = 1;
 
+@HideInInspector var step:int;
+
 function Start () {
+	step = 0;
 	sign.sprite = signSprites[0];
 	AnnouncementOff();
 	score = Master.lastScore;
@@ -287,6 +290,7 @@ function AnnouncementOff () {
 	notifying = false;
 }	
 function AnnouncementStep1 (time:float) {
+	step = 1;
 	notifying = true;
 	announcement.chest.sprite = announcement.chestSprites[0];
 	announcement.cover.color.a = 1;
@@ -310,7 +314,7 @@ function AnnouncementStep1 (time:float) {
 		yield;
 	}	
 	difference = .02;
-	while (counter < time)
+	while (counter < time && step == 1)
 	{
 		xChange = Random.Range(-difference,difference);
 		yChange = Random.Range(-difference,difference);
@@ -325,10 +329,12 @@ function AnnouncementStep1 (time:float) {
 }
 
 function AnnouncementStep2 () {
+	step = 2;
 	announcement.chest.sprite = announcement.chestSprites[0];
 	announcement.lockImage.sprite = announcement.lockImageSprites[1];
 }
 function AnnouncementStep3 (level:int) {
+	step = 3;
 	announcement.unlockParticle.emissionRate = 100;
 	announcement.unlock.transform.localScale = Vector3(.5,.5,1);
 	announcement.unlock.sprite = Master.currentWorld.unlocks.unlockIcons[level];

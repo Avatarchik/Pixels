@@ -48,6 +48,7 @@ static var introducing:boolean;
 var reveal:GameObject;
 var townDestructionCover:SpriteRenderer;
 var townDestructionSound:AudioClip;
+var theaterAlertNotification:GameObject;
 
 // Locations
 private var showNot:Vector3;
@@ -174,7 +175,15 @@ function WorldReveal() {
 		thisWorld.GetComponent(ParticleSystem).emissionRate = 0;
 		yield;
 	}
-	CheckForMapState();
+	if(PlayerPrefs.GetInt("HighSchool") == 1 && PlayerPrefs.GetInt("WorldMapTheaterUnlockNotified") != 1)
+	{
+		var newNotify:GameObject = Instantiate(theaterAlertNotification);
+		while(newNotify != null)
+		{
+			yield;
+		}
+	}
+	CheckForMapState();	
 }
 
 function CheckForMapState() {
@@ -183,7 +192,7 @@ function CheckForMapState() {
 		PlayerPrefs.SetInt("WorldMapState",1);
 		while(townDestructionCover.color.a != 1)
 		{
-			AudioManager.SongVolumeChange(1-townDestructionCover.color.a,100);
+			AudioManager.SongVolumeChange(1-(townDestructionCover.color.a*1.2),100);
 			townDestructionCover.color.a = Mathf.MoveTowards(townDestructionCover.color.a,1,Time.deltaTime*.3);
 			yield;
 		}

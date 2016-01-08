@@ -28,6 +28,10 @@ static var good:boolean;
 
 static var currentMusicLocation:float;
 
+@HideInInspector var possibleOpenings:GameObject[];
+
+var endSound:AudioClip;
+
 function Start () {
 	good = true;
 	scores = new float[10];
@@ -39,6 +43,17 @@ function Start () {
 		for(var x:int = 0; x < scenes[i].effects.originalColor.length; x++)
 		{
 			scenes[i].effects.originalColor[x] = scenes[i].effects.colorChangeObjects[x].color;
+		}
+		if(PlayerPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") == 1)
+		{
+			if(Master.allowShow)
+			{
+				possibleOpenings = scenes[i].showOpenings;
+			}
+			else
+			{
+				possibleOpenings = scenes[i].rehearsalOpenings;
+			}
 		}
 	}
 	if(Master.allowShow)
@@ -104,12 +119,22 @@ function Update () {
 }
 
 function Show () {
-	yield WaitForSeconds(1);
-	theaterLights.StartOfShow();	
+yield WaitForSeconds(.1);
+	theaterLights.StartOfShow();
+	var openingText:GameObject;
+	if(possibleOpenings.length > 0)
+	{
+		openingText = Instantiate(possibleOpenings[Random.Range(0,possibleOpenings.length)]);
+	}
+	while(!openingText.GetComponent(TextManager).finished)
+	{
+		yield;
+	}
+	theaterLights.StartOfShow();
 	musicSpeaker.Play();
 	vocalSpeakerBad.Play();
 	vocalSpeakerGood.Play();
-	for(var i:int = 0; i < 5; i++)
+	for(var i:int = 0; i < scenes.length; i++)
 	{
 		while(currentMusicLocation < scenes[i].info.gameStartTime)
 		{
@@ -117,6 +142,7 @@ function Show () {
 		}
 		if(PlayerPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") != 1)
 		{
+			EndSong();
 			break;
 		}
 		StartScene(scenes[i]);
@@ -126,7 +152,7 @@ function Show () {
 		}
 		EndScene(scenes[i]);
 	}
-	currentTheaterSpeed = 10;
+	currentTheaterSpeed = 20;
 	currentTheaterPosition = Vector3.zero;
 	yield WaitForSeconds(.5);
 	EndShow ();
@@ -135,8 +161,17 @@ function Show () {
 function EndShow () {
 	curtains.Close();
 	theaterLights.EndOfShow();
-	yield WaitForSeconds(4.5);
+	AudioManager.StopSong();
+	yield WaitForSeconds(3);
 	results.DisplayScores(scores);
+}
+
+function EndSong () {
+	AudioManager.PlaySound(endSound);
+	yield WaitForSeconds(.2);
+	musicSpeaker.Stop();
+	vocalSpeakerBad.Stop();
+	vocalSpeakerGood.Stop();
 }
 
 function Test () {
@@ -191,6 +226,8 @@ class Scene {
 	var gameName:String;
 	var effects:SceneEffects;
 	var info:SceneInfo;
+	var rehearsalOpenings:GameObject[];
+	var showOpenings:GameObject[];
 }
 
 class SceneEffects {

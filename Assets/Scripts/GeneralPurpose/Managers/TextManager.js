@@ -853,6 +853,10 @@ function Clicked () {
 	finished = true;
 }
 
+function Next () {
+	NextLine();
+}
+
 class Line {
 	var dialogue:String;
 	var leftSide:SideInfo;

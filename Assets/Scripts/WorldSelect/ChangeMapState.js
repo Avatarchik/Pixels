@@ -20,7 +20,6 @@ var distance:float;
 var button:SpriteRenderer;
 var buttonIcon:SpriteRenderer;
 
-var warningNote:GameObject;
 var warningText:String;
 
 var highScoreObject:GameObject;
