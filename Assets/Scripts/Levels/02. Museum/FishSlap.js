@@ -9,8 +9,6 @@ private var timer:float;
 var failBack:GameObject;
 var failBackMove:boolean;
 
-var worldIntros:AudioClip[];
-
 var darknessAmount:Color;
 
 var fishSizeSprites:Sprite[];
@@ -70,10 +68,6 @@ var splash:AudioClip;
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)],.7);
-	}
 	clicked = false;
 	importantFinger = -1;
 	startLocation = Vector3(0,6.5,3.65);

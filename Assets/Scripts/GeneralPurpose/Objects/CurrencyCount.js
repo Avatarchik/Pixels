@@ -31,8 +31,7 @@ function CurrencyCounting(){
 		}
 		else if(currency > PlayerPrefs.GetInt("CurrencyNumber"))
 		{
-			currency--;
-			//yield WaitForSeconds(.01);
+			currency = Mathf.MoveTowards(currency,PlayerPrefs.GetInt("CurrencyNumber"),3);
 		}
 		if(GetComponent(TextMesh)!=null)
 		{

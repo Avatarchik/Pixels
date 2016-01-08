@@ -29,7 +29,7 @@ function Start () {
 	{
 		likeliness = .25;
 	}	
-	if(gameSounds.length > 0 && Random.value < likeliness)
+	if(gameSounds.length > 0 && Random.value < likeliness && Master.currentWorld.basic.worldNameVar != "VRTraining")
 	{
 		AudioManager.PlayCutscene(gameSounds[Random.Range(0,gameSounds.length)],volume);
 	}

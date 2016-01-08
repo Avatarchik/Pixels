@@ -38,31 +38,39 @@ function UpdateVisuals (reset:boolean) {
 	{
 		Master.hardMode = true;
 	}
-	else
+	else if(Master.currentWorld.basic.worldNameVar == "Theater")
 	{
 		Master.hardMode = false;
 	}
 }
 
 function Clicked () {
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") == 1)
+	if(WorldMapManager.currentState == MapStatus.Confirmation)
 	{
-		if(Master.hardMode)
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") == 1)
 		{
-			Master.hardMode = false;
-			GetComponent(SpriteRenderer).sprite = upSprite;
-			subText.transform.localPosition.y = subTextOrigin;
+			if(Master.hardMode)
+			{
+				Master.hardMode = false;
+				GetComponent(SpriteRenderer).sprite = upSprite;
+				subText.transform.localPosition.y = subTextOrigin;
+			}
+			else
+			{
+				Master.hardMode = true;
+				GetComponent(SpriteRenderer).sprite = downSprite;
+				subText.transform.localPosition.y = subTextOrigin - .02;
+			}
 		}
 		else
 		{
-			Master.hardMode = true;
-			GetComponent(SpriteRenderer).sprite = downSprite;
-			subText.transform.localPosition.y = subTextOrigin - .02;
+			Camera.main.GetComponent(Master).LaunchNotification("Get to 25 games on this level first!",NotificationType.lockedWorld);
+			WorldMapManager.currentState = MapStatus.Notification;
+			while(Master.notifying)
+			{
+				yield;
+			}
+			WorldMapManager.currentState = MapStatus.Confirmation;
 		}
-	}
-	else
-	{
-		WorldMapManager.currentNotification = Instantiate(warningNote);
-		WorldMapManager.currentState = MapStatus.Notification;
 	}
 }

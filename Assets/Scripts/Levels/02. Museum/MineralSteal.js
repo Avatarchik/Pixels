@@ -11,10 +11,7 @@
 var failBack:GameObject;
 var failBackMove:boolean;
 
-var worldIntros:AudioClip[];
-
 var darknessAmount:Color;
-
 
 var diamond:GameObject;
 var robot:GameObject;
@@ -47,10 +44,6 @@ var robotNot:SpriteRenderer;
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)],.7);
-	}
 	positions = new float[5];
 	goal = 0;
 	killDistance = 1;

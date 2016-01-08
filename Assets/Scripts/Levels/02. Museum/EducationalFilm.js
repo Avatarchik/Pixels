@@ -8,7 +8,6 @@ private var timer:float;
 
 private var darknessObject;
 
-var worldIntros:AudioClip[];
 var darknessAmount:Color;
 
 var people:GameObject[];
@@ -37,10 +36,6 @@ var creditsObject:GameObject;
 @HideInInspector var importantFinger:int;
 
 function Start () {
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)],.7);
-	}
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		speed = MicroTester.timeMultiplier;

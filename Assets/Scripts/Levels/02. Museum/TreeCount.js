@@ -11,7 +11,6 @@ private var darknessObject;
 var failBack:GameObject;
 var failBackMove:boolean;
 
-var worldIntros:AudioClip[];
 var darknessAmount:Color;
 
 var treePrefab:GameObject;
@@ -52,10 +51,6 @@ var mulchSound:AudioClip;
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)],.7);
-	}
 	currentTree = 0;
 	importantFinger = -1;
 	treeStartValue = Vector3(-1.41,-4.78,2.5);

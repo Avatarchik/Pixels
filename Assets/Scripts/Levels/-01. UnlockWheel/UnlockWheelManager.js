@@ -90,12 +90,12 @@ function GetPrice () {
 function Spin () {
 	if(lockedItems.Length > 0)
 	{
-		if(PlayerPrefs.GetInt("CurrencyNumber") >= price)
+		if(PlayerPrefs.GetInt("CurrencyNumber") >= price && currentState != UnlockWheelStatus.Spinning)
 		{
+			currentState = UnlockWheelStatus.Spinning;
 			AudioManager.PlaySound(slotCoinSound,.65);
 			yield WaitForSeconds(.5);
 			PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")-price);
-			currentState = UnlockWheelStatus.Spinning;
 			var spinCounter:int = 0;
 			var spinlimit:int = Random.Range(45,55);
 			shakeAmount = .05;

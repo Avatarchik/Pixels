@@ -43,7 +43,7 @@ function BeginVR () {
 	yield WaitForSeconds(.8);
 	if(!PlayerPrefs.HasKey("RemixHasBeenPlayed") || PlayerPrefs.GetInt("RemixHasBeenPlayed") == 0)
 	{
-		Camera.main.GetComponent(Master).LaunchNotification("Select which worlds you want to include in a remix!",NotificationType.tutorial);
+		Camera.main.GetComponent(Master).LaunchNotification("Earn coins by combining levels!",NotificationType.tutorial);
 		PlayerPrefs.SetInt("RemixHasBeenPlayed",1);
 	}
 	yield WaitForSeconds(1);

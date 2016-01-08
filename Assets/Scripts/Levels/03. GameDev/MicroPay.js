@@ -26,6 +26,8 @@ var allow:boolean;
 
 @HideInInspector var waitTime:float;
 
+var paySound:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -106,6 +108,7 @@ function Update () {
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && !finished)
 	{
+		AudioManager.PlaySound(paySound,.6);
 		clicked = true;
 		if(allow)
 		{

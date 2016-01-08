@@ -9,7 +9,7 @@ function Start () {
 	}
 	if(GetComponent(TextMesh) != null)
 	{
-		//CheckText();
+		CheckText();
 	}
 	if(GetComponent(ButtonSquare) != null)
 	{
@@ -37,17 +37,18 @@ function CheckSprite () {
 }
 
 function CheckText () {
-	var previousText:String;
+	var previousSize:float;
+	previousSize = GetComponent(TextMesh).characterSize;
 	while(true)
 	{
 		if((Master.vertical && vertical) || (!Master.vertical && !vertical))
 		{
-			GetComponent(TextMesh).text = previousText;
-			previousText = GetComponent(TextMesh).text;
+			GetComponent(TextMesh).characterSize = previousSize;
+			previousSize = GetComponent(TextMesh).characterSize;
 		}
 		else
 		{
-			GetComponent(TextMesh).text = "";
+			GetComponent(TextMesh).characterSize = 0;
 		}
 		yield;
 	}

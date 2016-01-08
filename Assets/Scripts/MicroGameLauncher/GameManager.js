@@ -281,15 +281,12 @@ function GameOver () {
 	yield WaitForSeconds(.5);
 	pausable = false;
 	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
-	if(!Master.hardMode && !quitting)
+	if(!Master.hardMode && !quitting && Master.currentWorld.basic.worldNameVar != "VRTraining")
 	{
-		if(FindEnding() != null)
-		{
 			loadedText = Instantiate(FindEnding());
 			yield WaitForSeconds(.2);
 			Destroy(currentlyLoaded);
 			while(!loadedText.GetComponent(TextManager).finished){yield;}
-		}
 	}
 	Master.lastScore = gameNumber;
 	currentResults = Instantiate(results,Vector3(results.transform.position.x,20,results.transform.position.z), Quaternion.identity);

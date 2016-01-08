@@ -11,8 +11,6 @@ private var darknessObject;
 var failBack:GameObject;
 var failBackMove:boolean;
 
-var worldIntros:AudioClip[];
-
 var darknessAmount:Color;
 
 var slider1:GameObject;
@@ -43,10 +41,6 @@ var doneness:boolean[];
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlayCutscene(worldIntros[Random.Range(0,worldIntros.length)],.7);
-	}
 	whichSlider = 0;
 	rocketOrder = new int[3];
 	rocketOrder[0] = Random.Range(0,3);

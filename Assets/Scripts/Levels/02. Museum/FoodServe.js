@@ -11,7 +11,6 @@ private var darknessObject;
 var failBack:GameObject;
 var failBackMove:boolean;
 
-var worldIntros:AudioClip[];
 var darknessAmount:Color;
 
 var plates:GameObject[];
@@ -48,10 +47,6 @@ var clickSound:AudioClip;
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
-	if(Random.Range(0,10.0) < 2.5)
-	{
-		AudioManager.PlaySound(worldIntros[Random.Range(0,worldIntros.length)],.7);
-	}
 	clickWait = .1;
 	firstNotify = false;
 	distance = 5;

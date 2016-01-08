@@ -126,6 +126,9 @@ function Show () {
 		}
 		EndScene(scenes[i]);
 	}
+	currentTheaterSpeed = 10;
+	currentTheaterPosition = Vector3.zero;
+	yield WaitForSeconds(.5);
 	EndShow ();
 }
 

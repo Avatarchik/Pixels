@@ -25,6 +25,10 @@ var lasers:SpriteRenderer[];
 
 @HideInInspector var clicked:boolean;
 
+var flash:SpriteRenderer;
+
+var shotgunSound:AudioClip;
+
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
 	{
@@ -69,6 +73,7 @@ function Start () {
 }
 
 function Update () {
+	flash.color.a = Mathf.MoveTowards(flash.color.a,0,Time.deltaTime * 10);
 	timer -= Time.deltaTime;
 	if(timer < 0 && !finished)
 	{
@@ -105,6 +110,8 @@ function Play (arm:SpriteRenderer,number:int) {
 	{
 		if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && Mathf.Abs(Finger.GetPosition(importantFinger).x-arm.transform.position.x) < touchDistance)
 		{
+			AudioManager.PlaySound(shotgunSound,.55,.6);
+			flash.color.a = 1;
 			clicked = true;
 			if(demonArmProgress[number] > 3)
 			{

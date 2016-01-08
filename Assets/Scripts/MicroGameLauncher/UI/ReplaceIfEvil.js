@@ -5,6 +5,9 @@ var evilSprite:Sprite;
 function Start () {
 	if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
 	{
-		GetComponent(SpriteRenderer).sprite = evilSprite;
+		if(GetComponent(SpriteRenderer) != null)
+		{
+			GetComponent(SpriteRenderer).sprite = evilSprite;
+		}
 	}
 }

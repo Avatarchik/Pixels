@@ -176,7 +176,7 @@ function Update () {
 		{
 			if(Mathf.Abs(Finger.GetPosition(importantFinger).x - ghosts[ceoGhost].transform.position.x) < ghostDistance)
 			{
-				Finish(true,1);
+				Finish(true,.3);
 			}
 			else
 			{
@@ -184,7 +184,7 @@ function Update () {
 				{
 					AudioManager.PlaySound(ghostScream,.7,.5);
 				}
-				Finish(false,1);
+				Finish(false,.6);
 			}
 		}
 	}

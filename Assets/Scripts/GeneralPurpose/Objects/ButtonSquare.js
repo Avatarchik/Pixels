@@ -106,7 +106,7 @@ function FixedUpdate () {
 			}
 		}
 	}
-	else if(!Finger.GetExists(importantFinger))
+	if(!Finger.GetExists(importantFinger))
 	{
 		button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x * boundMultiplier, transform.lossyScale.y * boundMultiplier, 2));
 		// Touch button with importantFinger.

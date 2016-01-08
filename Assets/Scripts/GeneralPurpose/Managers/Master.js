@@ -224,7 +224,7 @@ function CheckDeviceType(search:String):boolean {
 		
 }
 
-function Demo() {
+function Demo () {
 	var resetTimer:float = settings.resetTime;
 	counter = settings.demoTime;
 	PlayerPrefs.SetInt("CurrencyNumber",1000);

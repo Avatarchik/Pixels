@@ -199,7 +199,7 @@ function Update () {
 		{
 			clicked[i] = true;
 			RemoveAmmo();
-			AudioManager.PlaySound(gunshot,.5,Random.Range(.95,1.05));
+			AudioManager.PlaySound(gunshot,.55,Random.Range(.95,1.05));
 			location.transform.position.x = Finger.GetPosition(i).x;
 			location.transform.position.y = Finger.GetPosition(i).y;
 			if(leftEnemy != null && Vector2.Distance(Finger.GetPosition(i), leftEnemy.transform.position) < maxDistance)
