@@ -50,6 +50,7 @@ var timeNumber:int[];
 var normalCEO:Sprite;
 var eyesCEO:Sprite;
 
+var letterSound:AudioClip;
 
 function Start () {
 	letterMovement = false;
@@ -136,6 +137,7 @@ function Talk () {
 }
 
 function Throw () {
+	AudioManager.PlaySound(letterSound);
 	while(letter.transform.localPosition.x != 25)
 	{
 		letter.transform.localPosition.x = Mathf.MoveTowards(letter.transform.localPosition.x,25, Time.deltaTime*15);

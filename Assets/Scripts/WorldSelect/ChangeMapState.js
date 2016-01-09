@@ -25,6 +25,8 @@ var warningText:String;
 var highScoreObject:GameObject;
 @HideInInspector var currentHighScoreBoard:GameObject;
 
+var playbillSlide:AudioClip;
+
 function Start () {
 	showCounter = 0;
 	StartCoroutine(UpdateWorldAvailability());
@@ -95,6 +97,7 @@ function Clicked () {
 								Master.currentWorld = level;
 							}
 						}
+						AudioManager.PlaySound(playbillSlide);
 						WorldMapManager.currentState = MapStatus.Confirmation;
 					}
 				}

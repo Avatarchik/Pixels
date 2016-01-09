@@ -255,7 +255,7 @@ function Quit () {
 	BroadcastArray(gameCovers,"DisplayChange","Clear");
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	AudioManager.StopSong();
-	GameOver();
+	GameOver();	
 }
 
 // End game and reset timer.

@@ -56,6 +56,9 @@ var origin:Vector3;
 var playerPrefab:GameObject;
 var customMaterial:Material;
 
+var swordSound:AudioClip;
+var killSound:AudioClip;
+
 function Awake () {
 	player = Instantiate(playerPrefab);
 	player.transform.position = Vector3(4.8928,-1.476,transform.position.z+5);
@@ -286,6 +289,7 @@ function EnemyMovement () {
 		}
 		else if(enemyDead)
 		{
+			AudioManager.PlaySound(killSound);
 			Shake(monster.gameObject,300);
 			monster.sprite = dyingMonsterSprites[0];
 			yield WaitForSeconds(.5);
@@ -303,6 +307,7 @@ function EnemyMovement () {
 }
 
 function Fight () {
+	AudioManager.PlaySound(swordSound);
 	player.transform.position.x -= 1;
 	enemyHealth --;
 	Shake(monster.gameObject,20);

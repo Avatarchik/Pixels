@@ -207,6 +207,7 @@
      <Compile Include="Assets\Scripts\Theater\TheShow\NL\NLShowLights.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\PPF\PPF.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\PPF\PPFWallFun.js" />
+     <Compile Include="Assets\Scripts\Theater\TheShow\QuitButton.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\ShowCurtains.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\ShowLightManager.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\ShowManager.js" />
@@ -231,6 +232,7 @@
      <Compile Include="Assets\Scripts\TitleScreen\Tutorial\SkipButton.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Tutorial\TutorialObject.js" />
      <Compile Include="Assets\Scripts\TitleScreen\UndoCustomizationChanges.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\Visuals\EraseAll.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\HideDuringIntro.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\JamesCredit.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Visuals\Logo.js" />

@@ -31,6 +31,8 @@ var runningSprites:Sprite[];
 @HideInInspector var caught:boolean;
 @HideInInspector var cageGoal:float;
 
+var trapSound:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -211,6 +213,7 @@ function Finish(completionStatus:boolean) {
 function Finish(completionStatus:boolean,waitTime:float) {
 	if(!finished)
 	{
+		AudioManager.PlaySound(trapSound);
 		finished = true;
 		yield WaitForSeconds(waitTime);
 		GameObject.FindGameObjectWithTag("GameController").BroadcastMessage("GameComplete",completionStatus,SendMessageOptions.DontRequireReceiver);

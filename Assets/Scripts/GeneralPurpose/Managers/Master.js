@@ -280,6 +280,13 @@ function Demo () {
 	}
 }
 
+function ResetGame () {
+	PlayerPrefs.DeleteAll();
+	AudioManager.StopAll(0);
+	Application.LoadLevel("GameStart");
+	Destroy(gameObject);
+}
+
 function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
 	if(settings.quickProgress)
@@ -455,6 +462,7 @@ function UnlockAllOptions () {
 	PlayerPrefs.DeleteAll();
 	PlayerPrefs.SetInt("TutorialFinished",2);
 	PlayerPrefs.SetInt("WorldMapState",2);
+	PlayerPrefs.SetInt("FirstThingUnlocked",1);
 	for(var aWorld:World in worlds)
 	{
 		var worldName:String;

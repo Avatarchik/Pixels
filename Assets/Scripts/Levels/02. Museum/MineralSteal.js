@@ -41,6 +41,8 @@ var robotNot:SpriteRenderer;
 @HideInInspector var positions:float[];
 @HideInInspector var goal:int;
 
+var diamondSound:AudioClip;
+
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
@@ -154,6 +156,7 @@ function Update () {
 		diamond.transform.parent = robot.transform;
 		if(!finished)
 		{
+			AudioManager.PlaySound(diamondSound);
 			Finish(true);
 			diamond.GetComponent(SpriteRenderer).sprite = gotDiamondSprite;
 		}

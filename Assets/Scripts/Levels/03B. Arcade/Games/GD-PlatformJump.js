@@ -52,6 +52,7 @@ var customMaterial:Material;
 
 @HideInInspector var endLocation:float;
 var jump:AudioClip;
+var squish:AudioClip;
 
 function Awake () {
 	player = Instantiate(playerPrefab);
@@ -271,12 +272,10 @@ function Update () {
 			{
 				Destroy(enemies[nearestBlock]);
 				enemies[nearestBlock] = null;
+				AudioManager.PlaySound(squish,.6);
 				if(velocity < 0)
 				{
 					velocity = 30 + speed * 2.5;
-					
-					//velocity = 40 at 5
-					//velocity = 30 at 1
 				}
 			}
 		}

@@ -52,6 +52,7 @@ var playerPrefab:GameObject;
 var customMaterial:Material;
 
 var jump:AudioClip;
+var squish:AudioClip;
 
 function Awake () {
 	player = Instantiate(playerPrefab);
@@ -280,6 +281,7 @@ function Update () {
 			{
 				Destroy(enemies[nearestBlock]);
 				enemies[nearestBlock] = null;
+				AudioManager.PlaySound(squish,.6);
 				if(velocity < 0)
 				{
 					velocity = 30 + speed * 2.5;

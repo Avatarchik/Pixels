@@ -42,6 +42,7 @@ var completenessSprites:Sprite[];
 var successLightThings:SpriteRenderer[];
 
 var shuffle:AudioClip;
+var success:AudioClip;
 
 function Start () {
 	// Basic world variable initialization.
@@ -294,6 +295,7 @@ function Update () {
 		reloading = true;
 		Reload(.3);
 		gameProgress ++;
+		AudioManager.PlaySound(success,.7);
 		if(gameProgress >= numberToBeat)
 		{
 			Reload(2);

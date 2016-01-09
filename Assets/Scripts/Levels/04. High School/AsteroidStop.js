@@ -39,6 +39,8 @@ var mushroom:SpriteRenderer;
 @HideInInspector var barTop:float;
 @HideInInspector var counterTop:float;
 
+var explodeSound:AudioClip;
+var nukeSound:AudioClip;
 
 function Start () {
 	if(Random.Range(0,10.0) < 2.5)
@@ -174,6 +176,7 @@ function Play () {
 		}
 		if(Vector3.Distance(asteroid.transform.position,asteroidGoal) < .2 && !finished)
 		{
+			AudioManager.PlaySound(nukeSound);
 			mushroom.color.a = 1;
 			white.color.a = 1;
 			Finish(false,1.5);
@@ -217,6 +220,7 @@ function Fire(thisMissile:GameObject,thisGoal:Vector3) {
 }
 
 function Explode () {
+	AudioManager.PlaySound(explodeSound,.2);
 	Instantiate(explosion,asteroid.transform.position, Quaternion.identity);
 	asteroidsLeft--;
 	Destroy(asteroid);

@@ -19,6 +19,8 @@ var notify:TextMesh;
 
 var countdownSound:AudioClip;
 
+var localSpeaker:AudioSource;
+
 function Start () {
 	notify.color.a = 0;
 	if(!PlayerPrefs.HasKey("Sound"))
@@ -257,7 +259,10 @@ function Continue () {
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
 				countdown.text = "3";
-				AudioManager.PlaySound(countdownSound);
+				if(PlayerPrefs.GetInt("Sound") == 1)
+				{
+					localSpeaker.PlayOneShot(countdownSound,.8);
+				}
 				yield;
 			}
 			while(timer < .8)
@@ -265,7 +270,10 @@ function Continue () {
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
 				countdown.text = "2";
-				AudioManager.PlaySound(countdownSound);
+				if(PlayerPrefs.GetInt("Sound") == 1)
+				{
+					localSpeaker.PlayOneShot(countdownSound,.8);
+				}
 				yield;
 			}
 			while(timer < 1.2)
@@ -273,7 +281,10 @@ function Continue () {
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
 				countdown.text = "1";
-				AudioManager.PlaySound(countdownSound);
+				if(PlayerPrefs.GetInt("Sound") == 1)
+				{
+					localSpeaker.PlayOneShot(countdownSound,.8);
+				}
 				yield;
 			}
 		}

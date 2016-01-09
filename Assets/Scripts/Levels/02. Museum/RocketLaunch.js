@@ -38,6 +38,9 @@ var doneness:boolean[];
 
 @HideInInspector var whichSlider:int;
 
+var launchSound:AudioClip;
+var explodeSound:AudioClip;
+
 function Start () {
 	failBackMove = false;
 	failBack.transform.position.y = 12;
@@ -194,6 +197,7 @@ function Update () {
 		{
 			if(Mathf.Abs(rockets[i].transform.position.x-slider1.transform.position.x) < 2 && !finished)
 			{
+				AudioManager.PlaySound(explodeSound,.3);
 				exploded[i] = true;
 				finished = true;
 				failBackMove = true;
@@ -271,6 +275,7 @@ function Play () {
 function Launch (rocket:GameObject, rocketNumber:int) {
 	var rocketSpeed:float = .2;
 	var origin:float = rocket.transform.position.x;
+	AudioManager.PlaySound(launchSound);
 	//Debug.Log(Time.time);
 	while(rocket.transform.position.y < 30)
 	{

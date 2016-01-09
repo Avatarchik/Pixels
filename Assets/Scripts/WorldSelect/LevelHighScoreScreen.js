@@ -70,6 +70,8 @@ function Start () {
 				{
 					Debug.Log("Successfully retrieved " + scores.length + " scores!");
 					allUsers = new User[scores.length];
+					var userIDs:String[];
+					userIDs = new String[scores.length];
 					for(var score:int = 0; score < allUsers.length; score++)
 					{
 						allUsers[score] = new User();
@@ -80,14 +82,19 @@ function Start () {
 						}
 						else
 						{
-							allUsers[score].name = scores[score].userID;
+							userIDs[score] = scores[score].userID;
 							allUsers[score].score = scores[score].value;
 						}
 					}
+					Social.LoadUsers(userIDs,function(users){
+						for(var i:int = 0; i < users.length; i++)
+						{
+							allUsers[i].name = users[i].userName;
+						}
+					});
 					friendNames = new String[Social.localUser.friends.length];
 					for(var name:int = 0; name < friendNames.length; name ++)
 					{
-						Debug.Log(Social.localUser.friends[name].userName);
 						friendNames[name] = Social.localUser.friends[name].userName;
 					}	
 					FinishStart();

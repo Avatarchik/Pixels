@@ -201,21 +201,21 @@ function Update () {
 			treeRingSubmitted[currentTree] = 2;
 			treeGoal[currentTree] = goal2;
 			currentTree++;
-			AudioManager.PlaySound(mulchSound,.5);
+			AudioManager.PlaySound(mulchSound,.5,Random.Range(.9,1.1));
 		}
 		else if(Mathf.Abs(trees[currentTree].transform.position.x - goal3) < distance)
 		{
 			treeRingSubmitted[currentTree] = 3;
 			treeGoal[currentTree] = goal3;
 			currentTree++;
-			AudioManager.PlaySound(mulchSound,.5);
+			AudioManager.PlaySound(mulchSound,.5,Random.Range(.9,1.1));
 		}
 		else if(Mathf.Abs(trees[currentTree].transform.position.x - goal4) < distance)
 		{
 			treeRingSubmitted[currentTree] = 4;
 			treeGoal[currentTree] = goal4;
 			currentTree++;
-			AudioManager.PlaySound(mulchSound,.5);
+			AudioManager.PlaySound(mulchSound,.5,Random.Range(.9,1.1));
 		}
 	}
 	if(importantFinger == -1)

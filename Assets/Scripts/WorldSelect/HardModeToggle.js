@@ -17,7 +17,7 @@ function UpdateVisuals (reset:boolean) {
 		GetComponent(SpriteRenderer).sprite = upSprite;
 		subText.transform.localPosition.y = subTextOrigin;
 	}
-	if(Master.currentWorld.basic.worldNameVar == "Arcade" || Master.currentWorld.basic.worldNameVar == "Theater")
+	if(Master.currentWorld.basic.worldNameVar == "Arcade" || Master.currentWorld.basic.worldNameVar == "Theater" || Master.currentWorld.basic.worldNameVar == "UnlockWheel" || Master.currentWorld.basic.worldNameVar == "VRTraining")
 	{
 		subText.GetComponent(SpriteRenderer).color = Color(0,0,0,0);
 		GetComponent(SpriteRenderer).color = Color(0,0,0,0);

@@ -35,6 +35,8 @@ var creditsObject:GameObject;
 @HideInInspector var clicked:boolean;
 @HideInInspector var importantFinger:int;
 
+var walkSound:AudioClip;
+
 function Start () {
 	if(Application.loadedLevelName == "MicroTester")
 	{
@@ -234,6 +236,7 @@ function Clicked () {
 }
 
 function RemoveHit() {
+	AudioManager.PlaySound(walkSound);
 	var randomLimit:int = 10;
 	while(randomLimit > 0)
 	{	

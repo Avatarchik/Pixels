@@ -47,6 +47,8 @@ var doneSprites:Sprite[];
 
 @HideInInspector var gameFaces:GameObject[];
 
+var popSound:AudioClip;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
@@ -207,6 +209,7 @@ function Update () {
 			{
 				if(balloons[nearest])
 				{
+					AudioManager.PlaySound(popSound);
 					balloons[nearest] = false;
 					Destroy(balloonObjects[nearest]);
 				}

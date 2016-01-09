@@ -32,6 +32,8 @@ static var currentMusicLocation:float;
 
 var endSound:AudioClip;
 
+var openingText:GameObject;
+
 function Start () {
 	good = true;
 	scores = new float[10];
@@ -119,9 +121,8 @@ function Update () {
 }
 
 function Show () {
-yield WaitForSeconds(.1);
+yield WaitForSeconds(.35);
 	theaterLights.StartOfShow();
-	var openingText:GameObject;
 	if(possibleOpenings.length > 0)
 	{
 		openingText = Instantiate(possibleOpenings[Random.Range(0,possibleOpenings.length)]);

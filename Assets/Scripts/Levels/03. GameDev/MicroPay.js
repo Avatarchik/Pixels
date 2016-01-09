@@ -102,16 +102,17 @@ function Update () {
 	}
 	if(Input.GetKeyDown("space") && allow && !finished)
 	{
+		AudioManager.PlaySound(paySound,1);
 		dollarEmitter.Emit(10);
 		amountIn ++;
 	}
 	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
 	if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && !finished)
 	{
-		AudioManager.PlaySound(paySound,.6);
 		clicked = true;
 		if(allow)
 		{
+			AudioManager.PlaySound(paySound,1);
 			dollarEmitter.Emit(10);
 			amountIn ++;
 		}
