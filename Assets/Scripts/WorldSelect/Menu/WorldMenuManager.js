@@ -258,10 +258,13 @@ function Continue () {
 			{
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
-				countdown.text = "3";
-				if(PlayerPrefs.GetInt("Sound") == 1)
+				if(countdown.text != "3")
 				{
-					localSpeaker.PlayOneShot(countdownSound,.8);
+					countdown.text = "3";
+					if(PlayerPrefs.GetInt("Sound") == 1)
+					{
+						localSpeaker.PlayOneShot(countdownSound,.8);
+					}
 				}
 				yield;
 			}
@@ -269,10 +272,13 @@ function Continue () {
 			{
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
-				countdown.text = "2";
-				if(PlayerPrefs.GetInt("Sound") == 1)
+				if(countdown.text != "2")
 				{
-					localSpeaker.PlayOneShot(countdownSound,.8);
+					countdown.text = "2";
+					if(PlayerPrefs.GetInt("Sound") == 1)
+					{
+						localSpeaker.PlayOneShot(countdownSound,.8);
+					}
 				}
 				yield;
 			}
@@ -280,10 +286,13 @@ function Continue () {
 			{
 				timer = Time.realtimeSinceStartup - currentTime;
 				countdown.transform.position.y = 0;
-				countdown.text = "1";
-				if(PlayerPrefs.GetInt("Sound") == 1)
+				if(countdown.text != "1")
 				{
-					localSpeaker.PlayOneShot(countdownSound,.8);
+					countdown.text = "1";
+					if(PlayerPrefs.GetInt("Sound") == 1)
+					{
+						localSpeaker.PlayOneShot(countdownSound,.8);
+					}
 				}
 				yield;
 			}

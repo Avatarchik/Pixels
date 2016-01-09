@@ -124,6 +124,7 @@ function NotConnected () {
 	globalText.color.a = 0;
 	friendsText.color.a = 0;
 	notConnected.color.a = 1;
+	Debug.Log("hey1");
 	if(loading != null)
 	{
 		Destroy(loading);
@@ -131,6 +132,7 @@ function NotConnected () {
 }
 
 function FinishStart () {
+	yield WaitForSeconds(1);
 	if(allUsers.Length == 0)
 	{
 		CreateDefaults();
@@ -161,6 +163,7 @@ function FinishStart () {
 	CreateDisplayList(allUsers);
 	UpdateDisplay();	
 	ShowResults();
+	Debug.Log("hey2");
 	if(loading != null)
 	{
 		Destroy(loading);

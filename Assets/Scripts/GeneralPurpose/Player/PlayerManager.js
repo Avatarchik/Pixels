@@ -118,7 +118,7 @@ function ChangePart(part:String, change:int) {
 			}
 			if((unavailableCheck >= 50 || change == 0) && !Master.notifying)
 			{
-				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any hair styles yet!",NotificationType.lockedWorld);
+				Announcement("You haven't unlocked any hair styles yet!");
 				PlayerPrefs.SetInt("HairSelection",initial);
 			}
 			else
@@ -144,7 +144,7 @@ function ChangePart(part:String, change:int) {
 			}
 			if(unavailableCheck >= 50 && !Master.notifying)
 			{
-				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any eye types yet!",NotificationType.lockedWorld);
+				Announcement("You haven't unlocked any eye types yet!");
 				PlayerPrefs.SetInt("EyesSelection",initial);
 			}
 			else
@@ -169,7 +169,7 @@ function ChangePart(part:String, change:int) {
 			}
 			if(unavailableCheck >= 50 && !Master.notifying)
 			{
-				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any tops yet!",NotificationType.lockedWorld);
+				Announcement("You haven't unlocked any tops yet!");
 				PlayerPrefs.SetInt("TopSelection",initial);
 			}
 			else
@@ -194,7 +194,7 @@ function ChangePart(part:String, change:int) {
 			}
 			if(unavailableCheck >= 50 && !Master.notifying)
 			{
-				Camera.main.GetComponent(Master).LaunchNotification("You haven't unlocked any bottoms yet!",NotificationType.lockedWorld);
+				Announcement("You haven't unlocked any bottoms yet!");
 				PlayerPrefs.SetInt("BottomSelection",initial);	
 			}
 			else
@@ -206,6 +206,10 @@ function ChangePart(part:String, change:int) {
 			break;
 	}
 	Refresh(part,change);
+}
+
+function Announcement (word:String) {
+	Camera.main.GetComponent(Master).LaunchNotification(word,NotificationType.lockedWorld);
 }
 
 function ChangeColor(part:String, color:int) {

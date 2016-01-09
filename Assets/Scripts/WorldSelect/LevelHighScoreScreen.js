@@ -136,6 +136,7 @@ function NotConnected () {
 }
 
 function FinishStart () {
+	yield WaitForSeconds(1);
 	if(allUsers.Length == 0)
 	{
 		CreateDefaults();

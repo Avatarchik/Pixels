@@ -676,7 +676,7 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 	}
 }
 
-function LaunchNotification (text:String,type:NotificationType) {
+function LaunchNotification (text:String,type:NotificationType):IEnumerator {
 	if(!notifying)
 	{
 		notifying = true;
@@ -713,6 +713,7 @@ function PushNotificationRegistration () {
 			var newNotif:iOS.LocalNotification;
 			newNotif = new iOS.LocalNotification();
 			newNotif.alertBody = "The show is on!";
+			/*
 			if(System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Monday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Tuesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Wednesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Thursday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Friday)
 			{
 				newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(19);
@@ -720,7 +721,8 @@ function PushNotificationRegistration () {
 			else
 			{
 				newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(14);
-			}
+			}*/
+			newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(19);
 			iOS.NotificationServices.ScheduleLocalNotification(newNotif);
 		}
 	}

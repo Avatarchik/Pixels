@@ -45,6 +45,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Credits\CreditsCharacter.js" />
+     <Compile Include="Assets\Scripts\Credits\CreditsColorBars.js" />
+     <Compile Include="Assets\Scripts\Credits\CreditsManager.js" />
+     <Compile Include="Assets\Scripts\Credits\CreditsSkip.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\AnimationTester.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\BennettTest.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Experimental\Info\GSpeed.js" />
