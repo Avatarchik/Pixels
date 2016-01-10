@@ -307,7 +307,7 @@ function EnemyMovement () {
 }
 
 function Fight () {
-	AudioManager.PlaySound(swordSound);
+	AudioManager.PlaySound(swordSound,.7,Random.Range(.8,1.2));
 	player.transform.position.x -= 1;
 	enemyHealth --;
 	Shake(monster.gameObject,20);

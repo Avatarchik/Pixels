@@ -70,8 +70,11 @@ var menu:GameObject;
 // "Cutscene" variables
 @HideInInspector var loadedText:GameObject;
 
+static var showCredits:boolean;
+
 function Start () {
 	// Get required variables.
+	showCredits = false;
 	LoadWorld();
 	currentGames = Master.currentWorld.basic.games;
 	bossGame = Master.currentWorld.basic.bossGame;
@@ -314,20 +317,33 @@ function GameOver () {
 			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
 		}
 	}
-	if(replay)
-	{
-		AudioManager.StopAll(.5);
-		BeforeGames();
-	}
-	else
+	if(showCredits)
 	{
 		AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
 		Instantiate(transition,Vector3(0,0,-9.5), Quaternion.identity);
 		yield WaitForSeconds(.7);
 		AudioManager.StopSong();
 		yield WaitForSeconds(1.3);
-		Application.LoadLevel("WorldSelect");
+		Application.LoadLevel("Credits");
 		Master.hardMode = false;
+	}
+	else
+	{
+		if(replay)
+		{
+			AudioManager.StopAll(.5);
+			BeforeGames();
+		}
+		else
+		{
+			AudioManager.PlaySoundTransition(Master.currentWorld.audio.transitionOut);
+			Instantiate(transition,Vector3(0,0,-9.5), Quaternion.identity);
+			yield WaitForSeconds(.7);
+			AudioManager.StopSong();
+			yield WaitForSeconds(1.3);
+			Application.LoadLevel("WorldSelect");
+			Master.hardMode = false;
+		}
 	}
 }
 

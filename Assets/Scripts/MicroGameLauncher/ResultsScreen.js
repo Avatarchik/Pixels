@@ -25,6 +25,7 @@ var badApplause:AudioClip;
 var unlockApplause:AudioClip[];
 var unlockSounds:AudioClip[];
 var drum:AudioClip;
+var transition:GameObject;
 
 @HideInInspector var nextGoal:int = 1;
 
@@ -135,7 +136,7 @@ function CountScore() {
 		}
 		for(var i:int = 0; i < unlockLevels.length; i++)
 		{
-			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i && Master.currentWorld.basic.worldNameVar != "Neverland")
+			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i)
 			{
 				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",i);
 				for(var thisParticle:ParticleSystem in particles)
@@ -155,10 +156,17 @@ function CountScore() {
 					switch(i-1)
 					{
 						case 0:
-							Master.mapNotifyWorlds = Master.currentWorld.unlocks.unlocksLevel1;
+							if(Master.currentWorld.unlocks.unlocksLevel1[0] != "ActOneFinished")
+							{
+								Master.mapNotifyWorlds = Master.currentWorld.unlocks.unlocksLevel1;
+							}
 							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel1)
 							{
 								PlayerPrefs.SetInt(variableName,1);
+								if(variableName == "ActOneFinished")
+								{
+									GameManager.showCredits = true;
+								}
 							}
 							break;
 						case 1:

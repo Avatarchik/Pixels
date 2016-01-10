@@ -178,6 +178,7 @@ function WorldReveal() {
 	if(PlayerPrefs.GetInt("HighSchool") == 1 && PlayerPrefs.GetInt("WorldMapTheaterUnlockNotified") != 1)
 	{
 		var newNotify:GameObject = Instantiate(theaterAlertNotification);
+		PlayerPrefs.SetInt("WorldMapTheaterUnlockNotified",1);
 		while(newNotify != null)
 		{
 			yield;
@@ -193,7 +194,7 @@ function CheckForMapState() {
 		while(townDestructionCover.color.a != 1)
 		{
 			AudioManager.SongVolumeChange(1-(townDestructionCover.color.a*1.2),100);
-			townDestructionCover.color.a = Mathf.MoveTowards(townDestructionCover.color.a,1,Time.deltaTime*.3);
+			townDestructionCover.color.a = Mathf.MoveTowards(townDestructionCover.color.a,1,Time.deltaTime*.45);
 			yield;
 		}
 		Master.worldCoverOn = true;

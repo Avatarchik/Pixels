@@ -229,6 +229,7 @@
      <Compile Include="Assets\Scripts\TitleScreen\DemoReset.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ShowColorSelection.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StageHand.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\StartCredits.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StartGame.js" />
      <Compile Include="Assets\Scripts\TitleScreen\TitleManager.js" />
      <Compile Include="Assets\Scripts\TitleScreen\Tutorial\Enlarge.js" />

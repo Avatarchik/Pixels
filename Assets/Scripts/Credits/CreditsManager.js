@@ -26,12 +26,13 @@ function Start () {
 	credits = new GameObject[creditsObjects.length];
 	if(creditsObjects.Length > 0)
 	{
-		credits[0] = Instantiate(creditsObjects[0],Vector3.zero + Vector3(0,0,5),Quaternion.identity);
+		credits[0] = Instantiate(creditsObjects[0],Vector3.zero + Vector3(100,0,5),Quaternion.identity);
 	}
+	ShowObject(0);
 	speed = 50;
-	AudioManager.PlaySong(creditsSong);
 	if(record)
 	{
+		AudioManager.PlaySong(creditsSong);
 		Record();
 	}
 	else
@@ -64,6 +65,8 @@ function ColorBars () {
 }
 
 function Credits () {
+	yield WaitForSeconds(.5);
+	AudioManager.PlaySong(creditsSong);
 	for(var i:int = 1; i < objectNumbers.length; i++)
 	{
 		while(AudioManager.GetLocation() < objectNumbers[i])
@@ -88,14 +91,6 @@ function Credits () {
 		}
 	}
 	yield WaitForSeconds(1);
-	if(!leaving)
-	{
-		newNote = Instantiate(endGameNote);
-	}
-	while(newNote != null)
-	{
-		yield;
-	}
 	Leave();
 }
 
@@ -150,14 +145,14 @@ function HideObject (object:int) {
 	{
 		while(credits[object].transform.position != end)
 		{
-			credits[object].transform.position = Vector3.MoveTowards(credits[object].transform.position,end,Time.deltaTime*Time.timeScale*speed * 1.5);
+			credits[object].transform.position = Vector3.MoveTowards(credits[object].transform.position,end,Time.deltaTime*Time.timeScale*speed);
 			if(randomNumber < .5)
 			{
-				credits[object].transform.Rotate(Vector3(0,0,10) * Time.deltaTime);
+				credits[object].transform.Rotate(Vector3(0,0,40) * Time.deltaTime);
 			}	
 			else
 			{
-				credits[object].transform.Rotate(Vector3(0,0,-10) * Time.deltaTime);
+				credits[object].transform.Rotate(Vector3(0,0,-40) * Time.deltaTime);
 			}
 			yield;
 		}
@@ -226,14 +221,23 @@ function AddNumber (original:float[],addition:float):float[] {
 function Leave () {
 	if(!leaving)
 	{
-		for(var i:int = 0; i < creditsObjects.length; i++)
+		leaving = true;
+		if(PlayerPrefs.GetInt("EndGameMoreToDo") != 1)
 		{
-			if(credits[i] != null)
+			PlayerPrefs.SetInt("ActOneFinished",1);
+			newNote = Instantiate(endGameNote);
+			for(var i:int = 0; i < creditsObjects.length; i++)
 			{
-				HideObject(i);
+				if(credits[i] != null)
+				{
+					HideObject(i);
+				}
 			}
 		}
-		leaving = true;
+		while(newNote != null)
+		{
+			yield;
+		}
 		var controller:Master = Camera.main.GetComponent(Master);
 		AudioManager.PlaySoundTransition(controller.currentWorld.audio.transitionOut);
 		Instantiate(transition, Vector3(0,0,-5), Quaternion.identity);

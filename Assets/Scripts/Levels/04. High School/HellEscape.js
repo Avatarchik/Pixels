@@ -110,7 +110,8 @@ function Play (arm:SpriteRenderer,number:int) {
 	{
 		if(Finger.GetExists(importantFinger) && !Master.paused && !clicked && Mathf.Abs(Finger.GetPosition(importantFinger).x-arm.transform.position.x) < touchDistance)
 		{
-			AudioManager.PlaySound(shotgunSound,.55,.6);
+			AudioManager.PlaySound(shotgunSound,.4,Random.Range(.2,.4));
+			flash.color = Color.red;
 			flash.color.a = 1;
 			clicked = true;
 			if(demonArmProgress[number] > 3)
