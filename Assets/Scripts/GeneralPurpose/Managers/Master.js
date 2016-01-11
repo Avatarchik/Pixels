@@ -174,21 +174,15 @@ function CheckOrientation () {
 function CheckForShowTime () {
 	while(true)
 	{
+		allowShow = false;
 		date = System.DateTime.Today.Day + " " + System.DateTime.Today.Month + " " + System.DateTime.Today.Year;
 		if(settings.alwaysPerform)
 		{
 			allowShow = true;
 		}
-		else if(PlayerPrefs.GetInt("HighSchool") == 1 && PlayerPrefs.GetInt("ShowDate:"+date) != 1)
+		else if(PlayerPrefs.GetInt("HighSchool") == 1 && PlayerPrefs.GetInt("ShowDate:"+date) != 1 && System.DateTime.Now.Hour == 14)
 		{
-			if((((System.DateTime.Today.DayOfWeek == 1 || System.DateTime.Today.DayOfWeek == 2 || System.DateTime.Today.DayOfWeek == 3 || System.DateTime.Today.DayOfWeek == 4 || System.DateTime.Today.DayOfWeek == 5) && System.DateTime.Now.Hour == 19)) || ((System.DateTime.Today.DayOfWeek == 6 || System.DateTime.Today.DayOfWeek == 7) && System.DateTime.Now.Hour == 14))
-			{
-				allowShow = true;
-			}
-			else
-			{
-				allowShow = false;
-			}
+			allowShow = true;
 		}
 		yield WaitForSeconds(10);
 	}

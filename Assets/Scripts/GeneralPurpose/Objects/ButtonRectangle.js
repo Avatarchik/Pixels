@@ -100,7 +100,7 @@ function Update () {
 	{
 		button = Bounds(Vector3(transform.position.x, transform.position.y, 0), Vector3(transform.lossyScale.x * boundMultiplier, transform.lossyScale.y * boundMultiplier/2, 2));
 		// Touch button with importantFinger.
-		if(!WorldMapManager.mapMove && Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) < button.extents.x && button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
+		if(Vector3.Distance(startPosition, Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)) < button.extents.x && button.Contains(Vector3(Finger.GetPosition(importantFinger).x,Finger.GetPosition(importantFinger).y,0)))
 		{
 			// This is where clicking happens.
 			gameObject.SendMessage("Clicked", SendMessageOptions.DontRequireReceiver);

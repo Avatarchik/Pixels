@@ -69,7 +69,7 @@ function DisplayScores (newScores:float[]) {
 	if(Master.allowShow)
 	{
 		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+Mathf.Floor(totalScore/5));
-		PlayerPrefs.GetInt("ShowDate:"+Master.date,1);
+		PlayerPrefs.SetInt("ShowDate:"+Master.date,1);
 	}
 	yield WaitForSeconds(1);
 	finished = true;

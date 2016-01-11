@@ -82,6 +82,7 @@ function Clicked () {
 			}
 			break;
 		case MapStatus.Confirmation:
+			Master.hardMode = false;
 			if(WorldMapManager.allowClick)
 			{
 				if(PlayerPrefs.GetInt(worldNameVar) == 1)

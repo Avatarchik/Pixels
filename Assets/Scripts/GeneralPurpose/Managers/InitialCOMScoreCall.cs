@@ -3,7 +3,6 @@ using System.Collections;
 using System.Runtime.InteropServices;
 
 public class InitialCOMScoreCall : MonoBehaviour {
-	/*
 	#if UNITY_IPHONE
 	[DllImport ("__Internal")]
 	static private extern void _trackState (string appState, string jsonDict);
@@ -31,7 +30,6 @@ public class InitialCOMScoreCall : MonoBehaviour {
 		}
 		#endif
 	}
-	*/
 	// Update is called once per frame
 	void Update () {
 	

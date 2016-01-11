@@ -167,14 +167,14 @@ function FlatMovement () {
 				goal = -1;
 			}
 			yield WaitForSeconds(Random.Range(4,8.0));
-			currentFlat = Instantiate(flats[Random.Range(0,flats.Length)], Vector3(transform.position.x + -16.7 * goal,transform.position.y - 4.95 + (.15 * Random.Range(-3,6)),4.2),Quaternion.identity);
+			currentFlat = Instantiate(flats[Random.Range(0,flats.Length)], Vector3(transform.localPosition.x + -16.7 * goal,transform.localPosition.y - 4.95 + (.15 * Random.Range(-3,6)),4.2),Quaternion.identity);
 			currentFlat.transform.parent = transform;
 			yield;
 		}
 		while(currentFlat != null)
 		{
 			currentFlat.transform.position.x += Time.deltaTime * 4 * goal;
-			if(currentFlat.transform.position.x > transform.position.x + 16.7 || currentFlat.transform.position.x < transform.position.x - 16.7)
+			if(currentFlat.transform.localPosition.x > transform.localPosition.x + 16.7 || currentFlat.transform.localPosition.x < transform.localPosition.x - 16.7)
 			{
 				Destroy(currentFlat);
 			}
@@ -228,17 +228,17 @@ function FlyInMovement () {
 
 function Shake (object:GameObject, numberShakes:int, distance:Vector3){
 	var count:int = 0;
-	var origin:Vector3 = object.transform.position;
-	object.transform.position = origin + distance;
+	var origin:Vector3 = object.transform.localPosition;
+	object.transform.localPosition = origin + distance;
 	while(count < numberShakes)
 	{
 		distance = distance * -.85;
-		object.transform.position = origin + distance;
+		object.transform.localPosition = origin + distance;
 		yield WaitForSeconds(.004);
 		count ++;
 		yield;
 	}
-	object.transform.position = Vector3(origin.x,origin.y,object.transform.position.z);
+	object.transform.localPosition = Vector3(origin.x,origin.y,object.transform.localPosition.z);
 	yield;
 }
 

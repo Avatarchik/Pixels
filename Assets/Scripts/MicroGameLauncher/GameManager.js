@@ -241,7 +241,7 @@ function BetweenGame () {
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
 	if(quitting){return;}
-	if(lives <= 0 || (PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1]))
+	if(lives <= 0 || (PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1] && Master.currentWorld.basic.worldNameVar != "VRTraining"))
 	{
 		StartCoroutine(GameOver());
 	}

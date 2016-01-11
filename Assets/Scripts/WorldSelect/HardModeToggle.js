@@ -34,7 +34,7 @@ function UpdateVisuals (reset:boolean) {
 			GetComponent(SpriteRenderer).color = Color(1,.35,.35,1);
 		}
 	}
-	if(Master.currentWorld.basic.worldNameVar == "Theater" && Master.allowShow)
+	if(Master.currentWorld.basic.worldNameVar == "Theater" && Master.allowShow && PlayerPrefs.GetInt("ShowDate:"+Master.date) != 1)
 	{
 		Master.hardMode = true;
 	}

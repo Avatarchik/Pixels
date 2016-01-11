@@ -233,6 +233,7 @@ function Update () {
 			// Get Finger
 			if(importantFinger == -1)
 			{
+				allowClick = true;
 				for(var i:int = 0; i < Finger.identity.length; i++)
 				{
 					if(Finger.GetExists(i))

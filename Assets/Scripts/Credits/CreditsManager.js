@@ -224,7 +224,7 @@ function Leave () {
 		leaving = true;
 		if(PlayerPrefs.GetInt("EndGameMoreToDo") != 1)
 		{
-			PlayerPrefs.SetInt("ActOneFinished",1);
+			PlayerPrefs.SetInt("EndGameMoreToDo",1);
 			newNote = Instantiate(endGameNote);
 			for(var i:int = 0; i < creditsObjects.length; i++)
 			{
@@ -244,6 +244,6 @@ function Leave () {
 		yield WaitForSeconds(.7);
 		AudioManager.StopSong();
 		yield WaitForSeconds(1.3);
-		Application.LoadLevel("WorldSelect");
+		Application.LoadLevel("TitleScreen");
 	}
 }
