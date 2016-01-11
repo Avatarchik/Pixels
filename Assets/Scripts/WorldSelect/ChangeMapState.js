@@ -97,7 +97,7 @@ function Clicked () {
 								Master.currentWorld = level;
 							}
 						}
-						AudioManager.PlaySound(playbillSlide);
+						AudioManager.PlaySound(playbillSlide,.45);
 						WorldMapManager.currentState = MapStatus.Confirmation;
 					}
 				}

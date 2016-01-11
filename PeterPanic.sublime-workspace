@@ -1,0 +1,239 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mousepos",
+				"mousePosition	Input.*"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/UnityBuild/Unity.sublime-build",
+	"command_palette":
+	{
+		"height": 307.0,
+		"selected_items":
+		[
+			[
+				"prins",
+				"Package Control: Install Package"
+			],
+			[
+				"packinst",
+				"Package Control: Install Package"
+			],
+			[
+				"packins",
+				"Package Control: Install Package"
+			],
+			[
+				"packin",
+				"Package Control: Install Package"
+			],
+			[
+				"pain",
+				"Package Control: Advanced Install Package"
+			],
+			[
+				"pacins",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: List Unmanaged Packages"
+			],
+			[
+				"packinstalll",
+				"Package Control: Install Local Dependency"
+			],
+			[
+				"packageli",
+				"Package Control: List Packages"
+			],
+			[
+				"packdisc",
+				"Package Control: Discover Packages"
+			],
+			[
+				"packaadd re",
+				"Package Control: Add Repository"
+			],
+			[
+				"packains",
+				"Package Control: Install Package"
+			],
+			[
+				"packaenab",
+				"Package Control: Enable Package"
+			],
+			[
+				"packali",
+				"Package Control: List Packages"
+			],
+			[
+				"packainst",
+				"Package Control: Install Package"
+			],
+			[
+				"packagecontrolin",
+				"Package Control: Install Package"
+			],
+			[
+				"packagecon",
+				"Package Control: List Packages"
+			],
+			[
+				"packc",
+				"Package Control: Add Channel"
+			],
+			[
+				"packint",
+				"Package Control: Install Package"
+			],
+			[
+				"packagcontol",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Discover Packages"
+			],
+			[
+				"packagecontrol",
+				"Package Control: List Packages"
+			],
+			[
+				"package",
+				"Package Control: Discover Packages"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/jamesmarionair/GameProjects/PeterPanic/Assets/Scripts/GeneralPurpose/Managers/Master.js",
+		"/Users/jamesmarionair/Documents/PeterPanic/Libraries/Plugins/iOS/AdobeMobileLibrary/ADBMobileConfig.json",
+		"/Users/jamesmarionair/GameProjects/PeterPanic/Assets/Scripts/GeneralPurpose/Managers/Finger.js",
+		"/Users/jamesmarionair/GameProjects/PeterPanic/PeterPanic.sublime-project",
+		"/Users/jamesmarionair/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/jamesmarionair/Library/Application Support/Sublime Text 2/Packages/Unity3D/UnityJavaScript.tmLanguage",
+		"/Users/jamesmarionair/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}

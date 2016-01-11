@@ -946,7 +946,7 @@ function Credits () {
 	credits.currentBottom = credits.bottomVertical;
 	credits.distanceProgress = 0;
 	CreditsMovement();
-	while(AudioManager.GetLocation() < credits.waitTime)
+	while(AudioManager.GetLocation() < credits.waitTime || AudioManager.GetLocation() > credits.waitTime + 1)
 	{
 		yield;
 	}
