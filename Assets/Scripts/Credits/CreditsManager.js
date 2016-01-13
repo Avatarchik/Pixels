@@ -7,6 +7,7 @@ var creditsObjects:GameObject[];
 
 var record:boolean;
 var recordBars:boolean;
+var recordSprites:boolean;
 
 var creditsSong:AudioClip;
 
@@ -15,13 +16,17 @@ var endGameNote:GameObject;
 @HideInInspector var newNote:GameObject;
 @HideInInspector var leaving:boolean;
 
+static var move:boolean;
+
 var transition:GameObject;
 
 var colorBars:CreditsColorBars[];
 
 var colorBarTimes:float[];
+var spriteMoveTimes:float[];
 
 function Start () {
+	move = false;
 	leaving = false;
 	credits = new GameObject[creditsObjects.length];
 	if(creditsObjects.Length > 0)
@@ -44,6 +49,14 @@ function Start () {
 		else
 		{
 			ColorBars();
+		}
+		if(recordSprites)
+		{
+			RecordSprites();
+		}
+		else
+		{
+			SpriteMovement();
 		}
 		Credits();
 	}
@@ -194,6 +207,33 @@ function RecordBars () {
 			placeHolder++;
 		}
 		yield;
+	}
+}
+
+function RecordSprites () {
+	var placeHolder:int = 0;
+	spriteMoveTimes = new float[0];
+	while(true)
+	{
+		
+		if(Input.GetKeyDown("a"))
+		{
+			spriteMoveTimes = AddNumber(spriteMoveTimes,AudioManager.GetLocation());
+			move = !move;
+			placeHolder++;
+		}
+		yield;
+	}
+}
+
+function SpriteMovement () {
+	for(var i:int = 0; i < spriteMoveTimes.length; i++)
+	{
+		while(AudioManager.GetLocation() < spriteMoveTimes[i])
+		{
+			yield;
+		}
+		move = !move;
 	}
 }
 

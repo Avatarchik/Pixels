@@ -116,7 +116,6 @@ function ChangePart(part:String, change:int) {
 				}		
 				unavailableCheck++;
 			}
-			Debug.Log(change);
 			if((unavailableCheck >= 50 || change == 0) && !Master.notifying)
 			{
 				Announcement("You haven't unlocked any hair styles yet!");

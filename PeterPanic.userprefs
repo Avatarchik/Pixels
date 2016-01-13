@@ -1,5 +1,5 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,12 +13,12 @@
           </Node>
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Credits" expanded="True" />
+              <Node name="Credits" expanded="True">
+                <Node name="CreditsManager.js" selected="True" />
+              </Node>
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
-                <Node name="Objects" expanded="True">
-                  <Node name="ButtonRectangle.js" selected="True" />
-                </Node>
+                <Node name="Objects" expanded="True" />
                 <Node name="Player" expanded="True" />
               </Node>
               <Node name="Levels" expanded="True">
