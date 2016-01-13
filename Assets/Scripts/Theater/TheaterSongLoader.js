@@ -40,7 +40,7 @@ function Clicked () {
 			GameObject.FindGameObjectWithTag("LedgerController").SendMessage("VideoButtonPress",type,SendMessageOptions.DontRequireReceiver);
 		}
 	}
-	else
+	else if(!LedgerController.videoPlaying)
 	{
 		Camera.main.GetComponent(Master).LaunchNotification(lockText,NotificationType.lockedWorld);
 	}

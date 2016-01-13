@@ -81,12 +81,12 @@ function MenuEffect(clicked:String) {
 			if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 0)
 			{
 				PlayerPrefs.SetInt("IgnoreTimeOfDay", 1);
-				NotifyText("Timed world map effects disabled!");
+				NotifyText("World map effects disabled!");
 			}
 			else
 			{
 				PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
-				NotifyText("Timed world map effects enabled!");
+				NotifyText("World map effects enabled!");
 			}
 			button[0].GetComponent(WorldMenuButton).SetText(option[0]);
 			break;

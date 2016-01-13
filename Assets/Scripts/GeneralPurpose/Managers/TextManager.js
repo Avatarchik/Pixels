@@ -42,6 +42,10 @@ function Start () {
 	{
 		Credits();
 	}
+	else
+	{
+		Destroy(credits.creditObject);
+	}
 	// Initialize variable values.
 	spriteObjects = new GameObject[3];
 	lineMarker = 0;

@@ -37,6 +37,17 @@ function Unclicked () {
 		switch(newState)
 		{
 			case TheaterStatus.Home:
+				for(var peter:GameObject in GameObject.FindGameObjectsWithTag("Player"))
+				{
+					if(peter.transform.GetComponent(PlayerWalking) == null)
+					{
+						peter.transform.GetComponent(PlayerManager).Save();
+					}
+				}
+				for(var peter:GameObject in GameObject.FindGameObjectsWithTag("Player"))
+				{
+					peter.transform.GetComponent(PlayerManager).Revert();
+				}
 				if(LedgerController.songPlaying)
 				{
 					LedgerController.songPlaying = false;
@@ -60,8 +71,25 @@ function Unclicked () {
 				TheaterController.currentState = newState;
 				break;
 			case TheaterStatus.Stats:
+				Debug.Log(TheaterController.currentState);
 				if(TheaterController.currentState == TheaterStatus.CustomizeNoColor || TheaterController.currentState == TheaterStatus.CustomizeColor)
 				{
+					Debug.Log("hey");
+					for(var peter:GameObject in GameObject.FindGameObjectsWithTag("Player"))
+					{
+						if(peter.transform.GetComponent(PlayerWalking) == null)
+						{
+							peter.transform.GetComponent(PlayerManager).Save();
+						}
+						else
+						{
+							peter.transform.GetComponent(PlayerManager).Refresh("hair");
+							peter.transform.GetComponent(PlayerManager).Refresh("eyes");
+							peter.transform.GetComponent(PlayerManager).Refresh("top");
+							peter.transform.GetComponent(PlayerManager).Refresh("bottom");
+							peter.transform.GetComponent(PlayerManager).Refresh("body");
+						}
+					}
 					TheaterController.currentState = TheaterStatus.Home;
 				}
 				else

@@ -34,7 +34,7 @@ var currentTop:GameObject;
 var currentBottom:GameObject;
 var currentMouth:GameObject;
 
-var save:int[];
+static var save:int[];
 
 var standStill:boolean = false;
 

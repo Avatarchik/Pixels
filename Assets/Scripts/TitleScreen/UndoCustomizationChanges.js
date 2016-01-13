@@ -11,7 +11,13 @@ function Start () {
 
 function Initial() {
 	yield WaitForEndOfFrame();
-	player = playerParent.Find("Player").gameObject;
+	for(var peter:GameObject in GameObject.FindGameObjectsWithTag("Player"))
+	{
+		if(peter.transform.GetComponent(PlayerWalking) == null)
+		{
+			player = peter;
+		}
+	}
 	manager = player.GetComponent(PlayerManager);
 }
 function Clicked () {

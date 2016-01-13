@@ -1,5 +1,5 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,9 +13,7 @@
           </Node>
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Credits" expanded="True">
-                <Node name="CreditsManager.js" selected="True" />
-              </Node>
+              <Node name="Credits" expanded="True" />
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
                 <Node name="Objects" expanded="True" />
@@ -28,9 +26,12 @@
               <Node name="MicroGameLauncher" expanded="True" />
               <Node name="Theater" expanded="True">
                 <Node name="TheShow" expanded="True" />
+                <Node name="TheaterSongLoader.js" selected="True" />
               </Node>
               <Node name="TitleScreen" expanded="True" />
-              <Node name="WorldSelect" expanded="True" />
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Menu" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>
