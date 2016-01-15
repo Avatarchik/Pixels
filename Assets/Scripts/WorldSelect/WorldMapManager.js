@@ -49,6 +49,7 @@ var reveal:GameObject;
 var townDestructionCover:SpriteRenderer;
 var townDestructionSound:AudioClip;
 var theaterAlertNotification:GameObject;
+var IAPRequest:GameObject;
 
 // Locations
 private var showNot:Vector3;
@@ -180,6 +181,14 @@ function WorldReveal() {
 		var newNotify:GameObject = Instantiate(theaterAlertNotification);
 		PlayerPrefs.SetInt("WorldMapTheaterUnlockNotified",1);
 		while(newNotify != null)
+		{
+			yield;
+		}
+	}
+	if(PlayerPrefs.GetInt("SaveSystemAvailable") == 0)
+	{
+		var IAPNote:GameObject = Instantiate(IAPRequest);
+		while(IAPNote != null || Master.notifying)
 		{
 			yield;
 		}

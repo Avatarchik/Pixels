@@ -236,7 +236,10 @@ function Clicked () {
 }
 
 function RemoveHit() {
-	AudioManager.PlaySound(walkSound);
+	if(Random.value < .4)
+	{
+		AudioManager.PlaySound(walkSound);
+	}
 	var randomLimit:int = 10;
 	while(randomLimit > 0)
 	{	

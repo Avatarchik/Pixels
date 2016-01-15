@@ -52,9 +52,9 @@ function Update () {
 }
 
 function Clicked () {
-	if(RemixManager.step == 1 || RemixManager.step == 2)
+	if((RemixManager.step == 1 || RemixManager.step == 2) && !Master.notifying)
 	{
-		RemixManager.step += change;
+		GameObject.FindGameObjectWithTag("WorldUI").GetComponent(RemixManager).StepChange(change);
 	}
 }
 

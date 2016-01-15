@@ -291,9 +291,11 @@ function Initialize () {
 	{
 		unlockLevels = [0,14,24,34,70,100];
 	}
-	if(settings.eraseOnLoad || (settings.eraseOnNewVersion && PlayerPrefs.GetFloat("AppVersion") != appVersion))
+	if(settings.eraseOnLoad || PlayerPrefs.GetInt("SaveSystemAvailable") == 0)
 	{
+		var oldBegNumber = PlayerPrefs.GetInt("IAPBeggingNumber");
 		PlayerPrefs.DeleteAll();
+		PlayerPrefs.SetInt("IAPBeggingNumber",oldBegNumber);
 		PlayerPrefs.SetFloat("AppVersion",appVersion);
 	}
 	CheckArcadeUnlocks();
@@ -326,6 +328,23 @@ function Initialize () {
 	}
 	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
 	
+	///////////////////////////////////////////////////////////////////////// IAP variables.
+	if(!PlayerPrefs.HasKey("SaveSystemAvailable"))
+	{
+		PlayerPrefs.SetInt("SaveSystemAvailable", 0);
+	}
+	if(!PlayerPrefs.HasKey("PaidSongOneUnlocked"))
+	{
+		PlayerPrefs.SetInt("PaidSongOneUnlocked", 0);
+	}
+	if(!PlayerPrefs.HasKey("PaidSongTwoUnlocked"))
+	{
+		PlayerPrefs.SetInt("PaidSongTwoUnlocked", 0);
+	}
+	if(!PlayerPrefs.HasKey("IAPBeggingNumber"))
+	{
+		PlayerPrefs.SetInt("IAPBeggingNumber", 0);
+	}
 	///////////////////////////////////////////////////////////////////////// Overall status variables.
 	if(!PlayerPrefs.HasKey("LastWorldVisited"))
 	{
@@ -461,6 +480,10 @@ function UnlockAllOptions () {
 	{
 		var worldName:String;
 		worldName = aWorld.basic.worldNameVar;
+		
+		PlayerPrefs.SetInt("SaveSystemAvailable", 1);
+		PlayerPrefs.SetInt("PaidSongOneUnlocked", 1);
+		PlayerPrefs.SetInt("PaidSongTwoUnlocked", 1);
 	    ///////////////////////////////////////////////////////////////////// World unlock variables.
 		if(!PlayerPrefs.HasKey(worldName))
 		{
@@ -565,7 +588,6 @@ class WorldOptions {
 }
 
 class Options {
-	var eraseOnNewVersion:boolean;
 	var quickProgress:boolean;
 	var unlockEverything:boolean;
 	var skipOpening:boolean;
@@ -720,4 +742,8 @@ function PushNotificationRegistration () {
 			iOS.NotificationServices.ScheduleLocalNotification(newNotif);
 		}
 	}
+}
+
+function SendDebug () {
+	Debug.Log("itworked!");
 }

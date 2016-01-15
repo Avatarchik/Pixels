@@ -108,6 +108,24 @@ function Load() {
 	}
 }
 
+function StepChange (amount:float)
+{
+	if(amount > 0)
+	{
+		if(loadGames.Length > 0)
+		{
+			step += amount;
+		}
+		else
+		{
+			Camera.main.GetComponent(Master).LaunchNotification("You must select at least one world!",NotificationType.tutorial);
+		}
+	}
+	else
+	{
+		step += amount;
+	}
+}
 function AddObject (original:GameObject[],addition:GameObject):GameObject[] {
 	var finalArray:GameObject[] = new GameObject[original.length+1];
 	for(var y:int = 0; y < original.length; y++)

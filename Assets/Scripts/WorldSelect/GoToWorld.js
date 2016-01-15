@@ -16,7 +16,7 @@ function Update () {
 
 function Clicked () {
 	whiteFlash.color.a = 1;
-	if(WorldMapManager.currentState == MapStatus.Confirmation)
+	if(WorldMapManager.currentState == MapStatus.Confirmation || WorldMapManager.currentState == MapStatus.Clear)
 	{
 		Load();
 	}
@@ -30,33 +30,33 @@ function Load () {
 		AudioManager.PlaySoundTransition(controller.currentWorld.audio.transitionIn);
 		Instantiate(transition, Vector3(0,0,-9.5), Quaternion.identity);
 		done = true;
-	}
-	yield WaitForSeconds(.7);
-	AudioManager.StopSong();
-	yield WaitForSeconds(1);
-	switch(controller.currentWorld.basic.world)
-	{
-		case WorldSelect.Theater:
-			if(Master.hardMode && Master.allowShow)
-			{	
-				Application.LoadLevel("TheShow");
-			}
-			else
-			{
-				Application.LoadLevel("Theater");
-			}
-			break;
-		case WorldSelect.Arcade:
-			Application.LoadLevel("Arcade");
-			break;
-		case WorldSelect.UnlockWheel:
-			Application.LoadLevel("UnlockWheel");
-			break;
-		case WorldSelect.Remix:
-			Application.LoadLevel("VRMachine");
-			break;
-		default:
-			Application.LoadLevel("MicroGameLauncher");
-			break;
+		yield WaitForSeconds(.7);
+		AudioManager.StopSong();
+		yield WaitForSeconds(1);
+		switch(controller.currentWorld.basic.world)
+		{
+			case WorldSelect.Theater:
+				if(Master.hardMode && Master.allowShow)
+				{	
+					Application.LoadLevel("TheShow");
+				}
+				else
+				{
+					Application.LoadLevel("Theater");
+				}
+				break;
+			case WorldSelect.Arcade:
+				Application.LoadLevel("Arcade");
+				break;
+			case WorldSelect.UnlockWheel:
+				Application.LoadLevel("UnlockWheel");
+				break;
+			case WorldSelect.Remix:
+				Application.LoadLevel("VRMachine");
+				break;
+			default:
+				Application.LoadLevel("MicroGameLauncher");
+				break;
+		}
 	}
 }

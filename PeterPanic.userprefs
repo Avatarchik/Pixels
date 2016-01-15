@@ -1,37 +1,26 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
+            <Node name="IAP" expanded="True">
+              <Node name="Assets" expanded="True" />
+              <Node name="Scripts" expanded="True">
+                <Node name="IAPManager.cs" selected="True" />
               </Node>
             </Node>
           </Node>
           <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="IAP" expanded="True">
+              <Node name="Scripts" expanded="True" />
+            </Node>
             <Node name="Scripts" expanded="True">
-              <Node name="Credits" expanded="True" />
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
-                <Node name="Objects" expanded="True" />
-                <Node name="Player" expanded="True" />
               </Node>
-              <Node name="Levels" expanded="True">
-                <Node name="03. GameDev" expanded="True" />
-                <Node name="05. Neverland" expanded="True" />
-              </Node>
-              <Node name="MicroGameLauncher" expanded="True" />
-              <Node name="Theater" expanded="True">
-                <Node name="TheShow" expanded="True" />
-                <Node name="TheaterSongLoader.js" selected="True" />
-              </Node>
-              <Node name="TitleScreen" expanded="True" />
-              <Node name="WorldSelect" expanded="True">
-                <Node name="Menu" expanded="True" />
-              </Node>
+              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>

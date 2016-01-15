@@ -93,6 +93,8 @@ function Clicked () {
 				if(PlayerPrefs.GetInt("CurrencyNumber") >= paidUnlockCost)
 				{
 					PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
+					GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).Scroll(1);
+					GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).Scroll(-1);
 					Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);
 					manager.Scroll(0);
 					if(TalkButton.talkWait < 0)

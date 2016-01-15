@@ -1,0 +1,46 @@
+{
+    "ios" :
+    {
+        "iap":{
+			"key":"afb214f3ddd842c28de9260d82407ded",
+            "items":{
+                "remove_ads":{
+                    "id":"com.cocos2dx.non1",
+                    "type":"non_consumable"
+                },
+                "double_coin":{
+                    "id":"com.cocos2dx.non2",
+                    "type":"non_consumable"
+                },
+                "coin_package":{
+                    "id":"com.sdkbox.coin.test1"
+                },
+                "coin_package2":{
+                    "id":"com.cocos2dx.plugintest3"
+                }
+            }
+        }
+    },
+    "android" :
+    {
+        "iap":{
+            "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuxoumyLS006Qk+M6Nfu4w+iuWgBdVLDnuqbXCacsG2boeByEKaeEE4JfFLMuqlvdbJHGFHggtEGbIcQa3eaV5tIY4Mw/iFdisyrclQN5hU0VRO0IOeBXL4CjhL0TB22I27g2pwujk6U4VERVcGTNDBMxooQREtRr+yK/IKQAaTY93k9wVbZYHXxW4IWRePuijEX28QLO1dEOl+ugN1dTdM3zHBEaobbOjOy4kttqp6CEPouu+O7b4qQJgD1aEtWVO2zM4q5UwC56taRmsEl5oGkDbQXXlP98k1c0MzE7Tj5Yvngq+eXn19s4OwI4DHCYAzL9p/l2NUdGgxmbxh9KAwIDAQAB",
+            "items":{
+                "remove_ads":{
+                    "id":"com.cocos2dx.non1",
+                    "type":"non_consumable"
+                },
+                "double_coin":{
+                    "id":"com.cocos2dx.non2",
+                    "type":"non_consumable"
+                },
+                "coin_package":{
+                    "id":"com.sdkbox.coin.test1"
+                },
+                "coin_package2":{
+                    "id":"com.cocos2dx.plugintest3"
+                }
+            }
+        }
+    }
+}
