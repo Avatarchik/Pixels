@@ -6,7 +6,7 @@ var player:GameObject;
 
 function Clicked () {
 	player = GameObject.FindGameObjectWithTag("Player");
-	if(TitleManager.currentState != TitleStatus.Intro && !Master.notifying)
+	if(TitleManager.currentState != TitleStatus.Intro && !Master.notifying && TitleManager.currentState != TitleStatus.Leaving)
 	{
 		if(player != null)
 		{

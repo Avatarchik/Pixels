@@ -256,6 +256,7 @@
      <Compile Include="Assets\Scripts\WorldSelect\HardModeToggle.js" />
      <Compile Include="Assets\Scripts\WorldSelect\LevelHighScoreScreen.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\ChangeColor.js" />
+     <Compile Include="Assets\Scripts\WorldSelect\Menu\UnlockSavingButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuButton.js" />
      <Compile Include="Assets\Scripts\WorldSelect\Menu\WorldMenuManager.js" />
      <Compile Include="Assets\Scripts\WorldSelect\MoveIcons.js" />
@@ -274,7 +275,20 @@
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\JSON\readme.txt" />
      <None Include="Assets\IAP\Resources\AndroidManifest.xml" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_iAd.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_NSData+Base64.h.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_NativeCore.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_Camera.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_InApp.mm.txt" />
      <None Include="Assets\IAP\Resources\sdkbox_config.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_SocialGate.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_CloudKit.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_NativeCore.h.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_Soomla.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_ReplayKit.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_NSData+Base64.m.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_GameCenter.mm.txt" />
+     <None Include="Assets\Plugins\StansAssets\IOS\ISN_Media.mm.txt" />
      <None Include="Assets\Art\Materials\3DText.shader" />
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>

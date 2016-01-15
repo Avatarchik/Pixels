@@ -15,6 +15,12 @@ public class IAPManager : MonoBehaviour {
 
 	public GameObject[] begging;
 
+	Boolean skip;
+
+	void Awake () {
+		skip = false;
+	}
+
 	// Use this for initialization
 	void Start () {
 		startPosition = transform.position;
@@ -23,13 +29,18 @@ public class IAPManager : MonoBehaviour {
 		startPosition.x = 0;
 		StartCoroutine(LaunchNote());
 	}
+
+	void SkipTheSpeaking () {
+		skip = true;
+	}
 	
 	// Update is called once per frame
 	IEnumerator LaunchNote () {
-		if(begging.Length > 0)
+		if(begging.Length > 0 && !skip)
 		{
 			GameObject newBeggingNote;
 			newBeggingNote = Instantiate(begging[Mathf.Min(begging.Length-1,PlayerPrefs.GetInt("IAPBeggingNumber"))]);
+			PlayerPrefs.SetInt("IAPBeggingNumber",PlayerPrefs.GetInt("IAPBeggingNumber") + 1);
 			newBeggingNote.transform.parent = transform;
 			while(newBeggingNote != null)
 			{
@@ -60,7 +71,7 @@ public class IAPManager : MonoBehaviour {
 			PlayerPrefs.SetInt("SaveSystemAvailable",1);
 			PlayerPrefs.SetInt("PaidSongOneUnlocked",1);
 			PlayerPrefs.SetInt("PaidSongTwoUnlocked",1);
-			BroadcastMessage("It might have worked! Who knows!");
+			BroadcastMessage("SuccessfulPurchase","It might have worked! Who knows!");
 		}
 		else
 		{
@@ -80,6 +91,10 @@ public class IAPManager : MonoBehaviour {
 		}
 	}
 
+	public void Failure (String error) {
+		BroadcastMessage("FailedPurchase");
+	}
+
 	public void Failure (Product product, String error) {
 		BroadcastMessage("FailedPurchase");
 	}
@@ -95,7 +110,7 @@ public class IAPManager : MonoBehaviour {
 	public void Initialized (Boolean result) {
 		if(!result)
 		{
-			BroadcastMessage("NotConnected");
+			//BroadcastMessage("NotConnected");
 		}
 	}
 

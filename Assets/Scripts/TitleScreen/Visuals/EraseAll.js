@@ -19,13 +19,16 @@ function Update () {
 }
 
 function Clicked () {
-	counter = 0;
-	if(step < 4)
+	if(!Master.notifying)
 	{
-		step++;
-	}
-	else
-	{
-		Camera.main.GetComponent(Master).ResetGame();
+		counter = 0;
+		if(step < 4)
+		{
+			step++;
+		}
+		else
+		{
+			Camera.main.GetComponent(Master).ResetGame();
+		}
 	}
 }

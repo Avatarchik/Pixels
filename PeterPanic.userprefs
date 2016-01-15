@@ -6,9 +6,11 @@
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="IAP" expanded="True">
-              <Node name="Assets" expanded="True" />
-              <Node name="Scripts" expanded="True">
-                <Node name="IAPManager.cs" selected="True" />
+              <Node name="Scripts" expanded="True" />
+            </Node>
+            <Node name="Scripts" expanded="True">
+              <Node name="GeneralPurpose" expanded="True">
+                <Node name="Managers" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -20,7 +22,14 @@
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
               </Node>
-              <Node name="WorldSelect" expanded="True" />
+              <Node name="TitleScreen" expanded="True">
+                <Node name="Visuals" expanded="True" />
+              </Node>
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Menu" expanded="True">
+                  <Node name="UnlockSavingButton.js" selected="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>

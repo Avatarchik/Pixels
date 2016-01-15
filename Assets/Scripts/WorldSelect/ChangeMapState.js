@@ -60,71 +60,74 @@ function CheckHover () {
 }
 
 function Clicked () {
-	switch(newState)
+	if(!Master.notifying)
 	{
-		case MapStatus.Menu:
-			if(WorldMapManager.currentState == MapStatus.Clear && menu != null && currentMenu == null)
-			{
-				currentMenu = Instantiate(menu, Vector3(0,-24,-3),Quaternion.identity);
-				WorldMapManager.currentState = MapStatus.Menu;
-			}
-			break;
-		case MapStatus.Clear:
-			if(WorldMapManager.currentState == MapStatus.Confirmation)
-			{
-				WorldMapManager.currentState = MapStatus.Clear;
-				var menuManager:WorldMenuManager = GetComponentInParent(WorldMenuManager); 
-			}
-			else if(WorldMapManager.currentState == MapStatus.Menu)
-			{
-				WorldMapManager.currentState = MapStatus.Clear;
-				GetComponentInParent(WorldMenuManager).Exit();
-			}
-			break;
-		case MapStatus.Confirmation:
-			Master.hardMode = false;
-			if(WorldMapManager.allowClick)
-			{
-				if(PlayerPrefs.GetInt(worldNameVar) == 1)
+		switch(newState)
+		{
+			case MapStatus.Menu:
+				if(WorldMapManager.currentState == MapStatus.Clear && menu != null && currentMenu == null)
 				{
-					if(WorldMapManager.currentState == MapStatus.Clear || (WorldMapManager.currentState == MapStatus.Intro && !WorldMapManager.introducing))
+					currentMenu = Instantiate(menu, Vector3(0,-24,-3),Quaternion.identity);
+					WorldMapManager.currentState = MapStatus.Menu;
+				}
+				break;
+			case MapStatus.Clear:
+				if(WorldMapManager.currentState == MapStatus.Confirmation)
+				{
+					WorldMapManager.currentState = MapStatus.Clear;
+					var menuManager:WorldMenuManager = GetComponentInParent(WorldMenuManager); 
+				}
+				else if(WorldMapManager.currentState == MapStatus.Menu)
+				{
+					WorldMapManager.currentState = MapStatus.Clear;
+					GetComponentInParent(WorldMenuManager).Exit();
+				}
+				break;
+			case MapStatus.Confirmation:
+				Master.hardMode = false;
+				if(WorldMapManager.allowClick)
+				{
+					if(PlayerPrefs.GetInt(worldNameVar) == 1)
+					{
+						if(WorldMapManager.currentState == MapStatus.Clear || (WorldMapManager.currentState == MapStatus.Intro && !WorldMapManager.introducing))
+						{
+							WorldMapManager.selectedLocation = transform.localPosition.x;
+							controller = Camera.main.GetComponent(Master);
+							for(var level:World in controller.worlds)
+							{
+								if(level.basic.worldNameVar == worldNameVar)
+								{
+									Master.currentWorld = level;
+								}
+							}
+							AudioManager.PlaySound(playbillSlide,.45);
+							WorldMapManager.currentState = MapStatus.Confirmation;
+						}
+					}
+					else if(WorldMapManager.currentState == MapStatus.Clear)
 					{
 						WorldMapManager.selectedLocation = transform.localPosition.x;
-						controller = Camera.main.GetComponent(Master);
-						for(var level:World in controller.worlds)
-						{
-							if(level.basic.worldNameVar == worldNameVar)
-							{
-								Master.currentWorld = level;
-							}
-						}
-						AudioManager.PlaySound(playbillSlide,.45);
-						WorldMapManager.currentState = MapStatus.Confirmation;
+						Camera.main.GetComponent(Master).LaunchNotification(warningText,NotificationType.lockedWorld);
+						WorldMapManager.currentState = MapStatus.Notification;
 					}
 				}
-				else if(WorldMapManager.currentState == MapStatus.Clear)
+				break;
+			case MapStatus.HighScore:
+				if(currentHighScoreBoard == null)
 				{
-					WorldMapManager.selectedLocation = transform.localPosition.x;
-					Camera.main.GetComponent(Master).LaunchNotification(warningText,NotificationType.lockedWorld);
-					WorldMapManager.currentState = MapStatus.Notification;
+					WorldMapManager.currentState = MapStatus.HighScore;
+					currentHighScoreBoard = Instantiate(highScoreObject);
+					currentHighScoreBoard.transform.position.z = -4;
+					while(currentHighScoreBoard != null)
+					{
+						yield;
+					}
+					WorldMapManager.currentState = MapStatus.Confirmation;
 				}
-			}
-			break;
-		case MapStatus.HighScore:
-			if(currentHighScoreBoard == null)
-			{
-				WorldMapManager.currentState = MapStatus.HighScore;
-				currentHighScoreBoard = Instantiate(highScoreObject);
-				currentHighScoreBoard.transform.position.z = -4;
-				while(currentHighScoreBoard != null)
-				{
-					yield;
-				}
-				WorldMapManager.currentState = MapStatus.Confirmation;
-			}
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
+		}
 	}
 }
 

@@ -1,11 +1,9 @@
 ﻿#pragma strict
 
-@HideInInspector var notConnected:boolean;
-@HideInInspector var succesfullyPurchased:boolean;
+@HideInInspector var done:boolean;
 
 function Start () {
-	notConnected = false;
-	succesfullyPurchased = false;
+	done = false;
 }
 
 function Update () {
@@ -13,7 +11,8 @@ function Update () {
 }
 
 function NotConnected () {
-	Results("Couldn't connect! Unlock from menu when connected!");
+	yield WaitForSeconds(.1);
+	Results("Connect to the internet to save game data!");
 }
 
 function SuccessfulPurchase (note:String) {
@@ -29,11 +28,16 @@ function FailedPurchase () {
 }
 
 function Results (note:String) {
-	Camera.main.GetComponent(Master).LaunchNotification(note,NotificationType.tutorial);
-	transform.position.x = 100;
-	while(Master.notifying)
+	if(!done)
 	{
-		yield;
+		done = true;
+		Master.notifying = false;
+		Camera.main.GetComponent(Master).LaunchNotification(note,NotificationType.tutorial);
+		transform.position.x = 100;
+		while(Master.notifying)
+		{
+			yield;
+		}
+		Destroy(gameObject);
 	}
-	Destroy(gameObject);
 }

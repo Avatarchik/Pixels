@@ -3,8 +3,8 @@
 // Audio
 var transitionToTitle:AudioClip;
 
-var option:String[] = new String[4];
-var button:GameObject[] = new GameObject[4];
+@HideInInspector var option:String[] = new String[4];
+@HideInInspector var button:GameObject[] = new GameObject[4];
 var buttonPrefab:GameObject;
 var transition:GameObject;
 var transitionColors:Color[];
@@ -58,80 +58,83 @@ function Update () {
 
 // List of what happens depending on what button is pressed, and in what menu.
 function MenuEffect(clicked:String) {
-	switch(clicked)
+	if(!Master.notifying)
 	{
-		// From initial menu.
-		case "Continue":
-			Exit();
-			Continue();
-			break;
-		case "Options":
-			option[0] = "Facebook";
-			option[1] = "Music";
-			option[2] = "Sound";
-			option[3] = "Back";
-			UpdateNamesUp();
-			break;
-		case "Title Screen":
-			ReturnToTitle();
-			break;
-			
-		// From options screen.
-		case "Facebook":
-			if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 0)
-			{
-				PlayerPrefs.SetInt("IgnoreTimeOfDay", 1);
-				NotifyText("World map effects disabled!");
-			}
-			else
-			{
-				PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
-				NotifyText("World map effects enabled!");
-			}
-			button[0].GetComponent(WorldMenuButton).SetText(option[0]);
-			break;
-		case "Music":
-			if(PlayerPrefs.GetInt("Music") == 0)
-			{
-				PlayerPrefs.SetInt("Music", 1);
-				NotifyText("Music on!");
-			}
-			else
-			{
-				PlayerPrefs.SetInt("Music", 0);
-				NotifyText("Music off!");
-			}
-			button[1].GetComponent(WorldMenuButton).SetText(option[1]);
-			break;
-		case "Sound":
-			if(PlayerPrefs.GetInt("Sound") == 0)
-			{
-				PlayerPrefs.SetInt("Sound", 1);
-				NotifyText("Music on!");
-			}
-			else
-			{
-				PlayerPrefs.SetInt("Sound", 0);
-				NotifyText("Music off!");
-			}
-			button[2].GetComponent(WorldMenuButton).SetText(option[2]);
-			break;
-		case "Back":
-			if(Application.loadedLevelName == "TitleScreen")
-			{
-				TitleManager.currentState = TitleStatus.Home;
-			}
-			else
-			{
-				option[0] = "Continue";
-				option[1] = "Options";
-				option[2] = "Title Screen";
-				option[3] = "";
-				UpdateNamesDown();
-			}
-			break;
-		default:
-			break;
+		switch(clicked)
+		{
+			// From initial menu.
+			case "Continue":
+				Exit();
+				Continue();
+				break;
+			case "Options":
+				option[0] = "Facebook";
+				option[1] = "Music";
+				option[2] = "Sound";
+				option[3] = "Back";
+				UpdateNamesUp();
+				break;
+			case "Title Screen":
+				ReturnToTitle();
+				break;
+				
+			// From options screen.
+			case "Facebook":
+				if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 0)
+				{
+					PlayerPrefs.SetInt("IgnoreTimeOfDay", 1);
+					NotifyText("World map effects disabled!");
+				}
+				else
+				{
+					PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
+					NotifyText("World map effects enabled!");
+				}
+				button[0].GetComponent(WorldMenuButton).SetText(option[0]);
+				break;
+			case "Music":
+				if(PlayerPrefs.GetInt("Music") == 0)
+				{
+					PlayerPrefs.SetInt("Music", 1);
+					NotifyText("Music on!");
+				}
+				else
+				{
+					PlayerPrefs.SetInt("Music", 0);
+					NotifyText("Music off!");
+				}
+				button[1].GetComponent(WorldMenuButton).SetText(option[1]);
+				break;
+			case "Sound":
+				if(PlayerPrefs.GetInt("Sound") == 0)
+				{
+					PlayerPrefs.SetInt("Sound", 1);
+					NotifyText("Music on!");
+				}
+				else
+				{
+					PlayerPrefs.SetInt("Sound", 0);
+					NotifyText("Music off!");
+				}
+				button[2].GetComponent(WorldMenuButton).SetText(option[2]);
+				break;
+			case "Back":
+				if(Application.loadedLevelName == "TitleScreen")
+				{
+					TitleManager.currentState = TitleStatus.Home;
+				}
+				else
+				{
+					option[0] = "Continue";
+					option[1] = "Options";
+					option[2] = "Title Screen";
+					option[3] = "";
+					UpdateNamesDown();
+				}
+				break;
+			default:
+				break;
+		}
 	}
 }
 
