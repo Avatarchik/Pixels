@@ -1,35 +1,26 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TestObscureStuff.js">
+    <Files>
+      <File FileName="Assets/Plugins/AntiCheatToolkit/Examples/Scripts/ActTesterGui.cs" Line="9" Column="40" />
+      <File FileName="Assets/Scripts/TestObscureStuff.js" Line="4" Column="9" />
+      <File FileName="Assets/Plugins/AntiCheatToolkit/Scripts/ObscuredTypes/ObscuredPrefs.cs" Line="3" Column="7" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True" />
-            </Node>
-            <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
+          <Node name="Assembly-CSharp-firstpass" expanded="True">
+            <Node name="Plugins" expanded="True">
+              <Node name="AntiCheatToolkit" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="ObscuredTypes" expanded="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
           <Node name="Assembly-UnityScript" expanded="True">
-            <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True" />
-            </Node>
             <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
-              </Node>
-              <Node name="TitleScreen" expanded="True">
-                <Node name="Visuals" expanded="True" />
-              </Node>
-              <Node name="WorldSelect" expanded="True">
-                <Node name="Menu" expanded="True">
-                  <Node name="UnlockSavingButton.js" selected="True" />
-                </Node>
-              </Node>
+              <Node name="TestObscureStuff.js" selected="True" />
             </Node>
           </Node>
         </State>

@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{C7750707-8266-7CC2-7325-B6D01D5E15ED}") = "PeterPanic", "Assembly-CSharp-firstpass.csproj", "{A7599C9F-46F3-D26E-1FFA-2507D5381E11}"
+EndProject
 Project("{C7750707-8266-7CC2-7325-B6D01D5E15ED}") = "PeterPanic", "Assembly-CSharp.csproj", "{824454E3-F4AA-33A6-2115-E9810384A3AC}"
 EndProject
 Project("{C7750707-8266-7CC2-7325-B6D01D5E15ED}") = "PeterPanic", "Assembly-CSharp-Editor.csproj", "{A614EDA9-B956-4A0A-E90B-A61CC5A273FD}"
@@ -13,6 +15,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7599C9F-46F3-D26E-1FFA-2507D5381E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7599C9F-46F3-D26E-1FFA-2507D5381E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7599C9F-46F3-D26E-1FFA-2507D5381E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7599C9F-46F3-D26E-1FFA-2507D5381E11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{824454E3-F4AA-33A6-2115-E9810384A3AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{824454E3-F4AA-33A6-2115-E9810384A3AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{824454E3-F4AA-33A6-2115-E9810384A3AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,7 +35,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 
