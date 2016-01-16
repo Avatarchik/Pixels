@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var colors:Color[];
 var variable:String;
 
@@ -15,7 +17,7 @@ function ColorRotate () {
 		{
 			yield WaitForSeconds(Random.Range(.2,1.3));
 			transform.GetComponent(SpriteRenderer).color = colors[Random.Range(0,colors.length)];
-			if(PlayerPrefs.GetInt(variable) == 1 || variable == "")
+			if(ObscuredPrefs.GetInt(variable) == 1 || variable == "")
 			{
 				transform.GetComponent(SpriteRenderer).color.a = Random.Range(.6,1);
 			}
@@ -33,7 +35,7 @@ function ColorFlicker () {
 		while(true)
 		{
 			yield WaitForSeconds(Random.Range(.05,.1));
-			if(PlayerPrefs.GetInt(variable) == 1 || variable == "")
+			if(ObscuredPrefs.GetInt(variable) == 1 || variable == "")
 			{
 				transform.GetComponent(SpriteRenderer).color.a += Random.Range(-.05,.05);
 			}

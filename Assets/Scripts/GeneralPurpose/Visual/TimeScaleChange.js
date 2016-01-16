@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 static var speed:boolean;
 
 @HideInInspector var slowOverride:boolean;

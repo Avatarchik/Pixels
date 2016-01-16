@@ -1,5 +1,7 @@
 	#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 import UnityEngine.SocialPlatforms;
 
 static var initialLoad:boolean;
@@ -24,7 +26,6 @@ static var vertical:boolean;
 @HideInInspector var showSelectedWorld:World;
 @HideInInspector var showUnlockLevels:int[];
 
-var appVersion:float;
 var varNames:String[];
 var settings:Options;
 var arcadeGames:ArcadeGame[];
@@ -104,10 +105,6 @@ function Awake () {
 	CheckForShowTime();
 	Social.localUser.Authenticate (ProcessAuthentication);
 	PushNotificationRegistration();
-	if(settings.skipOpening)
-	{
-		PlayerPrefs.SetInt("TutorialFinished",2);
-	}
 	if(Application.loadedLevelName == "GameStart")
 	{
 		Application.LoadLevel("TitleScreen");
@@ -180,7 +177,7 @@ function CheckForShowTime () {
 		{
 			allowShow = true;
 		}
-		else if(PlayerPrefs.GetInt("HighSchool") == 1 && PlayerPrefs.GetInt("ShowDate:"+date) != 1 && System.DateTime.Now.Hour == 14)
+		else if(ObscuredPrefs.GetInt("HighSchool") == 1 && ObscuredPrefs.GetInt("ShowDate:"+date) != 1 && System.DateTime.Now.Hour == 14)
 		{
 			allowShow = true;
 		}
@@ -221,16 +218,16 @@ function CheckDeviceType(search:String):boolean {
 function Demo () {
 	var resetTimer:float = settings.resetTime;
 	counter = settings.demoTime;
-	PlayerPrefs.SetInt("CurrencyNumber",1000);
+	ObscuredPrefs.SetInt("CurrencyNumber",1000);
 	while(true)
 	{
 		if(Input.GetKey("down") && Input.GetKey("m"))
 		{
-			PlayerPrefs.SetInt("CurrencyNumber",Mathf.Max(PlayerPrefs.GetInt("CurrencyNumber") - 10,0));
+			ObscuredPrefs.SetInt("CurrencyNumber",Mathf.Max(ObscuredPrefs.GetInt("CurrencyNumber") - 10,0));
 		}
 		else if(Input.GetKey("up") && Input.GetKey("m"))
 		{
-			PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") + 10);
+			ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber") + 10);
 		}
 		if(Finger.GetExists(0))
 		{
@@ -254,11 +251,7 @@ function Demo () {
 		}
 		if(counter < 0 || resetTimer < 0)
 		{
-			yield WaitForSeconds(.5);
-			PlayerPrefs.DeleteAll();
-			AudioManager.StopAll(0);
-			Application.LoadLevel("GameStart");
-			Destroy(gameObject);
+			ResetGame();
 		}
 		else if (counter > settings.demoTime * 2)
 		{
@@ -266,7 +259,7 @@ function Demo () {
 			unlockAll = true;
 			Initialize();
 			UnlockAllOptions();
-			PlayerPrefs.SetInt("CurrencyNumber", 1000);
+			ObscuredPrefs.SetInt("CurrencyNumber", 1000);
 			AudioManager.StopAll(0);
 			Application.LoadLevel("TitleScreen");
 		}
@@ -275,7 +268,7 @@ function Demo () {
 }
 
 function ResetGame () {
-	PlayerPrefs.DeleteAll();
+	DeleteAllValues();
 	AudioManager.StopAll(0);
 	Application.LoadLevel("GameStart");
 	Destroy(gameObject);
@@ -291,12 +284,9 @@ function Initialize () {
 	{
 		unlockLevels = [0,14,24,34,70,100];
 	}
-	if(settings.eraseOnLoad || PlayerPrefs.GetInt("SaveSystemAvailable") == 0)
+	if(settings.eraseOnLoad || ObscuredPrefs.GetInt("SaveSystemAvailable") == 0)
 	{
-		var oldBegNumber = PlayerPrefs.GetInt("IAPBeggingNumber");
-		PlayerPrefs.DeleteAll();
-		PlayerPrefs.SetInt("IAPBeggingNumber",oldBegNumber);
-		PlayerPrefs.SetFloat("AppVersion",appVersion);
+		DeleteAllValues();
 	}
 	CheckArcadeUnlocks();
 	if(unlockAll)
@@ -307,223 +297,223 @@ function Initialize () {
 	}
 	for(var i:int = 0; i < worlds.length; i++)
 	{
-		if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar))
+		if(!ObscuredPrefs.HasKey(worlds[i].basic.worldNameVar))
 		{
-			PlayerPrefs.SetInt(worlds[i].basic.worldNameVar, 0);
+			ObscuredPrefs.SetInt(worlds[i].basic.worldNameVar, 0);
 		}
 		for(var varName:int = 0; varName < varNames.length; varName++)
 		{
-			if(!PlayerPrefs.HasKey(worlds[i].basic.worldNameVar+varNames[varName]))
+			if(!ObscuredPrefs.HasKey(worlds[i].basic.worldNameVar+varNames[varName]))
 			{
-				PlayerPrefs.SetInt(worlds[i].basic.worldNameVar+varNames[varName], 0);
+				ObscuredPrefs.SetInt(worlds[i].basic.worldNameVar+varNames[varName], 0);
 			}
 		}
 	}
 	for(i = 0; i < settings.customizationPieces.length; i++)
 	{
-		if(!PlayerPrefs.HasKey(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name))
+		if(!ObscuredPrefs.HasKey(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name))
 		{
-			PlayerPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,0);
+			ObscuredPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,0);
 		}
 	}
-	PlayerPrefs.SetInt("PackingPeanutFactory", 1);
+	ObscuredPrefs.SetInt("PackingPeanutFactory", 1);
 	
 	///////////////////////////////////////////////////////////////////////// IAP variables.
-	if(!PlayerPrefs.HasKey("SaveSystemAvailable"))
+	if(!ObscuredPrefs.HasKey("SaveSystemAvailable"))
 	{
-		PlayerPrefs.SetInt("SaveSystemAvailable", 0);
+		ObscuredPrefs.SetInt("SaveSystemAvailable", 0);
 	}
-	if(!PlayerPrefs.HasKey("PaidSongOneUnlocked"))
+	if(!ObscuredPrefs.HasKey("PaidSongOneUnlocked"))
 	{
-		PlayerPrefs.SetInt("PaidSongOneUnlocked", 0);
+		ObscuredPrefs.SetInt("PaidSongOneUnlocked", 0);
 	}
-	if(!PlayerPrefs.HasKey("PaidSongTwoUnlocked"))
+	if(!ObscuredPrefs.HasKey("PaidSongTwoUnlocked"))
 	{
-		PlayerPrefs.SetInt("PaidSongTwoUnlocked", 0);
+		ObscuredPrefs.SetInt("PaidSongTwoUnlocked", 0);
 	}
-	if(!PlayerPrefs.HasKey("IAPBeggingNumber"))
+	if(!ObscuredPrefs.HasKey("IAPBeggingNumber"))
 	{
-		PlayerPrefs.SetInt("IAPBeggingNumber", 0);
+		ObscuredPrefs.SetInt("IAPBeggingNumber", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Overall status variables.
-	if(!PlayerPrefs.HasKey("LastWorldVisited"))
+	if(!ObscuredPrefs.HasKey("LastWorldVisited"))
 	{
-		PlayerPrefs.SetString("LastWorldVisited", "PackingPeanutFactory");
+		ObscuredPrefs.SetString("LastWorldVisited", "PackingPeanutFactory");
 	}
-	if(!PlayerPrefs.HasKey("CurrencyNumber"))
+	if(!ObscuredPrefs.HasKey("CurrencyNumber"))
 	{
-		PlayerPrefs.SetInt("CurrencyNumber", 0);
+		ObscuredPrefs.SetInt("CurrencyNumber", 0);
 	}
-	if(!PlayerPrefs.HasKey("TutorialFinished"))
+	if(!ObscuredPrefs.HasKey("TutorialFinished"))
 	{
-		PlayerPrefs.SetInt("TutorialFinished", 0);
+		ObscuredPrefs.SetInt("TutorialFinished", 0);
 	}
-	if(!PlayerPrefs.HasKey("WorldMapState"))
+	if(!ObscuredPrefs.HasKey("WorldMapState"))
 	{
-		PlayerPrefs.SetInt("WorldMapState", 0);
+		ObscuredPrefs.SetInt("WorldMapState", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Options variables.
-	if(!PlayerPrefs.HasKey("Sound"))
+	if(!ObscuredPrefs.HasKey("Sound"))
 	{
-		PlayerPrefs.SetInt("Sound", 1);
+		ObscuredPrefs.SetInt("Sound", 1);
 	}
-	if(!PlayerPrefs.HasKey("Music"))
+	if(!ObscuredPrefs.HasKey("Music"))
 	{
-		PlayerPrefs.SetInt("Music", 1);
+		ObscuredPrefs.SetInt("Music", 1);
 	}
 	///////////////////////////////////////////////////////////////////////// Character selection variables.
-	if(!PlayerPrefs.HasKey("HairSelection"))
+	if(!ObscuredPrefs.HasKey("HairSelection"))
 	{
-		PlayerPrefs.SetInt("HairSelection", 0);
+		ObscuredPrefs.SetInt("HairSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("HairColor"))
+	if(!ObscuredPrefs.HasKey("HairColor"))
 	{
-		PlayerPrefs.SetInt("HairColor", 0);
+		ObscuredPrefs.SetInt("HairColor", 0);
 	}
-	if(!PlayerPrefs.HasKey("EyesSelection"))
+	if(!ObscuredPrefs.HasKey("EyesSelection"))
 	{
-		PlayerPrefs.SetInt("EyesSelection", 0);
+		ObscuredPrefs.SetInt("EyesSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("EyeColor"))
+	if(!ObscuredPrefs.HasKey("EyeColor"))
 	{
-		PlayerPrefs.SetInt("EyeColor", 0);
+		ObscuredPrefs.SetInt("EyeColor", 0);
 	}
-	if(!PlayerPrefs.HasKey("TopSelection"))
+	if(!ObscuredPrefs.HasKey("TopSelection"))
 	{
-		PlayerPrefs.SetInt("TopSelection", 0);
+		ObscuredPrefs.SetInt("TopSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("TopColor"))
+	if(!ObscuredPrefs.HasKey("TopColor"))
 	{
-		PlayerPrefs.SetInt("TopColor", 1);
+		ObscuredPrefs.SetInt("TopColor", 1);
 	}
-	if(!PlayerPrefs.HasKey("BottomSelection"))
+	if(!ObscuredPrefs.HasKey("BottomSelection"))
 	{
-		PlayerPrefs.SetInt("BottomSelection", 0);
+		ObscuredPrefs.SetInt("BottomSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("BottomColor"))
+	if(!ObscuredPrefs.HasKey("BottomColor"))
 	{
-		PlayerPrefs.SetInt("BottomColor", 0);
+		ObscuredPrefs.SetInt("BottomColor", 0);
 	}
-	if(!PlayerPrefs.HasKey("BodyColor"))
+	if(!ObscuredPrefs.HasKey("BodyColor"))
 	{
-		PlayerPrefs.SetInt("BodyColor", 0);
+		ObscuredPrefs.SetInt("BodyColor", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Theater Theater selection variables.
-	if(!PlayerPrefs.HasKey("StageWallSelection"))
+	if(!ObscuredPrefs.HasKey("StageWallSelection"))
 	{
-		PlayerPrefs.SetInt("StageWallSelection", 0);
+		ObscuredPrefs.SetInt("StageWallSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("StageFloorSelection"))
+	if(!ObscuredPrefs.HasKey("StageFloorSelection"))
 	{
-		PlayerPrefs.SetInt("StageFloorSelection", 0);
+		ObscuredPrefs.SetInt("StageFloorSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("CeilingSelection"))
+	if(!ObscuredPrefs.HasKey("CeilingSelection"))
 	{
-		PlayerPrefs.SetInt("CeilingSelection", 0);
+		ObscuredPrefs.SetInt("CeilingSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("TheaterWallSelection"))
+	if(!ObscuredPrefs.HasKey("TheaterWallSelection"))
 	{
-		PlayerPrefs.SetInt("TheaterWallSelection", 0);
+		ObscuredPrefs.SetInt("TheaterWallSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("TheaterFloorSelection"))
+	if(!ObscuredPrefs.HasKey("TheaterFloorSelection"))
 	{
-		PlayerPrefs.SetInt("TheaterFloorSelection", 0);
+		ObscuredPrefs.SetInt("TheaterFloorSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("CurtainSelection"))
+	if(!ObscuredPrefs.HasKey("CurtainSelection"))
 	{
-		PlayerPrefs.SetInt("CurtainSelection", 0);
+		ObscuredPrefs.SetInt("CurtainSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("ChairsSelection"))
+	if(!ObscuredPrefs.HasKey("ChairsSelection"))
 	{
-		PlayerPrefs.SetInt("ChairsSelection", 0);
+		ObscuredPrefs.SetInt("ChairsSelection", 0);
 	}
 	///////////////////////////////////////////////////////////////////////// Theater FOH selection variables.
-	if(!PlayerPrefs.HasKey("FOHWallSelection"))
+	if(!ObscuredPrefs.HasKey("FOHWallSelection"))
 	{
-		PlayerPrefs.SetInt("FOHWallSelection", 0);
+		ObscuredPrefs.SetInt("FOHWallSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("FOHFloorSelection"))
+	if(!ObscuredPrefs.HasKey("FOHFloorSelection"))
 	{
-		PlayerPrefs.SetInt("FOHFloorSelection", 0);
+		ObscuredPrefs.SetInt("FOHFloorSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("FOHBoozeSelection"))
+	if(!ObscuredPrefs.HasKey("FOHBoozeSelection"))
 	{
-		PlayerPrefs.SetInt("FOHBoozeSelection", 0);
+		ObscuredPrefs.SetInt("FOHBoozeSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("FOHTicketBoothSelection"))
+	if(!ObscuredPrefs.HasKey("FOHTicketBoothSelection"))
 	{
-		PlayerPrefs.SetInt("FOHTicketBoothSelection", 0);
+		ObscuredPrefs.SetInt("FOHTicketBoothSelection", 0);
 	}
-	if(!PlayerPrefs.HasKey("FOHDeskSelection"))
+	if(!ObscuredPrefs.HasKey("FOHDeskSelection"))
 	{
-		PlayerPrefs.SetInt("FOHDeskSelection", 0);
+		ObscuredPrefs.SetInt("FOHDeskSelection", 0);
 	}
-	if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
+	if(ObscuredPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
 	{
-		PlayerPrefs.SetInt("WorldMapState",1);
+		ObscuredPrefs.SetInt("WorldMapState",1);
 	}
 }
 
 function UnlockCustomizeOptions() {
 	for(var i:int = 0; i < settings.customizationPieces.length; i++)
 	{
-		PlayerPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,1);
+		ObscuredPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,1);
 	}
 }
 
 function UnlockAllOptions () {
-	PlayerPrefs.DeleteAll();
-	PlayerPrefs.SetInt("TutorialFinished",2);
-	PlayerPrefs.SetInt("WorldMapState",2);
-	PlayerPrefs.SetInt("FirstThingUnlocked",1);
+	DeleteAllValues();
+	ObscuredPrefs.SetInt("TutorialFinished",2);
+	ObscuredPrefs.SetInt("WorldMapState",2);
+	ObscuredPrefs.SetInt("FirstThingUnlocked",1);
 	for(var aWorld:World in worlds)
 	{
 		var worldName:String;
 		worldName = aWorld.basic.worldNameVar;
 		
-		PlayerPrefs.SetInt("SaveSystemAvailable", 1);
-		PlayerPrefs.SetInt("PaidSongOneUnlocked", 1);
-		PlayerPrefs.SetInt("PaidSongTwoUnlocked", 1);
+		ObscuredPrefs.SetInt("SaveSystemAvailable", 1);
+		ObscuredPrefs.SetInt("PaidSongOneUnlocked", 1);
+		ObscuredPrefs.SetInt("PaidSongTwoUnlocked", 1);
 	    ///////////////////////////////////////////////////////////////////// World unlock variables.
-		if(!PlayerPrefs.HasKey(worldName))
+		if(!ObscuredPrefs.HasKey(worldName))
 		{
-			PlayerPrefs.SetInt(worldName, 1);
+			ObscuredPrefs.SetInt(worldName, 1);
 		}
 		///////////////////////////////////////////////////////////////////// World reward variables.
-		if(!PlayerPrefs.HasKey(worldName+"Unlocks"))
+		if(!ObscuredPrefs.HasKey(worldName+"Unlocks"))
 		{
-			PlayerPrefs.SetInt(worldName+"Unlocks", 3);
+			ObscuredPrefs.SetInt(worldName+"Unlocks", 3);
 		}
 		///////////////////////////////////////////////////////////////////// World high score variables.
-		if(!PlayerPrefs.HasKey(worldName)+"HighScore")
+		if(!ObscuredPrefs.HasKey(worldName)+"HighScore")
 		{
-			PlayerPrefs.SetInt(worldName+"HighScore", 50);
+			ObscuredPrefs.SetInt(worldName+"HighScore", 50);
 		}
-		if(!PlayerPrefs.HasKey(worldName)+"HighScoreHard")
+		if(!ObscuredPrefs.HasKey(worldName)+"HighScoreHard")
 		{
-			PlayerPrefs.SetInt(worldName+"HighScoreHard", 50);
+			ObscuredPrefs.SetInt(worldName+"HighScoreHard", 50);
 		}
 		///////////////////////////////////////////////////////////////////// World visit variables.
-		if(!PlayerPrefs.HasKey(worldName)+"PlayedOnce")
+		if(!ObscuredPrefs.HasKey(worldName)+"PlayedOnce")
 		{
-			PlayerPrefs.SetInt(worldName+"PlayedOnce", 1);
+			ObscuredPrefs.SetInt(worldName+"PlayedOnce", 1);
 		}
-		if(!PlayerPrefs.HasKey(worldName)+"Beaten")
+		if(!ObscuredPrefs.HasKey(worldName)+"Beaten")
 		{
-			PlayerPrefs.SetInt(worldName+"Beaten", 1);
+			ObscuredPrefs.SetInt(worldName+"Beaten", 1);
 		}
 		for(var varName:int = 0; varName < varNames.length; varName++)
 		{
-			if(!PlayerPrefs.HasKey(aWorld.basic.worldNameVar+varNames[varName]))
+			if(!ObscuredPrefs.HasKey(aWorld.basic.worldNameVar+varNames[varName]))
 			{
-				PlayerPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 1);
+				ObscuredPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 1);
 			}
 		}
 	}
-	PlayerPrefs.SetInt("HairSelection",0);
-	PlayerPrefs.SetInt("EyesSelection",0);
-	PlayerPrefs.SetInt("TopSelection",0);
-	PlayerPrefs.SetInt("BottomSelection",0);
+	ObscuredPrefs.SetInt("HairSelection",0);
+	ObscuredPrefs.SetInt("EyesSelection",0);
+	ObscuredPrefs.SetInt("TopSelection",0);
+	ObscuredPrefs.SetInt("BottomSelection",0);
 	UnlockCustomizeOptions();
 }
 
@@ -590,7 +580,7 @@ class WorldOptions {
 class Options {
 	var quickProgress:boolean;
 	var unlockEverything:boolean;
-	var skipOpening:boolean;
+	var devButton:boolean;
 	var eraseOnLoad:boolean;
 	var alwaysPerform:boolean;
 	var demoMode:boolean;
@@ -648,15 +638,15 @@ class ArcadeGame {
 function CheckArcadeUnlocks () {
 	for(var thisGame:ArcadeGame in arcadeGames)
 	{
-		if(!PlayerPrefs.HasKey("Arcade"+thisGame.name))
+		if(!ObscuredPrefs.HasKey("Arcade"+thisGame.name))
 		{
-			PlayerPrefs.SetInt("Arcade"+thisGame.name,0);
+			ObscuredPrefs.SetInt("Arcade"+thisGame.name,0);
 		}	
-		if(!PlayerPrefs.HasKey("Arcade"+thisGame.name+"Score"))
+		if(!ObscuredPrefs.HasKey("Arcade"+thisGame.name+"Score"))
 		{
-			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
+			ObscuredPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
 		}	
-		thisGame.highScore = PlayerPrefs.GetFloat("Arcade"+thisGame.name+"Score");
+		thisGame.highScore = ObscuredPrefs.GetFloat("Arcade"+thisGame.name+"Score");
 	}
 }
 
@@ -671,9 +661,9 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 	{
 		for(var thisGame:ArcadeGame in arcadeGames)
 		{
-			PlayerPrefs.SetInt("Arcade"+thisGame.name,1);
-			PlayerPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
-			thisGame.highScore = PlayerPrefs.GetFloat("Arcade"+thisGame.name+"Score");
+			ObscuredPrefs.SetInt("Arcade"+thisGame.name,1);
+			ObscuredPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
+			thisGame.highScore = ObscuredPrefs.GetFloat("Arcade"+thisGame.name+"Score");
 		}
 	}
 	else
@@ -686,9 +676,9 @@ function UnlockArcadeGames (gameName:String,all:boolean) {
 				specificGame = thisGame;
 			}
 		}
-		PlayerPrefs.SetInt("Arcade"+specificGame.name,1);
-		PlayerPrefs.SetFloat("Arcade"+specificGame.name+"Score",0);
-		specificGame.highScore = PlayerPrefs.GetFloat("Arcade"+specificGame.name);
+		ObscuredPrefs.SetInt("Arcade"+specificGame.name,1);
+		ObscuredPrefs.SetFloat("Arcade"+specificGame.name+"Score",0);
+		specificGame.highScore = ObscuredPrefs.GetFloat("Arcade"+specificGame.name);
 	}
 }
 
@@ -722,7 +712,7 @@ function ProcessAuthentication (success: boolean) {
 function PushNotificationRegistration () {
 	iOS.NotificationServices.RegisterForNotifications(iOS.NotificationType.Alert);
 	iOS.NotificationServices.ClearLocalNotifications();
-	if(PlayerPrefs.GetInt("HighSchool") == 1)
+	if(ObscuredPrefs.GetInt("HighSchool") == 1)
 	{
 		for(var i:int = 0; i < 8; i++)
 		{
@@ -744,6 +734,21 @@ function PushNotificationRegistration () {
 	}
 }
 
-function SendDebug () {
-	Debug.Log("itworked!");
+function DeleteAllValues () {
+	if(settings.eraseOnLoad)
+	{
+		ObscuredPrefs.DeleteAll();
+	}
+	else
+	{
+		var beggingNumber:int = ObscuredPrefs.GetInt("IAPBeggingNumber");
+		var saveSystem:int = ObscuredPrefs.GetInt("SaveSystemAvailable");
+		var paidSongOne:int = ObscuredPrefs.GetInt("PaidSongOneUnlocked");
+		var paidSongTwo:int = ObscuredPrefs.GetInt("PaidSongTwoUnlocked");
+		ObscuredPrefs.DeleteAll();
+		ObscuredPrefs.SetInt("IAPBeggingNumber",beggingNumber);
+		ObscuredPrefs.SetInt("SaveSystemAvailable",saveSystem);
+		ObscuredPrefs.SetInt("PaidSongOneUnlocked",paidSongOne);
+		ObscuredPrefs.SetInt("PaidSongTwoUnlocked",paidSongTwo);
+	}
 }

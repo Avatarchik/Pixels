@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var step:int;
 var smokeLeft:ParticleSystem;
 var smokeRight:ParticleSystem;

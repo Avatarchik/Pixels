@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var currency:int;
 
 var coinSprites:Sprite[];
@@ -12,14 +14,14 @@ var coinSound:AudioClip;
 
 function Start () {
 	animating = false;
-	currency = PlayerPrefs.GetInt("CurrencyNumber");
+	currency = ObscuredPrefs.GetInt("CurrencyNumber");
 	StartCoroutine(CurrencyCounting());
 }
 
 function CurrencyCounting(){
 	while(true)
 	{
-		if(currency < PlayerPrefs.GetInt("CurrencyNumber"))
+		if(currency < ObscuredPrefs.GetInt("CurrencyNumber"))
 		{
 			currency++;
 			AudioManager.PlaySound(coinSound,.1);
@@ -29,9 +31,9 @@ function CurrencyCounting(){
 			}
 			//yield WaitForSeconds(.1);
 		}
-		else if(currency > PlayerPrefs.GetInt("CurrencyNumber"))
+		else if(currency > ObscuredPrefs.GetInt("CurrencyNumber"))
 		{
-			currency = Mathf.MoveTowards(currency,PlayerPrefs.GetInt("CurrencyNumber"),3);
+			currency = Mathf.MoveTowards(currency,ObscuredPrefs.GetInt("CurrencyNumber"),3);
 		}
 		if(GetComponent(TextMesh)!=null)
 		{

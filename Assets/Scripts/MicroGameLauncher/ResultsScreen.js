@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var score:int;
 @HideInInspector var smallFont:int;
 @HideInInspector var largeFont:int;
@@ -41,7 +43,7 @@ function Start () {
 	largeFont = 606;
 	notifying = false;
 	skip = false;
-	numberOfUnlocks = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks");
+	numberOfUnlocks = ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks");
 	unlockLevels = new int[Master.unlockLevels.length];
 	if(Master.currentWorld.basic.worldNameVar == "VRTraining")
 	{
@@ -118,7 +120,7 @@ function CountScore() {
 		{
 			currencyValue *= Camera.main.GetComponent(Master).settings.economy.hardGameValue;
 		}
-		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+currencyValue);
+		ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber")+currencyValue);
 		for(var thisText:TextMesh in text)
 		{
 			thisText.fontSize = smallFont;
@@ -136,9 +138,9 @@ function CountScore() {
 		}
 		for(var i:int = 0; i < unlockLevels.length; i++)
 		{
-			if(currentDisplayedScore == unlockLevels[i] && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i)
+			if(currentDisplayedScore == unlockLevels[i] && ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Unlocks") < i)
 			{
-				PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",i);
+				ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Unlocks",i);
 				for(var thisParticle:ParticleSystem in particles)
 				{
 					thisParticle.Emit(300);
@@ -162,7 +164,7 @@ function CountScore() {
 							}
 							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel1)
 							{
-								PlayerPrefs.SetInt(variableName,1);
+								ObscuredPrefs.SetInt(variableName,1);
 								if(variableName == "ActOneFinished")
 								{
 									GameManager.showCredits = true;
@@ -172,11 +174,11 @@ function CountScore() {
 						case 1:
 							for(var variableName:String in Master.currentWorld.unlocks.unlocksLevel2)
 							{
-								PlayerPrefs.SetInt(variableName,1);
+								ObscuredPrefs.SetInt(variableName,1);
 							}
 							break;
 						case 2:
-							PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") + Master.currentWorld.unlocks.unlocksLevel3);
+							ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber") + Master.currentWorld.unlocks.unlocksLevel3);
 							break;
 						default:
 							break;
@@ -191,9 +193,9 @@ function CountScore() {
 					AudioManager.PlaySound(unlockApplause[i-1],.4);	
 					AnnouncementStep3(i-1);
 					yield WaitForSeconds(4);
-					if(PlayerPrefs.GetInt("UnlockNotifiedAboutFurtherUnlocks") != 1)
+					if(ObscuredPrefs.GetInt("UnlockNotifiedAboutFurtherUnlocks") != 1)
 					{
-						PlayerPrefs.SetInt("UnlockNotifiedAboutFurtherUnlocks", 1);
+						ObscuredPrefs.SetInt("UnlockNotifiedAboutFurtherUnlocks", 1);
 						Camera.main.GetComponent(Master).LaunchNotification("Replay to unlock new difficulties and stuff!",NotificationType.notEnoughCoins);
 						while(Master.notifying)
 						{
@@ -238,7 +240,7 @@ function FindNextGoal () {
 	}
 	else
 	{
-		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar);
+		var highestScore = ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar);
 		if(score > highestScore)
 		{
 			highestScore = score;

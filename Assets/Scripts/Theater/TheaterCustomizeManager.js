@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var highlight:SpriteRenderer;
 
 // All of the possible pieces and representative sprites to be loaded.

@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var thisCharacter:Person;
 
 var hum:AudioSource;

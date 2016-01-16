@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var mouth:SpriteRenderer;
 
 var mouthClosed:Sprite;

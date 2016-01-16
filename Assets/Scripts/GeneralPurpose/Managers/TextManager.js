@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 public enum RecordType{None,Left,Center,Right,MusicTiming,Background};
 public enum SideChange{None,MouthStates,Speaking,Flipped,Frown,SpriteType,Phonemes,ClearMouth};
 public enum Phoneme{type1,type2,type3,type4,type5};

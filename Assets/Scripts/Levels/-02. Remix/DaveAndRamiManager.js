@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var welcomeSounds:AudioClip[];
 var goodSounds:AudioClip[];
 var neutralSounds:AudioClip[];

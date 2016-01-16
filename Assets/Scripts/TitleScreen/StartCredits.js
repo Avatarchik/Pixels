@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 // Audio
 var transitionToWorld:AudioClip;
 
@@ -7,7 +9,7 @@ var transition:GameObject;
 var done:boolean;
 
 function Awake () {
-	if(PlayerPrefs.GetInt("ActOneFinished") != 1)
+	if(ObscuredPrefs.GetInt("ActOneFinished") != 1)
 	{
 		Destroy(gameObject);
 	}

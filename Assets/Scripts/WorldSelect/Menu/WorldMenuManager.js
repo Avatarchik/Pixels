@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 // Audio
 var transitionToTitle:AudioClip;
 
@@ -23,17 +25,17 @@ var localSpeaker:AudioSource;
 
 function Start () {
 	notify.color.a = 0;
-	if(!PlayerPrefs.HasKey("Sound"))
+	if(!ObscuredPrefs.HasKey("Sound"))
 	{
-		PlayerPrefs.SetInt("Sound", 1);
+		ObscuredPrefs.SetInt("Sound", 1);
 	}
-	if(!PlayerPrefs.HasKey("Music"))
+	if(!ObscuredPrefs.HasKey("Music"))
 	{
-		PlayerPrefs.SetInt("Music", 1);
+		ObscuredPrefs.SetInt("Music", 1);
 	}
-	if(!PlayerPrefs.HasKey("IgnoreTimeOfDay"))
+	if(!ObscuredPrefs.HasKey("IgnoreTimeOfDay"))
 	{
-		PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
+		ObscuredPrefs.SetInt("IgnoreTimeOfDay", 0);
 	}
 	option[0] = "Continue";
 	option[1] = "Options";
@@ -80,40 +82,40 @@ function MenuEffect(clicked:String) {
 				
 			// From options screen.
 			case "Facebook":
-				if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 0)
+				if(ObscuredPrefs.GetInt("IgnoreTimeOfDay") == 0)
 				{
-					PlayerPrefs.SetInt("IgnoreTimeOfDay", 1);
+					ObscuredPrefs.SetInt("IgnoreTimeOfDay", 1);
 					NotifyText("World map effects disabled!");
 				}
 				else
 				{
-					PlayerPrefs.SetInt("IgnoreTimeOfDay", 0);
+					ObscuredPrefs.SetInt("IgnoreTimeOfDay", 0);
 					NotifyText("World map effects enabled!");
 				}
 				button[0].GetComponent(WorldMenuButton).SetText(option[0]);
 				break;
 			case "Music":
-				if(PlayerPrefs.GetInt("Music") == 0)
+				if(ObscuredPrefs.GetInt("Music") == 0)
 				{
-					PlayerPrefs.SetInt("Music", 1);
+					ObscuredPrefs.SetInt("Music", 1);
 					NotifyText("Music on!");
 				}
 				else
 				{
-					PlayerPrefs.SetInt("Music", 0);
+					ObscuredPrefs.SetInt("Music", 0);
 					NotifyText("Music off!");
 				}
 				button[1].GetComponent(WorldMenuButton).SetText(option[1]);
 				break;
 			case "Sound":
-				if(PlayerPrefs.GetInt("Sound") == 0)
+				if(ObscuredPrefs.GetInt("Sound") == 0)
 				{
-					PlayerPrefs.SetInt("Sound", 1);
+					ObscuredPrefs.SetInt("Sound", 1);
 					NotifyText("Music on!");
 				}
 				else
 				{
-					PlayerPrefs.SetInt("Sound", 0);
+					ObscuredPrefs.SetInt("Sound", 0);
 					NotifyText("Music off!");
 				}
 				button[2].GetComponent(WorldMenuButton).SetText(option[2]);
@@ -264,7 +266,7 @@ function Continue () {
 				if(countdown.text != "3")
 				{
 					countdown.text = "3";
-					if(PlayerPrefs.GetInt("Sound") == 1)
+					if(ObscuredPrefs.GetInt("Sound") == 1)
 					{
 						localSpeaker.PlayOneShot(countdownSound,.8);
 					}
@@ -278,7 +280,7 @@ function Continue () {
 				if(countdown.text != "2")
 				{
 					countdown.text = "2";
-					if(PlayerPrefs.GetInt("Sound") == 1)
+					if(ObscuredPrefs.GetInt("Sound") == 1)
 					{
 						localSpeaker.PlayOneShot(countdownSound,.8);
 					}
@@ -292,7 +294,7 @@ function Continue () {
 				if(countdown.text != "1")
 				{
 					countdown.text = "1";
-					if(PlayerPrefs.GetInt("Sound") == 1)
+					if(ObscuredPrefs.GetInt("Sound") == 1)
 					{
 						localSpeaker.PlayOneShot(countdownSound,.8);
 					}

@@ -1,5 +1,7 @@
 #pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var destination:float;
 
 var speed:float;

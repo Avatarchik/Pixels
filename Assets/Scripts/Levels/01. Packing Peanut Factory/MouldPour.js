@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var particle:ParticleSystem;
 var lid:GameObject;
 @HideInInspector var lidOrigin:Vector3;
@@ -280,17 +282,17 @@ function Finish(completionStatus:boolean) {
 }
 
 function SendTutorial () {
-	if(PlayerPrefs.HasKey("TutorialFor:" + transform.name))
+	if(ObscuredPrefs.HasKey("TutorialFor:" + transform.name))
 	{
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,PlayerPrefs.GetInt("TutorialFor:" + transform.name) + 1);
+		ObscuredPrefs.SetInt("TutorialFor:" + transform.name,ObscuredPrefs.GetInt("TutorialFor:" + transform.name) + 1);
 	}
 	else
 	{
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,1);
+		ObscuredPrefs.SetInt("TutorialFor:" + transform.name,1);
 	}
-	if((PlayerPrefs.GetInt("TutorialFor:" + transform.name) > 1) && Application.loadedLevelName == "MicroGameLauncher" && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") == 0 && !Master.hardMode)
+	if((ObscuredPrefs.GetInt("TutorialFor:" + transform.name) > 1) && Application.loadedLevelName == "MicroGameLauncher" && ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed") == 0 && !Master.hardMode)
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(GameManager).TurnOnNotification("Wait until the light turns green!");
-		PlayerPrefs.SetInt("TutorialFor:" + transform.name,-1);
+		ObscuredPrefs.SetInt("TutorialFor:" + transform.name,-1);
 	}
 }

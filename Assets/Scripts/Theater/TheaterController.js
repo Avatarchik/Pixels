@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 public enum TheaterStatus{Home,Front,Stats,CustomizeNoColor,CustomizeColor,Show};
 static var currentState:TheaterStatus;
 static var customizing:boolean;

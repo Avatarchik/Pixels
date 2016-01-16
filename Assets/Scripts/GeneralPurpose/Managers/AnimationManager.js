@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var standingSprites:Sprite[];
 var walkSpriteBack:Sprite[];
 var walkSpriteFront:Sprite[];

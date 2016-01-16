@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 // Set in editor.
 var textObject:TextMesh;
 var glow:SpriteRenderer;

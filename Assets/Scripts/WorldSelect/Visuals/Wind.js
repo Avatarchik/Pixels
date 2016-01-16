@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var standing:Sprite;
 var moving1:Sprite;
 var moving2:Sprite;
@@ -14,7 +16,7 @@ function Update () {
 }
 
 function TreeCycle () {
-	if(PlayerPrefs.GetInt("WorldMapState") == 1 && evil != null)
+	if(ObscuredPrefs.GetInt("WorldMapState") == 1 && evil != null)
 	{
 		
 		GetComponent(SpriteRenderer).sprite = evil;

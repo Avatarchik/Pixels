@@ -1,5 +1,7 @@
 ﻿	#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 // Variable Types
 var transition:GameObject;
 var notification:GameObject;
@@ -114,7 +116,7 @@ function BeforeGames () {
 	lives = Master.lives;
 	difficultyChangeAmount = 3;
 	speedChangeAmount = 10;
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0)
+	if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0)
 	{
 		settings = "First Time";
 	}
@@ -192,14 +194,14 @@ function BeforeGames () {
 	UI.BroadcastMessage("TimerPause", gameNumber,SendMessageOptions.DontRequireReceiver);
 	if(!Master.hardMode)
 	{
-		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
+		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce") == 0)
 		{
-			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"FirstOpeningPlayed",1);
+			ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"FirstOpeningPlayed",1);
 			loadedText = Instantiate(Master.currentWorld.text.firstOpening);
 		}
 		else
 		{
-			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"RegularOpeningPlayed",1);
+			ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"RegularOpeningPlayed",1);
 			loadedText = Instantiate(Master.currentWorld.text.regularOpening);
 		}
 		// Wait for the text to finish.
@@ -241,7 +243,7 @@ function BetweenGame () {
 	}
 	yield WaitForSeconds(timeBeforeSpeedChange);
 	if(quitting){return;}
-	if(lives <= 0 || (PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1] && Master.currentWorld.basic.worldNameVar != "VRTraining"))
+	if(lives <= 0 || (ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1] && Master.currentWorld.basic.worldNameVar != "VRTraining"))
 	{
 		StartCoroutine(GameOver());
 	}
@@ -283,7 +285,7 @@ function GameComplete (success:boolean) {
 function GameOver () {
 	yield WaitForSeconds(.5);
 	pausable = false;
-	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
+	ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
 	if(!Master.hardMode && !quitting && Master.currentWorld.basic.worldNameVar != "VRTraining")
 	{
 			loadedText = Instantiate(FindEnding());
@@ -305,16 +307,16 @@ function GameOver () {
 	fade.material.color.a = 0;
 	if(Master.hardMode)
 	{
-		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard") <= gameNumber)
+		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard") <= gameNumber)
 		{
-			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",gameNumber);
+			ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",gameNumber);
 		}
 	}
 	else
 	{
-		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
+		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore") <= gameNumber)
 		{
-			PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
+			ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",gameNumber);
 		}
 	}
 	if(showCredits)
@@ -348,30 +350,30 @@ function GameOver () {
 }
 
 function FindEnding ():GameObject{
-	if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1])
+	if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 0 && gameNumber > Master.unlockLevels[1])
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Beaten",1);
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"Beaten",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"BeatEndPlayed",1);
 		return Master.currentWorld.text.beatEnd;
 	}
 	else if(gameNumber > Master.unlockLevels[3])
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End4Played",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End4Played",1);
 		return Master.currentWorld.text.end4;
 	}
 	else if(gameNumber > Master.unlockLevels[2])
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End3Played",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End3Played",1);
 		return Master.currentWorld.text.end3;
 	}
-	else if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber > Master.unlockLevels[1])
+	else if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber > Master.unlockLevels[1])
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End2Played",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End2Played",1);
 		return Master.currentWorld.text.end2;
 	}
 	else
 	{
-		PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End1Played",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End1Played",1);
 		return Master.currentWorld.text.end1;
 	}
 }

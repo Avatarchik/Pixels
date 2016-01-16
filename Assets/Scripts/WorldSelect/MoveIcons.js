@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var leftNotifierHorizontal:Transform;
 @HideInInspector var rightNotifierHorizontal:Transform;
 
@@ -11,7 +13,7 @@
 
 var worldMapObject:Transform;
 function Start () {
-	if(PlayerPrefs.GetInt("PackingPeanutFactoryUnlocks") > 1 || worldMapObject == null)
+	if(ObscuredPrefs.GetInt("PackingPeanutFactoryUnlocks") > 1 || worldMapObject == null)
 	{
 		Destroy(gameObject);
 	}
@@ -39,7 +41,7 @@ function Start () {
 }
 
 function Update () {
-	if(worldMapObject.position.x > leftLimit || PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
+	if(worldMapObject.position.x > leftLimit || ObscuredPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
 	{
 		leftNotifierHorizontal.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(leftNotifierHorizontal.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
 		leftNotifierVertical.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(leftNotifierVertical.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
@@ -49,7 +51,7 @@ function Update () {
 		leftNotifierHorizontal.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
 		leftNotifierVertical.GetComponent(SpriteRenderer).color.a =  Mathf.Abs(Mathf.Sin(Time.time)/1.5) + .1;
 	}
-	if(worldMapObject.position.x < rightLimit || PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
+	if(worldMapObject.position.x < rightLimit || ObscuredPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
 	{
 		rightNotifierHorizontal.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(rightNotifierHorizontal.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);
 		rightNotifierVertical.GetComponent(SpriteRenderer).color.a = Mathf.MoveTowards(rightNotifierVertical.GetComponent(SpriteRenderer).color.a,0,Time.deltaTime);

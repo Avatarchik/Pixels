@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var flipped:int;
 var wait:float;
 var crossing:boolean;

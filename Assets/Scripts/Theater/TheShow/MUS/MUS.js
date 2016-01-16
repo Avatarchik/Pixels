@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var hitTimes:float[];
 
 var lightSprites:Sprite[];

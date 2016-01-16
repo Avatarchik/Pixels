@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var open:boolean = false;
 @HideInInspector var phonemeTime:float;
 

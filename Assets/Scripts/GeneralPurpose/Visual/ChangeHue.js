@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var hueMaterial:Material;
 var hue:float;
 var saturation:float;

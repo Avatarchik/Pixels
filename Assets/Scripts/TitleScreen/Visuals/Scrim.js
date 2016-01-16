@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var plain:Sprite;
 var sprite1:Sprite;
 var sprite2:Sprite;

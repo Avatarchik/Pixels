@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using AOT;
 using sdkbox;
+using CodeStage.AntiCheat.ObscuredTypes;
 
 public class IAPManager : MonoBehaviour {
 
@@ -15,7 +16,11 @@ public class IAPManager : MonoBehaviour {
 
 	public GameObject[] begging;
 
+	public GameObject[] buttons;
+
 	Boolean skip;
+
+	String restoreName;
 
 	void Awake () {
 		skip = false;
@@ -23,6 +28,7 @@ public class IAPManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		restoreName = "";
 		startPosition = transform.position;
 		startPosition.x = 100;
 		transform.position = startPosition;
@@ -33,7 +39,20 @@ public class IAPManager : MonoBehaviour {
 	void SkipTheSpeaking () {
 		skip = true;
 	}
-	
+
+	void DestroyButtons () {
+		for(int i = 0; i < buttons.Length; i++)
+		{
+			Destroy (buttons[i]);
+		}
+		GetComponent<TextMesh>().text = "Connecting...";
+		StartCoroutine(TimeOutCounter());
+	}
+
+	IEnumerator TimeOutCounter () {
+		yield return new WaitForSeconds(13);
+		BroadcastMessage("FailedPurchase");
+	}
 	// Update is called once per frame
 	IEnumerator LaunchNote () {
 		if(begging.Length > 0 && !skip)
@@ -51,6 +70,7 @@ public class IAPManager : MonoBehaviour {
 	}
 
 	public void RequestIAP (String purchaseName) {
+		DestroyButtons();
 		if(Application.isEditor)
 		{
 			Success(new Product());
@@ -61,33 +81,44 @@ public class IAPManager : MonoBehaviour {
 		}
 	}
 
-	public void RestorePurchases () {
+	public void RestorePurchases (String purchaseName) {
+		DestroyButtons();
+		restoreName = purchaseName;
 		GetComponent<IAP>().restore();
+	}
+
+	public void ProductsRequested (Product[] products) {
+		for(int i = 0; i < products.Length; i++)
+		{
+			Debug.Log("Name: " + products[i].name + " ID: " + products[i].id + " Title: " + products[i].title + " Description: " + products[i].description);
+		}
 	}
 
 	public void Success (Product product) {
 		if(Application.isEditor)
 		{
-			PlayerPrefs.SetInt("SaveSystemAvailable",1);
-			PlayerPrefs.SetInt("PaidSongOneUnlocked",1);
-			PlayerPrefs.SetInt("PaidSongTwoUnlocked",1);
+			ObscuredPrefs.SetInt("SaveSystemAvailable",1);
+			ObscuredPrefs.SetInt("PaidSongOneUnlocked",1);
+			ObscuredPrefs.SetInt("PaidSongTwoUnlocked",1);
 			BroadcastMessage("SuccessfulPurchase","It might have worked! Who knows!");
 		}
 		else
 		{
-			if(product.name == "UnlockSaving")
+			if(product.id == "com.turner.peterpanic.unlocksaving")
 			{
-				PlayerPrefs.SetInt("SaveSystemAvailable",1);
+				ObscuredPrefs.SetInt("SaveSystemAvailable",1);
+				BroadcastMessage("SuccessfulPurchase", "Saving was successfully unlocked!");
 			}
-			else if(product.name == "UnlockDollarSongOne")
+			else if(product.id == "com.turner.peterpanic.unlockdollarsongone")
 			{
-				PlayerPrefs.SetInt("PaidSongOneUnlocked",1);
+				ObscuredPrefs.SetInt("PaidSongOneUnlocked",1);
+				BroadcastMessage("SuccessfulPurchase", "Dollar Song One was successfully unlocked!");
 			}
-			else if(product.name == "UnlockDollarSongTwo")
+			else if(product.id == "com.turner.peterpanic.unlockdollarsongtwo")
 			{
-				PlayerPrefs.SetInt("PaidSongTwoUnlocked",1);
+				ObscuredPrefs.SetInt("PaidSongTwoUnlocked",1);
+				BroadcastMessage("SuccessfulPurchase", "Dollar Song Two successfully unlocked!");
 			}
-			BroadcastMessage("SuccessfulPurchase",product.title + " was successfully unlocked!");
 		}
 	}
 
@@ -114,8 +145,23 @@ public class IAPManager : MonoBehaviour {
 		}
 	}
 
-	public void Restored (Product product) {
-
+	public void Restored (Product[] products) {
+		Boolean success = false;
+		for(int i = 0; i < products.Length; i++)
+		{
+			if(products[i].id == restoreName)
+			{
+				success = true;
+			}
+		}
+		if(success)
+		{
+			BroadcastMessage("RestoreSuccess");
+		}
+		else
+		{
+			BroadcastMessage("RestoreFailed");
+		}
 	}
 
 	public void FinishedRestoring () {

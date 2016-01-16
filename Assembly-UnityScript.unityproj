@@ -192,6 +192,7 @@
      <Compile Include="Assets\Scripts\TestObscureStuff.js" />
      <Compile Include="Assets\Scripts\Theater\ChangeSelectedWorld.js" />
      <Compile Include="Assets\Scripts\Theater\ChangeTheaterState.js" />
+     <Compile Include="Assets\Scripts\Theater\DollarSongButton.js" />
      <Compile Include="Assets\Scripts\Theater\FirstTimeTheaterNotifier.js" />
      <Compile Include="Assets\Scripts\Theater\HideForShow.js" />
      <Compile Include="Assets\Scripts\Theater\LedgerController.js" />
@@ -228,7 +229,7 @@
      <Compile Include="Assets\Scripts\Theater\TheaterSongLoader.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ChangeTitleState.js" />
      <Compile Include="Assets\Scripts\TitleScreen\CustomizationButton.js" />
-     <Compile Include="Assets\Scripts\TitleScreen\DemoReset.js" />
+     <Compile Include="Assets\Scripts\TitleScreen\DevButton.js" />
      <Compile Include="Assets\Scripts\TitleScreen\ShowColorSelection.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StageHand.js" />
      <Compile Include="Assets\Scripts\TitleScreen\StartCredits.js" />
@@ -273,9 +274,8 @@
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapManager.js" />
      <Compile Include="Assets\Scripts\WorldSelect\WorldMapVisualsManager.js" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
-     <None Include="Assets\Plugins\AntiCheatToolkit\Shaders\WallHackTexture.shader" />
      <None Include="Assets\Plugins\AntiCheatToolkit\Android\AndroidManifest.xml" />
-     <None Include="Assets\JSON\readme.txt" />
+     <None Include="Assets\Plugins\JSON\readme.txt" />
      <None Include="Assets\Plugins\AntiCheatToolkit\Changelog.txt" />
      <None Include="Assets\IAP\Resources\AndroidManifest.xml" />
      <None Include="Assets\Plugins\StansAssets\IOS\ISN_iAd.mm.txt" />

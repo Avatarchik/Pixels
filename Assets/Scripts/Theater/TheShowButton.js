@@ -1,7 +1,9 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 function Start () {
-	if(PlayerPrefs.GetInt("HighSchool") != 1)
+	if(ObscuredPrefs.GetInt("HighSchool") != 1)
 	{
 		GetComponent(SpriteRenderer).color = Color.gray;
 		GetComponent(ButtonSquare).up = GetComponent(ButtonSquare).down;
@@ -15,7 +17,7 @@ function Clicked () {
 	if(!Master.notifying && TheaterController.currentState == TheaterStatus.Stats && TheaterController.buttonCooldown < 0)
 	{
 		TheaterController.buttonCooldown = .2;
-		if(PlayerPrefs.GetInt("HighSchool") == 1)
+		if(ObscuredPrefs.GetInt("HighSchool") == 1)
 		{
 			LedgerController.currentState = LedgerState.Closed;
 			TheaterController.customizing = false;

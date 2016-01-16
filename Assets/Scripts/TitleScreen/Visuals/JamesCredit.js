@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 function Start () {
 	GetComponent(TextMesh).color.a = 0;
 	Opening();

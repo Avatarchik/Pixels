@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var material:Material;
 @HideInInspector var origin:float;
 @HideInInspector var destination:float;

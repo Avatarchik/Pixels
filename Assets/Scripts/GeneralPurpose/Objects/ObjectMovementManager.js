@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var allowMovement:boolean = true;
 enum MovementType{Basic,Follow,Linear,Radial};
 var movement:MovementType;

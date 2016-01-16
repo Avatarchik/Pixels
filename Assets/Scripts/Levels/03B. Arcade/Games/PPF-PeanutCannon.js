@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var cannon1:GameObject;
 var cannon2:GameObject;
 var cannon3:GameObject;

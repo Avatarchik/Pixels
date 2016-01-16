@@ -28,7 +28,7 @@ public class IAPButton : MonoBehaviour {
 		}
 		else if(restore)
 		{
-			manager.RestorePurchases();
+			manager.RestorePurchases(unlockName);
 		}
 		else if(unlock)
 		{

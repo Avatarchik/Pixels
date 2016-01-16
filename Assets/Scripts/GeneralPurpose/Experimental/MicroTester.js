@@ -1,4 +1,6 @@
 ﻿#pragma strict
+
+import CodeStage.AntiCheat.ObscuredTypes;
 var speed:float;
 var difficultyAmount:int;
 

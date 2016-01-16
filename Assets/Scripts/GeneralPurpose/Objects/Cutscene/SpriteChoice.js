@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 public enum Type{Switch,Fade,Progression};
 
 var sprites:Sprite[];

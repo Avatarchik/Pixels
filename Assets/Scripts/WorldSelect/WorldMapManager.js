@@ -1,5 +1,7 @@
 #pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro,WorldReveal,HighScore};
 
 static var currentState:MapStatus;
@@ -78,7 +80,7 @@ function Start () {
 	}
 	for(var world:Transform in worlds)
 	{
-		if(world.name == PlayerPrefs.GetString("LastWorldVisited"))
+		if(world.name == ObscuredPrefs.GetString("LastWorldVisited"))
 		{
 			transform.position.x = world.localPosition.x * transform.localScale.x * -1;
 		}
@@ -97,7 +99,7 @@ function Start () {
 	{
 		townDestructionCover.color.a = 1;
 	}
-	if(PlayerPrefs.GetInt("TutorialFinished") < 2)
+	if(ObscuredPrefs.GetInt("TutorialFinished") < 2)
 	{
 		introducing = true;
 		currentState = MapStatus.Intro;
@@ -139,7 +141,7 @@ function Intro() {
 	{
 		yield;
 	}
-	PlayerPrefs.SetInt("TutorialFinished",2);
+	ObscuredPrefs.SetInt("TutorialFinished",2);
 	currentState = MapStatus.Clear;
 }
 
@@ -176,16 +178,16 @@ function WorldReveal() {
 		thisWorld.GetComponent(ParticleSystem).emissionRate = 0;
 		yield;
 	}
-	if(PlayerPrefs.GetInt("HighSchool") == 1 && PlayerPrefs.GetInt("WorldMapTheaterUnlockNotified") != 1)
+	if(ObscuredPrefs.GetInt("HighSchool") == 1 && ObscuredPrefs.GetInt("WorldMapTheaterUnlockNotified") != 1)
 	{
 		var newNotify:GameObject = Instantiate(theaterAlertNotification);
-		PlayerPrefs.SetInt("WorldMapTheaterUnlockNotified",1);
+		ObscuredPrefs.SetInt("WorldMapTheaterUnlockNotified",1);
 		while(newNotify != null)
 		{
 			yield;
 		}
 	}
-	if(PlayerPrefs.GetInt("SaveSystemAvailable") == 0)
+	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0)
 	{
 		var IAPNote:GameObject = Instantiate(IAPRequest);
 		while(IAPNote != null || Master.notifying)
@@ -197,9 +199,9 @@ function WorldReveal() {
 }
 
 function CheckForMapState() {
-	if(PlayerPrefs.GetInt("WorldMapState") == 0 && PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
+	if(ObscuredPrefs.GetInt("WorldMapState") == 0 && ObscuredPrefs.GetInt("HighSchoolBeatEndPlayed") == 1)
 	{
-		PlayerPrefs.SetInt("WorldMapState",1);
+		ObscuredPrefs.SetInt("WorldMapState",1);
 		while(townDestructionCover.color.a != 1)
 		{
 			AudioManager.SongVolumeChange(1-(townDestructionCover.color.a*1.2),100);
@@ -295,12 +297,12 @@ function Update () {
 			}
 			
 			// Move camera according to finger velocity, but slow over time.
-			if(PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
+			if(ObscuredPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") == 0)
 			{
 				transform.position.x = Mathf.Lerp(transform.position.x,location2,Time.deltaTime*3);
 				transform.position.x = Mathf.MoveTowards(transform.position.x,location2,Time.deltaTime*8);
 			}
-			else if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1 && PlayerPrefs.GetInt("CurrencyNumber") >= 50 && PlayerPrefs.GetInt("UnlockWheel") == 1)
+			else if(ObscuredPrefs.GetInt("FirstThingUnlocked") != 1 && ObscuredPrefs.GetInt("CurrencyNumber") >= 50 && ObscuredPrefs.GetInt("UnlockWheel") == 1)
 			{
 				SendUnlockNote();
 				transform.position.x = Mathf.Lerp(transform.position.x,location3,Time.deltaTime*3);
@@ -365,11 +367,11 @@ function showTicket() {
 		{
 			if(Master.hardMode)
 			{
-				text.text = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard").ToString();
+				text.text = ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard").ToString();
 			}
 			else
 			{
-				text.text = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore").ToString();
+				text.text = ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"HighScore").ToString();
 			}
 		}
 	}
@@ -412,11 +414,11 @@ function FindClosest() {
 	}
 	if(Mathf.Abs(transform.position.x - (worlds[closestWorld].localPosition.x * transform.localScale.x * -1)) < 8 && Mathf.Abs(cameraVelocity) < 10)
 	{
-		if(PlayerPrefs.GetString("LastWorldVisited") != worlds[closestWorld].name)
+		if(ObscuredPrefs.GetString("LastWorldVisited") != worlds[closestWorld].name)
 		{
-			PlayerPrefs.SetString("LastWorldVisited", worlds[closestWorld].name);
+			ObscuredPrefs.SetString("LastWorldVisited", worlds[closestWorld].name);
 		}
-		if(PlayerPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") != 0 && currentState != MapStatus.WorldReveal)
+		if(ObscuredPrefs.GetInt("PackingPeanutFactoryFirstOpeningPlayed") != 0 && currentState != MapStatus.WorldReveal)
 		{
 			transform.position.x = Mathf.Lerp(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*3);
 			transform.position.x = Mathf.MoveTowards(transform.position.x, worlds[closestWorld].localPosition.x * transform.localScale.x * -1,Time.deltaTime*.7);

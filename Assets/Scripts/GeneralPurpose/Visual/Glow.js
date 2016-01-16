@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var sprite:SpriteRenderer;
 @HideInInspector var randomness:float;
 

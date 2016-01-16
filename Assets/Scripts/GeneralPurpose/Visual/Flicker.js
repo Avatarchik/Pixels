@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var flickerSpeed:float;
 var newBrightness:float;
 var lightSprite:SpriteRenderer;

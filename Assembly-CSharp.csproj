@@ -49,14 +49,10 @@
      <Compile Include="Assets\IAP\Assets\Json.cs" />
      <Compile Include="Assets\IAP\Scripts\IAPButton.cs" />
      <Compile Include="Assets\IAP\Scripts\IAPManager.cs" />
-     <Compile Include="Assets\JSON\JSONObject.cs" />
-     <Compile Include="Assets\JSON\JSONTemplates.cs" />
-     <Compile Include="Assets\JSON\VectorTemplates.cs" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\InitialCOMScoreCall.cs" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
-     <None Include="Assets\Plugins\AntiCheatToolkit\Shaders\WallHackTexture.shader" />
      <None Include="Assets\Plugins\AntiCheatToolkit\Android\AndroidManifest.xml" />
-     <None Include="Assets\JSON\readme.txt" />
+     <None Include="Assets\Plugins\JSON\readme.txt" />
      <None Include="Assets\Plugins\AntiCheatToolkit\Changelog.txt" />
      <None Include="Assets\IAP\Resources\AndroidManifest.xml" />
      <None Include="Assets\Plugins\StansAssets\IOS\ISN_iAd.mm.txt" />

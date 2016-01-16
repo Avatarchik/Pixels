@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 @HideInInspector var stageWall:SpriteRenderer;
 @HideInInspector var stageFloor:SpriteRenderer;
 @HideInInspector var ceiling:SpriteRenderer;

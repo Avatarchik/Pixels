@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var objectNumbers:float[];
 var creditsObjects:GameObject[];
 @HideInInspector var credits:GameObject[];
@@ -262,9 +264,9 @@ function Leave () {
 	if(!leaving)
 	{
 		leaving = true;
-		if(PlayerPrefs.GetInt("EndGameMoreToDo") != 1)
+		if(ObscuredPrefs.GetInt("EndGameMoreToDo") != 1)
 		{
-			PlayerPrefs.SetInt("EndGameMoreToDo",1);
+			ObscuredPrefs.SetInt("EndGameMoreToDo",1);
 			newNote = Instantiate(endGameNote);
 			for(var i:int = 0; i < creditsObjects.length; i++)
 			{

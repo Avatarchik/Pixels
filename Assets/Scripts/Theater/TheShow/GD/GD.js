@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var sliders:GameObject[];
 var sliderVolumes:SpriteRenderer[];
 var largeVolume:SpriteRenderer;
@@ -86,7 +88,7 @@ function Update () {
 		}
 		totalVolume += volumeLevels[i] - 1;
 	}
-	if(PlayerPrefs.GetInt("Sound") == 1 && ShowManager.currentMusicLocation < endTime && ShowManager.currentMusicLocation > startTime)
+	if(ObscuredPrefs.GetInt("Sound") == 1 && ShowManager.currentMusicLocation < endTime && ShowManager.currentMusicLocation > startTime)
 	{
 		speaker.volume = Mathf.Max(0,totalVolume - .5)/3.5;
 	}

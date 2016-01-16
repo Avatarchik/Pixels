@@ -1,10 +1,12 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var unlockPrefab:GameObject;
 var menuManager:WorldMenuManager;
 
 function Start () {
-	if(PlayerPrefs.GetInt("SaveSystemAvailable") == 1 || Application.loadedLevelName == "MicroGameLauncher")
+	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 1 || Application.loadedLevelName == "MicroGameLauncher")
 	{
 		Destroy(gameObject);
 	}
@@ -26,7 +28,7 @@ function Clicked () {
 		}
 		Master.notifying = false;
 	}
-	if(PlayerPrefs.GetInt("SaveSystemAvailable") == 1)
+	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 1)
 	{
 		Destroy(gameObject);
 	}

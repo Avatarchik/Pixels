@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var simpleReplace:boolean;
 var playerPrefab:GameObject;
 var startPosition:Vector3;

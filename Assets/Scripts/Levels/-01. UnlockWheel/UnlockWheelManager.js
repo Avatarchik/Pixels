@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 public enum UnlockWheelStatus{Clear,Spinning,Notify,Leaving};
 static var currentState:UnlockWheelStatus;
 var successSounds:AudioClip[];
@@ -52,9 +54,9 @@ var loseSounds:AudioClip[];
 var dylan:DylanTalk;
 
 function Start () {
-	if(!PlayerPrefs.HasKey("PlayerUnlockSlotLosses"))
+	if(!ObscuredPrefs.HasKey("PlayerUnlockSlotLosses"))
 	{
-		PlayerPrefs.SetFloat("PlayerUnlockSlotLosses", 0);
+		ObscuredPrefs.SetFloat("PlayerUnlockSlotLosses", 0);
 	}
 	dylan.Talk(welcomeSounds);
 	endSprites = new Sprite[3];
@@ -90,12 +92,12 @@ function GetPrice () {
 function Spin () {
 	if(lockedItems.Length > 0)
 	{
-		if(PlayerPrefs.GetInt("CurrencyNumber") >= price && currentState != UnlockWheelStatus.Spinning)
+		if(ObscuredPrefs.GetInt("CurrencyNumber") >= price && currentState != UnlockWheelStatus.Spinning)
 		{
 			currentState = UnlockWheelStatus.Spinning;
 			AudioManager.PlaySound(slotCoinSound,.65);
 			yield WaitForSeconds(.5);
-			PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")-price);
+			ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber")-price);
 			var spinCounter:int = 0;
 			var spinlimit:int = Random.Range(45,55);
 			shakeAmount = .05;
@@ -177,13 +179,13 @@ function DetermineWinners() {
 	var props:boolean = (lockedPropPieces.length > 0);
 	winNumber = 0;
 	var winValue:float = Random.value;
-	if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1)
+	if(ObscuredPrefs.GetInt("FirstThingUnlocked") != 1)
 	{
 		winValue = .1;
 	}
-	if(winValue < .5 + (.1 * PlayerPrefs.GetFloat("PlayerUnlockSlotLosses")))
+	if(winValue < .5 + (.1 * ObscuredPrefs.GetFloat("PlayerUnlockSlotLosses")))
 	{
-		PlayerPrefs.SetFloat("PlayerUnlockSlotLosses", 0);
+		ObscuredPrefs.SetFloat("PlayerUnlockSlotLosses", 0);
 		winNumber = 1;
 		if(winValue < .05)
 		{
@@ -192,7 +194,7 @@ function DetermineWinners() {
 	}
 	else
 	{
-		PlayerPrefs.SetFloat("PlayerUnlockSlotLosses", PlayerPrefs.GetFloat("PlayerUnlockSlotLosses") + 1);
+		ObscuredPrefs.SetFloat("PlayerUnlockSlotLosses", ObscuredPrefs.GetFloat("PlayerUnlockSlotLosses") + 1);
 		winNumber = 0;
 	}
 	winners = new GameObject[winNumber];
@@ -207,7 +209,7 @@ function DetermineWinners() {
 		while(repeatability > 0 && winType == "?")
 		{
 			var randomNumber:float = Random.value;
-			if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1)
+			if(ObscuredPrefs.GetInt("FirstThingUnlocked") != 1)
 			{
 				randomNumber = .2;
 			}
@@ -410,7 +412,7 @@ function Results (number:int) {
 		}
 		for(var i:int  = 0; i < number; i++)
 		{
-			PlayerPrefs.SetInt(choices[i].GetComponent(VariablePrefix).variablePrefix + choices[i].transform.name,1);
+			ObscuredPrefs.SetInt(choices[i].GetComponent(VariablePrefix).variablePrefix + choices[i].transform.name,1);
 		}
 		while(currentNotifier != null)
 		{
@@ -420,9 +422,9 @@ function Results (number:int) {
 		{
 			dylan.Talk(winSounds);
 		}
-		if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1)
+		if(ObscuredPrefs.GetInt("FirstThingUnlocked") != 1)
 		{
-			PlayerPrefs.SetInt("FirstThingUnlocked",1);
+			ObscuredPrefs.SetInt("FirstThingUnlocked",1);
 			Camera.main.GetComponent(Master).LaunchNotification("Go to the Theater or Title Screen to dress Peter!",NotificationType.notEnoughCoins);
 			while(Master.notifying)
 			{
@@ -450,7 +452,7 @@ function UpdateUnlockables () {
 	
 	for(var i = 0; i < unlockableItems.length; i++)
 	{
-		if(PlayerPrefs.GetInt(unlockableItems[i].GetComponent(VariablePrefix).variablePrefix + unlockableItems[i].transform.name) != 1)
+		if(ObscuredPrefs.GetInt(unlockableItems[i].GetComponent(VariablePrefix).variablePrefix + unlockableItems[i].transform.name) != 1)
 		{
 			lockedItems = AddObject(lockedItems,unlockableItems[i]);
 			var itemType:String = unlockableItems[i].GetComponent(VariablePrefix).variablePrefix;

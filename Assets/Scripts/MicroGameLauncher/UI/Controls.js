@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import CodeStage.AntiCheat.ObscuredTypes;
+
 var text:String;
 
 public enum MiniGameControlType{Tap,Tilt,LeftRight,Drag};

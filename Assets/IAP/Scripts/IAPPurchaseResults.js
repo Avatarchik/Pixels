@@ -19,6 +19,14 @@ function SuccessfulPurchase (note:String) {
 	Results(note);
 }
 
+function RestoreSuccess () {
+	Results("Unable to restore this item!");
+}
+
+function RestoreFailed () {
+	Results("Unable to restore this item!");
+}
+
 function PurchaseCancelled () {
 	Results("Unlock from the menu if you change your mind!");
 }

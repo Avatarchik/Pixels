@@ -16,8 +16,10 @@ public class InitialCOMScoreCall : MonoBehaviour {
 		#if UNITY_IPHONE
 		var contextData = new JSONObject(JSONObject.Type.OBJECT);
 		contextData.AddField( "State", "launched" );
-		
-		_trackAction("OpenApp", contextData.Print(false));
+		if(!Application.isEditor)
+		{
+			_trackAction("OpenApp", contextData.Print(false));
+		}
 		#endif
 		
 		#if UNITY_ANDROID
