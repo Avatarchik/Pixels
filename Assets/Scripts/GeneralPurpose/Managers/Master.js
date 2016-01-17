@@ -8,7 +8,6 @@ static var initialLoad:boolean;
 
 public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix};
 
-static var speedIncrease:int;
 static var lives:int;
 static var paused:boolean;
 static var lastScore:int;
@@ -63,7 +62,6 @@ function Awake () {
 	currentWorld = worlds[3];
 	lives = 3;
 	paused = false;
-	speedIncrease = 1;
 	initialLoad = true;
 	hardMode = false;
 	

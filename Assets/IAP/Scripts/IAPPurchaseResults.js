@@ -20,7 +20,7 @@ function SuccessfulPurchase (note:String) {
 }
 
 function RestoreSuccess () {
-	Results("Unable to restore this item!");
+	Results("Item restored!");
 }
 
 function RestoreFailed () {
