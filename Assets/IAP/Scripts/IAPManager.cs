@@ -90,7 +90,7 @@ public class IAPManager : MonoBehaviour {
 	public void ProductsRequested (Product[] products) {
 		for(int i = 0; i < products.Length; i++)
 		{
-			Debug.Log("Name: " + products[i].name + " ID: " + products[i].id + " Title: " + products[i].title + " Description: " + products[i].description);
+			//Debug.Log("Name: " + products[i].name + " ID: " + products[i].id + " Title: " + products[i].title + " Description: " + products[i].description);
 		}
 	}
 
@@ -146,21 +146,17 @@ public class IAPManager : MonoBehaviour {
 	}
 
 	public void Restored (Product product) {
-		Debug.Log("RestoreName: " + restoreName + " Retrieved Name: " + product.name + " ID?: " + product.id);
 		if(product.id == "com.turner.peterpanic.unlocksaving")
 		{
 			ObscuredPrefs.SetInt("SaveSystemAvailable",1);
-			BroadcastMessage("SuccessfulPurchase", "Saving was successfully unlocked!");
 		}
 		else if(product.id == "com.turner.peterpanic.unlockdollarsongone")
 		{
 			ObscuredPrefs.SetInt("PaidSongOneUnlocked",1);
-			BroadcastMessage("SuccessfulPurchase", "Dollar Song One was successfully unlocked!");
 		}
 		else if(product.id == "com.turner.peterpanic.unlockdollarsongtwo")
 		{
 			ObscuredPrefs.SetInt("PaidSongTwoUnlocked",1);
-			BroadcastMessage("SuccessfulPurchase", "Dollar Song Two successfully unlocked!");
 		}
 		if(product.name == restoreName)
 		{
