@@ -97,6 +97,7 @@
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\CreatePlayer.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\MouthMovement.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Player\PlayerManager.js" />
+     <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Blink.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\ChangeHue.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Flicker.js" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Visual\Glow.js" />
@@ -196,6 +197,7 @@
      <Compile Include="Assets\Scripts\Theater\FirstTimeTheaterNotifier.js" />
      <Compile Include="Assets\Scripts\Theater\HideForShow.js" />
      <Compile Include="Assets\Scripts\Theater\LedgerController.js" />
+     <Compile Include="Assets\Scripts\Theater\PaidSongs\RotateSetPiece.js" />
      <Compile Include="Assets\Scripts\Theater\PlayerWalking.js" />
      <Compile Include="Assets\Scripts\Theater\StatScreenMenuOption.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\GD\GD.js" />
