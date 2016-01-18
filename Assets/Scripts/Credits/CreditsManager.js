@@ -102,10 +102,10 @@ function Credits () {
 		}
 		else
 		{
-			HideObject(i);
+			//HideObject(i);
 		}
 	}
-	yield WaitForSeconds(1);
+	yield WaitForSeconds(4);
 	Leave();
 }
 

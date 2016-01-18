@@ -114,14 +114,7 @@ function StepChange (amount:float)
 {
 	if(amount > 0)
 	{
-		if(loadGames.Length > 0)
-		{
-			step += amount;
-		}
-		else
-		{
-			Camera.main.GetComponent(Master).LaunchNotification("You must select at least one world!",NotificationType.tutorial);
-		}
+		step += amount;
 	}
 	else
 	{

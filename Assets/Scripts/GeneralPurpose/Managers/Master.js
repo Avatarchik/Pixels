@@ -17,8 +17,7 @@ static var unlockAll:boolean;
 static var hardMode:boolean;
 static var unlockLevels:int[];
 
-@HideInInspector var topBar:GameObject;
-@HideInInspector var bottomBar:GameObject;
+@HideInInspector var numberOfHours:int;
 static var device:String;
 static var vertical:boolean;
 
@@ -44,6 +43,9 @@ static var allowShow:boolean;
 static var date:String;
 
 function Awake () {
+	
+	numberOfHours = 1;
+	
 	showWorldTitle = false;
 	Time.timeScale = 1;
 	WorldOptions();
@@ -79,18 +81,6 @@ function Awake () {
 		device = "16:9";
 	}
 	
-	//var children:Transform[];
-	for(var child:Transform in gameObject.GetComponentsInChildren(Transform))
-	{
-		if(child.name == "Top")
-		{
-			topBar = child.gameObject;
-		}
-		if(child.name == "Bottom")
-		{
-			bottomBar = child.gameObject;
-		}
-	}
 	Application.targetFrameRate = 60;
 	Screen.orientation = ScreenOrientation.AutoRotation; 
 	Screen.autorotateToLandscapeLeft = true;
@@ -118,6 +108,7 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log(PlayerPrefs.GetInt("SaveSystemAvailable"));
 	showSelectedWorld = currentWorld;
 	showUnlockLevels = unlockLevels;
 	CheckOrientation();
@@ -282,7 +273,11 @@ function Initialize () {
 	{
 		unlockLevels = [0,14,24,34,70,100];
 	}
-	if(settings.eraseOnLoad || ObscuredPrefs.GetInt("SaveSystemAvailable") == 0)
+	if(settings.eraseOnLoad)
+	{
+		DeleteAllValues();
+	}
+	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - ObscuredPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
 	{
 		DeleteAllValues();
 	}
@@ -731,6 +726,84 @@ function PushNotificationRegistration () {
 		}
 	}
 }
+
+function CurrentTick ():int {
+	var  currentTick:System.Int64 = System.DateTime.Now.Ticks;
+	currentTick /= 1000000000;
+	while(currentTick > 10000000)
+	{
+		currentTick -= 10000000;
+	}
+	return currentTick;
+}
+
+function SetLastTick () {
+	ObscuredPrefs.SetInt("LastClosedTime",CurrentTick());
+}
+/*
+function applicationWillResignActive () {
+	Debug.Log("* * * * * * * * * * * * * Resign Active");
+	SetLastTick();
+}
+
+function applicationDidEnterBackground () {
+	Debug.Log("* * * * * * * * * * * * * Enter Background");
+	SetLastTick();
+}
+
+function applicationWillTerminate () {
+	Debug.Log("* * * * * * * * * * * * * Will Terminate");
+	SetLastTick();
+}
+
+function applicationDidBecomeActive () {
+	Debug.Log("* * * * * * * * * * * * * Become Active");
+	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - PlayerPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
+	{
+		ResetGame();
+	}
+}
+
+function applicationWillEnterForeground () {
+	Debug.Log("* * * * * * * * * * * * * Enter Foreground");
+	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - PlayerPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
+	{
+		ResetGame();
+	}
+}
+*/
+function OnApplicationPause (pause:boolean) {
+	if(pause)
+	{
+		SetLastTick();
+	}
+	else
+	{
+		if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - ObscuredPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
+		{
+			ResetGame();
+		}
+	}
+}
+
+function OnApplicationFocus (focus:boolean) {
+	if(focus)
+	{
+		if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - ObscuredPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
+		{
+			ResetGame();
+		}
+	}
+	else
+	{
+		SetLastTick();
+	}
+}
+
+function OnApplicationQuit () {
+	SetLastTick();
+}
+
 
 function DeleteAllValues () {
 	if(settings.eraseOnLoad)

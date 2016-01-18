@@ -107,27 +107,13 @@ function Start () {
 	}
 	else if(Master.mapNotifyWorlds.length > 0)
 	{
-		if(TimeManager.state == TimeState.DayNormal || TimeManager.state == TimeState.NightNormal)
-		{
-			AudioManager.PlaySongIntro(null,worldMusic,1);
-		}
-		else
-		{
-			AudioManager.PlaySongIntro(null,worldMusicEvil,1);
-		}
+		StartSong();
 		currentState = MapStatus.WorldReveal;
 		WorldReveal();
 	}
 	else
 	{
-		if(TimeManager.state == TimeState.DayNormal || TimeManager.state == TimeState.NightNormal)
-		{
-			AudioManager.PlaySongIntro(null,worldMusic,1);
-		}
-		else
-		{
-			AudioManager.PlaySongIntro(null,worldMusicEvil,1);
-		}
+		StartSong();
 	}
 	MapCover();
 }
@@ -189,6 +175,7 @@ function WorldReveal() {
 	}
 	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0)
 	{
+		yield WaitForSeconds(1);
 		var IAPNote:GameObject = Instantiate(IAPRequest);
 		while(IAPNote != null || Master.notifying)
 		{
@@ -222,6 +209,17 @@ function MapCover() {
 	{
 		townDestructionCover.color.a = Mathf.MoveTowards(townDestructionCover.color.a,0,Time.deltaTime * 1);
 		yield;
+	}
+}
+
+function StartSong () {
+	if(TimeManager.state == TimeState.DayNormal || TimeManager.state == TimeState.NightNormal)
+	{
+		AudioManager.PlaySongIntro(null,worldMusic,1);
+	}
+	else
+	{
+		AudioManager.PlaySongIntro(null,worldMusicEvil,1);
 	}
 }
 

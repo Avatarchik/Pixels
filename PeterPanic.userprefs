@@ -7,9 +7,7 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="IAP" expanded="True">
               <Node name="Assets" expanded="True" />
-              <Node name="Scripts" expanded="True">
-                <Node name="IAPManager.cs" selected="True" />
-              </Node>
+              <Node name="Scripts" expanded="True" />
             </Node>
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
@@ -22,14 +20,22 @@
               <Node name="Scripts" expanded="True" />
             </Node>
             <Node name="Scripts" expanded="True">
+              <Node name="Credits" expanded="True" />
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
                 <Node name="Objects" expanded="True">
                   <Node name="Device" expanded="True" />
                 </Node>
               </Node>
+              <Node name="Levels" expanded="True">
+                <Node name="-02. Remix" expanded="True">
+                  <Node name="RemixManager.js" selected="True" />
+                </Node>
+              </Node>
               <Node name="Theater" expanded="True" />
-              <Node name="TitleScreen" expanded="True" />
+              <Node name="TitleScreen" expanded="True">
+                <Node name="Visuals" expanded="True" />
+              </Node>
               <Node name="WorldSelect" expanded="True">
                 <Node name="Menu" expanded="True" />
               </Node>

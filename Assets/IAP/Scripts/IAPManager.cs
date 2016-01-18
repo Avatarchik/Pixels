@@ -55,16 +55,20 @@ public class IAPManager : MonoBehaviour {
 	}
 	// Update is called once per frame
 	IEnumerator LaunchNote () {
-		if(begging.Length > 0 && !skip)
+		if(begging.Length > 0 && !skip && ObscuredPrefs.GetInt("IAPBeggingNumber") < begging.Length)
 		{
 			GameObject newBeggingNote;
-			newBeggingNote = Instantiate(begging[Mathf.Min(begging.Length-1,PlayerPrefs.GetInt("IAPBeggingNumber"))]);
-			PlayerPrefs.SetInt("IAPBeggingNumber",PlayerPrefs.GetInt("IAPBeggingNumber") + 1);
+			newBeggingNote = Instantiate(begging[Mathf.Min(begging.Length-1,ObscuredPrefs.GetInt("IAPBeggingNumber"))]);
+			ObscuredPrefs.SetInt("IAPBeggingNumber",ObscuredPrefs.GetInt("IAPBeggingNumber") + 1);
 			newBeggingNote.transform.parent = transform;
 			while(newBeggingNote != null)
 			{
 				yield return new WaitForEndOfFrame();
 			}
+			if(GameObject.FindGameObjectWithTag("MapManager") != null)
+			{
+				GameObject.FindGameObjectWithTag("MapManager").BroadcastMessage("StartSong",SendMessageOptions.DontRequireReceiver);
+			}	
 		}
 		transform.position = startPosition;
 	}
