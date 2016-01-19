@@ -108,7 +108,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(PlayerPrefs.GetInt("SaveSystemAvailable"));
 	showSelectedWorld = currentWorld;
 	showUnlockLevels = unlockLevels;
 	CheckOrientation();
