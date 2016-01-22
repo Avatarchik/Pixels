@@ -350,6 +350,14 @@ function AnnouncementStep3 (level:int) {
 	announcement.unlock.sprite = Master.currentWorld.unlocks.unlockIcons[level];
 	announcement.chest.sprite = announcement.chestSprites[1];
 	announcement.lockImage.sprite = null;
+	if(Master.currentWorld.unlocks.unlockNotificationTextLine1[level].length > 16 || Master.currentWorld.unlocks.unlockNotificationTextLine1[level].length > 16)
+	{
+		announcement.text.characterSize = .08;
+	}
+	else
+	{
+		announcement.text.characterSize = .1;
+	}
 	announcement.text.text = Master.currentWorld.unlocks.unlockNotificationTextLine1[level] + "\n" + Master.currentWorld.unlocks.unlockNotificationTextLine2[level];;
 }
 

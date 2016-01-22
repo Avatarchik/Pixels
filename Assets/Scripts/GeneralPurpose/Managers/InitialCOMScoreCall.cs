@@ -11,15 +11,13 @@ public class InitialCOMScoreCall : MonoBehaviour {
 	static private extern void _trackAction (string eventName, string jsonDict);
 	#endif
 
+
 	// Use this for initialization
 	void Start () {
 		#if UNITY_IPHONE
 		var contextData = new JSONObject(JSONObject.Type.OBJECT);
 		contextData.AddField( "State", "launched" );
-		if(!Application.isEditor)
-		{
-			_trackAction("OpenApp", contextData.Print(false));
-		}
+		_trackAction("OpenApp", contextData.Print(false));
 		#endif
 		
 		#if UNITY_ANDROID

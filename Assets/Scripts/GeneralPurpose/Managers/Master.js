@@ -32,6 +32,7 @@ var worldOptions:WorldOptions;
 static var currentWorld:World;
 
 var notification:GameObject;
+var unlockSaveNote:GameObject;
 static var notifying:boolean;
 static var mapNotifyWorlds:String[];
 static var showWorldTitle:boolean;
@@ -87,6 +88,7 @@ function Awake () {
 	Screen.autorotateToLandscapeRight = true; 
 	Screen.autorotateToPortrait = true;
 	Screen.autorotateToPortraitUpsideDown = true;
+	Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	
 	DontDestroyOnLoad(gameObject);
 	Initialize();
@@ -572,7 +574,6 @@ class WorldOptions {
 class Options {
 	var quickProgress:boolean;
 	var unlockEverything:boolean;
-	var devButton:boolean;
 	var eraseOnLoad:boolean;
 	var alwaysPerform:boolean;
 	var demoMode:boolean;
@@ -704,6 +705,7 @@ function ProcessAuthentication (success: boolean) {
 function PushNotificationRegistration () {
 	iOS.NotificationServices.RegisterForNotifications(iOS.NotificationType.Alert);
 	iOS.NotificationServices.ClearLocalNotifications();
+	iOS.NotificationServices.CancelAllLocalNotifications();
 	if(ObscuredPrefs.GetInt("HighSchool") == 1)
 	{
 		for(var i:int = 0; i < 8; i++)
@@ -736,45 +738,21 @@ function CurrentTick ():int {
 	return currentTick;
 }
 
-function SetLastTick () {
-	ObscuredPrefs.SetInt("LastClosedTime",CurrentTick());
-}
-/*
-function applicationWillResignActive () {
-	Debug.Log("* * * * * * * * * * * * * Resign Active");
-	SetLastTick();
-}
-
-function applicationDidEnterBackground () {
-	Debug.Log("* * * * * * * * * * * * * Enter Background");
-	SetLastTick();
-}
-
-function applicationWillTerminate () {
-	Debug.Log("* * * * * * * * * * * * * Will Terminate");
-	SetLastTick();
-}
-
-function applicationDidBecomeActive () {
-	Debug.Log("* * * * * * * * * * * * * Become Active");
-	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - PlayerPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
+function SetLastTick (closed:boolean) {
+	if(closed)
 	{
-		ResetGame();
+		ObscuredPrefs.SetInt("LastClosedTime",CurrentTick() - 16);
+	}
+	else
+	{
+		ObscuredPrefs.SetInt("LastClosedTime",CurrentTick());	
 	}
 }
 
-function applicationWillEnterForeground () {
-	Debug.Log("* * * * * * * * * * * * * Enter Foreground");
-	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - PlayerPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
-	{
-		ResetGame();
-	}
-}
-*/
 function OnApplicationPause (pause:boolean) {
 	if(pause)
 	{
-		SetLastTick();
+		SetLastTick(false);
 	}
 	else
 	{
@@ -795,12 +773,12 @@ function OnApplicationFocus (focus:boolean) {
 	}
 	else
 	{
-		SetLastTick();
+		SetLastTick(false);
 	}
 }
 
 function OnApplicationQuit () {
-	SetLastTick();
+	SetLastTick(true);
 }
 
 

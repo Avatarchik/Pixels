@@ -47,17 +47,22 @@ function Awake () {
 
 function Update () {
 	internalDeltaTime = Time.realtimeSinceStartup - internalDeltaTime;
+	cutsceneSpeaker.pitch = Time.timeScale;
+	for(var i:int = 0; i < musicSpeaker.length; i++)
+	{
+		musicSpeaker[i].pitch = Time.timeScale;
+	}
 	if(ObscuredPrefs.GetInt("Music") == 1 && ObscuredPrefs.HasKey("Music"))
 	{
-		for(var i:int = 0; i < musicSpeaker.length; i++)
+		for(i = 0; i < musicSpeaker.length; i++)
 		{
 			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,Time.deltaTime * musicChangeSpeed);
-			musicSpeaker[i].pitch = Time.timeScale;
 		}
-		cutsceneSpeaker.pitch = Time.timeScale;
+		cutsceneSpeaker.volume = 1;
 	}
 	else
 	{
+		cutsceneSpeaker.volume = 0;
 		for(i = 0; i < musicSpeaker.length; i++)
 		{
 			musicSpeaker[i].volume = 0;

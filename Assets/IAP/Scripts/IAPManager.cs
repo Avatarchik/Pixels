@@ -29,9 +29,9 @@ public class IAPManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		restoreName = "";
-		startPosition = transform.position;
+		startPosition = transform.localPosition;
 		startPosition.x = 100;
-		transform.position = startPosition;
+		transform.localPosition = startPosition;
 		startPosition.x = 0;
 		StartCoroutine(LaunchNote());
 	}
@@ -55,7 +55,7 @@ public class IAPManager : MonoBehaviour {
 	}
 	// Update is called once per frame
 	IEnumerator LaunchNote () {
-		if(begging.Length > 0 && !skip && ObscuredPrefs.GetInt("IAPBeggingNumber") < begging.Length)
+		if(begging.Length > 0 && !skip && ObscuredPrefs.GetInt("IAPBeggingNumber") < begging.Length )
 		{
 			GameObject newBeggingNote;
 			newBeggingNote = Instantiate(begging[Mathf.Min(begging.Length-1,ObscuredPrefs.GetInt("IAPBeggingNumber"))]);
@@ -162,7 +162,7 @@ public class IAPManager : MonoBehaviour {
 		{
 			ObscuredPrefs.SetInt("PaidSongTwoUnlocked",1);
 		}
-		if(product.name == restoreName)
+		if(product.name == restoreName || restoreName == "")
 		{
 			BroadcastMessage("RestoreSuccess");
 		}

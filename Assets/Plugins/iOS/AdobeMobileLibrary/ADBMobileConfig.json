@@ -1,12 +1,12 @@
 {
     "version" : "1.0",
     "analytics" : {
-        "rsids" : "",
-        "server" : "",
+        "rsids" : "adult-adbp-apps-std-dev",
+        "server" : "stats.adultswim.com",
         "charset" : "UTF-8",
         "ssl" : false,
-		"offlineEnabled" : false,
-        "lifecycleTimeout" : 300,
+		"offlineEnabled" : true,
+        "lifecycleTimeout" : 900,
 		"referrerTimeout" : 0,
         "batchLimit" : 0,
         "privacyDefault" : "optedin",
