@@ -1,6 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Theater/TheaterController.js">
+    <Files>
+      <File FileName="Assets/Scripts/Theater/TheaterController.js" Line="32" Column="51" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -15,11 +18,12 @@
             </Node>
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True">
-                  <Node name="Master.js" selected="True" />
-                </Node>
+                <Node name="Managers" expanded="True" />
               </Node>
               <Node name="MicroGameLauncher" expanded="True" />
+              <Node name="Theater" expanded="True">
+                <Node name="TheaterController.js" selected="True" />
+              </Node>
               <Node name="TitleScreen" expanded="True" />
             </Node>
           </Node>

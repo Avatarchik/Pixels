@@ -50,7 +50,7 @@ public class IAPManager : MonoBehaviour {
 	}
 
 	IEnumerator TimeOutCounter () {
-		yield return new WaitForSeconds(13);
+		yield return new WaitForSeconds(10);
 		BroadcastMessage("FailedPurchase");
 	}
 	// Update is called once per frame
