@@ -45,7 +45,7 @@ static var date:String;
 
 function Awake () {
 	
-	numberOfHours = 1;
+	numberOfHours = .5;
 	
 	showWorldTitle = false;
 	Time.timeScale = 1;
