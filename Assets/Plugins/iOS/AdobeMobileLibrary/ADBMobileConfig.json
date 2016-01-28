@@ -1,7 +1,7 @@
 {
     "version" : "1.0",
     "analytics" : {
-        "rsids" : "adult-adbp-apps-std-dev",
+        "rsids" : "adult-adbp-apps-std",
         "server" : "stats.adultswim.com",
         "charset" : "UTF-8",
         "ssl" : false,

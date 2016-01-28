@@ -4,6 +4,8 @@ import CodeStage.AntiCheat.ObscuredTypes;
 
 import UnityEngine.SocialPlatforms;
 
+import System.Runtime.InteropServices;
+
 static var initialLoad:boolean;
 
 public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix};
@@ -17,7 +19,7 @@ static var unlockAll:boolean;
 static var hardMode:boolean;
 static var unlockLevels:int[];
 
-@HideInInspector var numberOfHours:int;
+@HideInInspector var numberOfHours:float;
 static var device:String;
 static var vertical:boolean;
 
@@ -43,9 +45,14 @@ static var allowShow:boolean;
 
 static var date:String;
 
+static var resetting:boolean;
+static var comScoreCalled:boolean;
+
 function Awake () {
 	
-	numberOfHours = .5;
+	resetting = false;
+	comScoreCalled = false;
+	numberOfHours = 0;
 	
 	showWorldTitle = false;
 	Time.timeScale = 1;
@@ -102,6 +109,7 @@ function Awake () {
 }
 
 function Start () {
+//	ComScoreCall();
 	if(settings.demoMode)
 	{
 		demo = true;
@@ -258,10 +266,14 @@ function Demo () {
 }
 
 function ResetGame () {
-	DeleteAllValues();
-	AudioManager.StopAll(0);
-	Application.LoadLevel("GameStart");
-	Destroy(gameObject);
+	if(!resetting)
+	{
+		resetting = true;
+		DeleteAllValues();
+		AudioManager.StopAll(0);
+		Application.LoadLevel("GameStart");
+		Destroy(gameObject);
+	}
 }
 
 function Initialize () {
@@ -793,10 +805,37 @@ function DeleteAllValues () {
 		var saveSystem:int = ObscuredPrefs.GetInt("SaveSystemAvailable");
 		var paidSongOne:int = ObscuredPrefs.GetInt("PaidSongOneUnlocked");
 		var paidSongTwo:int = ObscuredPrefs.GetInt("PaidSongTwoUnlocked");
+		var playerPaymentTold:int = ObscuredPrefs.GetInt("PlayerHasBeenToldAboutPayment");
 		ObscuredPrefs.DeleteAll();
 		ObscuredPrefs.SetInt("IAPBeggingNumber",beggingNumber);
 		ObscuredPrefs.SetInt("SaveSystemAvailable",saveSystem);
 		ObscuredPrefs.SetInt("PaidSongOneUnlocked",paidSongOne);
 		ObscuredPrefs.SetInt("PaidSongTwoUnlocked",paidSongTwo);
+		ObscuredPrefs.SetInt("PlayerHasBeenToldAboutPayment",playerPaymentTold);
+	}
+}
+
+#if UNITY_IPHONE
+	@DllImport("__Internal")
+	static private function _trackState(appState: String, jsonDict: String) : float {}; 
+	@DllImport("__Internal")
+	static private function _trackAction(eventName: String, jsonDict: String) : float {};
+#endif
+
+function ComScoreCall () {
+	if(!comScoreCalled)
+	{
+		comScoreCalled = true;
+		Debug.Log( "Game Launch Analytics Event about to fire." );
+		var contextData = new JSONObject(JSONObject.Type.OBJECT);
+		contextData.AddField( "state", "game launched" );
+		contextData.AddField( "screen", "title" );    
+		#if UNITY_IPHONE      
+		if(!Application.isEditor)  
+		{
+			_trackAction("Launch", contextData.Print(false));
+		}
+		#endif    
+		Debug.Log( "Game Launch Analytics Event just fired!" );
 	}
 }

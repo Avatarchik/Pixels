@@ -27,7 +27,7 @@ function UpdateVisuals (reset:boolean) {
 	else
 	{
 		subText.GetComponent(SpriteRenderer).color = Color(1,1,1,1);
-		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") != 1)
+		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") != 1 && ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") != 1)
 		{
 			GetComponent(SpriteRenderer).color = Color(.7,.7,.7,1);
 		}

@@ -14,7 +14,13 @@ var sting:AudioClip;
 
 var speaker:AudioSource;
 
+var setSelfType:boolean;
+
 function Start () {
+	if(setSelfType)
+	{
+		SetType(GetComponent(TextManager).lines[0].dialogue,type);
+	}
 	Notify();
 }
 

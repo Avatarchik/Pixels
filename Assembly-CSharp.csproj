@@ -49,7 +49,6 @@
      <Compile Include="Assets\IAP\Assets\Json.cs" />
      <Compile Include="Assets\IAP\Scripts\IAPButton.cs" />
      <Compile Include="Assets\IAP\Scripts\IAPManager.cs" />
-     <Compile Include="Assets\Scripts\GeneralPurpose\Managers\InitialCOMScoreCall.cs" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
      <None Include="Assets\Plugins\AntiCheatToolkit\Android\AndroidManifest.xml" />
      <None Include="Assets\Plugins\JSON\readme.txt" />

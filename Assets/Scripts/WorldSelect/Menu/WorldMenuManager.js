@@ -111,12 +111,12 @@ function MenuEffect(clicked:String) {
 				if(ObscuredPrefs.GetInt("Sound") == 0)
 				{
 					ObscuredPrefs.SetInt("Sound", 1);
-					NotifyText("Music on!");
+					NotifyText("Sound on!");
 				}
 				else
 				{
 					ObscuredPrefs.SetInt("Sound", 0);
-					NotifyText("Music off!");
+					NotifyText("Sound off!");
 				}
 				button[2].GetComponent(WorldMenuButton).SetText(option[2]);
 				break;

@@ -6,6 +6,7 @@
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="IAP" expanded="True">
+              <Node name="Assets" expanded="True" />
               <Node name="Scripts" expanded="True" />
             </Node>
           </Node>
@@ -18,10 +19,10 @@
                 <Node name="Managers" expanded="True" />
               </Node>
               <Node name="MicroGameLauncher" expanded="True" />
-              <Node name="Theater" expanded="True">
-                <Node name="TheaterController.js" selected="True" />
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Menu" expanded="True" />
+                <Node name="HardModeToggle.js" selected="True" />
               </Node>
-              <Node name="TitleScreen" expanded="True" />
             </Node>
           </Node>
         </State>

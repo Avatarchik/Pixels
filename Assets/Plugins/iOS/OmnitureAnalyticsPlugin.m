@@ -25,14 +25,15 @@
 	// Including appName and sdkVersion with Lifecycle Calls
 	NSMutableDictionary *contextData = [NSMutableDictionary dictionary];
 	
-	[contextData setObject:@"sampleapp" forKey:@"appname"];
+	[contextData setObject:@"PeterPanic" forKey:@"appname"];
 	[contextData setObject:sdkVersion forKey:@"sdkversion"];
 	
 	[ADBMobile collectLifecycleDataWithAdditionalData:contextData];
 	
 	// Init ComScore
 	[CSComScore setAppContext];
-	[CSComScore setAppName:@"sampleapp"];
+    [CSComScore setSecure:NO];
+	[CSComScore setAppName:@"PeterPanic"];
 	[CSComScore setCustomerC2:@"6035748"];
 	[CSComScore setPublisherSecret:@"6bba25a9ff38cd173c1c93842c768e28"];
 	

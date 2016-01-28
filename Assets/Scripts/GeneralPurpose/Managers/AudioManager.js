@@ -58,7 +58,6 @@ function Update () {
 		{
 			musicSpeaker[i].volume = Mathf.MoveTowards(musicSpeaker[i].volume,musicVolume,Time.deltaTime * musicChangeSpeed);
 		}
-		cutsceneSpeaker.volume = 1;
 	}
 	else
 	{
@@ -246,7 +245,9 @@ static function PlayCutscene (sound:AudioClip, volume:float) {
 static function EndCutscene () {
 	while(cutsceneSpeaker.volume != 0)
 	{
+		Debug.Log(cutsceneSpeaker.volume);
 		cutsceneSpeaker.volume = Mathf.MoveTowards(cutsceneSpeaker.volume,0,Time.deltaTime * 3);
+		Debug.Log(cutsceneSpeaker.volume);
 		yield;
 	}
 	cutsceneSpeaker.Stop();
