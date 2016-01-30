@@ -13,7 +13,10 @@ function Start () {
 }
 
 function Update () {
-
+	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 1)
+	{
+		Destroy(gameObject);
+	}
 }
 
 function Clicked () {
@@ -27,9 +30,5 @@ function Clicked () {
 			yield;
 		}
 		Master.notifying = false;
-	}
-	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 1)
-	{
-		Destroy(gameObject);
 	}
 }

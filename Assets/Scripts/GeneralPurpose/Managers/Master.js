@@ -49,10 +49,9 @@ static var resetting:boolean;
 static var comScoreCalled:boolean;
 
 function Awake () {
-	
 	resetting = false;
 	comScoreCalled = false;
-	numberOfHours = 0;
+	numberOfHours = .5;
 	
 	showWorldTitle = false;
 	Time.timeScale = 1;
@@ -109,7 +108,6 @@ function Awake () {
 }
 
 function Start () {
-//	ComScoreCall();
 	if(settings.demoMode)
 	{
 		demo = true;
@@ -290,16 +288,12 @@ function Initialize () {
 	{
 		DeleteAllValues();
 	}
-	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - ObscuredPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
-	{
-		DeleteAllValues();
-	}
 	CheckArcadeUnlocks();
 	if(unlockAll)
 	{
 		UnlockArcadeGames(true);
 		UnlockAllOptions();
-		UnlockCustomizeOptions();
+		UnlockCustomizeOptions(true);
 	}
 	for(var i:int = 0; i < worlds.length; i++)
 	{
@@ -460,10 +454,15 @@ function Initialize () {
 	}
 }
 
-function UnlockCustomizeOptions() {
+function UnlockCustomizeOptions(unlock:boolean) {
+	var valuePref:int = 0;
+	if(unlock)
+	{
+		valuePref = 1;
+	}
 	for(var i:int = 0; i < settings.customizationPieces.length; i++)
 	{
-		ObscuredPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,1);
+		ObscuredPrefs.SetInt(settings.customizationPieces[i].GetComponent(VariablePrefix).variablePrefix+settings.customizationPieces[i].transform.name,valuePref);
 	}
 }
 
@@ -520,7 +519,7 @@ function UnlockAllOptions () {
 	ObscuredPrefs.SetInt("EyesSelection",0);
 	ObscuredPrefs.SetInt("TopSelection",0);
 	ObscuredPrefs.SetInt("BottomSelection",0);
-	UnlockCustomizeOptions();
+	UnlockCustomizeOptions(true);
 }
 
 class BasicVariables {
@@ -750,49 +749,23 @@ function CurrentTick ():int {
 	return currentTick;
 }
 
-function SetLastTick (closed:boolean) {
-	if(closed)
-	{
-		ObscuredPrefs.SetInt("LastClosedTime",CurrentTick() - 16);
-	}
-	else
-	{
-		ObscuredPrefs.SetInt("LastClosedTime",CurrentTick());	
-	}
-}
-
-function OnApplicationPause (pause:boolean) {
-	if(pause)
-	{
-		SetLastTick(false);
-	}
-	else
-	{
-		if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - ObscuredPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
-		{
-			ResetGame();
-		}
-	}
+function SetLastTick () {
+	ObscuredPrefs.SetInt("LastClosedTime",CurrentTick());
 }
 
 function OnApplicationFocus (focus:boolean) {
 	if(focus)
 	{
-		if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - ObscuredPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours)
+		if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 0 && CurrentTick() - ObscuredPrefs.GetInt("LastClosedTime") >= 36 * numberOfHours && ObscuredPrefs.GetInt("LastClosedTime") != 0)  // .5 is the number of hours
 		{
 			ResetGame();
 		}
 	}
 	else
 	{
-		SetLastTick(false);
+		SetLastTick();
 	}
 }
-
-function OnApplicationQuit () {
-	SetLastTick(true);
-}
-
 
 function DeleteAllValues () {
 	if(settings.eraseOnLoad)
@@ -801,17 +774,67 @@ function DeleteAllValues () {
 	}
 	else
 	{
-		var beggingNumber:int = ObscuredPrefs.GetInt("IAPBeggingNumber");
-		var saveSystem:int = ObscuredPrefs.GetInt("SaveSystemAvailable");
-		var paidSongOne:int = ObscuredPrefs.GetInt("PaidSongOneUnlocked");
-		var paidSongTwo:int = ObscuredPrefs.GetInt("PaidSongTwoUnlocked");
-		var playerPaymentTold:int = ObscuredPrefs.GetInt("PlayerHasBeenToldAboutPayment");
-		ObscuredPrefs.DeleteAll();
-		ObscuredPrefs.SetInt("IAPBeggingNumber",beggingNumber);
-		ObscuredPrefs.SetInt("SaveSystemAvailable",saveSystem);
-		ObscuredPrefs.SetInt("PaidSongOneUnlocked",paidSongOne);
-		ObscuredPrefs.SetInt("PaidSongTwoUnlocked",paidSongTwo);
-		ObscuredPrefs.SetInt("PlayerHasBeenToldAboutPayment",playerPaymentTold);
+		ObscuredPrefs.SetInt("PackingPeanutFactoryFirstOpeningPlayed",0);
+		ObscuredPrefs.SetInt("WorldMapState",1);
+		ObscuredPrefs.SetInt("CurrencyNumber",0);
+		ObscuredPrefs.SetInt("TutorialFinished",0);
+		ObscuredPrefs.SetInt("WorldMapState",0);
+		ObscuredPrefs.SetInt("FirstThingUnlocked",0);
+		for(var thisGame:ArcadeGame in arcadeGames)
+		{
+			ObscuredPrefs.SetInt("Arcade"+thisGame.name,0);
+			ObscuredPrefs.SetFloat("Arcade"+thisGame.name+"Score",0);
+			thisGame.highScore = ObscuredPrefs.GetFloat("Arcade"+thisGame.name+"Score");
+		}
+		for(var aWorld:World in worlds)
+		{
+			var worldName:String;
+			worldName = aWorld.basic.worldNameVar;
+			
+			ObscuredPrefs.SetInt("SaveSystemAvailable", 0);
+			ObscuredPrefs.SetInt("PaidSongOneUnlocked", 0);
+			ObscuredPrefs.SetInt("PaidSongTwoUnlocked", 0);
+		    ///////////////////////////////////////////////////////////////////// World unlock variables.
+			if(!ObscuredPrefs.HasKey(worldName))
+			{
+				ObscuredPrefs.SetInt(worldName, 0);
+			}
+			///////////////////////////////////////////////////////////////////// World reward variables.
+			if(!ObscuredPrefs.HasKey(worldName+"Unlocks"))
+			{
+				ObscuredPrefs.SetInt(worldName+"Unlocks", 0);
+			}
+			///////////////////////////////////////////////////////////////////// World high score variables.
+			if(!ObscuredPrefs.HasKey(worldName)+"HighScore")
+			{
+				ObscuredPrefs.SetInt(worldName+"HighScore", 0);
+			}
+			if(!ObscuredPrefs.HasKey(worldName)+"HighScoreHard")
+			{
+				ObscuredPrefs.SetInt(worldName+"HighScoreHard", 0);
+			}
+			///////////////////////////////////////////////////////////////////// World visit variables.
+			if(!ObscuredPrefs.HasKey(worldName)+"PlayedOnce")
+			{
+				ObscuredPrefs.SetInt(worldName+"PlayedOnce", 0);
+			}
+			if(!ObscuredPrefs.HasKey(worldName)+"Beaten")
+			{
+				ObscuredPrefs.SetInt(worldName+"Beaten", 0);
+			}
+			for(var varName:int = 0; varName < varNames.length; varName++)
+			{
+				if(!ObscuredPrefs.HasKey(aWorld.basic.worldNameVar+varNames[varName]))
+				{
+					ObscuredPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 0);
+				}
+			}
+		}
+		ObscuredPrefs.SetInt("HairSelection",0);
+		ObscuredPrefs.SetInt("EyesSelection",0);
+		ObscuredPrefs.SetInt("TopSelection",0);
+		ObscuredPrefs.SetInt("BottomSelection",0);
+		UnlockCustomizeOptions(false);
 	}
 }
 

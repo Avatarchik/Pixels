@@ -19,6 +19,7 @@ function Clicked () {
 			AudioManager.StopAll(0);
 			GameObject.FindGameObjectWithTag("Theater").GetComponent(TheaterController).PlayAudio();
 		}
+		ledgerController.currentState = LedgerState.Worlds;
 		ledgerController.ChangeSelection(amount);
 	}
 }

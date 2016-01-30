@@ -14,7 +14,6 @@ function Start () {
 	{
 		Destroy(gameObject);
 	}
-	Debug.Log(ObscuredPrefs.GetInt(variableToCheck));
 	if(ObscuredPrefs.GetInt(variableToCheck) == 1)
 	{
 		allowed = true;

@@ -40,12 +40,17 @@ function Awake () {
 	finished = false;
 }
 function Start () {
-	if(Application.loadedLevelName == "LyricsTest" || Application.loadedLevelName == "MicroGameLauncher")
+	if(Application.loadedLevelName == "LyricsTest" || Application.loadedLevelName == "MicroGameLauncher" || Application.loadedLevelName == "Theater")
 	{
 		Credits();
 	}
 	else
 	{
+		if(transform.Find("Credits") != null)
+		{
+			credits.creditObject = transform.Find("Credits").gameObject;
+			credits.text = credits.creditObject.transform.Find("CreditsText").GetComponent(TextMesh);
+		}
 		Destroy(credits.creditObject);
 	}
 	// Initialize variable values.

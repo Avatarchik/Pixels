@@ -66,8 +66,8 @@ function DisplayScores (newScores:float[]) {
 	finalScore.text = Mathf.Ceil(totalScore).ToString();
 	Social.ReportScore(totalScore,Master.currentWorld.basic.worldNameVar,DidItWork);
 	Social.ReportScore(totalScore,Master.currentWorld.basic.worldNameVar+"Hard",DidItWork);
-	ObscuredPrefs.SetFloat(Master.currentWorld.basic.worldNameVar+"HighScore",totalScore);
-	ObscuredPrefs.SetFloat(Master.currentWorld.basic.worldNameVar+"HighScoreHard",totalScore);
+	ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",Mathf.Floor(totalScore));
+	ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",Mathf.Floor(totalScore));
 	if(Master.allowShow)
 	{
 		ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber")+Mathf.Floor(totalScore/5));

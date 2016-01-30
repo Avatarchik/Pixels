@@ -234,12 +234,12 @@ static function PlayCutscene (sound:AudioClip) {
 }
 
 static function PlayCutscene (sound:AudioClip, volume:float) {
+	cutsceneSpeaker.clip = sound;
 	if(ObscuredPrefs.GetInt("Sound") == 1 && ObscuredPrefs.HasKey("Sound"))
 	{
-		cutsceneSpeaker.clip = sound;
 		cutsceneSpeaker.volume = volume;
-		cutsceneSpeaker.Play();
-	}	
+	}
+	cutsceneSpeaker.Play();
 }
 
 static function EndCutscene () {

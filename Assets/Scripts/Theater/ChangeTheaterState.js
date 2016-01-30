@@ -73,10 +73,8 @@ function Unclicked () {
 				TheaterController.currentState = newState;
 				break;
 			case TheaterStatus.Stats:
-				Debug.Log(TheaterController.currentState);
 				if(TheaterController.currentState == TheaterStatus.CustomizeNoColor || TheaterController.currentState == TheaterStatus.CustomizeColor)
 				{
-					Debug.Log("hey");
 					for(var peter:GameObject in GameObject.FindGameObjectsWithTag("Player"))
 					{
 						if(peter.transform.GetComponent(PlayerWalking) == null)

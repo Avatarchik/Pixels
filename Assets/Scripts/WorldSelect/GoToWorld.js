@@ -20,6 +20,7 @@ function Clicked () {
 	whiteFlash.color.a = 1;
 	if(WorldMapManager.currentState == MapStatus.Confirmation || WorldMapManager.currentState == MapStatus.Clear)
 	{
+		//WorldMapManager.currentState = MapStatus.GoingToWorld;
 		Load();
 	}
 }

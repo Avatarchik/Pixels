@@ -2,7 +2,7 @@
 
 import CodeStage.AntiCheat.ObscuredTypes;
 
-public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro,WorldReveal,HighScore};
+public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification,Returning,Intro,WorldReveal,HighScore,GoingToWorld};
 
 static var currentState:MapStatus;
 static var returnState:MapStatus;

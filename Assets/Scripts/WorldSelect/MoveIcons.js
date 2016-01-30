@@ -17,8 +17,8 @@ function Start () {
 	{
 		Destroy(gameObject);
 	}
-	leftLimit = 21;
-	rightLimit = -21;
+	leftLimit = 68;
+	rightLimit = -130;
 	for(var child:Transform in gameObject.GetComponentsInChildren(Transform))
 	{
 		if(child.name == "RightHorizontal")
