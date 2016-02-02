@@ -359,11 +359,14 @@ function FindEnding ():GameObject{
 	else if(gameNumber > Master.unlockLevels[3])
 	{
 		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End4Played",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End3Played",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End2Played",1);
 		return Master.currentWorld.text.end4;
 	}
 	else if(gameNumber > Master.unlockLevels[2])
 	{
 		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End3Played",1);
+		ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"End2Played",1);
 		return Master.currentWorld.text.end3;
 	}
 	else if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"Beaten") == 1 && gameNumber > Master.unlockLevels[1])

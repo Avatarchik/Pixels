@@ -49,7 +49,7 @@ function UpdateVisuals (reset:boolean) {
 function Clicked () {
 	if(WorldMapManager.currentState == MapStatus.Confirmation)
 	{
-		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") == 1)
+		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") == 1 || ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") == 1)
 		{
 			if(Master.hardMode)
 			{

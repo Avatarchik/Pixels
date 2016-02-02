@@ -49,18 +49,29 @@ function Clicked () {
 		{
 			if(!Master.notifying)
 			{
-				Master.notifying = true;
-				var newUnlockNote:GameObject = Instantiate(unlockPrefab);
-				newUnlockNote.BroadcastMessage("SkipTheSpeaking");
-				while(newUnlockNote != null)
+				var doThing:boolean = true;
+				if(Application.loadedLevelName == "Theater")
 				{
-					yield;
+					if(LedgerController.videoPlaying)
+					{
+						doThing = false;
+					}
 				}
-				if(ObscuredPrefs.GetInt(variableToCheck) == 1)
+				if(doThing)
 				{
-					allowed = true;
+					Master.notifying = true;
+					var newUnlockNote:GameObject = Instantiate(unlockPrefab);
+					newUnlockNote.BroadcastMessage("SkipTheSpeaking");
+					while(newUnlockNote != null)
+					{
+						yield;
+					}
+					if(ObscuredPrefs.GetInt(variableToCheck) == 1)
+					{
+						allowed = true;
+					}
+					Master.notifying = false;
 				}
-				Master.notifying = false;
 			}
 		}
 	}

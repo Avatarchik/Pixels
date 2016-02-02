@@ -51,7 +51,7 @@ static var comScoreCalled:boolean;
 function Awake () {
 	resetting = false;
 	comScoreCalled = false;
-	numberOfHours = .5;
+	numberOfHours = .26;
 	
 	showWorldTitle = false;
 	Time.timeScale = 1;
@@ -480,39 +480,18 @@ function UnlockAllOptions () {
 		ObscuredPrefs.SetInt("PaidSongOneUnlocked", 1);
 		ObscuredPrefs.SetInt("PaidSongTwoUnlocked", 1);
 	    ///////////////////////////////////////////////////////////////////// World unlock variables.
-		if(!ObscuredPrefs.HasKey(worldName))
-		{
-			ObscuredPrefs.SetInt(worldName, 1);
-		}
+		ObscuredPrefs.SetInt(worldName, 1);
 		///////////////////////////////////////////////////////////////////// World reward variables.
-		if(!ObscuredPrefs.HasKey(worldName+"Unlocks"))
-		{
-			ObscuredPrefs.SetInt(worldName+"Unlocks", 3);
-		}
+		ObscuredPrefs.SetInt(worldName+"Unlocks", 3);
 		///////////////////////////////////////////////////////////////////// World high score variables.
-		if(!ObscuredPrefs.HasKey(worldName)+"HighScore")
-		{
-			ObscuredPrefs.SetInt(worldName+"HighScore", 50);
-		}
-		if(!ObscuredPrefs.HasKey(worldName)+"HighScoreHard")
-		{
-			ObscuredPrefs.SetInt(worldName+"HighScoreHard", 50);
-		}
+		ObscuredPrefs.SetInt(worldName+"HighScore", 50);
+		ObscuredPrefs.SetInt(worldName+"HighScoreHard", 50);
 		///////////////////////////////////////////////////////////////////// World visit variables.
-		if(!ObscuredPrefs.HasKey(worldName)+"PlayedOnce")
-		{
-			ObscuredPrefs.SetInt(worldName+"PlayedOnce", 1);
-		}
-		if(!ObscuredPrefs.HasKey(worldName)+"Beaten")
-		{
-			ObscuredPrefs.SetInt(worldName+"Beaten", 1);
-		}
+		ObscuredPrefs.SetInt(worldName+"PlayedOnce", 1);
+		ObscuredPrefs.SetInt(worldName+"Beaten", 1);
 		for(var varName:int = 0; varName < varNames.length; varName++)
 		{
-			if(!ObscuredPrefs.HasKey(aWorld.basic.worldNameVar+varNames[varName]))
-			{
-				ObscuredPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 1);
-			}
+			ObscuredPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 1);
 		}
 	}
 	ObscuredPrefs.SetInt("HairSelection",0);
@@ -795,39 +774,18 @@ function DeleteAllValues () {
 			ObscuredPrefs.SetInt("PaidSongOneUnlocked", 0);
 			ObscuredPrefs.SetInt("PaidSongTwoUnlocked", 0);
 		    ///////////////////////////////////////////////////////////////////// World unlock variables.
-			if(!ObscuredPrefs.HasKey(worldName))
-			{
-				ObscuredPrefs.SetInt(worldName, 0);
-			}
+			ObscuredPrefs.SetInt(worldName, 0);
 			///////////////////////////////////////////////////////////////////// World reward variables.
-			if(!ObscuredPrefs.HasKey(worldName+"Unlocks"))
-			{
-				ObscuredPrefs.SetInt(worldName+"Unlocks", 0);
-			}
+			ObscuredPrefs.SetInt(worldName+"Unlocks", 0);
 			///////////////////////////////////////////////////////////////////// World high score variables.
-			if(!ObscuredPrefs.HasKey(worldName)+"HighScore")
-			{
-				ObscuredPrefs.SetInt(worldName+"HighScore", 0);
-			}
-			if(!ObscuredPrefs.HasKey(worldName)+"HighScoreHard")
-			{
-				ObscuredPrefs.SetInt(worldName+"HighScoreHard", 0);
-			}
+			ObscuredPrefs.SetInt(worldName+"HighScore", 0);
+			ObscuredPrefs.SetInt(worldName+"HighScoreHard", 0);
 			///////////////////////////////////////////////////////////////////// World visit variables.
-			if(!ObscuredPrefs.HasKey(worldName)+"PlayedOnce")
-			{
-				ObscuredPrefs.SetInt(worldName+"PlayedOnce", 0);
-			}
-			if(!ObscuredPrefs.HasKey(worldName)+"Beaten")
-			{
-				ObscuredPrefs.SetInt(worldName+"Beaten", 0);
-			}
+			ObscuredPrefs.SetInt(worldName+"PlayedOnce", 0);
+			ObscuredPrefs.SetInt(worldName+"Beaten", 0);
 			for(var varName:int = 0; varName < varNames.length; varName++)
 			{
-				if(!ObscuredPrefs.HasKey(aWorld.basic.worldNameVar+varNames[varName]))
-				{
-					ObscuredPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 0);
-				}
+				ObscuredPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 0);
 			}
 		}
 		ObscuredPrefs.SetInt("HairSelection",0);
