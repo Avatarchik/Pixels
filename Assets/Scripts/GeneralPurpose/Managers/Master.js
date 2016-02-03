@@ -173,7 +173,7 @@ function CheckForShowTime () {
 		{
 			allowShow = true;
 		}
-		else if(ObscuredPrefs.GetInt("HighSchool") == 1 && ObscuredPrefs.GetInt("ShowDate:"+date) != 1 && System.DateTime.Now.Hour == 14)
+		else if(ObscuredPrefs.GetInt("HighSchool") == 1 && ObscuredPrefs.GetInt("ShowDate:"+date) != 1 && System.DateTime.Now.Hour == 19)
 		{
 			allowShow = true;
 		}
@@ -703,15 +703,6 @@ function PushNotificationRegistration () {
 			var newNotif:iOS.LocalNotification;
 			newNotif = new iOS.LocalNotification();
 			newNotif.alertBody = "The show is on!";
-			/*
-			if(System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Monday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Tuesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Wednesday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Thursday || System.DateTime.Today.AddDays(i).DayOfWeek == System.DayOfWeek.Friday)
-			{
-				newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(19);
-			}
-			else
-			{
-				newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(14);
-			}*/
 			newNotif.fireDate = System.DateTime.Today.AddDays(i).AddHours(19);
 			iOS.NotificationServices.ScheduleLocalNotification(newNotif);
 		}

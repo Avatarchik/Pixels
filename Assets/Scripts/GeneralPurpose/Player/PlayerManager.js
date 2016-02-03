@@ -144,7 +144,7 @@ function ChangePart(part:String, change:int) {
 				
 				unavailableCheck++;
 			}
-			if(unavailableCheck >= 50 && !Master.notifying)
+			if((unavailableCheck >= 50 || change == 0) && !Master.notifying)
 			{
 				Announcement("You haven't unlocked any eye types yet!");
 				ObscuredPrefs.SetInt("EyesSelection",initial);
@@ -169,7 +169,7 @@ function ChangePart(part:String, change:int) {
 				}
 				unavailableCheck++;
 			}
-			if(unavailableCheck >= 50 && !Master.notifying)
+			if((unavailableCheck >= 50 || change == 0) && !Master.notifying)
 			{
 				Announcement("You haven't unlocked any tops yet!");
 				ObscuredPrefs.SetInt("TopSelection",initial);
@@ -194,7 +194,7 @@ function ChangePart(part:String, change:int) {
 				}
 				unavailableCheck++;
 			}
-			if(unavailableCheck >= 50 && !Master.notifying)
+			if((unavailableCheck >= 50 || change == 0) && !Master.notifying)
 			{
 				Announcement("You haven't unlocked any bottoms yet!");
 				ObscuredPrefs.SetInt("BottomSelection",initial);	
