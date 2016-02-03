@@ -16,7 +16,7 @@ function NotConnected () {
 }
 
 function SuccessfulPurchase (note:String) {
-	Results(note);
+	Results(note, true);
 }
 
 function RestoreSuccess () {
@@ -47,5 +47,17 @@ function Results (note:String) {
 			yield;
 		}
 		Destroy(gameObject);
+	}
+}
+
+function Results (note:String,success:boolean)
+{
+	if(!done)
+	{
+		Results(note);
+	}
+	else if(success)
+	{
+		Camera.main.GetComponent(Master).ChangeNotificationText(note);
 	}
 }

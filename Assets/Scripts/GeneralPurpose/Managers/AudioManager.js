@@ -245,9 +245,7 @@ static function PlayCutscene (sound:AudioClip, volume:float) {
 static function EndCutscene () {
 	while(cutsceneSpeaker.volume != 0)
 	{
-		Debug.Log(cutsceneSpeaker.volume);
 		cutsceneSpeaker.volume = Mathf.MoveTowards(cutsceneSpeaker.volume,0,Time.deltaTime * 3);
-		Debug.Log(cutsceneSpeaker.volume);
 		yield;
 	}
 	cutsceneSpeaker.Stop();

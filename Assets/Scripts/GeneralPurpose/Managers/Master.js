@@ -48,6 +48,8 @@ static var date:String;
 static var resetting:boolean;
 static var comScoreCalled:boolean;
 
+@HideInInspector var newNotification:GameObject;
+
 function Awake () {
 	resetting = false;
 	comScoreCalled = false;
@@ -669,7 +671,6 @@ function LaunchNotification (text:String,type:NotificationType):IEnumerator {
 	if(!notifying)
 	{
 		notifying = true;
-		var newNotification:GameObject;
 		newNotification = Instantiate(notification);
 		newNotification.GetComponent(NotificationManager).SetType(text,type);
 		while(newNotification!=null)
@@ -678,6 +679,10 @@ function LaunchNotification (text:String,type:NotificationType):IEnumerator {
 		}
 		notifying = false;
 	}
+}
+
+function ChangeNotificationText (text:String) {
+	newNotification.GetComponent(TextMesh).text = text;
 }
 
 function ProcessAuthentication (success: boolean) {

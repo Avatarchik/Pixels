@@ -35,7 +35,7 @@ function Clicked () {
 	{
 		if(LedgerController.currentState == LedgerState.Worlds)
 		{
-			if(type == "Entracte")
+			if(type == "Entracte" && !LedgerController.videoPlaying)
 			{
 				LedgerController.songPlaying = !LedgerController.songPlaying;
 			}
