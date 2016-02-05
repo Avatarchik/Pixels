@@ -126,6 +126,7 @@ function Clicked () {
 					}
 					WorldMapManager.currentState = MapStatus.Confirmation;
 				}
+				//SocialPlatforms.GameCenter.GameCenterPlatform.ShowLeaderboardUI(
 				break;
 			default:
 				break;

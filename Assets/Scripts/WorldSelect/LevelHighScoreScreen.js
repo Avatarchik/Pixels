@@ -64,36 +64,35 @@ function Start () {
 	global = true;
 	bigSize = .7;
 	normalSize = .15;
+	var leaderboard:ILeaderboard = Social.CreateLeaderboard();
+	leaderboard.id = leaderBoardName;
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{
-			Social.LoadScores(leaderBoardName, function(scores) {
-				if(scores.Length > 0)	
+			Debug.Log(Social.localUser.id);
+			leaderboard.LoadScores(function() {
+				if(leaderboard.scores.Length > 0)	
 				{
-					Debug.Log("Successfully retrieved " + scores.length + " scores!");
-					allUsers = new User[scores.length];
+					Debug.Log("Successfully retrieved " + leaderboard.scores.length + " scores!");
+					allUsers = new User[leaderboard.scores.length];
 					var userIDs:String[];
-					userIDs = new String[scores.length];
+					userIDs = new String[leaderboard.scores.length];
 					for(var score:int = 0; score < allUsers.length; score++)
 					{
 						allUsers[score] = new User();
-						if(scores[score].userID == Social.localUser.id)
+						allUsers[score].id = leaderboard.scores[score].userID;
+						userIDs[score] = leaderboard.scores[score].userID;
+						allUsers[score].score = leaderboard.scores[score].value;
+						if(allUsers[score].id == Social.localUser.id)
 						{
-							allUsers[score].name = "Bennett";
-							allUsers[score].score = 1;
+							allUsers[score].name = "Peter";
+							allUsers[score].peter = true;
 						}
 						else
 						{
-							userIDs[score] = scores[score].userID;
-							allUsers[score].score = scores[score].value;
+							allUsers[score].peter = false;
 						}
-					}
-					Social.LoadUsers(userIDs,function(users){
-						for(var i:int = 0; i < users.length; i++)
-						{
-							allUsers[i].name = users[i].userName;
-						}
-					});
+					}	
 					friendNames = new String[Social.localUser.friends.length];
 					for(var name:int = 0; name < friendNames.length; name ++)
 					{
@@ -117,6 +116,29 @@ function Start () {
 		}
 	}
 	);
+}
+
+function GetUserNames (ids:String[]) {
+	for(var x:int = 0; x < ids.length; x ++)
+	{
+		if(ids[x] != "Peter")
+		{
+			var singleThing:String[] = new String[1];
+			singleThing[0] = ids[x];
+			Social.LoadUsers(singleThing,function(users){
+				for(var i:int = 0; i < users.length; i++)
+				{
+					Debug.Log(users[0].userName);
+					locationNames[x].GetComponent(TextMesh).text = users[0].userName;
+				}
+			});
+		}
+		else
+		{
+			locationNames[x].GetComponent(TextMesh).text = "Peter";
+		}
+		yield WaitForSeconds(.3);
+	}
 }
 
 function NotConnected () {
@@ -147,24 +169,6 @@ function FinishStart () {
 	{
 		friendNames = defaultFriendNames;
 	}
-	
-	var tempArray:User[];
-	tempArray = allUsers;
-	allUsers = new User[allUsers.length + 1];
-	for(var arrayPiece:int = 0; arrayPiece < allUsers.length; arrayPiece ++)
-	{
-		allUsers[arrayPiece] = new User();
-	}
-	for(var i:int = 0; i < tempArray.length; i++)
-	{
-		allUsers[i] = tempArray[i];
-		allUsers[i].peter = false;
-	}
-	
-	allUsers[allUsers.length-1] = new User();
-	allUsers[allUsers.length-1].name = "Peter";
-	allUsers[allUsers.length-1].score = latestScore;
-	allUsers[allUsers.length-1].peter = true;
 	CreateFriendsList();
 	allUsers = OrderList(allUsers);
 	friendUsers = OrderList(friendUsers);
@@ -444,12 +448,23 @@ function CreateEmptyPlayer ():User {
 }
 
 function UpdateDisplay () {
+	var idsToGrab:String[] = new String[0];
 	for(var i:int = 0; i < displayUsers.length; i++)
 	{
 		if(displayUsers[i] != null && displayUsers[i].name != "")
 		{
 			locationNumbers[i].GetComponent(TextMesh).text = displayUsers[i].globalRank.ToString();
-			locationNames[i].GetComponent(TextMesh).text = displayUsers[i].name;
+			if(displayUsers[i].peter)
+			{
+				idsToGrab = AddString(idsToGrab,"Peter");
+				locationNames[i].GetComponent(TextMesh).text = displayUsers[i].name;
+			}
+			else
+			{
+				Debug.Log(displayUsers[i].id);
+				idsToGrab = AddString(idsToGrab,displayUsers[i].id);
+				locationNames[i].GetComponent(TextMesh).text = "Loading...";
+			}
 			locationScores[i].GetComponent(TextMesh).text = displayUsers[i].score.ToString("f0");
 		}
 		else
@@ -458,5 +473,16 @@ function UpdateDisplay () {
 			locationNames[i].GetComponent(TextMesh).text = "";
 			locationScores[i].GetComponent(TextMesh).text = "";
 		}
-	}	
-}	
+	}
+	GetUserNames(idsToGrab);
+}
+
+function AddString (original:String[],addition:String):String[] {
+	var finalArray:String[] = new String[original.length+1];
+	for(var y:int = 0; y < original.length; y++)
+	{
+		finalArray[y] = original[y];
+	}
+	finalArray[finalArray.length-1] = addition;
+	return finalArray;
+}

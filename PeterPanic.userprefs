@@ -1,19 +1,37 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/ArcadeHighScoreScreen.js">
+    <Files>
+      <File FileName="Assets/Scripts/WorldSelect/LevelHighScoreScreen.js" Line="79" Column="38" />
+      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeHighScoreScreen.js" Line="84" Column="45" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="IAPManager.cs" selected="True" />
-              </Node>
+              <Node name="Scripts" expanded="True" />
             </Node>
           </Node>
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="IAP" expanded="True">
               <Node name="Scripts" expanded="True" />
+            </Node>
+            <Node name="Scripts" expanded="True">
+              <Node name="GeneralPurpose" expanded="True">
+                <Node name="Managers" expanded="True" />
+              </Node>
+              <Node name="Levels" expanded="True">
+                <Node name="03B. Arcade" expanded="True">
+                  <Node name="ArcadeHighScoreScreen.js" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Theater" expanded="True">
+                <Node name="TheShow" expanded="True">
+                  <Node name="MUS" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>
