@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var sprite:SpriteRenderer;
 
 @HideInInspector var on:boolean;

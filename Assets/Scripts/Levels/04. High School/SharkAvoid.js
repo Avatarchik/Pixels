@@ -1,7 +1,5 @@
 #pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var colorChange:boolean;
 var colorForChange:Color;
 

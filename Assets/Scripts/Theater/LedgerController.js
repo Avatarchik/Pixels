@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 public enum LedgerState{Closed,FirstOpened,Transition,Menu,Worlds,Leaving};
 
 class StatPieces {
@@ -153,35 +151,35 @@ function UpdateDisplay(worldName:String){
 	EnableButton(encore2Button,encore2ButtonOriginalSprite);
 	EnableButton(encore3Button,encore3ButtonOriginalSprite);
 	EnableButton(encore4Button,encore4ButtonOriginalSprite);
-	if(ObscuredPrefs.GetInt(worldName+"PlayedOnce") != 1)
+	if(PlayerPrefs.GetInt(worldName+"PlayedOnce") != 1)
 	{
 		DisableButton(entracteButton);
 	}
-	if(ObscuredPrefs.GetInt(worldName+"FirstOpeningPlayed") < 1)
+	if(PlayerPrefs.GetInt(worldName+"FirstOpeningPlayed") < 1)
 	{
 		DisableButton(openingButton);
 	}
-	if(ObscuredPrefs.GetInt(worldName+"RegularOpeningPlayed") < 1)
+	if(PlayerPrefs.GetInt(worldName+"RegularOpeningPlayed") < 1)
 	{
 		DisableButton(repriseButton);
 	}
-	if(ObscuredPrefs.GetInt(worldName+"BeatEndPlayed") < 1)
+	if(PlayerPrefs.GetInt(worldName+"BeatEndPlayed") < 1)
 	{
 		DisableButton(act2Button);
 	}
-	if(ObscuredPrefs.GetInt(worldName+"End1Played") < 1)
+	if(PlayerPrefs.GetInt(worldName+"End1Played") < 1)
 	{
 		DisableButton(encore1Button);
 	}
-	if(ObscuredPrefs.GetInt(worldName+"End2Played") < 1)
+	if(PlayerPrefs.GetInt(worldName+"End2Played") < 1)
 	{	
 		DisableButton(encore2Button);
 	}
-	if(ObscuredPrefs.GetInt(worldName+"End3Played") < 1)
+	if(PlayerPrefs.GetInt(worldName+"End3Played") < 1)
 	{
 		DisableButton(encore3Button);
 	}
-	if(ObscuredPrefs.GetInt(worldName+"End4Played") < 1)
+	if(PlayerPrefs.GetInt(worldName+"End4Played") < 1)
 	{
 		DisableButton(encore4Button);
 	}

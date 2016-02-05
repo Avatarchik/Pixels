@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var hard:boolean;
 
 var upSprite:Sprite;
@@ -11,13 +9,13 @@ var downSprite:Sprite;
 var icon:GameObject;
 
 function Start () {
-	if(ObscuredPrefs.HasKey("RemixIsHardMode") && ObscuredPrefs.GetInt("RemixIsHardMode") == 1)
+	if(PlayerPrefs.HasKey("RemixIsHardMode") && PlayerPrefs.GetInt("RemixIsHardMode") == 1)
 	{
 		RemixManager.hardMode = true;
 	}
 	else
 	{
-		ObscuredPrefs.SetInt("RemixIsHardMode",0);
+		PlayerPrefs.SetInt("RemixIsHardMode",0);
 		RemixManager.hardMode = false;
 	}
 	icon = transform.Find("Icon").gameObject;
@@ -62,12 +60,12 @@ function Clicked () {
 		if(hard)
 		{
 			RemixManager.hardMode = true;
-			ObscuredPrefs.SetInt("RemixIsHardMode",1);
+			PlayerPrefs.SetInt("RemixIsHardMode",1);
 		}
 		else
 		{
 			RemixManager.hardMode = false;
-			ObscuredPrefs.SetInt("RemixIsHardMode",0);
+			PlayerPrefs.SetInt("RemixIsHardMode",0);
 		}
 	}
 }

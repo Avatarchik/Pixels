@@ -1,7 +1,5 @@
 #pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var scenes:Scene[];
 
 var musicSpeaker:AudioSource;
@@ -48,7 +46,7 @@ function Start () {
 		{
 			scenes[i].effects.originalColor[x] = scenes[i].effects.colorChangeObjects[x].color;
 		}
-		if(ObscuredPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") == 1)
+		if(PlayerPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") == 1)
 		{
 			if(Master.allowShow)
 			{
@@ -99,7 +97,7 @@ function Update () {
 		vocalSpeakerGood.pitch = 1;
 		Time.timeScale = 1;
 	}
-	if(ObscuredPrefs.GetInt("Music") == 1)
+	if(PlayerPrefs.GetInt("Music") == 1)
 	{
 		musicSpeaker.volume = 1;
 		if(good)
@@ -143,7 +141,7 @@ yield WaitForSeconds(.35);
 		{
 			yield;
 		}
-		if(ObscuredPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") != 1)
+		if(PlayerPrefs.GetInt(scenes[i].gameName+"BeatEndPlayed") != 1)
 		{
 			EndSong();
 			break;

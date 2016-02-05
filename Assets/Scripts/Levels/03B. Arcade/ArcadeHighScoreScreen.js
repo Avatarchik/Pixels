@@ -1,7 +1,5 @@
 #pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var global:boolean;
 
 var globalHighlight:SpriteRenderer;
@@ -45,9 +43,9 @@ function Start () {
 	leaderBoardName = ArcadeManager.lastGameVariable;
 	gameNameDisplay.text = ArcadeManager.lastGameVariable;
 	
-	if(ObscuredPrefs.GetFloat("Arcade"+leaderBoardName+"Score") < latestScore)
+	if(PlayerPrefs.GetFloat("Arcade"+leaderBoardName+"Score") < latestScore)
 	{
-		ObscuredPrefs.SetFloat("Arcade"+leaderBoardName+"Score",latestScore);
+		PlayerPrefs.SetFloat("Arcade"+leaderBoardName+"Score",latestScore);
 	}
 	
 	if(latestScore == 0)

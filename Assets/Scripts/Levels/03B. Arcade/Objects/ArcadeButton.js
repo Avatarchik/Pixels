@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var paidUnlock:boolean;
 @HideInInspector var paidUnlockCost:int;
 @HideInInspector var playCost:int;
@@ -72,9 +70,9 @@ function Clicked () {
 	{
 		if(unlocked)
 		{
-			if(ObscuredPrefs.GetInt("CurrencyNumber") >= playCost)
+			if(PlayerPrefs.GetInt("CurrencyNumber") >= playCost)
 			{
-				ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber") - playCost);
+				PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - playCost);
 				manager.StartGame();
 			}
 			else
@@ -92,9 +90,9 @@ function Clicked () {
 		{
 			if(paidUnlock)
 			{
-				if(ObscuredPrefs.GetInt("CurrencyNumber") >= paidUnlockCost)
+				if(PlayerPrefs.GetInt("CurrencyNumber") >= paidUnlockCost)
 				{
-					ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
+					PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber") - paidUnlockCost);
 					GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).Scroll(1);
 					GameObject.FindGameObjectWithTag("ArcadeManager").GetComponent(ArcadeManager).Scroll(-1);
 					Camera.main.GetComponent(Master).UnlockArcadeGames(ArcadeManager.lastGameVariable);

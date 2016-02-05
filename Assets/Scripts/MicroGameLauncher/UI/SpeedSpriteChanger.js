@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var speedSprites:GameObject[];
 var currentSpeed:int;
 

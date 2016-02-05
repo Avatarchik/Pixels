@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var heartSprites:Sprite[];
 
 var spriteNumber:int;

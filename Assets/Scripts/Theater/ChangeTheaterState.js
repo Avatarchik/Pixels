@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var newState:TheaterStatus;
 var allowedStates:TheaterStatus[];
 @HideInInspector var manager:PlayerManager;

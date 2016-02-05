@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var show:Vector3;
 var hide:Vector3;
 var movementSpeed:float;

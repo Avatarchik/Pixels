@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var waitTime:float;
 var song:AudioClip;
 var speaker:AudioSource;

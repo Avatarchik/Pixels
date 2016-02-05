@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var sprite:SpriteRenderer;
 
 var worldVar:String;
@@ -15,7 +13,7 @@ function Start () {
 	{
 		sprite.enabled = false;
 	}
-	if(worldVar != "" && ObscuredPrefs.GetInt(worldVar) != 1)
+	if(worldVar != "" && PlayerPrefs.GetInt(worldVar) != 1)
 	{
 		sprite.enabled = false;
 	}	

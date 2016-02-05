@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var step:int;
 @HideInInspector var counter:float;
 var icons:Sprite[];

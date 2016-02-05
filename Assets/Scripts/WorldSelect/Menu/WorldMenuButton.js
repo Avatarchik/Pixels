@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var sprite:GameObject[];
 var currentText:String;
 var buttonOn:Sprite;
@@ -67,7 +65,7 @@ function SetText(newText:String) {
 			gameObject.GetComponent(ButtonRectangle).up = null;
 		}
 	}
-	if((currentText == "Sound" && ObscuredPrefs.GetInt("Sound") == 0) || (currentText == "Music" && ObscuredPrefs.GetInt("Music") == 0) || (currentText == "Facebook" && ObscuredPrefs.GetInt("IgnoreTimeOfDay") == 1))
+	if((currentText == "Sound" && PlayerPrefs.GetInt("Sound") == 0) || (currentText == "Music" && PlayerPrefs.GetInt("Music") == 0) || (currentText == "Facebook" && PlayerPrefs.GetInt("IgnoreTimeOfDay") == 1))
 	{
 		sprite[0].transform.localPosition = Vector3(-.045,-.025,-.1);
 		GetComponent(SpriteRenderer).sprite = buttonOff;

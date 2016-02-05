@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 public enum NotificationType{tutorial,lockedWorld,lockedGame,notEnoughCoins,unlockedItems};
 
 var lockedIcon:GameObject;

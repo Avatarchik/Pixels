@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var playerParent:GameObject;
 @HideInInspector var player:GameObject;
 

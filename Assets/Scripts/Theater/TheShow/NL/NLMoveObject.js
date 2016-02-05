@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var destination:Vector3;
 var speed:float;
 var jump:boolean;

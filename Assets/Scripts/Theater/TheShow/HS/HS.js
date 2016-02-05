@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var wordHolder:Transform;
 var wordPrefab:GameObject;
 var words:String[];

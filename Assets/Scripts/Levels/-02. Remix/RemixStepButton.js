@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var showOnStep1:boolean;
 var showOnStep2:boolean;
 var change:int;

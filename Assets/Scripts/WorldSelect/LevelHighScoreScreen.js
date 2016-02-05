@@ -1,7 +1,5 @@
 #pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var global:boolean;
 
 var globalHighlight:SpriteRenderer;
@@ -41,12 +39,12 @@ function Start () {
 	clicked = false;
 	if(Master.hardMode)
 	{
-		latestScore = ObscuredPrefs.GetInt(Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar+"HighScoreHard");
+		latestScore = PlayerPrefs.GetInt(Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar+"HighScoreHard");
 		leaderBoardName = Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar + "Hard";
 	}
 	else
 	{
-		latestScore = ObscuredPrefs.GetInt(Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar+"HighScore");
+		latestScore = PlayerPrefs.GetInt(Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar+"HighScore");
 		leaderBoardName = Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar;
 	}
 	gameNameText.text = Camera.main.GetComponent(Master).currentWorld.basic.worldNameFull;

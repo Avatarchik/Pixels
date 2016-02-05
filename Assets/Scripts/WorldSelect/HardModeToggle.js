@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var upSprite:Sprite;
 var downSprite:Sprite;
 var subText:GameObject;
@@ -32,7 +30,7 @@ function UpdateVisuals (reset:boolean) {
 	{
 		allowClick = true;
 		subText.GetComponent(SpriteRenderer).color = Color(1,1,1,1);
-		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") != 1 && ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") != 1)
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") != 1 && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") != 1)
 		{
 			GetComponent(SpriteRenderer).color = Color(.7,.7,.7,1);
 		}
@@ -41,7 +39,7 @@ function UpdateVisuals (reset:boolean) {
 			GetComponent(SpriteRenderer).color = Color(1,.35,.35,1);
 		}
 	}
-	if(Master.currentWorld.basic.worldNameVar == "Theater" && Master.allowShow && ObscuredPrefs.GetInt("ShowDate:"+Master.date) != 1)
+	if(Master.currentWorld.basic.worldNameVar == "Theater" && Master.allowShow && PlayerPrefs.GetInt("ShowDate:"+Master.date) != 1)
 	{
 		Master.hardMode = true;
 	}
@@ -54,7 +52,7 @@ function UpdateVisuals (reset:boolean) {
 function Clicked () {
 	if(WorldMapManager.currentState == MapStatus.Confirmation && allowClick)
 	{
-		if(ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") == 1 || ObscuredPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") == 1)
+		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") == 1 || PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") == 1)
 		{
 			if(Master.hardMode)
 			{

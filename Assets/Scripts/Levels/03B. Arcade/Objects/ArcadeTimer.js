@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 static var currentTime:float;
 
 @HideInInspector var text:TextMesh;

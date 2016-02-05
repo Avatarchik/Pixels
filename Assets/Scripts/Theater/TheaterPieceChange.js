@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var theaterCustomizeManager:TheaterCustomizeManager;
 @HideInInspector var theaterController:TheaterController;
 @HideInInspector var theaterManager:TheaterManager;

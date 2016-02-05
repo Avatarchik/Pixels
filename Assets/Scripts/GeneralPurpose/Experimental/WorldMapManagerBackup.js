@@ -1,6 +1,4 @@
 ﻿#pragma strict
-
-import CodeStage.AntiCheat.ObscuredTypes;
 /*
 
 public enum MapStatus{Clear,Confirmation,Menu,Credits,Notification, Returning};

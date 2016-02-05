@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var unlock1Item:GameObject;
 var unlock2Item:GameObject;
 var unlock3Item:GameObject;

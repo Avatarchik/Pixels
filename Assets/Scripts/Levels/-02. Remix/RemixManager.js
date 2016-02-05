@@ -1,7 +1,5 @@
 #pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 static var leaving:boolean;
 
 static var step:int;
@@ -43,10 +41,10 @@ function BeginVR () {
 	yield WaitForSeconds(.4);
 	AudioManager.PlaySong(VRLevelMusic,1);
 	yield WaitForSeconds(.8);
-	if(!ObscuredPrefs.HasKey("RemixHasBeenPlayed") || ObscuredPrefs.GetInt("RemixHasBeenPlayed") == 0)
+	if(!PlayerPrefs.HasKey("RemixHasBeenPlayed") || PlayerPrefs.GetInt("RemixHasBeenPlayed") == 0)
 	{
 		Camera.main.GetComponent(Master).LaunchNotification("Earn coins by combining levels!",NotificationType.tutorial);
-		ObscuredPrefs.SetInt("RemixHasBeenPlayed",1);
+		PlayerPrefs.SetInt("RemixHasBeenPlayed",1);
 	}
 	yield WaitForSeconds(1);
 }

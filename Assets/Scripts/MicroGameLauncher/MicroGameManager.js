@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 public enum AnimationType{SingleImage,RotatingImage,ChangingImage,Choice};
 
 var clockSounds:boolean;

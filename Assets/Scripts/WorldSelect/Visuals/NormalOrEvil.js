@@ -1,11 +1,9 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var normal:boolean = false;
 
 function Start () {
-	if((ObscuredPrefs.GetInt("WorldMapState") == 1 && normal) || (ObscuredPrefs.GetInt("WorldMapState") != 1 && !normal))
+	if((PlayerPrefs.GetInt("WorldMapState") == 1 && normal) || (PlayerPrefs.GetInt("WorldMapState") != 1 && !normal))
 	{
 		if(GetComponent(SpriteRenderer) != null)
 		{
@@ -19,7 +17,7 @@ function Start () {
 	
 	//HighSchoolBeatEndPlayed
 	/*
-	else if(ObscuredPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal)
+	else if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal)
 	{
 		if(GetComponent(SpriteRenderer) != null)
 		{

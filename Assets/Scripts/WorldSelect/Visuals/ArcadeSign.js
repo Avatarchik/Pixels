@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var letter0A:SpriteRenderer;
 var letter1R:SpriteRenderer;
 var letter2C:SpriteRenderer;

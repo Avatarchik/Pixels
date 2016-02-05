@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 enum ScreenTouchType{LeftRight};
 
 var thisObject:boolean;

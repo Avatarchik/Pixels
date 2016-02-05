@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var talkSounds:AudioClip[];
 
 static var talkWait:float;

@@ -8,7 +8,6 @@ using System.Text;
 using System.IO;
 using AOT;
 using sdkbox;
-using CodeStage.AntiCheat.ObscuredTypes;
 
 public class IAPManager : MonoBehaviour {
 
@@ -21,6 +20,8 @@ public class IAPManager : MonoBehaviour {
 	Boolean skip;
 
 	String restoreName;
+
+	public TextMesh price;
 
 	void Awake () {
 		skip = false;
@@ -55,11 +56,11 @@ public class IAPManager : MonoBehaviour {
 	}
 	// Update is called once per frame
 	IEnumerator LaunchNote () {
-		if(begging.Length > 0 && !skip && ObscuredPrefs.GetInt("IAPBeggingNumber") < begging.Length )
+		if(begging.Length > 0 && !skip && PlayerPrefs.GetInt("IAPBeggingNumber") < begging.Length )
 		{
 			GameObject newBeggingNote;
-			newBeggingNote = Instantiate(begging[Mathf.Min(begging.Length-1,ObscuredPrefs.GetInt("IAPBeggingNumber"))]);
-			ObscuredPrefs.SetInt("IAPBeggingNumber",ObscuredPrefs.GetInt("IAPBeggingNumber") + 1);
+			newBeggingNote = Instantiate(begging[Mathf.Min(begging.Length-1,PlayerPrefs.GetInt("IAPBeggingNumber"))]);
+			PlayerPrefs.SetInt("IAPBeggingNumber",PlayerPrefs.GetInt("IAPBeggingNumber") + 1);
 			newBeggingNote.transform.parent = transform;
 			while(newBeggingNote != null)
 			{
@@ -94,33 +95,33 @@ public class IAPManager : MonoBehaviour {
 	public void ProductsRequested (Product[] products) {
 		for(int i = 0; i < products.Length; i++)
 		{
-			//Debug.Log("Name: " + products[i].name + " ID: " + products[i].id + " Title: " + products[i].title + " Description: " + products[i].description);
+
 		}
 	}
 
 	public void Success (Product product) {
 		if(Application.isEditor)
 		{
-			ObscuredPrefs.SetInt("SaveSystemAvailable",1);
-			ObscuredPrefs.SetInt("PaidSongOneUnlocked",1);
-			ObscuredPrefs.SetInt("PaidSongTwoUnlocked",1);
+			PlayerPrefs.SetInt("SaveSystemAvailable",1);
+			PlayerPrefs.SetInt("PaidSongOneUnlocked",1);
+			PlayerPrefs.SetInt("PaidSongTwoUnlocked",1);
 			BroadcastMessage("SuccessfulPurchase","It might have worked! Who knows!");
 		}
 		else
 		{
 			if(product.id == "com.turner.peterpanic.unlocksaving")
 			{
-				ObscuredPrefs.SetInt("SaveSystemAvailable",1);
+				PlayerPrefs.SetInt("SaveSystemAvailable",1);
 				BroadcastMessage("SuccessfulPurchase", "Saving was successfully unlocked!");
 			}
 			else if(product.id == "com.turner.peterpanic.unlockdollarsongone")
 			{
-				ObscuredPrefs.SetInt("PaidSongOneUnlocked",1);
+				PlayerPrefs.SetInt("PaidSongOneUnlocked",1);
 				BroadcastMessage("SuccessfulPurchase", "Dollar Song One was successfully unlocked!");
 			}
 			else if(product.id == "com.turner.peterpanic.unlockdollarsongtwo")
 			{
-				ObscuredPrefs.SetInt("PaidSongTwoUnlocked",1);
+				PlayerPrefs.SetInt("PaidSongTwoUnlocked",1);
 				BroadcastMessage("SuccessfulPurchase", "Dollar Song Two successfully unlocked!");
 			}
 		}
@@ -152,15 +153,15 @@ public class IAPManager : MonoBehaviour {
 	public void Restored (Product product) {
 		if(product.id == "com.turner.peterpanic.unlocksaving")
 		{
-			ObscuredPrefs.SetInt("SaveSystemAvailable",1);
+			PlayerPrefs.SetInt("SaveSystemAvailable",1);
 		}
 		else if(product.id == "com.turner.peterpanic.unlockdollarsongone")
 		{
-			ObscuredPrefs.SetInt("PaidSongOneUnlocked",1);
+			PlayerPrefs.SetInt("PaidSongOneUnlocked",1);
 		}
 		else if(product.id == "com.turner.peterpanic.unlockdollarsongtwo")
 		{
-			ObscuredPrefs.SetInt("PaidSongTwoUnlocked",1);
+			PlayerPrefs.SetInt("PaidSongTwoUnlocked",1);
 		}
 		if(product.name == restoreName || restoreName == "")
 		{

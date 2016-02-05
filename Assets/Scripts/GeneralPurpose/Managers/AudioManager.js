@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 public enum Person{None,Peter,PeanutCEO};
 
 static var musicGetter:Component[];
@@ -52,7 +50,7 @@ function Update () {
 	{
 		musicSpeaker[i].pitch = Time.timeScale;
 	}
-	if(ObscuredPrefs.GetInt("Music") == 1 && ObscuredPrefs.HasKey("Music"))
+	if(PlayerPrefs.GetInt("Music") == 1 && PlayerPrefs.HasKey("Music"))
 	{
 		for(i = 0; i < musicSpeaker.length; i++)
 		{
@@ -67,7 +65,7 @@ function Update () {
 			musicSpeaker[i].volume = 0;
 		}
 	}
-	if(ObscuredPrefs.GetInt("Sound") == 1 && ObscuredPrefs.HasKey("Sound"))
+	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
 	{
 		effectSpeaker.volume = soundVolume;
 		effectSpeaker.pitch = Time.timeScale * effectPitchMultiplier;
@@ -221,7 +219,7 @@ static function PlaySound (sound:AudioClip, volume:float) {
 
 static function PlaySound (sound:AudioClip, volume:float, speed:float) {
 	effectPitchMultiplier = speed;
-	if(ObscuredPrefs.GetInt("Sound") == 1 && ObscuredPrefs.HasKey("Sound"))
+	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
 	{
 		effectSpeaker.PlayOneShot(sound,volume);
 	}	
@@ -235,7 +233,7 @@ static function PlayCutscene (sound:AudioClip) {
 
 static function PlayCutscene (sound:AudioClip, volume:float) {
 	cutsceneSpeaker.clip = sound;
-	if(ObscuredPrefs.GetInt("Sound") == 1 && ObscuredPrefs.HasKey("Sound"))
+	if(PlayerPrefs.GetInt("Sound") == 1 && PlayerPrefs.HasKey("Sound"))
 	{
 		cutsceneSpeaker.volume = volume;
 	}

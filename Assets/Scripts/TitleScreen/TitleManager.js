@@ -1,7 +1,5 @@
 	#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 public enum TitleStatus{Home,CustomizeNoColor,CustomizeColor,Options,Intro,Leaving};
 
 static var currentState:TitleStatus;
@@ -70,7 +68,7 @@ function StartScreen () {
 	{
 		yield;
 	}
-	if(ObscuredPrefs.GetInt("TutorialFinished") != 0)
+	if(PlayerPrefs.GetInt("TutorialFinished") != 0)
 	{
 		started = true;
 		startSign.color.a = 0;
@@ -104,7 +102,7 @@ function Intro () {
 	{
 		yield;
 	}
-	ObscuredPrefs.SetInt("TutorialFinished",1);
+	PlayerPrefs.SetInt("TutorialFinished",1);
 	Regular();
 }
 
@@ -245,7 +243,7 @@ function Shake (object:GameObject, numberShakes:int, distance:Vector3){
 }
 
 function PlaySong () {
-	if(ObscuredPrefs.GetInt("Museum") == 1)
+	if(PlayerPrefs.GetInt("Museum") == 1)
 	{
 		AudioManager.PlayCutscene(intros[Random.Range(0,intros.length)]);
 	}

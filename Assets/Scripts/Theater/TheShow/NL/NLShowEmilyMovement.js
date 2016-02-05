@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var emily:SpriteRenderer;
 var mouth:SpriteRenderer;
 

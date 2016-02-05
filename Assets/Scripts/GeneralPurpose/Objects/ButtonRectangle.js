@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 // Declare variables.
 @HideInInspector var importantFinger:int;
 @HideInInspector var button:Bounds;

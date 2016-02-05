@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var newState:TitleStatus;
 var player:GameObject;
 @HideInInspector var manager:PlayerManager;

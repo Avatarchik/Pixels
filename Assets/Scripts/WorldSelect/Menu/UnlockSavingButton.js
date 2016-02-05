@@ -1,19 +1,17 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var unlockPrefab:GameObject;
 var menuManager:WorldMenuManager;
 
 function Start () {
-	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 1 || Application.loadedLevelName == "MicroGameLauncher")
+	if(PlayerPrefs.GetInt("SaveSystemAvailable") == 1 || Application.loadedLevelName == "MicroGameLauncher")
 	{
 		Destroy(gameObject);
 	}
 }
 
 function Update () {
-	if(ObscuredPrefs.GetInt("SaveSystemAvailable") == 1)
+	if(PlayerPrefs.GetInt("SaveSystemAvailable") == 1)
 	{
 		Destroy(gameObject);
 	}

@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var fallingObject:GameObject;
 var crate:GameObject;
 var objectsOnScreen:GameObject[];

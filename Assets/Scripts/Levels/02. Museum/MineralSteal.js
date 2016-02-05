@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var speed:int;
 @HideInInspector var difficulty:int;
 @HideInInspector var finished:boolean;

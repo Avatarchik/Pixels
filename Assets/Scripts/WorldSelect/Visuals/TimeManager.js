@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 public enum TimeState{DayNormal,NightNormal,DayEvil,NightEvil}
 
 @HideInInspector var currentTime:int;
@@ -32,7 +30,7 @@ function Awake () {
 		currentTime = overrideNumber;
 	}
 	GetColors();
-	if(ObscuredPrefs.GetInt("IgnoreTimeOfDay") == 1)
+	if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 1)
 	{
 		currentColors = dayColorsNormal;
 		state = TimeState.DayNormal;
@@ -78,7 +76,7 @@ function Update () {
 }
 
 function GetColors () {
-	if(ObscuredPrefs.GetInt("WorldMapState") == 1)
+	if(PlayerPrefs.GetInt("WorldMapState") == 1)
 	{
 		if(currentTime < 6 || currentTime > 21)
 		{

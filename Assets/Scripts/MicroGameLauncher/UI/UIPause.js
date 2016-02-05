@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var clicked:boolean;
 
 @HideInInspector var importantFinger:int;

@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var manager:ArcadeManager;
 var transition:GameObject;
 @HideInInspector var done:boolean;

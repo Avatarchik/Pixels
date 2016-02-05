@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var scores:float[];
 
 @HideInInspector var totalScore:float;
@@ -66,12 +64,12 @@ function DisplayScores (newScores:float[]) {
 	finalScore.text = Mathf.Ceil(totalScore).ToString();
 	Social.ReportScore(totalScore,Master.currentWorld.basic.worldNameVar,DidItWork);
 	Social.ReportScore(totalScore,Master.currentWorld.basic.worldNameVar+"Hard",DidItWork);
-	ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",Mathf.Floor(totalScore));
-	ObscuredPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",Mathf.Floor(totalScore));
+	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScore",Mathf.Floor(totalScore));
+	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"HighScoreHard",Mathf.Floor(totalScore));
 	if(Master.allowShow)
 	{
-		ObscuredPrefs.SetInt("CurrencyNumber",ObscuredPrefs.GetInt("CurrencyNumber")+Mathf.Floor(totalScore/5));
-		ObscuredPrefs.SetInt("ShowDate:"+Master.date,1);
+		PlayerPrefs.SetInt("CurrencyNumber",PlayerPrefs.GetInt("CurrencyNumber")+Mathf.Floor(totalScore/5));
+		PlayerPrefs.SetInt("ShowDate:"+Master.date,1);
 	}
 	yield WaitForSeconds(1);
 	finished = true;

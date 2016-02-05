@@ -1,7 +1,5 @@
 #pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 public enum ArcadeState {Selecting,Playing,Results,Leaderboard,Notification,Leaving}
 
 var mainScreen:GameObject;
@@ -73,7 +71,7 @@ function Start () {
 	AudioManager.PlaySound(helloSounds[tempVar],1);
 	AudioManager.PlaySong(frontMusic,.5);
 	TalkButton.talkWait = helloSounds[tempVar].length;
-	if(ObscuredPrefs.GetInt("Sound") == 0)
+	if(PlayerPrefs.GetInt("Sound") == 0)
 	{
 		GetComponent(AudioSource).enabled = false;
 	}
@@ -162,7 +160,7 @@ function Scroll (distance:int) {
 			}
 			else
 			{
-				if(ObscuredPrefs.GetInt("Arcade"+games[currentSelection].name) == 1)
+				if(PlayerPrefs.GetInt("Arcade"+games[currentSelection].name) == 1)
 				{
 					unlocked = true;
 				}

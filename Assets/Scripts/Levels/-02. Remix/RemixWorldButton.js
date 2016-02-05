@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 @HideInInspector var allWorlds:World[];
 @HideInInspector var thisWorld:World;
 
@@ -33,13 +31,13 @@ function Start () {
 		transform.position.z = -100;
 		transform.position.y = 1000;
 	}
-	if(ObscuredPrefs.HasKey(worldVar+"RemixIsSelected") && ObscuredPrefs.GetInt(worldVar+"RemixIsSelected") == 1)
+	if(PlayerPrefs.HasKey(worldVar+"RemixIsSelected") && PlayerPrefs.GetInt(worldVar+"RemixIsSelected") == 1)
 	{
 		selected = true;
 	}
 	else
 	{
-		ObscuredPrefs.SetInt(worldVar+"RemixIsSelected",0);
+		PlayerPrefs.SetInt(worldVar+"RemixIsSelected",0);
 		selected = false;
 	}
 }
@@ -67,11 +65,11 @@ function Clicked () {
 		selected = !selected;
 		if(selected)
 		{
-			ObscuredPrefs.SetInt(worldVar+"RemixIsSelected",1);
+			PlayerPrefs.SetInt(worldVar+"RemixIsSelected",1);
 		}
 		else
 		{
-			ObscuredPrefs.SetInt(worldVar+"RemixIsSelected",0);
+			PlayerPrefs.SetInt(worldVar+"RemixIsSelected",0);
 		}
 	}
 }

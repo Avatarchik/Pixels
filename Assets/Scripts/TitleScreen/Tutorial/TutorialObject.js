@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var start:Vector2;
 var goal:Vector2;
 var finish:Vector2;

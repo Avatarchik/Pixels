@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 enum TypeOfMovement{Rotate,Move,Float};
 var jumpy:boolean = false;
 var jumpWait:float = .1;

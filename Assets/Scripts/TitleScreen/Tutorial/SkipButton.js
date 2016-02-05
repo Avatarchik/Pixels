@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var skipProgress:int;
 var skipCounter:float;
 static var returning:boolean;

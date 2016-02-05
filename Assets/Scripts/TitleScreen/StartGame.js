@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 // Audio
 var transitionToWorld:AudioClip;
 
@@ -19,9 +17,9 @@ function Clicked () {
 	if(transition != null && !done && TitleManager.currentState == TitleStatus.Home && !Master.notifying)
 	{
 		TitleManager.currentState = TitleStatus.Leaving;
-		if(ObscuredPrefs.GetInt("PlayerHasBeenToldAboutPayment") != 1)
+		if(PlayerPrefs.GetInt("PlayerHasBeenToldAboutPayment") != 1)
 		{
-			ObscuredPrefs.SetInt("PlayerHasBeenToldAboutPayment",1);
+			PlayerPrefs.SetInt("PlayerHasBeenToldAboutPayment",1);
 			var newNote:GameObject = Instantiate(paidGameNotification);
 			while(newNote != null)
 			{

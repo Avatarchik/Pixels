@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var selectedWorld:WorldSelect;
 var initialWorldSpeed:int;
 var speedIncrease:int;

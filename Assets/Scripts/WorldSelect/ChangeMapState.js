@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var menu:GameObject; 
 var newState:MapStatus;
 
@@ -89,7 +87,7 @@ function Clicked () {
 				Master.hardMode = false;
 				if(WorldMapManager.allowClick)
 				{
-					if(ObscuredPrefs.GetInt(worldNameVar) == 1)
+					if(PlayerPrefs.GetInt(worldNameVar) == 1)
 					{
 						if(WorldMapManager.currentState == MapStatus.Clear || (WorldMapManager.currentState == MapStatus.Intro && !WorldMapManager.introducing))
 						{
@@ -135,7 +133,7 @@ function Clicked () {
 }
 
 function UpdateWorldAvailability () {
-	if(ObscuredPrefs.GetInt(worldNameVar) == 1)
+	if(PlayerPrefs.GetInt(worldNameVar) == 1)
 	{
 		CheckHover();
 	}
@@ -143,7 +141,7 @@ function UpdateWorldAvailability () {
 	{
 		if(thisWorldDisplay.Length == 2)
 		{
-			GetComponent(SpriteRenderer).sprite = thisWorldDisplay[ObscuredPrefs.GetInt(worldNameVar)];
+			GetComponent(SpriteRenderer).sprite = thisWorldDisplay[PlayerPrefs.GetInt(worldNameVar)];
 		}
 		yield WaitForSeconds(1);
 	}

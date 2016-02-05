@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var deleteOn:String;
 var variableToCheck:String;
 var unlockPrefab:GameObject;
@@ -10,11 +8,11 @@ var song:GameObject;
 
 function Start () {
 	allowed = false;
-	if(ObscuredPrefs.GetInt(deleteOn) != 1 && deleteOn != null && deleteOn != "")
+	if(PlayerPrefs.GetInt(deleteOn) != 1 && deleteOn != null && deleteOn != "")
 	{
 		Destroy(gameObject);
 	}
-	if(ObscuredPrefs.GetInt(variableToCheck) == 1)
+	if(PlayerPrefs.GetInt(variableToCheck) == 1)
 	{
 		allowed = true;
 	}
@@ -66,7 +64,7 @@ function Clicked () {
 					{
 						yield;
 					}
-					if(ObscuredPrefs.GetInt(variableToCheck) == 1)
+					if(PlayerPrefs.GetInt(variableToCheck) == 1)
 					{
 						allowed = true;
 					}

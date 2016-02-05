@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var manager:UnlockWheelManager;
 var spinButton:SpriteRenderer;
 var spinReadOut:TextMesh;

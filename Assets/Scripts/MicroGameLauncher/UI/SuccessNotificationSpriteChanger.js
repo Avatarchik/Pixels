@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var successSprite:Sprite;
 var failSprite:Sprite;
 

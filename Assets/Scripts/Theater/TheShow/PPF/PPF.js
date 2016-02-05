@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var pixels:SpriteRenderer[];
 var goal:boolean[];
 @HideInInspector var active:boolean[];

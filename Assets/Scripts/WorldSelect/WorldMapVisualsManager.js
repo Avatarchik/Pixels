@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var worldMap:GameObject;
 @HideInInspector var worldMapManager:WorldMapManager;
 

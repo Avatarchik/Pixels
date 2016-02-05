@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var events:SceneEvent[];
 
 var lights:SpriteRenderer[];

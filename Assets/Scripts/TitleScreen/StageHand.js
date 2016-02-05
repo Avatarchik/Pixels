@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-import CodeStage.AntiCheat.ObscuredTypes;
-
 var effectObject:GameObject;
 @HideInInspector var effect:SpriteRenderer;
 @HideInInspector var sprite:SpriteRenderer;
