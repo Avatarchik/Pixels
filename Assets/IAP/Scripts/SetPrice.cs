@@ -3,25 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SetPrice : MonoBehaviour {
-
+	
 	public string productID;
 	// Use this for initialization
 	void Start () {
-		IOSInAppPurchaseManager.instance.LoadStore();
-		StartCoroutine(DoStuff());
+		DoStuff ();
 	}
 
 	// Update is called once per frame
 	void Update () {
 	}
 
-	IEnumerator DoStuff () {
-		yield return new WaitForSeconds(.2f);
-		string localizedPrice = IOSInAppPurchaseManager.Instance.GetProductById(productID).LocalizedPrice;
-		string icon = IOSInAppPurchaseManager.Instance.GetProductById(productID).CurrencySymbol;
+	void DoStuff () {
+		string localizedPrice = CVariables.GetPrices(productID);
 		if(GetComponent<TextMesh>() != null)
 		{
-			GetComponent<TextMesh>().text = " " + icon + localizedPrice.Substring(0,localizedPrice.Length-1);
+			GetComponent<TextMesh>().text = localizedPrice;
 		}
 	}
 
