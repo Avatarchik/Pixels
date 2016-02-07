@@ -205,6 +205,7 @@ function BeforeGames () {
 		// Wait for the text to finish.
 		while(!loadedText.GetComponent(TextManager).finished){yield;}
 	}
+	UI.BroadcastMessage("GamesStart", gameNumber,SendMessageOptions.DontRequireReceiver);
 	PlayCurrentMusic();
 	GetRandomGame();
 	yield WaitForSeconds(1);
@@ -284,6 +285,7 @@ function GameOver () {
 	yield WaitForSeconds(.5);
 	pausable = false;
 	PlayerPrefs.SetInt(Master.currentWorld.basic.worldNameVar+"PlayedOnce", 1);
+	UI.BroadcastMessage("GamesEnd", gameNumber,SendMessageOptions.DontRequireReceiver);
 	if(!Master.hardMode && !quitting && Master.currentWorld.basic.worldNameVar != "VRTraining")
 	{
 			loadedText = Instantiate(FindEnding());
