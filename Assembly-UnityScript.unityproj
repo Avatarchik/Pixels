@@ -199,6 +199,7 @@
      <Compile Include="Assets\Scripts\Theater\LedgerController.js" />
      <Compile Include="Assets\Scripts\Theater\PaidSongs\RotateSetPiece.js" />
      <Compile Include="Assets\Scripts\Theater\PlayerWalking.js" />
+     <Compile Include="Assets\Scripts\Theater\SoundtrackButton.js" />
      <Compile Include="Assets\Scripts\Theater\StatScreenMenuOption.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\GD\GD.js" />
      <Compile Include="Assets\Scripts\Theater\TheShow\HS\HS.js" />

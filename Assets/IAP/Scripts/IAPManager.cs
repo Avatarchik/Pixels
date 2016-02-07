@@ -23,8 +23,11 @@ public class IAPManager : MonoBehaviour {
 
 	public TextMesh price;
 
+	Boolean restored;
+
 	void Awake () {
 		skip = false;
+		restored = false;
 	}
 
 	// Use this for initialization
@@ -165,15 +168,18 @@ public class IAPManager : MonoBehaviour {
 		}
 		if(product.name == restoreName || restoreName == "")
 		{
+			restored = true;
 			BroadcastMessage("RestoreSuccess");
 		}
 		else
 		{
-			BroadcastMessage("RestoreFailed");
 		}
 	}
 
 	public void FinishedRestoring () {
-
+		if(!restored)
+		{
+			BroadcastMessage("RestoreFailed");
+		}
 	}
 }

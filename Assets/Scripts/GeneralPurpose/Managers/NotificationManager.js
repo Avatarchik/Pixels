@@ -23,7 +23,10 @@ function Start () {
 }
 
 function Notify () {
-	speaker.PlayOneShot(sting,.7);
+	if(PlayerPrefs.GetInt("Sound") == 1)
+	{
+		speaker.PlayOneShot(sting,.7);
+	}
 	yield WaitForSeconds(.5);
 	if(Application.loadedLevelName == "MicroGameLauncher")
 	{

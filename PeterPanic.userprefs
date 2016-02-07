@@ -1,5 +1,5 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,13 +16,31 @@
               </Node>
             </Node>
             <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="SetPrice.cs" selected="True" />
-              </Node>
+              <Node name="Scripts" expanded="True" />
             </Node>
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
                 <Node name="Managers" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="IAP" expanded="True">
+              <Node name="Scripts" expanded="True" />
+            </Node>
+            <Node name="Scripts" expanded="True">
+              <Node name="GeneralPurpose" expanded="True">
+                <Node name="Managers" expanded="True" />
+              </Node>
+              <Node name="Levels" expanded="True">
+                <Node name="01. Packing Peanut Factory" expanded="True" />
+              </Node>
+              <Node name="MicroGameLauncher" expanded="True" />
+              <Node name="Theater" expanded="True">
+                <Node name="SoundtrackButton.js" selected="True" />
+              </Node>
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Menu" expanded="True" />
               </Node>
             </Node>
           </Node>
