@@ -6,7 +6,10 @@ var transitionToWorld:AudioClip;
 var transition:GameObject;
 var done:boolean;
 
+var allowable:boolean;
+
 function Awake () {
+	allowable = false;
 	if(PlayerPrefs.GetInt("ActOneFinished") != 1)
 	{
 		Destroy(gameObject);
@@ -16,10 +19,11 @@ function Awake () {
 function Start () {
 	DontDestroyOnLoad(gameObject);
 	done = false;
+	StartAllow();
 }
 
 function Clicked () {
-	if(transition != null && !done && TitleManager.currentState == TitleStatus.Home && !Master.notifying)
+	if(allowable && transition != null && !done && TitleManager.currentState == TitleStatus.Home && !Master.notifying)
 	{
 		TitleManager.currentState = TitleStatus.Leaving;
 		AudioManager.PlaySoundTransition(transitionToWorld);
@@ -32,4 +36,9 @@ function Clicked () {
 		Application.LoadLevel("Credits");
 		yield WaitForSeconds(2);
 	}
+}
+
+function StartAllow () {
+	yield WaitForSeconds(4);
+	allowable = true;
 }

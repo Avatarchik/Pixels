@@ -471,6 +471,7 @@ function UnlockAllOptions () {
 	PlayerPrefs.SetInt("TutorialFinished",2);
 	PlayerPrefs.SetInt("WorldMapState",2);
 	PlayerPrefs.SetInt("FirstThingUnlocked",1);
+	PlayerPrefs.SetInt("ActOneFinished",1);
 	for(var aWorld:World in worlds)
 	{
 		var worldName:String;

@@ -11,9 +11,13 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
+@HideInInspector var clicked:boolean[];
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
+	clicked = new boolean[5];
+	clicked = [false,false,false,false,false];
 	
 	// Level specific variable initialization.
 	
@@ -48,25 +52,20 @@ function Update () {
 		Finish(true,0);
 	}
 	// Get important finger.
-	if(importantFinger == -1)
+	for(var i:int = 0; i < Finger.identity.length; i++)
 	{
-		for(var i:int = 0; i < Finger.identity.length; i++)
+		if(!Master.paused)
 		{
-			if(Finger.GetExists(i) && Finger.GetInGame(i))
-			{
-				importantFinger = i;
-				break;
-			}
+			clicked[i] = true;
 		}
-	}
-	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
-	if(Finger.GetExists(importantFinger) && !Master.paused)
-	{
-		
-	}
-	else if(!Finger.GetExists(importantFinger))
-	{
-		importantFinger = -1;
+		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && !finished)
+		{
+			clicked[i] = true;
+		}
+		else if(!Finger.GetExists(i) || !Finger.GetInGame(i))
+		{
+			clicked[i] = false;
+		}
 	}
 }
 

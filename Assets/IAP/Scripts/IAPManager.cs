@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 using System;
 using System.Collections;
@@ -22,6 +22,8 @@ public class IAPManager : MonoBehaviour {
 	String restoreName;
 
 	public TextMesh price;
+
+	GameObject newBeggingNote;
 
 	Boolean restored;
 
@@ -55,13 +57,12 @@ public class IAPManager : MonoBehaviour {
 
 	IEnumerator TimeOutCounter () {
 		yield return new WaitForSeconds(15);
-		BroadcastMessage("FailedPurchase");
+		StartCoroutine(SendFailure());
 	}
 	// Update is called once per frame
 	IEnumerator LaunchNote () {
 		if(begging.Length > 0 && !skip && PlayerPrefs.GetInt("IAPBeggingNumber") < begging.Length )
 		{
-			GameObject newBeggingNote;
 			newBeggingNote = Instantiate(begging[Mathf.Min(begging.Length-1,PlayerPrefs.GetInt("IAPBeggingNumber"))]);
 			PlayerPrefs.SetInt("IAPBeggingNumber",PlayerPrefs.GetInt("IAPBeggingNumber") + 1);
 			newBeggingNote.transform.parent = transform;
@@ -131,11 +132,11 @@ public class IAPManager : MonoBehaviour {
 	}
 
 	public void Failure (String error) {
-		BroadcastMessage("FailedPurchase");
+		StartCoroutine(SendFailure());
 	}
 
 	public void Failure (Product product, String error) {
-		BroadcastMessage("FailedPurchase");
+		StartCoroutine(SendFailure());
 	}
 
 	public void Cancel () {
@@ -151,6 +152,14 @@ public class IAPManager : MonoBehaviour {
 		{
 			//BroadcastMessage("NotConnected");
 		}
+	}
+
+	public IEnumerator SendFailure () {
+		while(newBeggingNote != null)
+		{
+			yield return new WaitForEndOfFrame()	;
+		}
+		BroadcastMessage("FailedPurchase");
 	}
 
 	public void Restored (Product product) {

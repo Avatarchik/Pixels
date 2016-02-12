@@ -145,6 +145,10 @@ function Update () {
 	}
 	for(i = 0; i < Finger.identity.length; i++)
 	{
+		if(Master.paused)
+		{	
+			clicked[i] = true;
+		}
 		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && !finished)
 		{
 			AudioManager.PlaySound(clickSound,1);

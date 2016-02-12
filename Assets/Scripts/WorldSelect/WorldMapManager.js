@@ -425,6 +425,13 @@ function FindClosest() {
 function SendUnlockNote() {
 	if(!unlockNotified)
 	{
+		for(var i:int = 0; i < worlds.length; i++)
+		{
+			if(worlds[i].name != "UnlockWheel")
+			{
+				worlds[i].GetComponent(ButtonRectangle).enabled = false;
+			}
+		}
 		unlockNotified = true;
 		Camera.main.GetComponent(Master).LaunchNotification("Let's go unlock something!",NotificationType.notEnoughCoins);
 	}
