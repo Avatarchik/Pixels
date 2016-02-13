@@ -11,7 +11,14 @@ function Start () {
 }
 
 function Update () {
-
+	if(manager.openingText == null)
+	{
+		GetComponent(SpriteRenderer).color.a = 1;
+	}
+	else
+	{
+		GetComponent(SpriteRenderer).color.a = 0;
+	}
 }
 
 function Clicked () {

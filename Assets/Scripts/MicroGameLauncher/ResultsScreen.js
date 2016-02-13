@@ -232,7 +232,7 @@ function CountScore() {
 }
 
 function FindNextGoal () {
-	if(Master.hardMode)
+	if(Master.hardMode || Master.currentWorld.basic.worldNameVar == "VRTraining")
 	{
 		nextGoal = 5;
 	}

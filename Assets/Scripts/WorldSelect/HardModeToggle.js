@@ -25,9 +25,11 @@ function UpdateVisuals (reset:boolean) {
 		allowClick = false;
 		subText.GetComponent(SpriteRenderer).color = Color(0,0,0,0);
 		GetComponent(SpriteRenderer).color = Color(0,0,0,0);
+		GetComponent(ButtonSquare).click = false;
 	}
 	else
 	{
+		GetComponent(ButtonSquare).click = true;
 		allowClick = true;
 		subText.GetComponent(SpriteRenderer).color = Color(1,1,1,1);
 		if(PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End3Played") != 1 && PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar+"End4Played") != 1)

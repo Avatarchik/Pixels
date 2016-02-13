@@ -294,6 +294,7 @@ function GameOver () {
 			while(!loadedText.GetComponent(TextManager).finished){yield;}
 	}
 	Master.lastScore = gameNumber;
+	UI.BroadcastMessage("GameNumberChange", "",SendMessageOptions.DontRequireReceiver);
 	currentResults = Instantiate(results,Vector3(results.transform.position.x,20,results.transform.position.z), Quaternion.identity);
 	var sinCounter:float = 0;
 	var sinMultiplier:float = 20;

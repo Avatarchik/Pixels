@@ -28,3 +28,10 @@ function GameNumberChange (gameNumber:int) {
 		gameObject.GetComponent(TextMesh).text = gameNumber.ToString();
 	}
 }
+
+function GameNumberChange (gameNumber:String) {
+	if(words)
+	{
+		gameObject.GetComponent(TextMesh).text = gameNumber.ToString();
+	}
+}

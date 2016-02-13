@@ -6,12 +6,22 @@
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
+              <Node name="GeneralPurpose" expanded="True">
+                <Node name="Managers" expanded="True" />
+              </Node>
               <Node name="Levels" expanded="True">
                 <Node name="02. Museum" expanded="True" />
-                <Node name="07. Movies" expanded="True">
-                  <Node name="SniperShoot.js" selected="True" />
+                <Node name="07. Movies" expanded="True" />
+              </Node>
+              <Node name="MicroGameLauncher" expanded="True">
+                <Node name="UI" expanded="True">
+                  <Node name="UIPause.js" selected="True" />
                 </Node>
               </Node>
+              <Node name="Theater" expanded="True">
+                <Node name="TheShow" expanded="True" />
+              </Node>
+              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>
