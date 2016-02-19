@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 142dd024b76d54c5ba8163eee4e59e3d
-timeCreated: 1439393035
-licenseType: Free
+guid: 2b2a99da2519c4ef0a3b07f6e0852b23
+timeCreated: 1455816431
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: Ticket
@@ -38,6 +38,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1

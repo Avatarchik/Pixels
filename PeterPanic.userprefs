@@ -1,6 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js">
+    <Files>
+      <File FileName="Assets/Scripts/Levels/-01. UnlockWheel/UnlockWheelManager.js" Line="70" Column="48" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -10,13 +13,15 @@
                 <Node name="Managers" expanded="True" />
               </Node>
               <Node name="Levels" expanded="True">
+                <Node name="-01. UnlockWheel" expanded="True">
+                  <Node name="UnlockWheelManager.js" selected="True" />
+                </Node>
                 <Node name="02. Museum" expanded="True" />
+                <Node name="03B. Arcade" expanded="True" />
                 <Node name="07. Movies" expanded="True" />
               </Node>
               <Node name="MicroGameLauncher" expanded="True">
-                <Node name="UI" expanded="True">
-                  <Node name="UIPause.js" selected="True" />
-                </Node>
+                <Node name="UI" expanded="True" />
               </Node>
               <Node name="Theater" expanded="True">
                 <Node name="TheShow" expanded="True" />

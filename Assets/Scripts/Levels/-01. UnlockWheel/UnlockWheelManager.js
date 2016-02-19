@@ -65,6 +65,10 @@ function Start () {
 	unlockableItems = Camera.main.GetComponent(Master).settings.customizationPieces;
 	UpdateUnlockables();
 	GetPrice();
+	if(PlayerPrefs.GetInt("FirstThingUnlocked") != 1 && PlayerPrefs.GetInt("CurrencyNumber") <= price)
+	{
+		PlayerPrefs.SetInt("CurrencyNumber",price+1);
+	}
 	Shake();
 }
 

@@ -41,7 +41,7 @@ function Start () {
 	latestScore = ArcadeManager.lastScore;
 	Social.ReportScore(latestScore,"Arcade"+leaderBoardName,DidItWork);
 	leaderBoardName = ArcadeManager.lastGameVariable;
-	gameNameDisplay.text = ArcadeManager.lastGameVariable;
+	gameNameDisplay.text = ArcadeManager.lastGameDisplayName;
 	
 	if(PlayerPrefs.GetFloat("Arcade"+leaderBoardName+"Score") < latestScore)
 	{

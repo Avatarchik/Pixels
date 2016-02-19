@@ -610,6 +610,7 @@ function WorldOptions () {
 
 class ArcadeGame {
 	var name:String;
+	var displayName:String;
 	var game:GameObject;
 	var cabinet:Sprite;
 	var paidUnlockCost:int;

@@ -9,6 +9,14 @@ var warningNote:GameObject;
 
 @HideInInspector var allowClick:boolean;
 
+var ticketSprite:Sprite;
+var ticketAltSprite:Sprite;
+
+var ticket:SpriteRenderer;
+
+var highScoreButton:GameObject;
+var highScoreText:GameObject;
+
 function Start () {
 	allowClick = true;
 	subTextOrigin = subText.transform.localPosition.y;
@@ -19,6 +27,18 @@ function UpdateVisuals (reset:boolean) {
 	{
 		GetComponent(SpriteRenderer).sprite = upSprite;
 		subText.transform.localPosition.y = subTextOrigin;
+	}
+	if(Master.currentWorld.basic.worldNameVar == "Arcade" || Master.currentWorld.basic.worldNameVar == "UnlockWheel" || Master.currentWorld.basic.worldNameVar == "VRTraining")
+	{
+		ticket.sprite = ticketAltSprite;
+		highScoreButton.GetComponent(ButtonSquare).enabled = false;
+		highScoreText.transform.localPosition.z = -1000;
+	}
+	else
+	{
+		ticket.sprite = ticketSprite;
+		highScoreButton.GetComponent(ButtonSquare).enabled = true;
+		highScoreText.transform.localPosition.z = -.4;
 	}
 	if(Master.currentWorld.basic.worldNameVar == "Arcade" || Master.currentWorld.basic.worldNameVar == "Theater" || Master.currentWorld.basic.worldNameVar == "UnlockWheel" || Master.currentWorld.basic.worldNameVar == "VRTraining")
 	{

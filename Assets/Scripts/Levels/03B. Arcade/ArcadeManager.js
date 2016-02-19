@@ -36,6 +36,7 @@ var gameStartGeneralSounds:AudioClip[];
 
 static var lastScore:float;
 static var lastGameVariable:String;
+static var lastGameDisplayName:String;
 
 function Start () {
 	left = false;
@@ -145,6 +146,7 @@ function Scroll (distance:int) {
 		if(currentSelection < displays.length - 1)
 		{
 			lastGameVariable = games[currentSelection].name;
+			lastGameDisplayName = games[currentSelection].displayName;
 		}
 		var isMainScreen:boolean = false;
 		if(currentSelection == games.length)
