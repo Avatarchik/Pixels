@@ -441,6 +441,7 @@ function Play () {
 function EndGame(status:boolean,waitTime:float) {
 	if(!finished)
 	{
+		UITimer.soundsOn = !status;
 		finished = true;
 		yield WaitForSeconds(waitTime);
 		Finish(status);
@@ -448,7 +449,6 @@ function EndGame(status:boolean,waitTime:float) {
 }
 
 function Finish(completionStatus:boolean) {
-	UITimer.soundsOn = !completionStatus;
 	if(Application.loadedLevelName == "MicroTester")
 	{
 		GameObject.FindGameObjectWithTag("GameController").GetComponent(MicroTester).GameComplete(completionStatus);

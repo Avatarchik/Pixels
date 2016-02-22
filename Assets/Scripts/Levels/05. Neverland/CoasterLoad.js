@@ -83,7 +83,7 @@ function Start () {
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
-	carSpeed = 30 + (20 * speed);
+	carSpeed = 40 + (10 * speed);
 	variance = Mathf.Max(.35 - (.03 * speed),.25);
 	car.transform.position.x = successLocation - Mathf.Min(carSpeed * 3,totalDistance);
 	currentSpeed = carSpeed;

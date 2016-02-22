@@ -249,7 +249,7 @@ function Update () {
 			nearestBlock = space;
 		}
 	}
-	if(player.transform.position.y >= platformHeight+4 && platforms[nearestBlock] != null)
+	if(((player.transform.position.y >= platformHeight+3 && velocity > 0) || (player.transform.position.y >= platformHeight+4 && velocity <= 0)) && platforms[nearestBlock] != null)
 	{
 		bottom = platformHeight+4.376;
 	}

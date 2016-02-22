@@ -238,7 +238,7 @@ function FindNextGoal () {
 	}
 	else
 	{
-		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar);
+		var highestScore = PlayerPrefs.GetInt(Master.currentWorld.basic.worldNameVar + "HighScore");
 		if(score > highestScore)
 		{
 			highestScore = score;
@@ -246,9 +246,9 @@ function FindNextGoal () {
 		nextGoal = 1;
 		for(var i:int = 0; i < unlockLevels.length; i++)
 		{
-			if(highestScore > unlockLevels[i])
+			if(highestScore >= unlockLevels[i])
 			{
-				nextGoal = i + 2;
+				nextGoal = i + 1;
 			}
 		}
 		if(highestScore < 15)
