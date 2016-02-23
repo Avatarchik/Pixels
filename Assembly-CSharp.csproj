@@ -216,6 +216,7 @@
      <Compile Include="Assets\IAP\Scripts\IAPManager.cs" />
      <Compile Include="Assets\IAP\Scripts\SetPrice.cs" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\CVariables.cs" />
+     <Compile Include="Assets\Scripts\Test.cs" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
      <None Include="Assets\Plugins\JSON\readme.txt" />
      <None Include="Assets\IAP\Resources\AndroidManifest.xml" />

@@ -191,11 +191,11 @@ function Update () {
 	// Get important finger.
 	for(var i:int = 0; i < Finger.identity.length; i++)
 	{
-		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && ammoLeft <= 0)
+		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && ammoLeft <= 0 && !Master.paused)
 		{
 			AudioManager.PlaySound(outOfAmmo);
 		}
-		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && ammoLeft > 0)
+		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && ammoLeft > 0 && !Master.paused)
 		{
 			clicked[i] = true;
 			RemoveAmmo();
