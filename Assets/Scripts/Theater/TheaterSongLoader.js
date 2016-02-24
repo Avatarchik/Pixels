@@ -29,7 +29,7 @@ function Update () {
 }
 
 function Clicked () {
-	if(allowed)
+	if(allowed && !Master.notifying)
 	{
 		if(LedgerController.currentState == LedgerState.Worlds)
 		{

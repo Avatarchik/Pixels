@@ -1,18 +1,24 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/03B. Arcade/ArcadeHighScoreScreen.js">
+    <Files>
+      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeHighScoreScreen.js" Line="121" Column="2" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True" />
-            </Node>
+          <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
+              <Node name="Levels" expanded="True">
+                <Node name="03B. Arcade" expanded="True">
+                  <Node name="Objects" expanded="True" />
+                  <Node name="ArcadeHighScoreScreen.js" selected="True" />
+                </Node>
               </Node>
-              <Node name="Test.cs" selected="True" />
+              <Node name="Theater" expanded="True" />
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Visuals" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>

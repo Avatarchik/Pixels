@@ -10,14 +10,17 @@ function Update () {
 }
 
 function Clicked () {
-	if(LedgerController.songPlaying)
+	if(LedgerController.currentState != LedgerState.Closed && LedgerController.currentState != LedgerState.Transition)
 	{
-		LedgerController.songPlaying = false;
-		AudioManager.StopAll(0);
-		GameObject.FindGameObjectWithTag("Theater").GetComponent(TheaterController).PlayAudio();
-	}
-	if(!LedgerController.videoPlaying)
-	{
-		GameObject.FindGameObjectWithTag("LedgerController").GetComponent(LedgerController).ReplaceCover(type);
+		if(LedgerController.songPlaying)
+		{
+			LedgerController.songPlaying = false;
+			AudioManager.StopAll(0);
+			GameObject.FindGameObjectWithTag("Theater").GetComponent(TheaterController).PlayAudio();
+		}
+		if(!LedgerController.videoPlaying)
+		{
+			GameObject.FindGameObjectWithTag("LedgerController").GetComponent(LedgerController).ReplaceCover(type);
+		}
 	}
 }

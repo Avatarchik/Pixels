@@ -35,8 +35,11 @@ var notConnected:TextMesh;
 
 var loading:GameObject;
 
+@HideInInspector var canSwitch:boolean;
+
 function Start () {
 	clicked = false;
+	canSwitch = false;
 	if(Master.hardMode)
 	{
 		latestScore = PlayerPrefs.GetInt(Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar+"HighScoreHard");
@@ -117,6 +120,7 @@ function Start () {
 }
 
 function GetUserNames (ids:String[]) {
+	canSwitch = false;
 	for(var x:int = 0; x < ids.length; x ++)
 	{
 		if(ids[x] != "Peter")
@@ -137,6 +141,7 @@ function GetUserNames (ids:String[]) {
 		}
 		yield WaitForSeconds(.3);
 	}
+	canSwitch = true;
 }
 
 function NotConnected () {

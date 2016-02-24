@@ -35,8 +35,11 @@ var notConnected:TextMesh;
 
 var loading:GameObject;
 
+@HideInInspector var canSwitch:boolean;
+
 function Start () {
 	clicked = false;
+	canSwitch = false;
 	
 	latestScore = ArcadeManager.lastScore;
 	Social.ReportScore(latestScore,"Arcade"+leaderBoardName,DidItWork);
@@ -115,6 +118,7 @@ function Start () {
 }
 
 function GetUserNames (ids:String[]) {
+	canSwitch = false;
 	for(var x:int = 0; x < ids.length; x ++)
 	{
 		if(ids[x] != "Peter")
@@ -135,6 +139,7 @@ function GetUserNames (ids:String[]) {
 		}
 		yield WaitForSeconds(.3);
 	}
+	canSwitch = true;
 }
 
 function NotConnected () {
@@ -180,6 +185,10 @@ function FinishStart () {
 function RegularUpdate () {
 	while(true)
 	{
+		if(loading != null)
+		{
+			Destroy(loading);
+		}
 		if(Input.GetKeyDown("left"))
 		{
 			global = true;
@@ -197,7 +206,7 @@ function RegularUpdate () {
 		if(Finger.GetExists(0) && Finger.GetInGame(0) && !clicked)
 		{
 			clicked = true;
-			if(Finger.GetPosition(0).y < -5)
+			if(Finger.GetPosition(0).y < -5 && canSwitch)
 			{
 				if(Finger.GetPosition(0).x > 0)
 				{

@@ -298,6 +298,7 @@ function RemoveCover () {
 	yield WaitForSeconds(.5);
 	SwitchLocations(LedgerState.Menu);
 	while(Mathf.Abs(cover.transform.localPosition.x + 2.4) > .01 && theaterController.currentState == TheaterStatus.Stats)
+
 	{
 		cover.transform.localPosition.x = Mathf.MoveTowards(cover.transform.localPosition.x,-2.4,Time.deltaTime * 1.3);
 		cover.transform.localPosition.x = Mathf.Lerp(cover.transform.localPosition.x,-2.4,Time.deltaTime * 1.3);
