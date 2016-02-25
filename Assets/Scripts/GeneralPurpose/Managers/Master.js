@@ -266,6 +266,7 @@ function Demo () {
 function ResetGame () {
 	if(!resetting)
 	{
+		Destroy(GameObject.Find("IOSInAppPurchaseManager"));
 		resetting = true;
 		DeleteAllValues();
 		AudioManager.StopAll(0);

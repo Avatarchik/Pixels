@@ -185,10 +185,6 @@ function FinishStart () {
 function RegularUpdate () {
 	while(true)
 	{
-		if(loading != null)
-		{
-			Destroy(loading);
-		}
 		if(Input.GetKeyDown("left"))
 		{
 			global = true;

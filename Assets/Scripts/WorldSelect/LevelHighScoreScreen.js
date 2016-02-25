@@ -70,7 +70,6 @@ function Start () {
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{
-			Debug.Log(Social.localUser.id);
 			leaderboard.LoadScores(function() {
 				if(leaderboard.scores.Length > 0)	
 				{
@@ -204,7 +203,7 @@ function RegularUpdate () {
 		if(Finger.GetExists(0) && Finger.GetInGame(0) && !clicked)
 		{
 			clicked = true;
-			if(Finger.GetPosition(0).y < -5)
+			if(Finger.GetPosition(0).y < -5 && canSwitch)
 			{
 				if(Finger.GetPosition(0).x > 0)
 				{

@@ -35,7 +35,6 @@ public class CVariables : MonoBehaviour {
 		IOSInAppPurchaseManager.OnTransactionComplete += OnTransactionComplete;
 		while(!done)
 		{
-			Debug.Log(done);
 			IOSInAppPurchaseManager.instance.LoadStore();
 			yield return new WaitForSeconds(waitTime);
 			waitTime = Mathf.MoveTowards(waitTime,5f,.5f);
@@ -73,15 +72,15 @@ public class CVariables : MonoBehaviour {
 				string localizedPrice = t.LocalizedPrice;
 				int index = localizedPrice.IndexOf(t.CurrencySymbol);
 				string cleanPrice = (index < 0) ? localizedPrice : localizedPrice.Remove(index, t.CurrencySymbol.Length);
-				Debug.Log("id" + t.Id);
-				Debug.Log("title" + t.DisplayName);
-				Debug.Log("description" + t.Description);
-				Debug.Log("price" + t.Price);
-				Debug.Log("localizedPrice" + t.LocalizedPrice);
-				Debug.Log("currencySymbol" + t.CurrencySymbol);
-				Debug.Log("currencyCode" + t.CurrencyCode);
-				Debug.Log("-------------");
-				Debug.Log(localizedPrice);
+//				Debug.Log("id" + t.Id);
+//				Debug.Log("title" + t.DisplayName);
+//				Debug.Log("description" + t.Description);
+//				Debug.Log("price" + t.Price);
+//				Debug.Log("localizedPrice" + t.LocalizedPrice);
+//				Debug.Log("currencySymbol" + t.CurrencySymbol);
+//				Debug.Log("currencyCode" + t.CurrencyCode);
+//				Debug.Log("-------------");
+//				Debug.Log(localizedPrice);
 				unlockSongOnePrice = t.LocalizedPrice;
 			}
 			IOSProductTemplate u = IOSInAppPurchaseManager.Instance.GetProductById(unlockSongTwoID);
@@ -90,15 +89,15 @@ public class CVariables : MonoBehaviour {
 				string localizedPrice = u.LocalizedPrice;
 				int index = localizedPrice.IndexOf(u.CurrencySymbol);
 				string cleanPrice = (index < 0) ? localizedPrice : localizedPrice.Remove(index, u.CurrencySymbol.Length);
-				Debug.Log("id" + u.Id);
-				Debug.Log("title" + u.DisplayName);
-				Debug.Log("description" + u.Description);
-				Debug.Log("price" + u.Price);
-				Debug.Log("localizedPrice" + u.LocalizedPrice);
-				Debug.Log("currencySymbol" + u.CurrencySymbol);
-				Debug.Log("currencyCode" + u.CurrencyCode);
-				Debug.Log("-------------");
-				Debug.Log(localizedPrice);
+//				Debug.Log("id" + u.Id);
+//				Debug.Log("title" + u.DisplayName);
+//				Debug.Log("description" + u.Description);
+//				Debug.Log("price" + u.Price);
+//				Debug.Log("localizedPrice" + u.LocalizedPrice);
+//				Debug.Log("currencySymbol" + u.CurrencySymbol);
+//				Debug.Log("currencyCode" + u.CurrencyCode);
+//				Debug.Log("-------------");
+//				Debug.Log(localizedPrice);
 				unlockSongTwoPrice = u.LocalizedPrice;
 			}
 			IOSProductTemplate v = IOSInAppPurchaseManager.Instance.GetProductById(unlockSavingID);
@@ -107,15 +106,15 @@ public class CVariables : MonoBehaviour {
 				string localizedPrice = v.LocalizedPrice;
 				int index = localizedPrice.IndexOf(v.CurrencySymbol);
 				string cleanPrice = (index < 0) ? localizedPrice : localizedPrice.Remove(index, v.CurrencySymbol.Length);
-				Debug.Log("id" + v.Id);
-				Debug.Log("title" + v.DisplayName);
-				Debug.Log("description" + v.Description);
-				Debug.Log("price" + t.Price);
-				Debug.Log("localizedPrice" + v.LocalizedPrice);
-				Debug.Log("currencySymbol" + v.CurrencySymbol);
-				Debug.Log("currencyCode" + v.CurrencyCode);
-				Debug.Log("-------------");
-				Debug.Log(localizedPrice);
+//				Debug.Log("id" + v.Id);
+//				Debug.Log("title" + v.DisplayName);
+//				Debug.Log("description" + v.Description);
+//				Debug.Log("price" + t.Price);
+//				Debug.Log("localizedPrice" + v.LocalizedPrice);
+//				Debug.Log("currencySymbol" + v.CurrencySymbol);
+//				Debug.Log("currencyCode" + v.CurrencyCode);
+//				Debug.Log("-------------");
+//				Debug.Log(localizedPrice);
 				unlockSavingPrice = v.LocalizedPrice;
 			}
 		}
