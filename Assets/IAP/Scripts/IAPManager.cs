@@ -148,9 +148,9 @@ public class IAPManager : MonoBehaviour {
 	}
 
 	public void Initialized (Boolean result) {
-		if(!result)
+		Debug.Log("Initialized WAS:" + result);
+		if(result)
 		{
-			//BroadcastMessage("NotConnected");
 		}
 	}
 

@@ -499,6 +499,11 @@ function UnlockAllOptions () {
 	PlayerPrefs.SetInt("EyesSelection",0);
 	PlayerPrefs.SetInt("TopSelection",0);
 	PlayerPrefs.SetInt("BottomSelection",0);
+	PlayerPrefs.SetInt("HairColor", 0);
+	PlayerPrefs.SetInt("EyeColor", 0);
+	PlayerPrefs.SetInt("TopColor", 1);
+	PlayerPrefs.SetInt("BottomColor", 0);
+	PlayerPrefs.SetInt("BodyColor", 0);
 	UnlockCustomizeOptions(true);
 }
 
