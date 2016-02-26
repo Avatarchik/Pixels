@@ -67,7 +67,7 @@ function Clicked () {
 			case MapStatus.Menu:
 				if(WorldMapManager.currentState == MapStatus.Clear && menu != null && currentMenu == null)
 				{
-					currentMenu = Instantiate(menu, Vector3(0,-24,-3),Quaternion.identity);
+					currentMenu = Instantiate(menu, Vector3(0,-30,-3),Quaternion.identity);
 					WorldMapManager.currentState = MapStatus.Menu;
 				}
 				break;

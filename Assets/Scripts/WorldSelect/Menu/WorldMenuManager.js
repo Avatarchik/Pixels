@@ -218,7 +218,6 @@ function UpdateNamesDown () {
 			}
 		}
 	}
-	
 	transform.position.y = -25;
 	while(transform.position.y < destination &&  WorldMapManager.currentState == MapStatus.Menu)
 	{
@@ -356,7 +355,6 @@ function LoadLevelMovement () {
 }
 
 function NotifyText(text:String) {
-	Debug.Log("hey");
 	notify.text = text;
 	notify.color.a = 1;
 }

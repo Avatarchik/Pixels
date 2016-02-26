@@ -97,6 +97,7 @@ function Load() {
 			yield WaitForSeconds(.7);
 			AudioManager.StopSong();
 			yield WaitForSeconds(1);
+			Master.hardMode = hardMode;
 			Application.LoadLevel("MicroGameLauncher");
 		}
 		else

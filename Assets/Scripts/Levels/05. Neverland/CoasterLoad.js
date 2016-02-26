@@ -33,6 +33,8 @@ var speedText:TextMesh;
 
 @HideInInspector var variance:float;
 
+@HideInInspector var difficultyMultiplier:float;
+
 var alert:SpriteRenderer;
 var alertSprites:Sprite[];
 
@@ -84,6 +86,7 @@ function Start () {
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
 	carSpeed = 40 + (10 * speed);
+	difficultyMultiplier = .85 + (.15 * speed);
 	variance = Mathf.Max(.35 - (.03 * speed),.25);
 	car.transform.position.x = successLocation - Mathf.Min(carSpeed * 3,totalDistance);
 	currentSpeed = carSpeed;
@@ -210,7 +213,7 @@ function Play () {
 				currentLeverSpriteNumber = defaultNumber + Mathf.Floor(Finger.GetPosition(importantFinger).x + 1);
 			}
 		}
-		speed = (currentLeverSpriteNumber-6) * .1;
+		speed = (currentLeverSpriteNumber-6) * .1 * difficultyMultiplier;
 		if(finished)
 		{
 			speed = 0;

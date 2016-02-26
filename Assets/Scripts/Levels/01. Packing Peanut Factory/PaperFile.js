@@ -83,7 +83,7 @@ function Start () {
 		paperPile[i].GetComponent(ObjectMovementManager).fingerRange = 2;
 	}
 	paperPile[0].GetComponent(ObjectMovementManager).allowMovement = true;
-	length = paperPile.Length * (1.2 - speed * .12);
+	length = paperPile.Length * Mathf.Max((1.2 - speed * .12),.7);
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
 	timer = length;

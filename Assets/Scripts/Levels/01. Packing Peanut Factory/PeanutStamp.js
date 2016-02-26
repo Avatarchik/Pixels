@@ -89,6 +89,14 @@ function Start () {
 		itemTime = Mathf.MoveTowards(itemTime,.2,.2);
 	}	
 	length = itemTime * (object.Length + 1) + addedTime;
+	if(length < object.Length * .7)
+	{
+		length = object.Length * .7;
+	}
+	if(length < 4)
+	{
+		length = 4;
+	}
 	for(i = 0; i < platforms.Length; i++)
 	{
 		if(objectValues[i] == 2)

@@ -108,11 +108,11 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("HairSelection")+change >= hair.length)
 				{
-					change -= hair.length+1;
+					change -= hair.length;
 				}
 				if(PlayerPrefs.GetInt("HairSelection")+change < 0)
 				{
-					change = hair.length-1;
+					change = hair.length;
 				}		
 				unavailableCheck++;
 			}
@@ -133,13 +133,12 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("EyesSelection")+change >= eyes.length)
 				{
-					change -= eyes.length+1;
+					change -= eyes.length;
 				}
 				if(PlayerPrefs.GetInt("EyesSelection")+change < 0)
 				{
-					change = eyes.length-1;
+					change = eyes.length;
 				}
-				
 				unavailableCheck++;
 			}
 			if((unavailableCheck >= 50 || change == 0) && !Master.notifying)
@@ -159,11 +158,11 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("TopSelection")+change >= tops.length)
 				{
-					change -= tops.length+1;
+					change -= tops.length;
 				}
 				if(PlayerPrefs.GetInt("TopSelection")+change < 0)
 				{
-					change = tops.length-1;
+					change = tops.length;
 				}
 				unavailableCheck++;
 			}
@@ -184,11 +183,11 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("BottomSelection")+change >= bottoms.length)
 				{
-					change -= bottoms.length+1;
+					change -= bottoms.length;
 				}
 				if(PlayerPrefs.GetInt("BottomSelection")+change < 0)
 				{
-					change = bottoms.length-1;
+					change = bottoms.length;
 				}
 				unavailableCheck++;
 			}
