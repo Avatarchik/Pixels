@@ -28,7 +28,7 @@ function Clicked () {
 		}
 		else
 		{
-			Camera.main.GetComponent(Master).ResetGame();
+			Camera.main.GetComponent(Master).EraseGameButton();
 		}
 	}
 }

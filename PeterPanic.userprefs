@@ -1,30 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WorldSelect/Visuals/TimeManager.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MicroGameLauncher/GameManager.js">
     <Files>
-      <File FileName="Assets/Scripts/WorldSelect/ChangeMapState.js" Line="89" Column="30" />
-      <File FileName="Assets/Scripts/Levels/03B. Arcade/ArcadeHighScoreScreen.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WorldSelect/LevelHighScoreScreen.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WorldSelect/Visuals/TimeManager.js" Line="146" Column="36" />
+      <File FileName="../PeterPanic copy/Assets/Scripts/Levels/03B. Arcade/ArcadeHighScoreScreen.js" Line="202" Column="43" />
+      <File FileName="Assets/Scripts/WorldSelect/LevelHighScoreScreen.js" Line="408" Column="71" />
+      <File FileName="Assets/Scripts/MicroGameLauncher/GameManager.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
-                <Node name="Objects" expanded="True" />
+              <Node name="MicroGameLauncher" expanded="True">
+                <Node name="GameManager.js" selected="True" />
               </Node>
-              <Node name="Levels" expanded="True">
-                <Node name="03B. Arcade" expanded="True" />
-              </Node>
-              <Node name="MicroGameLauncher" expanded="True" />
-              <Node name="WorldSelect" expanded="True">
-                <Node name="Visuals" expanded="True">
-                  <Node name="TimeManager.js" selected="True" />
-                </Node>
-              </Node>
+              <Node name="WorldSelect" expanded="True" />
             </Node>
           </Node>
         </State>

@@ -153,7 +153,7 @@ public class IOSNativePostProcess  {
 		}
 
 
-		Debug.Log("ISN Postprocess Done");
+		//Debug.Log("ISN Postprocess Done");
 
 	
 	}

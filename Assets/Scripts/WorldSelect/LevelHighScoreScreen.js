@@ -77,6 +77,7 @@ function Start () {
 					allUsers = new User[leaderboard.scores.length];
 					var userIDs:String[];
 					userIDs = new String[leaderboard.scores.length];
+					var foundPeter:boolean = false;
 					for(var score:int = 0; score < allUsers.length; score++)
 					{
 						allUsers[score] = new User();
@@ -87,12 +88,17 @@ function Start () {
 						{
 							allUsers[score].name = "Peter";
 							allUsers[score].peter = true;
+							foundPeter = true;
 						}
 						else
 						{
 							allUsers[score].peter = false;
 						}
-					}	
+					}
+					if(!foundPeter)
+					{
+						allUsers = AddToArray(allUsers,CreatePeter());
+					}
 					friendNames = new String[Social.localUser.friends.length];
 					for(var name:int = 0; name < friendNames.length; name ++)
 					{
@@ -129,7 +135,6 @@ function GetUserNames (ids:String[]) {
 			Social.LoadUsers(singleThing,function(users){
 				for(var i:int = 0; i < users.length; i++)
 				{
-					Debug.Log(users[0].userName);
 					locationNames[x].GetComponent(TextMesh).text = users[0].userName;
 				}
 			});
@@ -138,7 +143,7 @@ function GetUserNames (ids:String[]) {
 		{
 			locationNames[x].GetComponent(TextMesh).text = "Peter";
 		}
-		yield WaitForSeconds(.3);
+		yield WaitForSeconds(.15);
 	}
 	canSwitch = true;
 }
@@ -204,7 +209,7 @@ function RegularUpdate () {
 		{
 			clicked = true;
 			if(Finger.GetPosition(0).y < -5 && canSwitch)
-			{
+			{ 
 				if(Finger.GetPosition(0).x > 0)
 				{
 					global = false;
@@ -278,16 +283,9 @@ function ShowResults() {
 		if(displayUsers[i].peter)
 		{
 			peterLocation = i;
-			locationNames[i].GetComponent(TextMesh).characterSize = bigSize;
-		}
-		else
-		{
-			locationNames[i].GetComponent(TextMesh).color.a = 0;
-			locationNumbers[i].GetComponent(TextMesh).color.a = 0;
-			locationScores[i].GetComponent(TextMesh).color.a = 0;
+			locationNames[i].GetComponent(TextMesh).characterSize = normalSize;
 		}
 	}
-	yield WaitForSeconds(1);
 	while(locationNames[peterLocation].GetComponent(TextMesh).characterSize != normalSize)
 	{
 		locationNames[peterLocation].GetComponent(TextMesh).characterSize = Mathf.MoveTowards(locationNames[peterLocation].GetComponent(TextMesh).characterSize,normalSize,Time.deltaTime * 2);
@@ -382,17 +380,17 @@ function CreateDisplayList (users:User[]) {
 		}
 	}
 	var placement:int = 0;
-	if(playerLocation > users.length - 6)
+	if(playerLocation > users.length - 9 || users.length < 10)
 	{
 		for(placement = 0; placement < displayUsers.length; placement++)
 		{
-			if(users.length - 1 - placement < 0)
-			{
-				displayUsers[placement] = CreateEmptyPlayer();
-			}
-			else if(users[users.length - 1 - placement] != null)
+			if(placement < users.length)
 			{
 				displayUsers[placement] = users[users.length - 1 - placement];
+			}
+			else
+			{
+				displayUsers[placement] = CreateEmptyPlayer();
 			}
 		}
 	}
@@ -400,28 +398,14 @@ function CreateDisplayList (users:User[]) {
 	{
 		for(placement = 0; placement < displayUsers.length; placement++)
 		{	
-			if(displayUsers.length - 1 - placement < 0 || displayUsers.length - 1 - placement >= users.length)
-			{
-				displayUsers[placement] = CreateEmptyPlayer();
-			}
-			else if(users[displayUsers.length - 1 - placement] != null)
-			{
-				displayUsers[placement] = users[displayUsers.length - 1 - placement];
-			}
+			displayUsers[displayUsers.length - 1 - placement] = users[placement];
 		}
 	}
 	else
 	{
 		for(placement = 0; placement < displayUsers.length; placement++)
 		{
-			if(playerLocation + 4 - placement < 0)
-			{
-				displayUsers[placement] = CreateEmptyPlayer();
-			}
-			else if(users[playerLocation + 4 - placement] != null)
-			{
-				displayUsers[placement] = users[playerLocation + 4 - placement];
-			}
+			displayUsers[placement] = users[playerLocation + 4 - placement];
 		}
 	}
 	while(displayUsers[0] == null)
@@ -444,8 +428,23 @@ function CreateEmptyPlayer ():User {
 	var newUser:User = new User();
 	newUser.name = "";
 	newUser.score = 0;
-	newUser.globalRank = 1000;
 	newUser.peter = false;
+	return newUser;
+}
+
+function CreatePeter ():User {
+	var newUser:User = new User();
+	newUser.name = "Peter";
+	if(Master.hardMode)
+	{
+		newUser.score = PlayerPrefs.GetInt(Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar+"HighScoreHard");
+	}
+	else
+	{
+		newUser.score = PlayerPrefs.GetInt(Camera.main.GetComponent(Master).currentWorld.basic.worldNameVar+"HighScore");
+	}
+	newUser.globalRank = 1000;
+	newUser.peter = true;
 	return newUser;
 }
 
@@ -463,7 +462,6 @@ function UpdateDisplay () {
 			}
 			else
 			{
-				Debug.Log(displayUsers[i].id);
 				idsToGrab = AddString(idsToGrab,displayUsers[i].id);
 				locationNames[i].GetComponent(TextMesh).text = "Loading...";
 			}

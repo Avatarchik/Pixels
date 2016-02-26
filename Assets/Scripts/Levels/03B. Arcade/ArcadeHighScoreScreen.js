@@ -68,6 +68,7 @@ function Start () {
 			leaderboard.LoadScores(function() {
 				if(leaderboard.scores.Length > 0)	
 				{
+					Destroy(loading);
 					Debug.Log("Successfully retrieved " + leaderboard.scores.length + " scores!");
 					allUsers = new User[leaderboard.scores.length];
 					var userIDs:String[];
@@ -103,7 +104,7 @@ function Start () {
 				{
 					Debug.Log("No scores were loaded.");
 					allUsers = new User[0];
-					NotConnected();
+					//NotConnected();
 				}
 			});
 		}
@@ -154,10 +155,7 @@ function NotConnected () {
 	globalText.color.a = 0;
 	friendsText.color.a = 0;
 	notConnected.color.a = 1;
-	if(loading != null)
-	{
-		Destroy(loading);
-	}
+	Destroy(loading);
 }
 
 function FinishStart () {
@@ -176,15 +174,12 @@ function FinishStart () {
 	CreateDisplayList(allUsers);
 	UpdateDisplay();	
 	ShowResults();
-	if(loading != null)
-	{
-		Destroy(loading);
-	}
 }
 
 function RegularUpdate () {
 	while(true)
 	{
+		notConnected.color.a = 0;
 		if(Input.GetKeyDown("left"))
 		{
 			global = true;

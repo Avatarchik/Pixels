@@ -275,6 +275,18 @@ function ResetGame () {
 	}
 }
 
+function EraseGameButton () {
+	if(!resetting)
+	{
+		Destroy(GameObject.Find("IOSInAppPurchaseManager"));
+		resetting = true;
+		DeleteAllValues();
+		AudioManager.StopAll(0);
+		Application.LoadLevel("GameStart");
+		Application.Quit();
+	}
+}
+
 function Initialize () {
 	///////////////////////////////////////////////////////////////////////// Testing information.
 	if(settings.quickProgress)

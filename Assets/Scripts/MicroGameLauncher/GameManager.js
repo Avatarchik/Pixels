@@ -291,6 +291,7 @@ function GameOver () {
 			loadedText = Instantiate(FindEnding());
 			yield WaitForSeconds(.2);
 			Destroy(currentlyLoaded);
+			Destroy(currentGame);
 			while(!loadedText.GetComponent(TextManager).finished){yield;}
 	}
 	Master.lastScore = gameNumber;
@@ -334,6 +335,14 @@ function GameOver () {
 	{
 		if(replay)
 		{
+			if(currentlyLoaded != null)
+			{
+				Destroy(currentlyLoaded);
+			}
+			if(currentGame != null)
+			{
+				Destroy(currentGame);
+			}
 			AudioManager.StopAll(.5);
 			BeforeGames();
 		}
