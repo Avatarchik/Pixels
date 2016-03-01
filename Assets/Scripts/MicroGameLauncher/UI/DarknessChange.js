@@ -4,11 +4,17 @@ var special:boolean = false;
 @HideInInspector var objectColor:Color;
 
 function Start () {
-	objectColor = GetComponent(SpriteRenderer).color;
+	if(!Master.hardMode)
+	{
+		objectColor = GetComponent(SpriteRenderer).color;
+	}
 }
 
 function Update () {
-	GetComponent(SpriteRenderer).color = Color.Lerp(GetComponent(SpriteRenderer).color,objectColor,Time.deltaTime * 6);
+	if(!Master.hardMode)
+	{
+		GetComponent(SpriteRenderer).color = Color.Lerp(GetComponent(SpriteRenderer).color,objectColor,Time.deltaTime * 6);
+	}
 }
 
 function ChangeBackgroundColor (newColor:Color) {

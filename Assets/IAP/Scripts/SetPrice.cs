@@ -26,7 +26,7 @@ public class SetPrice : MonoBehaviour {
 		{
 			GetComponent<TextMesh>().text = localizedPrice;
 		}
-		if(GetComponent<TextMesh>().text == "0.99 $")
+		if(localizedPrice == "0.99 $")
 		{
 			GetComponent<TextMesh>().text = "";
 		}

@@ -68,7 +68,6 @@ function Start () {
 			leaderboard.LoadScores(function() {
 				if(leaderboard.scores.Length > 0)	
 				{
-					Destroy(loading);
 					Debug.Log("Successfully retrieved " + leaderboard.scores.length + " scores!");
 					allUsers = new User[leaderboard.scores.length];
 					var userIDs:String[];
@@ -156,6 +155,10 @@ function NotConnected () {
 	friendsText.color.a = 0;
 	notConnected.color.a = 1;
 	Destroy(loading);
+	if(loading != null)
+	{
+		Destroy(loading);
+	}
 }
 
 function FinishStart () {
@@ -174,6 +177,10 @@ function FinishStart () {
 	CreateDisplayList(allUsers);
 	UpdateDisplay();	
 	ShowResults();
+	if(loading != null)
+	{
+		Destroy(loading);
+	}
 }
 
 function RegularUpdate () {

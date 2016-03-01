@@ -116,6 +116,7 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log(PlayerPrefs.GetString("UnlockSongOnePrice"));
 	showSelectedWorld = currentWorld;
 	showUnlockLevels = unlockLevels;
 	CheckOrientation();
@@ -270,8 +271,10 @@ function ResetGame () {
 		resetting = true;
 		DeleteAllValues();
 		AudioManager.StopAll(0);
-		Application.LoadLevel("GameStart");
-		Destroy(gameObject);
+		//Application.LoadLevel("GameStart");
+		//Destroy(gameObject);
+		SetLastTick();
+		Application.Quit();
 	}
 }
 
@@ -282,7 +285,7 @@ function EraseGameButton () {
 		resetting = true;
 		DeleteAllValues();
 		AudioManager.StopAll(0);
-		Application.LoadLevel("GameStart");
+		SetLastTick();
 		Application.Quit();
 	}
 }

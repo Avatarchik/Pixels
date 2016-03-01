@@ -16,7 +16,26 @@ public class CVariables : MonoBehaviour {
 
 	// Use this for initialization
 	public void Start () {
-		done = false;
+		if(!PlayerPrefs.HasKey("UnlockSongOnePrice"))
+		{
+			PlayerPrefs.SetString("UnlockSongOnePrice","");
+		}
+		if(!PlayerPrefs.HasKey("UnlockSongTwoPrice"))
+		{
+			PlayerPrefs.SetString("UnlockSongTwoPrice","");
+		}
+		if(!PlayerPrefs.HasKey("UnlockSavingPrice"))
+		{
+			PlayerPrefs.SetString("UnlockSavingPrice","");
+		}
+		if(PlayerPrefs.GetString("UnlockSongOnePrice") != "" && PlayerPrefs.GetString("UnlockSongTwoPrice") != "" && PlayerPrefs.GetString("UnlockSavingPrice") != "")
+		{
+			done = true;
+		}
+		else
+		{
+			done = false;
+		}
 		IOSInAppPurchaseManager.instance.AddProductId(unlockSongOneID);
 		IOSInAppPurchaseManager.instance.AddProductId(unlockSongTwoID);
 		IOSInAppPurchaseManager.instance.AddProductId(unlockSavingID);
@@ -45,15 +64,15 @@ public class CVariables : MonoBehaviour {
 		
 		if(productID == "com.turner.peterpanic.unlocksaving")
 		{
-			return unlockSavingPrice;
+			return PlayerPrefs.GetString("UnlockSavingPrice");
 		}
 		else if(productID == "com.turner.peterpanic.unlockdollarsongone")
 		{
-			return unlockSongOnePrice;
+			return PlayerPrefs.GetString("UnlockSongOnePrice");
 		}
 		else if(productID == "com.turner.peterpanic.unlockdollarsongtwo")
 		{
-			return unlockSongTwoPrice;
+			return PlayerPrefs.GetString("UnlockSongTwoPrice");
 		}
 		else
 		{
@@ -82,9 +101,13 @@ public class CVariables : MonoBehaviour {
 //				Debug.Log("-------------");
 //				Debug.Log(localizedPrice);
 				unlockSongOnePrice = t.LocalizedPrice;
+				if(t.LocalizedPrice != "0.99 $" )
+				{
+					PlayerPrefs.SetString("UnlockSongOnePrice",t.LocalizedPrice);
+				}
 			}
 			IOSProductTemplate u = IOSInAppPurchaseManager.Instance.GetProductById(unlockSongTwoID);
-			if(t!=null)
+			if(u!=null)
 			{
 				string localizedPrice = u.LocalizedPrice;
 				int index = localizedPrice.IndexOf(u.CurrencySymbol);
@@ -99,9 +122,13 @@ public class CVariables : MonoBehaviour {
 //				Debug.Log("-------------");
 //				Debug.Log(localizedPrice);
 				unlockSongTwoPrice = u.LocalizedPrice;
+				if(u.LocalizedPrice != "0.99 $")
+				{
+					PlayerPrefs.SetString("UnlockSongTwoPrice",u.LocalizedPrice);
+				}
 			}
 			IOSProductTemplate v = IOSInAppPurchaseManager.Instance.GetProductById(unlockSavingID);
-			if(t!=null)
+			if(v!=null)
 			{
 				string localizedPrice = v.LocalizedPrice;
 				int index = localizedPrice.IndexOf(v.CurrencySymbol);
@@ -116,6 +143,10 @@ public class CVariables : MonoBehaviour {
 //				Debug.Log("-------------");
 //				Debug.Log(localizedPrice);
 				unlockSavingPrice = v.LocalizedPrice;
+				if(v.LocalizedPrice != "0.99 $")
+				{
+					PlayerPrefs.SetString("UnlockSavingPrice",v.LocalizedPrice);
+				}
 			}
 		}
 		else
