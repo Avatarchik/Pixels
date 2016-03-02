@@ -1,17 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GeneralPurpose/Managers/Master.js">
     <Files>
-      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="288" Column="17" />
+      <File FileName="Assets/Scripts/GeneralPurpose/Managers/Master.js" Line="759" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="IAPManager.cs" selected="True" />
-              </Node>
+              <Node name="Scripts" expanded="True" />
             </Node>
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
@@ -22,7 +20,9 @@
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
+                <Node name="Managers" expanded="True">
+                  <Node name="Master.js" selected="True" />
+                </Node>
                 <Node name="Player" expanded="True" />
                 <Node name="Visual" expanded="True" />
               </Node>

@@ -267,18 +267,19 @@ function Demo () {
 function ResetGame () {
 	if(!resetting)
 	{
-		Destroy(GameObject.Find("IOSInAppPurchaseManager"));
+		//Destroy(GameObject.Find("IOSInAppPurchaseManager"));
 		resetting = true;
 		DeleteAllValues();
 		AudioManager.StopAll(0);
-		//Application.LoadLevel("GameStart");
-		//Destroy(gameObject);
+		Destroy(gameObject);
+		Application.LoadLevel("GameStart");
 		SetLastTick();
-		Application.Quit();
 	}
 }
 
 function EraseGameButton () {
+	ResetGame();
+	/*
 	if(!resetting)
 	{
 		Destroy(GameObject.Find("IOSInAppPurchaseManager"));
@@ -288,6 +289,7 @@ function EraseGameButton () {
 		SetLastTick();
 		Application.Quit();
 	}
+	*/
 }
 
 function Initialize () {
