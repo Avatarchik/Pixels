@@ -116,7 +116,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(PlayerPrefs.GetString("UnlockSongOnePrice"));
 	showSelectedWorld = currentWorld;
 	showUnlockLevels = unlockLevels;
 	CheckOrientation();

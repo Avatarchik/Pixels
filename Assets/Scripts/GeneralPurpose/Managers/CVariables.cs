@@ -28,7 +28,7 @@ public class CVariables : MonoBehaviour {
 		{
 			PlayerPrefs.SetString("UnlockSavingPrice","");
 		}
-		if(PlayerPrefs.GetString("UnlockSongOnePrice") != "" && PlayerPrefs.GetString("UnlockSongTwoPrice") != "" && PlayerPrefs.GetString("UnlockSavingPrice") != "")
+		if(PlayerPrefs.GetString("UnlockSongOnePrice") != "" && PlayerPrefs.GetString("UnlockSongTwoPrice") != "" && PlayerPrefs.GetString("UnlockSavingPrice") != "" && PlayerPrefs.GetString("UnlockSongOnePrice") != "0.99 $" && PlayerPrefs.GetString("UnlockSongTwoPrice") != "0.99 $" && PlayerPrefs.GetString("UnlockSavingPrice") != "0.99 $")
 		{
 			done = true;
 		}

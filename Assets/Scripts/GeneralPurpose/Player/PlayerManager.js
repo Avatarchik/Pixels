@@ -84,6 +84,7 @@ function Start () {
 }
 
 function Update () {
+	Debug.Log(PlayerPrefs.GetInt("TopSelection"));
 }
 
 function ChangePart(part:String, change:int) {
@@ -108,7 +109,8 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("HairSelection")+change >= hair.length)
 				{
-					change -= hair.length;
+					//change -= hair.length;
+					change = PlayerPrefs.GetInt("HairSelection") * -1;
 				}
 				if(PlayerPrefs.GetInt("HairSelection")+change < 0)
 				{
@@ -133,7 +135,8 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("EyesSelection")+change >= eyes.length)
 				{
-					change -= eyes.length;
+					//change -= eyes.length;
+					change = PlayerPrefs.GetInt("EyesSelection") * -1;
 				}
 				if(PlayerPrefs.GetInt("EyesSelection")+change < 0)
 				{
@@ -158,7 +161,8 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("TopSelection")+change >= tops.length)
 				{
-					change -= tops.length;
+					//change -= tops.length;
+					change = PlayerPrefs.GetInt("TopSelection") * -1;
 				}
 				if(PlayerPrefs.GetInt("TopSelection")+change < 0)
 				{
@@ -183,7 +187,8 @@ function ChangePart(part:String, change:int) {
 				change += fix;
 				if(PlayerPrefs.GetInt("BottomSelection")+change >= bottoms.length)
 				{
-					change -= bottoms.length;
+					//change -= bottoms.length;
+					change = PlayerPrefs.GetInt("BottomSelection") * -1;
 				}
 				if(PlayerPrefs.GetInt("BottomSelection")+change < 0)
 				{
