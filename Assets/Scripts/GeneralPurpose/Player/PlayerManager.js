@@ -84,7 +84,6 @@ function Start () {
 }
 
 function Update () {
-	Debug.Log(PlayerPrefs.GetInt("TopSelection"));
 }
 
 function ChangePart(part:String, change:int) {

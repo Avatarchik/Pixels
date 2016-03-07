@@ -6,7 +6,7 @@ import System.Runtime.InteropServices;
 
 static var initialLoad:boolean;
 
-public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix};
+public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix,AptFour,Movies,Mother,Finale,PostShow};
 
 static var lives:int;
 static var paused:boolean;
@@ -99,6 +99,7 @@ function Awake () {
 	DontDestroyOnLoad(gameObject);
 	Initialize();
 	CheckForShowTime();
+	
 	Social.localUser.Authenticate (ProcessAuthentication);
 	PushNotificationRegistration();
 	if(Application.loadedLevelName == "GameStart")

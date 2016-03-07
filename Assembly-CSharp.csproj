@@ -217,6 +217,7 @@
      <Compile Include="Assets\IAP\Scripts\SetPrice.cs" />
      <Compile Include="Assets\Scripts\GeneralPurpose\Managers\CVariables.cs" />
      <Compile Include="Assets\Scripts\Test.cs" />
+     <Compile Include="Assets\Scripts\WorldSelect\LoadLeaderboard.cs" />
      <None Include="Assets\Art\Materials\Custom-SepiaForJames.shader" />
      <None Include="Assets\Plugins\JSON\readme.txt" />
      <None Include="Assets\IAP\Resources\AndroidManifest.xml" />
@@ -249,6 +250,9 @@
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="P31RestKit">
+ <HintPath>/Users/jamesmarionair/GameProjects/PeterPanic/Assets/Plugins/P31RestKit.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

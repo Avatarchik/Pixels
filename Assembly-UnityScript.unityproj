@@ -184,27 +184,28 @@
      <Compile Include="Assets\Scripts\Levels\07. Movies\TenderKiss.js" />
      <Compile Include="Assets\Scripts\Levels\07. Movies\TitleCards.js" />
      <Compile Include="Assets\Scripts\Levels\07. Movies\TrainRun.js" />
-     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Game15.js" />
-     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Game16.js" />
-     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Game17.js" />
-     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Game18.js" />
-     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Game19.js" />
-     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Game20.js" />
-     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Game21.js" />
-     <Compile Include="Assets\Scripts\Levels\09. Finale\Game22.js" />
-     <Compile Include="Assets\Scripts\Levels\09. Finale\Game23.js" />
-     <Compile Include="Assets\Scripts\Levels\09. Finale\Game24.js" />
-     <Compile Include="Assets\Scripts\Levels\09. Finale\Game25.js" />
-     <Compile Include="Assets\Scripts\Levels\09. Finale\Game26.js" />
-     <Compile Include="Assets\Scripts\Levels\09. Finale\Game27.js" />
-     <Compile Include="Assets\Scripts\Levels\09. Finale\Game28.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\Game29.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\Game30.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\Game31.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\Game32.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\Game33.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\Game34.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\Game35.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\ChickenPluck.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\CleanUp.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\GuardDog.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\PhoneCall.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\StewCook.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\VHSStack.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\VacuumSuck.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\CannonTwo.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\DemonShowdown.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\DodgeFire.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\MineCart.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\PeanutMine.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\SortItems.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\TentacleSwing.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\AmandaDance.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\CEOTend.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\DemonAct.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\EmilySing.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\EricArrange.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\GideonDate.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\PeterTapper.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\ShakinaSummon.js" />
      <Compile Include="Assets\Scripts\Levels\MicroGame Template MultipleFingers.js" />
      <Compile Include="Assets\Scripts\Levels\MicroGame Template One Finger.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
@@ -344,6 +345,9 @@
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="P31RestKit">
+ <HintPath>/Users/jamesmarionair/GameProjects/PeterPanic/Assets/Plugins/P31RestKit.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
