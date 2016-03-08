@@ -1,10 +1,11 @@
 ﻿#pragma strict
 
-public enum LedgerState{Closed,FirstOpened,Transition,Menu,Worlds,Leaving};
+public enum LedgerState{Closed,FirstOpened,Transition,Menu,Worlds,Leaving,DevRequests};
 
 class StatPieces {
 	var menu:GameObject;
 	var worlds:GameObject;
+	var devRequests:GameObject;
 }
 
 static var currentState:LedgerState;
@@ -15,6 +16,8 @@ static var currentState:LedgerState;
 @HideInInspector var world:World;
 
 @HideInInspector var worldNames:String[];
+
+var devVideos:GameObject[];
 
 var cover:GameObject;
 
@@ -243,6 +246,36 @@ function VideoButtonPress (which:String) {
 			case "PaidSongTwoUnlocked":
 				RunVideo(dollarSong2);
 				break;
+			case "Dev1":
+				RunVideo(devVideos[0]);
+				break;
+			case "Dev2":
+				RunVideo(devVideos[1]);
+				break;
+			case "Dev3":
+				RunVideo(devVideos[2]);
+				break;
+			case "Dev4":
+				RunVideo(devVideos[3]);
+				break;
+			case "Dev5":
+				RunVideo(devVideos[4]);
+				break;
+			case "Dev6":
+				RunVideo(devVideos[5]);
+				break;
+			case "Dev7":
+				RunVideo(devVideos[6]);
+				break;
+			case "Dev8":
+				RunVideo(devVideos[7]);
+				break;
+			case "Dev9":
+				RunVideo(devVideos[8]);
+				break;
+			case "Dev10":
+				RunVideo(devVideos[9]);
+				break;
 		}
 	}
 }
@@ -282,10 +315,17 @@ function SwitchLocations (choice:LedgerState) {
 		case LedgerState.Menu:
 			pieces.menu.transform.localPosition.x = onScreen;
 			pieces.worlds.transform.localPosition.x = offScreen;
+			pieces.devRequests.transform.localPosition.x = offScreen;
 			break;
 		case LedgerState.Worlds:
 			pieces.menu.transform.localPosition.x = offScreen;
 			pieces.worlds.transform.localPosition.x = onScreen;
+			pieces.devRequests.transform.localPosition.x = offScreen;
+			break;
+		case LedgerState.DevRequests:
+			pieces.menu.transform.localPosition.x = offScreen;
+			pieces.worlds.transform.localPosition.x = offScreen;
+			pieces.devRequests.transform.localPosition.x = onScreen;
 			break;
 		case LedgerState.Leaving:
 			break;

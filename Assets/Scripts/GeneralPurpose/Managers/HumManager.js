@@ -24,7 +24,7 @@ function Update () {
 		{
 			hum.Play();
 		}
-		if(thisCharacter == AudioManager.humCharacter)
+		if(thisCharacter == AudioManager.humCharacter && PlayerPrefs.GetInt("Music") == 1)
 		{
 			hum.volume = Mathf.MoveTowards(hum.volume,.7,Time.deltaTime * .45);
 		}

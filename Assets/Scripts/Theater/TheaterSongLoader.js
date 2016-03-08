@@ -31,7 +31,7 @@ function Update () {
 function Clicked () {
 	if(allowed && !Master.notifying)
 	{
-		if(LedgerController.currentState == LedgerState.Worlds)
+		if(LedgerController.currentState == LedgerState.Worlds || LedgerController.currentState == LedgerState.DevRequests)
 		{
 			if(type == "Entracte" && !LedgerController.videoPlaying)
 			{

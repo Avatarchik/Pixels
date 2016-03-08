@@ -153,7 +153,7 @@ function Update () {
 	timer -= Time.deltaTime;
 	if((timer < 0 || car.transform.position.x > 14) && !finished)
 	{
-		if(currentSpeed < 20 && Mathf.Abs(car.transform.position.x) < 12)
+		if(currentSpeed < 30 && Mathf.Abs(car.transform.position.x) < 15)
 		{
 			Finish(true,1);
 		}
@@ -162,7 +162,7 @@ function Update () {
 			Finish(false,.4);
 		}
 	}
-	if(currentSpeed < 10 && Mathf.Abs(car.transform.position.x) < 12)
+	if(currentSpeed < 10 && Mathf.Abs(car.transform.position.x) < 15)
 	{
 		Finish(true,1);
 	}
@@ -227,7 +227,7 @@ function Play () {
 function Reset () {
 	while(true)
 	{
-		yield WaitForSeconds(.1);
+		yield WaitForSeconds(.03);
 		if(importantFinger == -1)
 		{
 			currentLeverSpriteNumber = Mathf.MoveTowards(currentLeverSpriteNumber,defaultNumber,1);

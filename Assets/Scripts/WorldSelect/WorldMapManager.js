@@ -318,6 +318,7 @@ function Update () {
 			}
 			break;
 		case MapStatus.Confirmation:
+			cameraVelocity = 0;
 			returnState = currentState;
 			showTicket();
 			FindClosest();

@@ -69,7 +69,7 @@ function Start () {
 		}
 		if(newValue == 1)
 		{
-			addedTime += .6;
+			addedTime += .9;
 		}
 		platforms[i] = Instantiate(platformPrefab, transform.position - Vector3(10 + ((i * 12) + speed * 2),3.4,2), Quaternion.identity);
 		object[i] = Instantiate(objectPrefab[newValue], transform.position - Vector3(10 + ((i * 12) + speed * 2),.4,1.8), Quaternion.identity);
@@ -102,7 +102,7 @@ function Start () {
 		if(objectValues[i] == 2)
 		{	
 			object[i].GetComponent(SpriteRenderer).sprite = oreSprite[oreCount];
-			length += 1;
+			length += .35;
 		}
 	}
 	UITimer.currentTarget = length;
@@ -111,6 +111,7 @@ function Start () {
 }
 
 function Update () {
+Debug.Log(timer);
 	// Get important finger.
 	if(importantFinger == -1)
 	{

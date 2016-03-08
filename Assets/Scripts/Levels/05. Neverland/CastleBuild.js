@@ -187,7 +187,14 @@ function Play () {
 		currentPiece ++;
 		if(currentPiece == finishedPieces.Length)
 		{
-			Finish(true,1);
+			if(success[currentPiece] == 1)
+			{
+				Finish(true,1);
+			}
+			else
+			{
+				Finish(false,1);
+			}
 		}
 		yield;
 	}

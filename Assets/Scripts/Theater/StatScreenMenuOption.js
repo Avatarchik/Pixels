@@ -3,14 +3,17 @@
 var type:LedgerState;
 
 function Start () {
-	
+	if(type == LedgerState.DevRequests && PlayerPrefs.GetInt("SaveSystemAvailable") != 1)
+	{
+		Destroy(gameObject);
+	}
 }
 
 function Update () {
 }
 
 function Clicked () {
-	if(LedgerController.currentState != LedgerState.Closed && LedgerController.currentState != LedgerState.Transition)
+	if(LedgerController.currentState != LedgerState.Closed && LedgerController.currentState != LedgerState.Transition && !Master.notifying)
 	{
 		if(LedgerController.songPlaying)
 		{
