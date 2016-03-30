@@ -19,15 +19,14 @@ var loadButton:GameObject;
 
 function Start () {	
 	loadButton.transform.position.z = 10000;
-	Social.ReportScore(ArcadeManager.lastScore,"Arcade"+leaderBoardName,DidItWork);
 	leaderBoardName = "Arcade" + ArcadeManager.lastGameVariable;
 	gameNameDisplay.text = ArcadeManager.lastGameDisplayName;
-	
 	latestScore = ArcadeManager.lastScore;
 	if(PlayerPrefs.GetFloat(leaderBoardName+"Score") < latestScore)
 	{
 		PlayerPrefs.SetFloat(leaderBoardName+"Score",latestScore);
 	}
+	Social.ReportScore(PlayerPrefs.GetFloat(leaderBoardName+"Score"),"Arcade"+leaderBoardName,DidItWork);
 	Social.localUser.Authenticate(function(success) {
 		if(success)
 		{

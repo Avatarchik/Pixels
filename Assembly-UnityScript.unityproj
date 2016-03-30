@@ -186,6 +186,7 @@
      <Compile Include="Assets\Scripts\Levels\07. Movies\TrainRun.js" />
      <Compile Include="Assets\Scripts\Levels\08. MothersHouse\ChickenPluck.js" />
      <Compile Include="Assets\Scripts\Levels\08. MothersHouse\CleanUp.js" />
+     <Compile Include="Assets\Scripts\Levels\08. MothersHouse\Cutscenes\DeleteFrontOfMothersHouse.js" />
      <Compile Include="Assets\Scripts\Levels\08. MothersHouse\GuardDog.js" />
      <Compile Include="Assets\Scripts\Levels\08. MothersHouse\PhoneCall.js" />
      <Compile Include="Assets\Scripts\Levels\08. MothersHouse\StewCook.js" />

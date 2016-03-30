@@ -3,38 +3,7 @@
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True" />
-            </Node>
-            <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
-              </Node>
-              <Node name="WorldSelect" expanded="True" />
-            </Node>
-          </Node>
-          <Node name="Assembly-UnityScript" expanded="True">
-            <Node name="IAP" expanded="True">
-              <Node name="Scripts" expanded="True" />
-            </Node>
-            <Node name="Scripts" expanded="True">
-              <Node name="GeneralPurpose" expanded="True">
-                <Node name="Managers" expanded="True" />
-              </Node>
-              <Node name="Levels" expanded="True">
-                <Node name="01. Packing Peanut Factory" expanded="True" />
-                <Node name="03B. Arcade" expanded="True" />
-                <Node name="05. Neverland" expanded="True" />
-              </Node>
-              <Node name="Theater" expanded="True" />
-              <Node name="WorldSelect" expanded="True">
-                <Node name="WorldMapManager.js" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
