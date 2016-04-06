@@ -1,9 +1,23 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WorldSelect/WorldMapVisualsManager.js">
+    <Files>
+      <File FileName="Assets/Scripts/WorldSelect/WorldMapManager.js" Line="90" Column="22" />
+      <File FileName="Assets/Scripts/WorldSelect/WorldMapVisualsManager.js" Line="64" Column="48" />
+      <File FileName="Assets/Scripts/WorldSelect/Visuals/NormalOrEvil.js" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="Scripts" expanded="True">
+              <Node name="WorldSelect" expanded="True">
+                <Node name="Visuals" expanded="True" />
+                <Node name="WorldMapVisualsManager.js" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />

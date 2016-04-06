@@ -61,41 +61,49 @@ function Update () {
 	{
 		player.transform.position.x = 17.9;
 	}
-	//playerManager.speed = .1;	
-	var allowableDistance:float = .05;
-	if(player.transform.position.x > allowableDistance)
+	if(worldMapManager.transform.position.x < -205 && player.transform.position.x > worldMapManager.transform.position.x + 205)
 	{
-		playerManager.currentState = PlayerState.WalkingFront;
-		player.transform.GetComponent(AnimationManager).flipped = -1;
-		player.GetComponent(PlayerManager).thisSpeed = .23;
-	}
-	else if(player.transform.position.x < -allowableDistance)
-	{
-		playerManager.currentState = PlayerState.WalkingFront;
-		player.transform.GetComponent(AnimationManager).flipped = 1;
-		player.GetComponent(PlayerManager).thisSpeed = .23;
-	}
-	else if(worldMapMovement < -allowableDistance)
-	{
-		playerManager.currentState = PlayerState.WalkingFront;
-		player.transform.GetComponent(AnimationManager).flipped = -1;
-		player.GetComponent(PlayerManager).thisSpeed = .23;
-	}
-	else if(worldMapMovement > allowableDistance)
-	{
-		playerManager.currentState = PlayerState.WalkingFront;
-		player.transform.GetComponent(AnimationManager).flipped = 1;
-		player.GetComponent(PlayerManager).thisSpeed = .23;
-	}
-	else if(worldMapManager.currentState == MapStatus.Confirmation)
-	{
-		playerManager.currentState = PlayerState.StandingBack;
-		player.GetComponent(PlayerManager).thisSpeed = .23;
+		player.transform.position.x = worldMapManager.transform.position.x + 205;
+		playerManager.currentState = PlayerState.SpecialHeadBob;
+		player.GetComponent(PlayerManager).thisSpeed = .7;
 	}
 	else
 	{
-		playerManager.currentState = PlayerState.SpecialHeadBob;
-		player.GetComponent(PlayerManager).thisSpeed = .7;
+		var allowableDistance:float = .05;
+		if(player.transform.position.x > allowableDistance)
+		{
+			playerManager.currentState = PlayerState.WalkingFront;
+			player.transform.GetComponent(AnimationManager).flipped = -1;
+			player.GetComponent(PlayerManager).thisSpeed = .23;
+		}
+		else if(player.transform.position.x < -allowableDistance)
+		{
+			playerManager.currentState = PlayerState.WalkingFront;
+			player.transform.GetComponent(AnimationManager).flipped = 1;
+			player.GetComponent(PlayerManager).thisSpeed = .23;
+		}
+		else if(worldMapMovement < -allowableDistance)
+		{
+			playerManager.currentState = PlayerState.WalkingFront;
+			player.transform.GetComponent(AnimationManager).flipped = -1;
+			player.GetComponent(PlayerManager).thisSpeed = .23;
+		}
+		else if(worldMapMovement > allowableDistance)
+		{
+			playerManager.currentState = PlayerState.WalkingFront;
+			player.transform.GetComponent(AnimationManager).flipped = 1;
+			player.GetComponent(PlayerManager).thisSpeed = .23;
+		}
+		else if(worldMapManager.currentState == MapStatus.Confirmation)
+		{
+			playerManager.currentState = PlayerState.StandingBack;
+			player.GetComponent(PlayerManager).thisSpeed = .23;
+		}
+		else
+		{
+			playerManager.currentState = PlayerState.SpecialHeadBob;
+			player.GetComponent(PlayerManager).thisSpeed = .7;
+		}
 	}
 }
 

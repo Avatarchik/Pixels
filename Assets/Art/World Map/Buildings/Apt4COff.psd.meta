@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: 6aa2bf64509f249ee95973365cb28441
-timeCreated: 1455234002
+guid: 46194fab28f5845739eb516b9b99da89
+timeCreated: 1459891641
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Theater
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -27,7 +28,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 32
+  maxTextureSize: 512
   textureSettings:
     filterMode: 0
     aniso: -1
@@ -50,7 +51,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: Neverland
+  spritePackingTag: WorldMapSprites
   userData: 
   assetBundleName: 
   assetBundleVariant: 

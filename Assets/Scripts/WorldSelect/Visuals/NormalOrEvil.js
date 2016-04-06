@@ -14,7 +14,10 @@ function Start () {
 			GetComponent(ParticleSystem).enableEmission = false;
 		}
 	}
-	
+	if(PlayerPrefs.GetInt("IgnoreTimeOfDay") == 1)
+	{
+		GetComponent(ParticleSystem).enableEmission = false;
+	}
 	//HighSchoolBeatEndPlayed
 	/*
 	else if(PlayerPrefs.GetInt("HighSchoolBeatEndPlayed") != 1 && !normal)

@@ -86,8 +86,8 @@ function Start () {
 	fade = Camera.main.GetComponentInChildren(Renderer);
 	showNot = Vector3(0,0,-1);
 	hideNot = Vector3(0,30,-1);
-	leftCameraLimit = -135;
-	rightCameraLimit = 73;
+	leftCameraLimit = -230;
+	rightCameraLimit = 93;
 	currentState = MapStatus.Clear;
 	returnState = currentState;
 	importantFinger = -1;

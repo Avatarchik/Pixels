@@ -193,6 +193,9 @@
      <Compile Include="Assets\Scripts\Levels\08. MothersHouse\VHSStack.js" />
      <Compile Include="Assets\Scripts\Levels\08. MothersHouse\VacuumSuck.js" />
      <Compile Include="Assets\Scripts\Levels\09. Finale\CannonTwo.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\Cutscenes\DeleteFrontOfFinale.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\Cutscenes\FinaleBackgrounds.js" />
+     <Compile Include="Assets\Scripts\Levels\09. Finale\Cutscenes\FinaleCover.js" />
      <Compile Include="Assets\Scripts\Levels\09. Finale\DemonShowdown.js" />
      <Compile Include="Assets\Scripts\Levels\09. Finale\DodgeFire.js" />
      <Compile Include="Assets\Scripts\Levels\09. Finale\MineCart.js" />
