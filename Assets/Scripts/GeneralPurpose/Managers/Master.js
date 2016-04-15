@@ -1,4 +1,4 @@
-	#pragma strict
+#pragma strict
 
 import UnityEngine.SocialPlatforms;
 
@@ -6,7 +6,7 @@ import System.Runtime.InteropServices;
 
 static var initialLoad:boolean;
 
-public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix,AptFour,Movies,Mother,Finale,PostShow};
+public enum WorldSelect{PackingPeanutFactory,Museum,Theater,HighSchool,Neverland,GameDev,Arcade,UnlockWheel,Remix,AptFour,Movies,Mother,Finale,PostShow,DollarStore};
 
 static var lives:int;
 static var paused:boolean;

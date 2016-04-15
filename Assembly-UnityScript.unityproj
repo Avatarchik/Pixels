@@ -117,6 +117,8 @@
      <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixManager.js" />
      <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixStepButton.js" />
      <Compile Include="Assets\Scripts\Levels\-02. Remix\RemixWorldButton.js" />
+     <Compile Include="Assets\Scripts\Levels\-03. DollarStore\DollarStoreManager.js" />
+     <Compile Include="Assets\Scripts\Levels\-03. DollarStore\LeaveDollarStore.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\BoxFill.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\ItemCatch.js" />
      <Compile Include="Assets\Scripts\Levels\01. Packing Peanut Factory\MonsterFeed.js" />

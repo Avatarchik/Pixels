@@ -3,17 +3,34 @@
 var special:boolean = false;
 @HideInInspector var objectColor:Color;
 
+var particle:boolean;
+var system:ParticleSystem;
+
 function Start () {
 	if(!Master.hardMode)
 	{
-		objectColor = GetComponent(SpriteRenderer).color;
+		if(particle)
+		{
+			
+		}
+		else
+		{
+			objectColor = GetComponent(SpriteRenderer).color;
+		}
 	}
 }
 
 function Update () {
 	if(!Master.hardMode)
 	{
-		GetComponent(SpriteRenderer).color = Color.Lerp(GetComponent(SpriteRenderer).color,objectColor,Time.deltaTime * 6);
+		if(particle)
+		{
+			
+		}
+		else
+		{
+			GetComponent(SpriteRenderer).color = Color.Lerp(GetComponent(SpriteRenderer).color,objectColor,Time.deltaTime * 6);
+		}
 	}
 }
 

@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 781796e3759c544d1837274c21c183aa
-timeCreated: 1457302348
+guid: 1bdd49ed9db584a319395cdc0fad3674
+timeCreated: 1460519394
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: SceneBack
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -31,7 +30,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
-    aniso: 1
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -51,7 +50,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: Neverland
+  spritePackingTag: UnlockWheel
   userData: 
   assetBundleName: 
   assetBundleVariant: 
