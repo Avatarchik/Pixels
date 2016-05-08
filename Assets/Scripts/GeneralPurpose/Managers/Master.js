@@ -14,6 +14,7 @@ static var lastScore:int;
 static var counter:float;
 static var demo:boolean;
 static var unlockAll:boolean;
+static var unlockAct1:boolean;
 static var hardMode:boolean;
 static var unlockLevels:int[];
 
@@ -65,6 +66,7 @@ function Awake () {
 	allowShow = false;
 	mapNotifyWorlds = new String[0];
 	if(settings.unlockEverything){unlockAll=true;}
+	if(settings.unlockAct1){unlockAct1=true;}
 	
 	// Sets initial variables for worlds.
 	unlockLevels = new int[6];
@@ -73,20 +75,8 @@ function Awake () {
 	paused = false;
 	initialLoad = true;
 	hardMode = false;
-	
-	// Set iOS device settings, including framerate and permitted orientations, and find Top and Bottom objects.
-	if(CheckDeviceType("4:3"))
-	{
-		device = "4:3";
-	}
-	else if(CheckDeviceType("16:9"))
-	{
-		device = "16:9";
-	}
-	else 
-	{
-		device = "16:9";
-	}
+	device = CheckDeviceType();
+	Debug.Log(device);
 	
 	Application.targetFrameRate = 60;
 	Screen.orientation = ScreenOrientation.AutoRotation; 
@@ -123,33 +113,29 @@ function Update () {
 	
 	if(vertical) 
 	{
-		switch(device)
-		{
-			case "16:9":
-				break;
-			case "4:3":
-				break;
-			default:
-				break;
-		}
-		if(device == "4:3")
-		{
-			GetComponent.<Camera>().orthographicSize = 16;
-		}
-		else
-		{
-			GetComponent.<Camera>().orthographicSize = 16;
-		}
+		GetComponent.<Camera>().orthographicSize = 16;
 	}
 	else
 	{
-		if(device == "4:3")
+		switch(device)
 		{
-			GetComponent.<Camera>().orthographicSize = 12;
-		}
-		else
-		{
-			GetComponent.<Camera>().orthographicSize = 9;
+			case "16:9":
+				GetComponent.<Camera>().orthographicSize = 9;
+				break;
+			case "4:3":
+				GetComponent.<Camera>().orthographicSize = 12;
+				break;
+			case "3:2":
+				GetComponent.<Camera>().orthographicSize = 11;
+				break;
+			case "8:5":
+				GetComponent.<Camera>().orthographicSize = 9;
+				break;
+			case "5:3":
+				GetComponent.<Camera>().orthographicSize = 9.5;
+				break;
+			default:
+				break;
 		}
 	}
 }
@@ -182,34 +168,63 @@ function CheckForShowTime () {
 	}
 }
 // This function returns the device type to adjust the screen size (and borders) for iPad and older iPhone models.
-function CheckDeviceType(search:String):boolean {
-	switch(search)
+//function CheckDeviceType(search:String):boolean {
+function CheckDeviceType():String {
+	var closestScreenSize:float = 1;
+	var screenSizeName:String;
+	screenSizeName = "16:9";
+	// 4:3 Screen Size (1.33 ratio)
+	if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-1.333) < closestScreenSize)
 	{
-		case "4:3":
-			if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-1.333) <.1 || Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-1.333)<.1)
-			{	
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-			break;
-		case "16:9":
-			if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.5625)<.1 || Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.5625)<.1)
-			{	
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-			break;
-		default:
-			return false;
-			break;
+		closestScreenSize = Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-1.333);
+		screenSizeName = "4:3";
 	}
-		
+	if(Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-1.333) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-1.333);
+		screenSizeName = "4:3";
+	}
+	if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.5625) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.5625);
+		screenSizeName = "16:9";
+	}
+	if(Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.5625) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.5625);
+		screenSizeName = "16:9";
+	}
+	if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.666) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.666);
+		screenSizeName = "3:2";
+	}
+	if(Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.666) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.666);
+		screenSizeName = "3:2";
+	}
+	if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.625) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.625);
+		screenSizeName = "8:5";
+	}
+	if(Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.625) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.625);
+		screenSizeName = "8:5";
+	}
+	if(Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.6) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.width * 1.0)/(Screen.height * 1.0))-.6);
+		screenSizeName = "5:3";
+	}
+	if(Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.6) < closestScreenSize)
+	{
+		closestScreenSize = Mathf.Abs(((Screen.height * 1.0)/(Screen.width * 1.0))-.6);
+		screenSizeName = "5:3";
+	}
+	return screenSizeName;
 }
 
 function Demo () {
@@ -267,7 +282,6 @@ function Demo () {
 function ResetGame () {
 	if(!resetting)
 	{
-		//Destroy(GameObject.Find("IOSInAppPurchaseManager"));
 		resetting = true;
 		DeleteAllValues();
 		AudioManager.StopAll(0);
@@ -279,17 +293,6 @@ function ResetGame () {
 
 function EraseGameButton () {
 	ResetGame();
-	/*
-	if(!resetting)
-	{
-		Destroy(GameObject.Find("IOSInAppPurchaseManager"));
-		resetting = true;
-		DeleteAllValues();
-		AudioManager.StopAll(0);
-		SetLastTick();
-		Application.Quit();
-	}
-	*/
 }
 
 function Initialize () {
@@ -311,6 +314,12 @@ function Initialize () {
 	{
 		UnlockArcadeGames(true);
 		UnlockAllOptions();
+		UnlockCustomizeOptions(true);
+	}
+	if(unlockAct1)
+	{
+		UnlockArcadeGames(true);
+		UnlockAct1Options();
 		UnlockCustomizeOptions(true);
 	}
 	for(var i:int = 0; i < worlds.length; i++)
@@ -490,14 +499,58 @@ function UnlockAllOptions () {
 	PlayerPrefs.SetInt("WorldMapState",2);
 	PlayerPrefs.SetInt("FirstThingUnlocked",1);
 	PlayerPrefs.SetInt("ActOneFinished",1);
+	PlayerPrefs.SetInt("SaveSystemAvailable", 1);
+	PlayerPrefs.SetInt("PaidSongOneUnlocked", 1);
+	PlayerPrefs.SetInt("PaidSongTwoUnlocked", 1);
 	for(var aWorld:World in worlds)
 	{
 		var worldName:String;
 		worldName = aWorld.basic.worldNameVar;
-		
-		PlayerPrefs.SetInt("SaveSystemAvailable", 1);
-		PlayerPrefs.SetInt("PaidSongOneUnlocked", 1);
-		PlayerPrefs.SetInt("PaidSongTwoUnlocked", 1);
+	    ///////////////////////////////////////////////////////////////////// World unlock variables.
+		PlayerPrefs.SetInt(worldName, 1);
+		///////////////////////////////////////////////////////////////////// World reward variables.
+		PlayerPrefs.SetInt(worldName+"Unlocks", 3);
+		///////////////////////////////////////////////////////////////////// World high score variables.
+		PlayerPrefs.SetInt(worldName+"HighScore", 50);
+		PlayerPrefs.SetInt(worldName+"HighScoreHard", 50);
+		///////////////////////////////////////////////////////////////////// World visit variables.
+		PlayerPrefs.SetInt(worldName+"PlayedOnce", 1);
+		PlayerPrefs.SetInt(worldName+"Beaten", 1);
+		for(var varName:int = 0; varName < varNames.length; varName++)
+		{
+			PlayerPrefs.SetInt(aWorld.basic.worldNameVar+varNames[varName], 1);
+		}
+	}
+	PlayerPrefs.SetInt("HairSelection",0);
+	PlayerPrefs.SetInt("EyesSelection",0);
+	PlayerPrefs.SetInt("TopSelection",0);
+	PlayerPrefs.SetInt("BottomSelection",0);
+	PlayerPrefs.SetInt("HairColor", 0);
+	PlayerPrefs.SetInt("EyeColor", 0);
+	PlayerPrefs.SetInt("TopColor", 1);
+	PlayerPrefs.SetInt("BottomColor", 0);
+	PlayerPrefs.SetInt("BodyColor", 0);
+	UnlockCustomizeOptions(true);
+}
+
+function UnlockAct1Options () {
+	DeleteAllValues();
+	PlayerPrefs.SetInt("TutorialFinished",2);
+	PlayerPrefs.SetInt("WorldMapState",2);
+	PlayerPrefs.SetInt("FirstThingUnlocked",1);
+	PlayerPrefs.SetInt("ActOneFinished",1);
+	PlayerPrefs.SetInt("SaveSystemAvailable", 1);
+	PlayerPrefs.SetInt("PaidSongOneUnlocked", 1);
+	PlayerPrefs.SetInt("PaidSongTwoUnlocked", 1);
+	for(var aWorld:World in worlds)
+	{
+		var worldName:String;
+		worldName = aWorld.basic.worldNameVar;
+		if(worldName == "Apartment")
+		{
+			PlayerPrefs.SetInt(worldName, 1);
+			break;
+		}
 	    ///////////////////////////////////////////////////////////////////// World unlock variables.
 		PlayerPrefs.SetInt(worldName, 1);
 		///////////////////////////////////////////////////////////////////// World reward variables.
@@ -588,6 +641,7 @@ class WorldOptions {
 class Options {
 	var quickProgress:boolean;
 	var unlockEverything:boolean;
+	var unlockAct1:boolean;
 	var eraseOnLoad:boolean;
 	var alwaysPerform:boolean;
 	var demoMode:boolean;

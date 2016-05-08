@@ -2,6 +2,8 @@
 
 var particle:ParticleSystem;
 
+var amount:float;
+
 function Start () {
 
 }

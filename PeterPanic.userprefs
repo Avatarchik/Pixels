@@ -1,17 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Levels/10. PostShow/Cutscenes/PostShowPixels.js">
+    <Files>
+      <File FileName="Assets/Scripts/Levels/10. PostShow/Cutscenes/PostShowPixels.js" Line="44" Column="25" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp-firstpass" expanded="True">
-            <Node name="Art" expanded="True">
-              <Node name="Materials" expanded="True">
-                <Node name="Custom-SepiaForJames.shader" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />

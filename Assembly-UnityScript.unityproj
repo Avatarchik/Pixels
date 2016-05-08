@@ -206,12 +206,12 @@
      <Compile Include="Assets\Scripts\Levels\09. Finale\TentacleSwing.js" />
      <Compile Include="Assets\Scripts\Levels\10. PostShow\AmandaDance.js" />
      <Compile Include="Assets\Scripts\Levels\10. PostShow\CEOTend.js" />
+     <Compile Include="Assets\Scripts\Levels\10. PostShow\Cutscenes\PostShowPixels.js" />
      <Compile Include="Assets\Scripts\Levels\10. PostShow\DemonAct.js" />
      <Compile Include="Assets\Scripts\Levels\10. PostShow\EmilySing.js" />
      <Compile Include="Assets\Scripts\Levels\10. PostShow\EricArrange.js" />
      <Compile Include="Assets\Scripts\Levels\10. PostShow\GideonDate.js" />
      <Compile Include="Assets\Scripts\Levels\10. PostShow\PeterTapper.js" />
-     <Compile Include="Assets\Scripts\Levels\10. PostShow\ShakinaSummon.js" />
      <Compile Include="Assets\Scripts\Levels\MicroGame Template MultipleFingers.js" />
      <Compile Include="Assets\Scripts\Levels\MicroGame Template One Finger.js" />
      <Compile Include="Assets\Scripts\MicroGameLauncher\GameManager.js" />
