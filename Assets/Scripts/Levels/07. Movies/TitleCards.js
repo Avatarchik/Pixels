@@ -11,15 +11,30 @@ var colorForChange:Color;
 @HideInInspector var length:float;
 @HideInInspector var timer:float;
 
-@HideInInspector var clicked:boolean[];
+@HideInInspector var clicked:boolean;
+
+var possibleCredits:TextMesh[];
+var startHeights:float[];
+
+var credits:GameObject;
+
+@HideInInspector var endHeight:float;
+
+@HideInInspector var scrollSpeed:float;
+
+@HideInInspector var momentum:float;
+
+@HideInInspector var lastPosition:float;
 
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
-	clicked = new boolean[5];
-	clicked = [false,false,false,false,false];
+	clicked = false;
 	
 	// Level specific variable initialization.
+	endHeight = 3.2;
+	momentum = 0;
+	lastPosition = -100;
 	
 	// Speed and difficulty information.
 	if(Application.loadedLevelName == "MicroTester")
@@ -32,10 +47,20 @@ function Start () {
 		speed = GameManager.speed;
 		difficulty = GameManager.difficulty;
 	}
-	length = 3 + 5/speed;
+	length = 4 * (.8 + .2 * difficulty);
 	timer = length;
 	UITimer.currentTarget = length;
 	UITimer.counter = 0;
+	scrollSpeed = Mathf.Max(.6,1.2 - (.15*speed));
+	credits.transform.localPosition.y = startHeights[difficulty-1];
+	
+	for(var i:int = 0; i < possibleCredits.length; i++)
+	{
+		if(i != difficulty-1)
+		{
+			possibleCredits[i].text = "";
+		}
+	}
 	// If the color of the UI should change.
 	if(colorChange)
 	{
@@ -51,21 +76,46 @@ function Update () {
 	{
 		Finish(true,0);
 	}
+	
 	// Get important finger.
-	for(var i:int = 0; i < Finger.identity.length; i++)
+	if(importantFinger == -1)
 	{
-		if(!Master.paused)
+		for(var i:int = 0; i < Finger.identity.length; i++)
 		{
-			clicked[i] = true;
+			if(Finger.GetExists(i) && Finger.GetInGame(i))
+			{
+				importantFinger = i;
+				break;
+			}
 		}
-		if(Finger.GetExists(i) && Finger.GetInGame(i) && !clicked[i] && !finished)
+	}
+	// If that finger still exists and the game isn't paused, do stuff. (Always fires when finger is first touched.)
+	if(Finger.GetExists(importantFinger) && !Master.paused)
+	{
+		if(!clicked)
 		{
-			clicked[i] = true;
+			clicked = true;
 		}
-		else if(!Finger.GetExists(i) || !Finger.GetInGame(i))
+		if(lastPosition != -100)
 		{
-			clicked[i] = false;
+			if((Finger.GetPosition(importantFinger).y - lastPosition) * scrollSpeed > momentum * .8)
+			{
+				momentum = (Finger.GetPosition(importantFinger).y - lastPosition) * scrollSpeed;
+			}
 		}
+		lastPosition = Finger.GetPosition(importantFinger).y;
+	}
+	else if(!Finger.GetExists(importantFinger))
+	{
+		clicked = false;
+		lastPosition = -100;
+		importantFinger = -1;
+	}
+	momentum = Mathf.MoveTowards(momentum,0,Time.deltaTime * 10);
+	credits.transform.localPosition.y += momentum * Time.deltaTime;
+	if(credits.transform.localPosition.y > endHeight)
+	{
+		Finish(true,0);
 	}
 }
 

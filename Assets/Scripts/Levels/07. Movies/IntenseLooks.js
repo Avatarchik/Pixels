@@ -13,6 +13,23 @@ var colorForChange:Color;
 
 @HideInInspector var clicked:boolean;
 
+var face1:SpriteRenderer;
+var face2:SpriteRenderer;
+
+var face1Sprites:Sprite[];
+var face2Sprites:Sprite[];
+
+var marker:GameObject;
+
+@HideInInspector var timerBarLeft:float;
+@HideInInspector var timerBarRight:float;
+
+@HideInInspector var markerTimer:float;
+
+@HideInInspector var goal:int;
+
+@HideInInspector var left:boolean;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;

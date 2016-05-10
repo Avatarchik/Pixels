@@ -13,6 +13,23 @@ var colorForChange:Color;
 
 @HideInInspector var clicked:boolean[];
 
+var buildingsBack:Material;
+var buildingsFront:Material;
+var tracks:Material;
+
+var laserWarning:SpriteRenderer;
+var laser:SpriteRenderer;
+
+var player:SpriteRenderer;
+var playerSprites:Sprite[];
+var hitSprite:Sprite;
+@HideInInspector var currentSprite:int;
+
+@HideInInspector var regularHeight:float;
+@HideInInspector var jumpHeight:float;
+
+@HideInInspector var gameSpeed:float;
+
 function Start () {
 	// Basic world variable initialization.
 	importantFinger = -1;
